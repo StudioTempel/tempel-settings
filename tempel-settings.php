@@ -12,7 +12,7 @@
  * Plugin Name:       Tempel settings
  * Plugin URI:        https://studiotempel.nl/tempel-settings
  * Description:       Simple plugin with settings for login branding, admin branding, disabling comments and more.
- * Version:           1.4
+ * Version:           1.5
  *
  * Requires at least: 6
  * Requires PHP:      8
@@ -243,4 +243,3 @@ function remove_comments()
 }
 
 add_action('wp_before_admin_bar_render', 'remove_comments');
-
