@@ -1,4 +1,5 @@
 <?php
+
 /**
  * StudioTempel settings
  *
@@ -10,7 +11,7 @@
  * @wordpress-plugin
  * Plugin Name:       Tempel settings
  * Plugin URI:        https://studiotempel.nl/tempel-settings
- * Description:       Simple plugin with settings for login branding, admin branding, disabling commens and more.
+ * Description:       Simple plugin with settings for login branding, admin branding, disabling comments and more.
  * Version:           1.4
  *
  * Requires at least: 6
@@ -29,6 +30,15 @@ define('CSS_VERSION', null); // Use this for cache busting CSS files
 $dir = plugin_dir_path(__FILE__);
 $logo = $dir . '/admin-logo.svg';
 
+require 'plugin-update-checker-5.2/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://studiotempel.nl/tempel-settings/info.json',
+	__FILE__, //Full path to the main plugin file or functions.php.
+	'tempel-settings'
+);
+
 
 /*Remove WordPress menu from admin bar*/
 add_action('admin_bar_menu', 'remove_wp_logo', 999);
@@ -38,7 +48,7 @@ function remove_wp_logo($wp_admin_bar)
 }
 
 
-if (function_exists('acf_add_local_field_group')):
+if (function_exists('acf_add_local_field_group')) :
 
     acf_add_local_field_group(array(
         'key' => 'group_63f355fa5efa7',
@@ -145,12 +155,13 @@ if (!is_admin()) {
     wp_enqueue_script('admin', 'https://studiotempel.nl/branding/admin-script.js', array('jquery'), JS_VERSION, true);
 }
 
-function is_wplogin(){
-    $ABSPATH_MY = str_replace(array('\\','/'), DIRECTORY_SEPARATOR, ABSPATH);
-    return ((in_array($ABSPATH_MY.'wp-login.php', get_included_files()) || in_array($ABSPATH_MY.'wp-register.php', get_included_files()) ) || (isset($_GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') || $_SERVER['PHP_SELF']== '/wp-login.php');
+function is_wplogin()
+{
+    $ABSPATH_MY = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ABSPATH);
+    return ((in_array($ABSPATH_MY . 'wp-login.php', get_included_files()) || in_array($ABSPATH_MY . 'wp-register.php', get_included_files())) || (isset($_GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') || $_SERVER['PHP_SELF'] == '/wp-login.php');
 }
 
-if( is_wplogin() ){
+if (is_wplogin()) {
     wp_enqueue_style('login-styles', 'https://studiotempel.nl/branding/login-screen.css');
     wp_enqueue_script('login', 'https://studiotempel.nl/branding/login-script.js', array('jquery'), JS_VERSION, true);
 }
@@ -163,10 +174,10 @@ if( is_wplogin() ){
 function my_acf_op_init($icon)
 {
 
-// Check function exists.
+    // Check function exists.
     if (function_exists('acf_add_options_page')) {
 
-// Register options page.
+        // Register options page.
         $option_page = acf_add_options_page(array(
             'page_title' => 'Tempel settings',
             'menu_title' => 'Tempel settings',
@@ -186,7 +197,7 @@ add_action('acf/init', 'my_acf_op_init', $logo);
 //Remove all comments on the website
 
 add_action('admin_init', function () {
-// Redirect any user trying to access comments page
+    // Redirect any user trying to access comments page
     global $pagenow;
 
     if ($pagenow === 'edit-comments.php') {
@@ -194,10 +205,10 @@ add_action('admin_init', function () {
         exit;
     }
 
-// Remove comments metabox from dashboard
+    // Remove comments metabox from dashboard
     remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
 
-// Disable support for comments and trackbacks in post types
+    // Disable support for comments and trackbacks in post types
     foreach (get_post_types() as $post_type) {
         if (post_type_supports($post_type, 'comments')) {
             remove_post_type_support($post_type, 'comments');
@@ -233,172 +244,3 @@ function remove_comments()
 
 add_action('wp_before_admin_bar_render', 'remove_comments');
 
-defined('ABSPATH') || exit;
-
-//include 'updatechecker.php';
-
-
-if (!class_exists('tempelUpdateChecker')) {
-
-    class tempelUpdateChecker
-    {
-
-        public $plugin_slug;
-        public $version;
-        public $cache_key;
-        public $cache_allowed;
-
-        public function __construct()
-        {
-
-            $this->plugin_slug = plugin_basename(__DIR__);
-            $this->version = '1.0';
-            $this->cache_key = 'tempel_custom_upd';
-            $this->cache_allowed = false;
-
-            add_filter('plugins_api', array($this, 'info'), 20, 3);
-            add_filter('site_transient_update_plugins', array($this, 'update'));
-            add_action('upgrader_process_complete', array($this, 'purge'), 10, 2);
-
-        }
-
-        public function request()
-        {
-
-            $remote = get_transient($this->cache_key);
-
-            if (false === $remote || !$this->cache_allowed) {
-
-                $remote = wp_remote_get(
-                    'https://studiotempel.nl/tempel-settings/info.json',
-                    array(
-                        'timeout' => 10,
-                        'headers' => array(
-                            'Accept' => 'application/json'
-                        )
-                    )
-                );
-
-                if (
-                    is_wp_error($remote)
-                    || 200 !== wp_remote_retrieve_response_code($remote)
-                    || empty(wp_remote_retrieve_body($remote))
-                ) {
-                    return false;
-                }
-
-                set_transient($this->cache_key, $remote, DAY_IN_SECONDS);
-
-            }
-
-            $remote = json_decode(wp_remote_retrieve_body($remote));
-
-            return $remote;
-
-        }
-
-
-        function info($res, $action, $args)
-        {
-
-// print_r( $action );
-// print_r( $args );
-
-// do nothing if you're not getting plugin information right now
-            if ('plugin_information' !== $action) {
-                return $res;
-            }
-
-// do nothing if it is not our plugin
-            if ($this->plugin_slug !== $args->slug) {
-                return $res;
-            }
-
-// get updates
-            $remote = $this->request();
-
-            if (!$remote) {
-                return $res;
-            }
-
-            $res = new stdClass();
-
-            $res->name = $remote->name;
-            $res->slug = $remote->slug;
-            $res->version = $remote->version;
-            $res->tested = $remote->tested;
-            $res->requires = $remote->requires;
-            $res->author = $remote->author;
-            $res->author_profile = $remote->author_profile;
-            $res->download_link = $remote->download_url;
-            $res->trunk = $remote->download_url;
-            $res->requires_php = $remote->requires_php;
-            $res->last_updated = $remote->last_updated;
-
-            $res->sections = array(
-                'description' => $remote->sections->description,
-                'installation' => $remote->sections->installation,
-                'changelog' => $remote->sections->changelog
-            );
-
-            if (!empty($remote->banners)) {
-                $res->banners = array(
-                    'low' => $remote->banners->low,
-                    'high' => $remote->banners->high
-                );
-            }
-
-            return $res;
-
-        }
-
-        public function update($transient)
-        {
-
-            if (empty($transient->checked)) {
-                return $transient;
-            }
-
-            $remote = $this->request();
-
-            if (
-                $remote
-                && version_compare($this->version, $remote->version, '<')
-                && version_compare($remote->requires, get_bloginfo('version'), '<=')
-                && version_compare($remote->requires_php, PHP_VERSION, '<')
-            ) {
-                $res = new stdClass();
-                $res->slug = $this->plugin_slug;
-                $res->plugin = plugin_basename(__FILE__); // tempel-update-plugin/tempel-update-plugin.php
-                $res->new_version = $remote->version;
-                $res->tested = $remote->tested;
-                $res->package = $remote->download_url;
-
-                $transient->response[$res->plugin] = $res;
-
-            }
-
-            return $transient;
-
-        }
-
-        public function purge($upgrader, $options)
-        {
-
-            if (
-                $this->cache_allowed
-                && 'update' === $options['action']
-                && 'plugin' === $options['type']
-            ) {
-// just clean the cache when new plugin version is installed
-                delete_transient($this->cache_key);
-            }
-
-        }
-
-
-    }
-
-    new tempelUpdateChecker();
-
-}
