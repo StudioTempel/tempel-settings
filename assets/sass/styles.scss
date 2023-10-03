@@ -1,0 +1,84 @@
+@import url("https://use.typekit.net/ebn5oyn.css?display=swap");
+@import "utility/variables";
+@import "utility/mixins";
+
+#tempel-settings-wrap {
+
+  form {
+    > h1 {
+      color: #becaec;
+      @include font-size(4.5, -0.7);
+    }
+
+    table.form-table {
+      tbody {
+        tr {
+          th {
+            color: $purple;
+          }
+
+          td {
+            input[type="checkbox"] {
+                display: none;
+            }
+
+            input[type="checkbox"] + label {
+                display: block;
+                position: relative;
+                width: 3em;
+                height: 1.6em;
+                background: $purple;
+                border-radius: 1em;
+                cursor: pointer;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -webkit-transition: background 0.1s ease-in-out;
+                transition: background 0.1s ease-in-out;
+            }
+
+            input[type="checkbox"] + label::before {
+                content: "";
+                display: block;
+                width: 1.2em;
+                height: 1.2em;
+                border-radius: 1em;
+                background: $black;
+
+                position: absolute;
+                left: 0.2em;
+                top: 0.2em;
+                -webkit-transition: all 0.2s ease-in-out;
+                transition: all 0.2s ease-in-out;
+            }
+
+            input[type="checkbox"]:checked + label {
+                background: $purple;
+            }
+
+            input[type="checkbox"]:checked + label::before {
+                left: 1.6em;
+                -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+            }
+          }
+        }
+      }
+    }
+
+    p.submit {
+      input[type="submit"] {
+        background: $purple;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px 16px;
+        color: #000000;
+        font-weight: bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+
+@import "default";
