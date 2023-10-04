@@ -9,24 +9,8 @@ use Tempel\Admin\Page;
 
 class SettingsPage extends Page
 {
-
-    protected $slug = 'tempel-settings';
-
-    protected $menu_title = 'Tempel settings';
-
-    protected $capability = 'manage_options';
-
-    protected $icon_url = null;
-
-    protected $position = 99;
-
-
-
     function render()
     {
-        if (!current_user_can('manage_options')) {
-            wp_die(__('You do not have sufficient permissions to access this page.', 'tempel'));
-        }
 ?>
         <div id="tempel-settings-wrap" class="tmpl-wrap">
             <div class="tmpl-header">
@@ -35,8 +19,9 @@ class SettingsPage extends Page
             <div class="tmpl-content">
                 <form action="options.php" method="post">
                     <?php
-                    $this->tempel_settings_init();
                     settings_fields('tempel-settings');
+                    $this->tempel_settings_init();
+
                     do_settings_sections('tempel-settings');
 
                     submit_button("Save");
@@ -54,11 +39,6 @@ class SettingsPage extends Page
 
     public function tempel_settings_init()
     {
-        register_setting(
-            'tempel-settings',                                                      // Option group
-            'tempel-settings-data',                                                 // Option name
-        );
-
         add_settings_section(
             'tempel-settings-section',                                              // ID
             '',                                                   // Title

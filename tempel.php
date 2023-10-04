@@ -35,7 +35,8 @@ use Tempel\Admin;
 use Tempel\Core;
 use Tempel\UpdateChecker;
 
-class Tempel {
+class Tempel
+{
 
     public $admin;
 
@@ -44,17 +45,19 @@ class Tempel {
     public $updateChecker;
 
     /**
-    * Tempel Constructor
-    */
-    public function __construct() {
+     * Tempel Constructor
+     */
+    public function __construct()
+    {
         $this->init();
     }
 
     /**
-    * Tempel Init
-    */
-    private function init() {
-        if(is_admin()) {
+     * Tempel Init
+     */
+    private function init()
+    {
+        if (is_admin()) {
             $this->admin = new Admin\Admin();
             $this->core = new Core\Core();
             $this->updateChecker = new UpdateChecker\UpdateChecker();
@@ -62,6 +65,6 @@ class Tempel {
     }
 }
 
-add_action('plugins_loaded', function() {
+add_action('plugins_loaded', function () {
     new Tempel;
 });

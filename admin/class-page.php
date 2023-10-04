@@ -13,18 +13,19 @@ abstract class Page
 
     protected $icon_url;
 
-    function __construct($slug, $page_title, $menu_title, $capability, $icon_url, $position)
+    function __construct($slug, $page_title, $menu_title, $icon_url, $position, $render = true, $capability = "manage_options" )
     {
+
         $this->slug = $slug;
 
         add_menu_page(
-            $page_title,
-            $menu_title,
-            $capability,
-            $slug,
-            array($this, 'render'),
-            $icon_url,
-            $position
+            $page_title,                                // Page title
+            $menu_title,                                // Menu title
+            $capability,                                // Capability
+            $slug,                                      // Menu slug
+            $render ? array($this, 'render') : null ,                     // Callback
+            $icon_url,                                  // Icon URL
+            $position                                   // Position
         );
     }
 }
