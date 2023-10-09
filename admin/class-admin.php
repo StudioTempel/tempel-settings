@@ -21,12 +21,16 @@ class Admin
     }
 
     public function add_menu_pages() {
-        $this->pages['tempel-options'] = new Pages\SettingsPage( 'tempel-settings', 'Tempel Settings', 'Tempel Settings', null, 99 );
+        $this->pages['tempel-options'] = new Pages\SettingsPage( 'tempel-settings', 'Tempel Settings', 'Tempel Settings', $this->get_menu_icon(), 99 );
     }
     public function tempel_register_settings() {
         register_setting(
             'tempel-settings',
             'tempel-settings-data'
         );
+    }
+
+    public function get_menu_icon() {
+        return plugins_url( 'assets/images/admin-logo.svg', dirname(__FILE__) );
     }
 }
