@@ -32,7 +32,7 @@ abstract class Page
             $menu_title,                                // Menu title
             $capability,                                // Capability
             $slug,                                      // Menu slug
-            $render ? array($this, 'render') : null,                     // Callback
+            $render ? array($this, 'render') : null,    // Callback
             $icon_url,                                  // Icon URL
             $position                                   // Position
         );
@@ -66,11 +66,11 @@ abstract class Page
 
     public function print_header()
     {
-        echo '
+        ?>
         <div class="tmpl-header">
-        <h1>' . esc_html(get_admin_page_title()) . '</h1>        
-        </div>'
-        ;
+            <h1><?= esc_html(get_admin_page_title()); ?></h1>        
+        </div>
+        <?php
     }
 
     public function print_footer()
@@ -138,17 +138,21 @@ abstract class Page
     {
         $option = get_option('tempel-settings-data');
         if ($option) {
-            $checkbox_value = $option[$args['id']];
+            $checkbox_value = $option[$args['id']] ?? false;
         } else {
             $checkbox_value = false;
         }
 
         echo "
-        <div class='form-group'>
-            <input type='checkbox' id='hide_dashboard_widgets' name='tempel-settings-data[" . $args['id'] . "]' " . checked("on", $checkbox_value, false) . "/>
-            <label for='hide_dashboard_widgets'></label>
+        <div class='field-wrap'>
+            <div class='field-label'>
+                <p>" . $args['label'] . "</p>
+            </div>
+            <div class='form-group'>
+                <input type='checkbox' id='". $args['id'] ."' name='tempel-settings-data[" . $args['id'] . "]' " . checked("on", $checkbox_value, false) . "/>
+                <label for='". $args['id'] ."'></label>
+            </div>
         </div>
         ";
-        echo get_option("tempel-settings-data[" . $args['id'] . "]");
     }
 }

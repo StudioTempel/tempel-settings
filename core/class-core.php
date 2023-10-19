@@ -18,8 +18,39 @@ class Core
         add_action('admin_bar_menu', array($this, 'tempel_remove_wp_logo'), 999);
         add_action('admin_enqueue_scripts', array($this, 'tempel_styles'));
         add_action('login_form', array($this, 'tempel_login_styles'));
-        add_action('admin_init', array($this, 'tempel_disable_commments'));
-        add_action('wp_dashboard_setup', array($this, 'tempel_remove_dashboard_widgets'));
+
+        if($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
+            add_action('admin_init', array($this, 'tempel_disable_commments'));
+        }
+
+        // Hide dashboard widgets
+        if($this->sanitize_checkbox_value($this->return_option('tmpl_hide_dashboard_widgets'))) {
+            add_action('wp_dashboard_setup', array($this, 'tempel_remove_dashboard_widgets'));
+
+        }
+    }
+
+    /**
+     * return option by name
+     */
+    function return_option($option_name) {
+        $option = get_option('tempel-settings-data');
+        if ($option) {
+            return $option[$option_name] ?? false;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Sanitize checkbox value to not return 'on' but true
+     */
+    function sanitize_checkbox_value($val) {
+        if($val == 'on') {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     function tempel_remove_wp_logo($wp_admin_bar)
@@ -27,28 +58,20 @@ class Core
         $wp_admin_bar->remove_node('wp-logo');
     }
 
-    public function tempel_remove_dashboard_widgets()
+
+
+    function tempel_remove_dashboard_widgets()
     {
-
-        $option = get_option('tempel-settings-data');
-        if ($option) {
-            $hide_dashboard_widgets_bool = $option['hide_dashboard_widgets_bool'];
-        } else {
-            $hide_dashboard_widgets_bool = false;
-        }
-
-        if ($hide_dashboard_widgets_bool) {
-            global $wp_meta_boxes;
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']); // Right Now
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']); // Activity
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']); // Recent Comments
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']); // Incoming Links
-            unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']); // Plugins
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']); // Quick Press
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']); // Recent Drafts
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']); // WordPress blog
-            unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // Other WordPress News
-        }
+        global $wp_meta_boxes;
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']); // Right Now
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_activity']); // Activity
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']); // Recent Comments
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']); // Incoming Links
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']); // Plugins
+        unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']); // Quick Press
+        unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']); // Recent Drafts
+        unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']); // WordPress blog
+        unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // Other WordPress News
     }
 
     public function tempel_remove_admin_bar_callback_action()
@@ -78,12 +101,20 @@ class Core
 
     public function tempel_styles()
     {
+        // if (!is_admin()) {
+        //     wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-bar.css');
+        // } else {
+        //     wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-theme.css');
+        //     wp_enqueue_script('admin', 'https://studiotempel.nl/branding/admin-script.js', array('jquery'), JS_VERSION, true);
+        //     wp_enqueue_style('tempel-settings-styles', '' . plugin_dir_url(__DIR__) . '/dist/css/styles.css');
+        // }
+
         if (!is_admin()) {
-            wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-bar.css');
+            wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-bar.css');
         } else {
-            wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-theme.css');
-            wp_enqueue_script('admin', 'https://studiotempel.nl/branding/admin-script.js', array('jquery'), JS_VERSION, true);
-            wp_enqueue_style('tempel-settings-styles', '' . plugin_dir_url(__DIR__) . '/dist/css/styles.css');
+            wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-theme.css');
+            wp_enqueue_script('admin', plugin_dir_url(__DIR__) . '/assets/branding/admin-script.js', array('jquery'), JS_VERSION, true);
+            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
         }
     }
 

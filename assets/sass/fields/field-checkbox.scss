@@ -38,4 +38,8 @@ form.tmpl-form {
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
     }
+
+    input[type="checkbox"] {
+        display: none;
+    }
 }

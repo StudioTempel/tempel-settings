@@ -1,19 +1,57 @@
 div.tmpl-wrap {
-    font-family: 'aktiv-grotesk', sans-serif;
-    background: $black;
-    padding: 20px;
-    border-radius: 0 0 48px 0;
-    margin: 20px 20px 20px 0;
+  text-size-adjust: none;
+  font-family: "aktiv-grotesk", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+  border-radius: 0 0 48px 0;
+  margin: 20px 20px 20px 0;
+  background: $black;
 
-    div.tmpl-header {
+  div.tmpl-header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid $purple;
 
+    h1 {
+      @include font-size(2.3, -0.5);
+      color: $purple;
+    }
+  }
+
+  div.tmpl-content {
+    form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 20px;
+
+      div.field-wrap {
+        display: flex;
+        gap: 20px;
+
+        div.field-label {
+          p {
+            margin: 0;
+            color: $purple;
+            font-weight: 500;
+          }
+        }
+      }
     }
 
-    div.tmpl-content {
-
+    p.submit {
+      input[type="submit"] {
+        background: $purple;
+        border: 0;
+        border-radius: 4px;
+        padding: 8px 16px;
+        color: #000000;
+        font-weight: bold;
+        cursor: pointer;
+      }
     }
+  }
 
-    div.tmpl-footer {
-
-    }
+  div.tmpl-footer {
+  }
 }

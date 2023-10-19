@@ -11,23 +11,21 @@ class SettingsPage extends Page
 {
     function render()
     {
-
-        // $this->add_field(
-        //     array(
-        //         'type'  => 'text',
-        //         'id'    => 'tempel_test',
-        //         'label' => 'Auto delete messages: ',
-        //         'placeholder'  => 'test'
-        //     )
-        // );
+        $this->add_field(
+            array(
+                'type' => 'checkbox',
+                'id' => 'tmpl_disable_comments',
+                'label' => 'Disable comments: ',
+            )
+        );
         $this->add_field(
             array(
                 'type'  => 'checkbox',
-                'id'    => 'hide_dashboard_widgets_bool'
+                'id'    => 'tmpl_hide_dashboard_widgets',
+                'label' => 'Hide dashboard widgets: ',
             )
         );
 
-        // var_dump($this->fields);
         $this->print_form();
     }
 }

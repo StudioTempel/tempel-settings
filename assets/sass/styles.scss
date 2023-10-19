@@ -2,70 +2,13 @@
 @import "utility/variables";
 @import "utility/mixins";
 
-body.toplevel_page_tempel-settings {
-  background: $purple !important;
+html {
+
 }
 
-.tmpl-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  div.tmpl-header {
-    padding-bottom: 5px;
-    border-bottom: 1px solid $purple;
-
-    h1 {
-      @include font-size(2.3, -0.5);
-      color: $purple;
-    }
-  }
-
-  div.tmpl-content {
-
-  }
-
-  div.tmpl-footer {
-
-  }
-
-
-  form {
-
-
-    table.form-table {
-      tbody {
-        tr {
-          th {
-            color: $purple;
-          }
-
-          td {
-
-          }
-        }
-      }
-    }
-
-    div.form-group {
-      input[type="checkbox"] {
-        display: none;
-    }
-
-
-    }
-
-    p.submit {
-      input[type="submit"] {
-        background: $purple;
-        border: 0;
-        border-radius: 4px;
-        padding: 8px 16px;
-        color: #000000;
-        font-weight: bold;
-        cursor: pointer;
-      }
-    }
-  }
+body.toplevel_page_tempel-settings {
+  background: $purple !important;
+  
 }
 
 
