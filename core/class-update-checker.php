@@ -2,8 +2,7 @@
 
 namespace Tempel\UpdateChecker;
 
-require plugin_dir_path(__DIR__) . 'vendor/plugin-update-checker-5.2/plugin-update-checker.php';
-
+require plugin_dir_path(__DIR__) . 'vendor/autoload.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 class UpdateChecker
