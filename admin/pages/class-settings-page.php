@@ -15,7 +15,7 @@ class SettingsPage extends Page
             array(
                 'type' => 'checkbox',
                 'id' => 'tmpl_disable_comments',
-                'label' => 'Disable comments: ',
+                'label' => 'Disable built in comments and post type: ',
             )
         );
         $this->add_field(
