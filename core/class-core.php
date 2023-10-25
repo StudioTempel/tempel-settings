@@ -32,7 +32,7 @@ class Core
             add_action('admin_bar_menu', array($this, 'tmpl_remove_default_post_type_menu_bar'), 999);
             add_action('wp_dashboard_setup', array($this, 'tmpl_remove_draft_widget'), 999);
             add_action('admin_footer', array($this, 'tmpl_remove_add_new_post_href_in_admin_bar'));
-            add_action('init', array($this, 'tmpl_remove_frontend_post_href'));
+            // add_action('wp_footer', 'tmpl_remove_add_new_post_href_in_admin_bar');
             add_action('init', array($this, 'tmpl_change_wp_object'));
         }
 
@@ -203,24 +203,24 @@ class Core
         $wp_admin_bar->remove_node('new-post');
     }
 
-    function tmpl_remove_frontend_post_href()
-    {
-        if (is_user_logged_in()) {
-            add_action('wp_footer', 'remove_add_new_post_href_in_admin_bar');
-        }
-    }
+    // function tmpl_remove_frontend_post_href()
+    // {
+    //     if (is_user_logged_in()) {
+    //         add_action('wp_footer', 'tmpl_remove_add_new_post_href_in_admin_bar');
+    //     }
+    // }
 
     function tmpl_remove_add_new_post_href_in_admin_bar()
     {
 ?>
         <script type="text/javascript">
-            function remove_add_new_post_href_in_admin_bar() {
+            function tmpl_remove_add_new_post_href_in_admin_bar() {
                 var add_new = document.getElementById('wp-admin-bar-new-content');
                 if (!add_new) return;
                 var add_new_a = add_new.getElementsByTagName('a')[0];
                 if (add_new_a) add_new_a.setAttribute('href', '#!');
             }
-            remove_add_new_post_href_in_admin_bar();
+            tmpl_remove_add_new_post_href_in_admin_bar();
         </script>
 <?php
     }

@@ -50,10 +50,10 @@ class Tempel
      */
     public function __construct()
     {
+        $this->init();
         $this->admin = new Admin\Admin();
         $this->updateChecker = new UpdateChecker\UpdateChecker();
         $this->core = new Core\Core();
-        $this->init();
     }
 
     public static function get_instance() {
@@ -71,12 +71,6 @@ class Tempel
 
     public static function install()
     {
-
-        register_setting(
-            'tempel-settings',
-            'tempel-settings-data'
-        );
-
         $default = array(
             'tmpl_branding'                     => 'on',
             'tmpl_hide_dashboard_widgets'       => 'on',
