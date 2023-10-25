@@ -159,7 +159,6 @@ abstract class Page
     public function is_checked($args)
     {
         $option = get_option('tempel-settings-data');
-        var_dump($option[$args]);
         if ($option) {
             $checkbox_value = $option[$args] ?? false;
         } else {

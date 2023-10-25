@@ -13,17 +13,16 @@ class Core
      */
     public function __construct()
     {
-
         add_action('admin_enqueue_scripts', array($this, 'plugin_styles'));
-                // Loads
-        if($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
+
+        // Loads
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
             add_action('get_header', array($this, 'tempel_remove_admin_bar_callback_action'));
             add_action('admin_bar_menu', array($this, 'tempel_admin_bar'), 999);
             add_action('admin_bar_menu', array($this, 'tempel_remove_wp_logo'), 999);
-            add_action('admin_enqueue_scripts', array($this, 'tempel_styles'));
+            add_action('wp_enqueue_scripts', array($this, 'tempel_styles'));
+            add_action('login_form', array($this, 'tempel_login_styles'));
         }
-        // Not loading
-        add_action('login_form', array($this, 'tempel_login_styles'));
 
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
             add_action('admin_init', array($this, 'tmpl_disable_commments'));
@@ -116,8 +115,9 @@ class Core
         }
     }
 
-    public function plugin_styles() {
-        if(is_admin()) {
+    public function plugin_styles()
+    {
+        if (is_admin()) {
             wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
         }
     }
@@ -140,7 +140,7 @@ class Core
 
     public function tempel_login_styles()
     {
-        if (is_wplogin()) {
+        if ($this->is_wplogin()) {
             wp_enqueue_style('login-styles', plugin_dir_url(__DIR__) . '/assets/branding/login-screen.css');
             wp_enqueue_script('login', plugin_dir_url(__DIR__) . '/assets/branding/login-script.js', array('jquery'), JS_VERSION, true);
         }
