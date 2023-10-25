@@ -159,6 +159,7 @@ abstract class Page
     public function is_checked($args)
     {
         $option = get_option('tempel-settings-data');
+        var_dump($option[$args]);
         if ($option) {
             $checkbox_value = $option[$args] ?? false;
         } else {
@@ -171,7 +172,7 @@ abstract class Page
     public function add_section($args)
     {
         $default_args = array(
-            'section_id'                => '',
+            'section_id'        => '',
             'title'             => '',
             'categories'        => array(),
         );
@@ -183,7 +184,7 @@ abstract class Page
     public function add_category($args)
     {
         $default_args = array(
-            'category_id'                => '',
+            'category_id'       => '',
             'title'             => '',
             'subtitle'          => '',
             'section_id'        => '',
@@ -199,9 +200,6 @@ abstract class Page
                 array_push($section['categories'], $data);
             }
         }
-
-        // echo '<br>';
-        // print_r($this->sections);
     }
 
     public function add_field($args)

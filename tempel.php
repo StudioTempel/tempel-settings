@@ -44,27 +44,52 @@ class Tempel
 
     public $updateChecker;
 
+    static $instance;
     /**
      * Tempel Constructor
      */
     public function __construct()
     {
+        $this->admin = new Admin\Admin();
+        $this->updateChecker = new UpdateChecker\UpdateChecker();
+        $this->core = new Core\Core();
         $this->init();
     }
 
-    /**
-     * Tempel Init
-     */
-    private function init()
-    {
-        if (is_admin()) {
-            $this->admin = new Admin\Admin();
-            $this->core = new Core\Core();
-            $this->updateChecker = new UpdateChecker\UpdateChecker();
+    public static function get_instance() {
+
+        if (null === self::$instance) {
+            self::$instance = new self();
         }
+    
+        return self::$instance;
+    }
+
+    private function init() {
+        register_activation_hook(__FILE__, array($this, 'install'));
+    }
+
+    public static function install()
+    {
+
+        register_setting(
+            'tempel-settings',
+            'tempel-settings-data'
+        );
+
+        $default = array(
+            'tmpl_branding'                     => 'on',
+            'tmpl_hide_dashboard_widgets'       => 'on',
+            'tmpl_disable_comments'             => 'on'
+        );
+        update_option('tempel-settings-data', $default);
+        
+        register_activation_hook(__FILE__, array("Tempel", 'setup'));
     }
 }
 
-add_action('plugins_loaded', function () {
-    new Tempel;
-});
+// add_action('plugins_loaded', function () {
+//     new Tempel;
+// });
+
+Tempel::get_instance();

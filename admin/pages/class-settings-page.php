@@ -12,6 +12,24 @@ class SettingsPage extends Page
     function render()
     {
 
+        /**
+         * Sections
+         * 
+         * !REQUIRED: ID, Title
+        */
+
+        /**
+         * Categories
+         * 
+         * !REQUIRED: ID, Title, Section ID
+        */
+
+        /**
+         * Fields
+         * 
+         * !REQUIRED: Type, Field ID, Label, Category ID
+        */
+
         // General Section
         $this->add_section(
             array(

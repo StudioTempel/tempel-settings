@@ -38,7 +38,7 @@ div.tmpl-wrap {
           display: flex;
           flex-direction: column;
           gap: 50px;
-          
+
           div.tmpl_category {
             display: flex;
             gap: 100px;
@@ -84,7 +84,7 @@ div.tmpl-wrap {
       input[type="submit"] {
         background: $purple;
         border: 0;
-        border-radius: 4px;
+        border-radius: 50px !important;
         padding: 8px 16px;
         color: #000000;
         font-weight: bold;
