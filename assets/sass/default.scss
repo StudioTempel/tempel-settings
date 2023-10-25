@@ -25,15 +25,56 @@ div.tmpl-wrap {
       flex-direction: column;
       row-gap: 20px;
 
-      div.field-wrap {
-        display: flex;
-        gap: 20px;
-
-        div.field-label {
-          p {
-            margin: 0;
+      div.tmpl_section {
+        div.section {
+          border-bottom: 1px solid $purple;
+          margin-bottom: 50px;
+          h2 {
             color: $purple;
-            font-weight: 500;
+          }
+        }
+
+        div.categories {
+          display: flex;
+          flex-direction: column;
+          gap: 50px;
+          
+          div.tmpl_category {
+            display: flex;
+            gap: 100px;
+
+            div.category {
+              max-width: 200px;
+              width: 100%;
+
+              h3 {
+                color: $purple;
+                margin: 0 0 5px 0;
+              }
+
+              p {
+                color: $grey;
+                opacity: 0.6;
+                margin: 0;
+              }
+            }
+
+            div.fields {
+              flex: 1;
+            }
+
+            div.field-wrap {
+              display: flex;
+              gap: 20px;
+
+              div.field-label {
+                p {
+                  margin: 0;
+                  color: $purple;
+                  font-weight: 500;
+                }
+              }
+            }
           }
         }
       }

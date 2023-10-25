@@ -13,10 +13,16 @@ class Core
      */
     public function __construct()
     {
-        add_action('get_header', array($this, 'tempel_remove_admin_bar_callback_action'));
-        add_action('admin_bar_menu', array($this, 'tempel_admin_bar'), 999);
-        add_action('admin_bar_menu', array($this, 'tempel_remove_wp_logo'), 999);
-        add_action('admin_enqueue_scripts', array($this, 'tempel_styles'));
+
+        add_action('admin_enqueue_scripts', array($this, 'plugin_styles'));
+                // Loads
+        if($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
+            add_action('get_header', array($this, 'tempel_remove_admin_bar_callback_action'));
+            add_action('admin_bar_menu', array($this, 'tempel_admin_bar'), 999);
+            add_action('admin_bar_menu', array($this, 'tempel_remove_wp_logo'), 999);
+            add_action('admin_enqueue_scripts', array($this, 'tempel_styles'));
+        }
+        // Not loading
         add_action('login_form', array($this, 'tempel_login_styles'));
 
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
@@ -82,14 +88,17 @@ class Core
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // Other WordPress News
     }
 
+    /**
+     * 
+     *  START BRANDING
+     * 
+     */
+
     public function tempel_remove_admin_bar_callback_action()
     {
         remove_action('wp_head', '_admin_bar_bump_cb');
     }
 
-    /**
-     * Custom Admin Bar
-     */
     public function tempel_admin_bar()
     {
         if (current_user_can('manage_options')) {
@@ -107,22 +116,19 @@ class Core
         }
     }
 
+    public function plugin_styles() {
+        if(is_admin()) {
+            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
+        }
+    }
+
     public function tempel_styles()
     {
-        // if (!is_admin()) {
-        //     wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-bar.css');
-        // } else {
-        //     wp_enqueue_style('admin-styles', 'https://studiotempel.nl/branding/admin-theme.css');
-        //     wp_enqueue_script('admin', 'https://studiotempel.nl/branding/admin-script.js', array('jquery'), JS_VERSION, true);
-        //     wp_enqueue_style('tempel-settings-styles', '' . plugin_dir_url(__DIR__) . '/dist/css/styles.css');
-        // }
-
         if (!is_admin()) {
             wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-bar.css');
         } else {
             wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-theme.css');
             wp_enqueue_script('admin', plugin_dir_url(__DIR__) . '/assets/branding/admin-script.js', array('jquery'), JS_VERSION, true);
-            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
         }
     }
 
@@ -135,10 +141,22 @@ class Core
     public function tempel_login_styles()
     {
         if (is_wplogin()) {
-            wp_enqueue_style('login-styles', 'https://studiotempel.nl/branding/login-screen.css');
-            wp_enqueue_script('login', 'https://studiotempel.nl/branding/login-script.js', array('jquery'), JS_VERSION, true);
+            wp_enqueue_style('login-styles', plugin_dir_url(__DIR__) . '/assets/branding/login-screen.css');
+            wp_enqueue_script('login', plugin_dir_url(__DIR__) . '/assets/branding/login-script.js', array('jquery'), JS_VERSION, true);
         }
     }
+
+    /**
+     * 
+     *  END BRANDING
+     * 
+     */
+
+    /**
+     * 
+     *  START DISABLE COMMENTS
+     * 
+     */
 
     public function tmpl_disable_commments()
     {
@@ -218,6 +236,10 @@ class Core
         $object->public = false;
         $object->show_in_nav_menus = false;
     }
-}
 
-  
+    /**
+     * 
+     *  END DISABLE COMMENTS
+     * 
+     */
+}
