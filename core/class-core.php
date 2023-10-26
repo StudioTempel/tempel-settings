@@ -5,6 +5,9 @@ namespace Tempel\Core;
 define('JS_VERSION', null); // Use this for cache busting JS files
 define('CSS_VERSION', null); // Use this for cache busting CSS files
 
+require_once "includes/class-svg-sanitizer.php";
+require_once "includes/styling.php";
+
 class Core
 {
 
@@ -17,12 +20,10 @@ class Core
 
         // Loads
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
-            add_action('get_header', array($this, 'tempel_remove_admin_bar_callback_action'));
-            add_action('admin_bar_menu', array($this, 'tempel_admin_bar'), 999);
-            add_action('admin_bar_menu', array($this, 'tempel_remove_wp_logo'), 999);
-            add_action('wp_enqueue_scripts', array($this, 'tempel_styles'));
-            add_action('login_form', array($this, 'tempel_login_styles'));
+            new Styling();
         }
+
+        new TMPL_SVGSanitizer();
 
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
             add_action('admin_init', array($this, 'tmpl_disable_commments'));
@@ -54,6 +55,13 @@ class Core
         }
     }
 
+    public function plugin_styles()
+    {
+        if (is_admin()) {
+            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
+        }
+    }
+
     /**
      * Sanitize checkbox value to not return 'on' but true
      */
@@ -66,10 +74,7 @@ class Core
         }
     }
 
-    function tempel_remove_wp_logo($wp_admin_bar)
-    {
-        $wp_admin_bar->remove_node('wp-logo');
-    }
+
 
 
 
@@ -87,70 +92,7 @@ class Core
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // Other WordPress News
     }
 
-    /**
-     * 
-     *  START BRANDING
-     * 
-     */
 
-    public function tempel_remove_admin_bar_callback_action()
-    {
-        remove_action('wp_head', '_admin_bar_bump_cb');
-    }
-
-    public function tempel_admin_bar()
-    {
-        if (current_user_can('manage_options')) {
-            global $wp_admin_bar;
-            $wp_admin_bar->add_menu(array(
-                'id' => 'studiotempel',
-                'title' => '<img src="/wp-content/plugins/tempel-settings/assets/images/admin-logo.svg" width="500" height="600" />',
-                'href' => 'studiotempel.nl',
-                'meta' => array(
-                    'target' => '_blank', // Opens the link with a new tab
-                    'title' => __('Studio Tempel'), // Text will be shown on hovering
-                ),
-
-            ));
-        }
-    }
-
-    public function plugin_styles()
-    {
-        if (is_admin()) {
-            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
-        }
-    }
-
-    public function tempel_styles()
-    {
-        if (!is_admin()) {
-            wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-bar.css');
-        } else {
-            wp_enqueue_style('admin-styles', plugin_dir_url(__DIR__) . '/assets/branding/admin-theme.css');
-            wp_enqueue_script('admin', plugin_dir_url(__DIR__) . '/assets/branding/admin-script.js', array('jquery'), JS_VERSION, true);
-        }
-    }
-
-    public function is_wplogin()
-    {
-        $ABSPATH_MY = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ABSPATH);
-        return ((in_array($ABSPATH_MY . 'wp-login.php', get_included_files()) || in_array($ABSPATH_MY . 'wp-register.php', get_included_files())) || (isset($_GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') || $_SERVER['PHP_SELF'] == '/wp-login.php');
-    }
-
-    public function tempel_login_styles()
-    {
-        if ($this->is_wplogin()) {
-            wp_enqueue_style('login-styles', plugin_dir_url(__DIR__) . '/assets/branding/login-screen.css');
-            wp_enqueue_script('login', plugin_dir_url(__DIR__) . '/assets/branding/login-script.js', array('jquery'), JS_VERSION, true);
-        }
-    }
-
-    /**
-     * 
-     *  END BRANDING
-     * 
-     */
 
     /**
      * 

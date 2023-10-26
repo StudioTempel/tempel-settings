@@ -24,8 +24,12 @@
  * Update URI:        https://studiotempel.nl/tempel-settings
  */
 
-
 namespace Tempel;
+
+if(!defined('ABSPATH')) exit; // Exit if accessed directly
+
+define('PLUGIN_PATH', plugin_dir_url(__FILE__));
+define('PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 require 'admin/class-admin.php';
 require 'core/class-core.php';

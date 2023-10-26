@@ -101,8 +101,44 @@ class SettingsPage extends Page
         // General Section
         $this->add_section(
             array(
-                'section_id'        => 'widget',
+                'section_id'        => 'extra',
+                'title'             => 'Extra',
+            )
+        );
+
+        $this->add_category(
+            array(
+                'category_id'       => 'tmpl_widget',
                 'title'             => 'Widget',
+                'subtitle'          => 'Widget settings',
+                'section_id'        => 'extra',
+            )
+        );
+
+        $this->add_field(
+            array(
+                'field_id'          => 'tmpl_widget_title',
+                'category_id'       => 'tmpl_widget',
+                'type'              => 'checkbox',
+                'label'             => 'Enable widget',
+            )
+        );
+
+        $this->add_category(
+            array(
+                'category_id'       => 'tmpl_svg_support',
+                'title'             => 'SVG Support',
+                'subtitle'          => 'Add svg support to wordpress',
+                'section_id'        => 'extra',
+            )
+        );
+
+        $this->add_field(
+            array(
+                'field_id'          => 'tmpl_enable_svg',
+                'category_id'       => 'tmpl_svg_support',
+                'type'              => 'checkbox',
+                'label'             => 'Enable SVG Support',
             )
         );
 

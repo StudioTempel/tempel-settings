@@ -3,19 +3,17 @@ div.tmpl-wrap {
   font-family: "aktiv-grotesk", sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  padding: 20px;
+  gap: 20px;
+  padding: 30px;
   border-radius: 0 0 48px 0;
   margin: 20px 20px 20px 0;
   background: $black;
 
   div.tmpl-header {
-    padding-bottom: 5px;
-    border-bottom: 1px solid $purple;
-
     h1 {
       @include font-size(2.3, -0.5);
       color: $purple;
+      margin: 0;
     }
   }
 
@@ -23,12 +21,12 @@ div.tmpl-wrap {
     form {
       display: flex;
       flex-direction: column;
-      row-gap: 20px;
+      row-gap: 50px;
 
       div.tmpl_section {
         div.section {
           border-bottom: 1px solid $purple;
-          margin-bottom: 50px;
+          margin-bottom: 25px;
           h2 {
             color: $purple;
           }
@@ -38,6 +36,7 @@ div.tmpl-wrap {
           display: flex;
           flex-direction: column;
           gap: 50px;
+          padding-left: 10px;
 
           div.tmpl_category {
             display: flex;

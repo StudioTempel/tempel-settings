@@ -1,5 +1,6 @@
 {
     "require": {
-        "yahnis-elsts/plugin-update-checker": "^5.2"
+        "yahnis-elsts/plugin-update-checker": "^5.2",
+        "enshrined/svg-sanitize": "^0.16.0"
     }
 }
