@@ -9,7 +9,7 @@ use Tempel\Admin\Pages;
 class Admin
 {
 
-    public static $pages = array();
+    public $pages = array();
 
 
     public function __construct()

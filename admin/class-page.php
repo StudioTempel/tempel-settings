@@ -194,7 +194,7 @@ abstract class Page
 
 
         foreach ($this->sections as &$section) {
-                
+
             if ($section['section_id'] == $data['section_id']) {
                 array_push($section['categories'], $data);
             }

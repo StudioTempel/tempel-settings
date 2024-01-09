@@ -16,19 +16,19 @@ class SettingsPage extends Page
          * Sections
          * 
          * !REQUIRED: ID, Title
-        */
+         */
 
         /**
          * Categories
          * 
          * !REQUIRED: ID, Title, Section ID
-        */
+         */
 
         /**
          * Fields
          * 
          * !REQUIRED: Type, Field ID, Label, Category ID
-        */
+         */
 
         // General Section
         $this->add_section(
@@ -43,7 +43,7 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_branding',
                 'title'             => 'Branding',
-                'subtitle'      => 'Branding subtitle',
+                'subtitle'          => 'Activeer Studio Tempel branding',
                 'section_id'        => 'general',
             )
         );
@@ -63,7 +63,7 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_comments',
                 'title'             => 'Comments',
-                'subtitle'      => 'Comments subtitle',
+                'subtitle'          => 'Activeer deze instelling om de commments en standaard berichten post type uit te schakelen',
                 'section_id'        => 'general',
             )
         );
@@ -83,7 +83,7 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_dashboard',
                 'title'             => 'Dashboard',
-                'subtitle'      => 'Dashboard subtitle',
+                'subtitle'          => 'Verberg alle ongebruikte dashboard widgets',
                 'section_id'        => 'general',
             )
         );
@@ -110,14 +110,14 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_widget',
                 'title'             => 'Widget',
-                'subtitle'          => 'Widget settings',
+                'subtitle'          => 'Voeg een support widget toe aan het dashboard',
                 'section_id'        => 'extra',
             )
         );
 
         $this->add_field(
             array(
-                'field_id'          => 'tmpl_widget_title',
+                'field_id'          => 'tmpl_enable_widget',
                 'category_id'       => 'tmpl_widget',
                 'type'              => 'checkbox',
                 'label'             => 'Enable widget',
@@ -128,7 +128,7 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_svg_support',
                 'title'             => 'SVG Support',
-                'subtitle'          => 'Add svg support to wordpress',
+                'subtitle'          => 'Voeg svg support toe aan de media uploader',
                 'section_id'        => 'extra',
             )
         );

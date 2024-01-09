@@ -1,0 +1,76 @@
+#tempel-support-widget .postbox-header {
+    border: none !important;
+
+}
+
+#tempel-support-widget .postbox-header h2 {
+    opacity: 0;
+}
+
+#tempel-support-widget {
+    background: #BECAEC;
+
+}
+
+#tempel-support-widget .inside {
+    padding: 30px;
+    position: static;
+}
+
+#tempel-support-widget .inside>div {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+#tempel-support-widget .inside img {
+    position: absolute;
+    top: 30px;
+    width: 120px;
+    height: auto;
+}
+
+#tempel-support-widget .inside a.button {
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    border: 1.5px solid black;
+    background: transparent;
+    transition: all .3s ease;
+}
+
+#tempel-support-widget .inside a.button:hover {
+    background: black;
+    color: #BECAEC;
+}
+
+#tempel-support-widget .inside a.button.black {
+    background: black;
+    color: #BECAEC;
+}
+
+#tempel-support-widget .inside a.button.black:hover {
+    background: #BECAEC;
+    color: black;
+}
+
+#tempel-support-widget .inside h1 {
+    font-size: 70px;
+    line-height: 70px;
+    min-width: 100%;
+
+    font-family: sans-serif;
+    font-weight: 600;
+    color: black;
+    letter-spacing: -3px;
+
+    margin-bottom: 30px;
+
+}
+
+#tempel-support-widget .inside h1 span {
+    color: #BECAEC;
+    text-stroke: 2px black;
+    -webkit-text-stroke: 1.5px black;
+}

@@ -2,9 +2,6 @@
 
 namespace Tempel\Core;
 
-define('JS_VERSION', null); // Use this for cache busting JS files
-define('CSS_VERSION', null); // Use this for cache busting CSS files
-
 require_once "includes/class-svg-sanitizer.php";
 require_once "includes/styling.php";
 
@@ -26,7 +23,7 @@ class Core
         new TMPL_SVGSanitizer();
 
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
-            add_action('admin_init', array($this, 'tmpl_disable_commments'));
+            add_action('admin_menu', array($this, 'tmpl_disable_commments'));
 
             add_action('admin_menu', array($this, 'tmpl_remove_default_post_type'));
             add_action('admin_bar_menu', array($this, 'tmpl_remove_default_post_type_menu_bar'), 999);
@@ -39,6 +36,10 @@ class Core
         // Hide dashboard widgets
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_hide_dashboard_widgets'))) {
             add_action('wp_dashboard_setup', array($this, 'tempel_remove_dashboard_widgets'));
+        }
+
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_enable_widget'))) {
+            add_action('wp_dashboard_setup', array($this, 'tmpl_add_dashboard_widget'));
         }
     }
 
@@ -74,10 +75,7 @@ class Core
         }
     }
 
-
-
-
-
+    // Remove unsued dashboard widgets
     function tempel_remove_dashboard_widgets()
     {
         global $wp_meta_boxes;
@@ -91,8 +89,6 @@ class Core
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']); // WordPress blog
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']); // Other WordPress News
     }
-
-
 
     /**
      * 
@@ -114,10 +110,17 @@ class Core
         remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
 
         // Disable support for comments and trackbacks in post types
-        foreach (get_post_types() as $post_type) {
-            if (post_type_supports($post_type, 'comments')) {
-                remove_post_type_support($post_type, 'comments');
-                remove_post_type_support($post_type, 'trackbacks');
+        if (is_array(get_post_types())) {
+            foreach (get_post_types() as $post_type) {
+                if (post_type_supports($post_type, 'comments')) {
+                    remove_post_type_support($post_type, 'comments');
+                    remove_post_type_support($post_type, 'trackbacks');
+                }
+            }
+        } else {
+            if (post_type_supports(get_post_types(), 'comments')) {
+                remove_post_type_support(get_post_types(), 'comments');
+                remove_post_type_support(get_post_types(), 'trackbacks');
             }
         }
 
@@ -128,7 +131,7 @@ class Core
         // Hide existing comments
         add_filter('comments_array', '__return_empty_array', 10, 2);
 
-        remove_menu_page('edit-comments.php');
+        remove_menu_page('edit-comments.php', 'comments');
 
         if (is_admin_bar_showing()) {
             remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
@@ -137,7 +140,7 @@ class Core
 
     function tmpl_remove_default_post_type()
     {
-        remove_menu_page('edit.php');
+        remove_menu_page('edit.php', 'post', '');
     }
 
     function tmpl_remove_default_post_type_menu_bar($wp_admin_bar)
@@ -164,7 +167,7 @@ class Core
             }
             tmpl_remove_add_new_post_href_in_admin_bar();
         </script>
-<?php
+    <?php
     }
 
     function tmpl_remove_draft_widget()
@@ -184,4 +187,45 @@ class Core
      *  END DISABLE COMMENTS
      * 
      */
+
+    /**
+     * 
+     * START DASHBOARD WIDGETS
+     */
+
+    // Add empty widget to dashboard and call render function for content
+    function tmpl_add_dashboard_widget()
+    {
+        wp_add_dashboard_widget(
+            'tempel-support-widget',         // Widget slug.
+            'Studio Tempel',         // Title.
+            array($this, 'tmpl_widget_render') // Display function.
+        );
+    }
+
+
+    // Render function for dashboard widget
+    function tmpl_widget_render()
+    {
+    ?>
+        <div class='tempel-support-widget'>
+            <img src='<?php echo plugin_dir_url(__DIR__) . 'assets/images/studiotempel-logo.svg' ?>' alt='Studio Tempel' />
+            <h1>Kunnen <span>we</span>
+                helpen?</h1>
+            <a href='https://studiotempel.nl/contact/' rel="nofollow" target="_blank" class='button black'>Stel je vraag</a>
+            <a target="_blank" rel="nofollow" href='https://studiotempel.nl/handleidingen/handleiding-seo.pdf' class='button'>SEO handboek</a>
+            <?php
+            // Check if gravity forms is installed
+            if (class_exists('GFForms')) {
+                echo "<a href='admin.php?page=gf_entries' class='button'>Formulier inzendingen</a>";
+            }
+
+            // Check if ExactMetrics plugin is active
+            if (is_plugin_active('google-analytics-dashboard-for-wp/gadwp.php')) {
+                echo "<a href='admin.php?page=exactmetrics_reports' class='button'>Statistieken</a>";
+            }
+            ?>
+        </div>
+<?php
+    }
 }

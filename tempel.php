@@ -12,7 +12,7 @@
  * Plugin Name:       Tempel settings
  * Plugin URI:        https://studiotempel.nl/tempel-settings
  * Description:       Simple plugin with settings for login branding, admin branding, disabling comments and more.
- * Version:           1.5
+ * Version:           1.6
  *
  * Requires at least: 6
  * Requires PHP:      8
@@ -28,8 +28,7 @@ namespace Tempel;
 
 if(!defined('ABSPATH')) exit; // Exit if accessed directly
 
-define('PLUGIN_PATH', plugin_dir_url(__FILE__));
-define('PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('TMPL_PLUGIN_PATH', plugin_dir_url(__FILE__));
 
 require 'admin/class-admin.php';
 require 'core/class-core.php';
