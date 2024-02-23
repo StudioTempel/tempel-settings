@@ -98,7 +98,7 @@ body.login #login form p.submit input[type="submit"] {
 }
 
 body.login #login h1 a {
-    background: url("login-logo.svg") center no-repeat !important;
+    background: url("../images/login-logo.svg") center no-repeat !important;
     background-size: 84px !important
 }
 

@@ -21,13 +21,13 @@ const proxyUrl = 'http://plugin-testing.local/wp-admin/admin.php?page=tempel-set
 const paths = {
     scripts: {
         source: 'assets/js/scripts.js',
-        destination: 'dist/js/',
-        destinationWatcher: 'dist/js/scripts.min.js'
+        destination: 'assets/js',
+        destinationWatcher: 'assets/js/scripts.min.js'
     },
     sass: {
         source: 'assets/sass/styles.scss',
         sourceWatcher: 'assets/sass/**/*.scss',
-        destination: 'dist/css',
+        destination: 'assets/css',
         destinationWatcher: ''
     },
     php: {

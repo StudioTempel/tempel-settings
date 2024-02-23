@@ -25,11 +25,15 @@ class Core
         if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
             add_action('admin_menu', array($this, 'tmpl_disable_commments'));
 
-            add_action('admin_menu', array($this, 'tmpl_remove_default_post_type'));
-            add_action('admin_bar_menu', array($this, 'tmpl_remove_default_post_type_menu_bar'), 999);
             add_action('wp_dashboard_setup', array($this, 'tmpl_remove_draft_widget'), 999);
             add_action('admin_footer', array($this, 'tmpl_remove_add_new_post_href_in_admin_bar'));
-            // add_action('wp_footer', 'tmpl_remove_add_new_post_href_in_admin_bar');
+            add_action( 'wp_before_admin_bar_render', array($this, 'tmpl_remove_comments_menu') );
+        }
+
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_default_posts'))) {
+            add_action('admin_menu', array($this, 'tmpl_remove_default_post_type'));
+            add_action('admin_bar_menu', array($this, 'tmpl_remove_default_post_type_menu_bar'), 999);
+
             add_action('init', array($this, 'tmpl_change_wp_object'));
         }
 
@@ -59,7 +63,7 @@ class Core
     public function plugin_styles()
     {
         if (is_admin()) {
-            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/dist/css/styles.css');
+            wp_enqueue_style('tempel-settings-styles', plugin_dir_url(__DIR__) . '/assets/css/styles.css');
         }
     }
 
@@ -138,6 +142,12 @@ class Core
         }
     }
 
+    function tmpl_remove_comments_menu() {
+        global $wp_admin_bar;
+        $wp_admin_bar->remove_menu('comments');
+    }
+   
+
     function tmpl_remove_default_post_type()
     {
         remove_menu_page('edit.php', 'post', '');
@@ -146,6 +156,8 @@ class Core
     function tmpl_remove_default_post_type_menu_bar($wp_admin_bar)
     {
         $wp_admin_bar->remove_node('new-post');
+        // remove edit comment node
+        $wp_admin_bar->remove_node('comments');
     }
 
     // function tmpl_remove_frontend_post_href()
@@ -221,7 +233,7 @@ class Core
             }
 
             // Check if ExactMetrics plugin is active
-            if (is_plugin_active('google-analytics-dashboard-for-wp/gadwp.php')) {
+            if (class_exists('ExactMetrics')) {
                 echo "<a href='admin.php?page=exactmetrics_reports' class='button'>Statistieken</a>";
             }
             ?>
