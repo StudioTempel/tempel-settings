@@ -63,7 +63,7 @@ class SettingsPage extends Page
             array(
                 'category_id'       => 'tmpl_comments',
                 'title'             => 'Comments',
-                'subtitle'          => 'Activeer deze instelling om de commments en standaard berichten post type uit te schakelen',
+                'subtitle'          => 'Activeer deze instelling om de commments uit te schakelen',
                 'section_id'        => 'general',
             )
         );
@@ -73,8 +73,26 @@ class SettingsPage extends Page
             array(
                 'type'              => 'checkbox',
                 'field_id'          => 'tmpl_disable_comments',
-                'label'             => 'Disable built in comments and post type',
+                'label'             => 'Disable comments',
                 'category_id'       => 'tmpl_comments',
+            )
+        );
+
+        $this->add_category(
+            array(
+                'category_id'       => 'tmpl_posts',
+                'title'             => 'Posts',
+                'subtitle'          => 'Activeer deze instelling om de standaard berichten post type uit te schakelen',
+                'section_id'        => 'general',
+            )
+        );
+
+        $this->add_field(
+            array(
+                'type'              => 'checkbox',
+                'field_id'          => 'tmpl_disable_default_posts',
+                'label'             => 'Disable built in post type',
+                'category_id'       => 'tmpl_posts',
             )
         );
 
