@@ -10,9 +10,8 @@
  * @license           GPL v2 or later
  *
  * Plugin Name:       Tempel settings
- * Description:       Plugin that complements custom build themes produced by Studio Tempel
- * Version:           1.7
- * Plugin URI:        https://studiotempel.nl/tempel-settings
+ * Description:       Plugin that compliments custom built themes produced by Studio Tempel
+ * Version:           1.8
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings

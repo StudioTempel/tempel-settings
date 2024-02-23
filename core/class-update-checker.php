@@ -17,9 +17,13 @@ class UpdateChecker
     public function tempel_update_checker()
     {
         $tempelUpdateChecker = PucFactory::buildUpdateChecker(
-            'https://studiotempel.nl/tempel-settings/info.json',
-            plugin_dir_path(__DIR__) . 'tempel.php', //Full path to the main plugin file or functions.php.
+            'https://github.com/StudioTempel/tempel-settings',
+            plugin_dir_path(__DIR__) . 'tempel.php',
             'tempel-settings'
         );
+
+        $tempelUpdateChecker->setBranch('production');
+
+        $tempelUpdateChecker->setAuthentication('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');
     }
 }
