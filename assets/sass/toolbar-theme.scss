@@ -1,0 +1,159 @@
+html[lang] {
+  margin-top: 0 !important;
+}
+
+#wpadminbar {
+  top: auto !important;
+  bottom: 15px;
+  width: auto !important;
+  min-width: 0 !important;
+  left: 50% !important;
+  position: fixed;
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background: white !important;
+  padding: 10px 15px;
+  border-radius: 50px;
+  -webkit-box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.15);
+  height: auto !important;
+
+  * {
+    font-size: 13px !important;
+  }
+
+  .quicklinks ul {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+
+    li:hover .ab-item {
+      background: transparent !important;
+      color: #3498db !important;
+    }
+  }
+
+  &:not(.mobile) .ab-top-menu > li > .ab-item:focus {
+    background: transparent !important;
+    color: #3498db !important;
+  }
+
+  .quicklinks ul li {
+    &:hover .ab-item:before {
+      color: #3498db !important;
+    }
+
+    &.hover {
+      .ab-item {
+        background: transparent !important;
+        color: #3498db !important;
+
+        &:before {
+          color: #3498db !important;
+        }
+      }
+
+      #yoast-ab-icon {
+        background-repeat: no-repeat !important;
+        background-position: 0 6px !important;
+        background-size: 20px !important;
+        //background-image: url("../../tmpl/yoast-hover.svg") !important;
+      }
+    }
+  }
+
+  > #wp-toolbar span.ab-label {
+    color: #82878c !important;
+
+    &:hover {
+      color: #3498db !important;
+    }
+  }
+
+  a.ab-item {
+    color: #82878c !important;
+    -webkit-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+    &:before {
+      color: #82878c !important;
+    }
+
+    #yoast-ab-icon:hover {
+      background-repeat: no-repeat !important;
+      background-position: 0 6px !important;
+      background-size: 20px !important;
+      //background-image: url("../../tmpl/yoast-hover.svg") !important;
+    }
+  }
+}
+
+#wp-admin-bar-carerix_admin_group,
+#wp-admin-bar-warpdrive_top_menu,
+#wp-admin-bar-exactmetrics_frontend_button,
+#wp-admin-bar-enable-jquery-migrate-helper {
+  display: none !important;
+}
+
+#wpadminbar {
+  #wp-admin-bar-studiotempel,
+  .exactmetrics-adminbar-menu-item,
+  .ab-sub-wrapper,
+  #wp-admin-bar-studiotempel {
+    display: none !important;
+  }
+}
+
+#wp-admin-bar-rank-math,
+#wp-admin-bar-paytium {
+  display: none !important;
+}
+
+#wpadminbar {
+  #wp-admin-bar-customize,
+  #wp-admin-bar-updates,
+  #wp-admin-bar-rs_theme_options,
+  #wp-admin-bar-nr7-vergelijker,
+  #wp-admin-bar-new-draft,
+  #wp-admin-bar-google-site-kit,
+  #wp-admin-bar-wphb,
+  #wp-admin-bar-duplicate-post,
+  #wp-admin-bar-new-content,
+  #wp-admin-bar-top-secondary {
+    display: none !important;
+  }
+}
+
+@media (max-width: 600px) {
+  #wpadminbar {
+    padding: 0 5px !important;
+    position: fixed !important;
+    bottom: 10px !important;
+
+    a.ab-item {
+      color: #82878c !important;
+      -webkit-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      transition: all 0.3s ease;
+
+      &:before {
+        color: #82878c !important;
+      }
+
+      #yoast-ab-icon:hover {
+        background-repeat: no-repeat !important;
+        background-position: 0 6px !important;
+        background-size: 20px !important;
+        //background-image: url("../../tmpl/yoast-hover.svg") !important;
+      }
+    }
+
+    #wp-admin-bar-wpseo-menu {
+      display: none !important;
+    }
+  }
+}

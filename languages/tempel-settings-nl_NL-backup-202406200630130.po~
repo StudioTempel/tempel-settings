@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tempel settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-19 20:38+0000\n"
+"PO-Revision-Date: 2024-06-20 06:29+0000\n"
+"Last-Translator: \n"
+"Language-Team: Nederlands\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Domain: tempel-settings"
+
+#. Author URI of the plugin
+msgid "https://studiotempel.nl"
+msgstr "https://studiotempel.nl"
+
+#: core/includes/custom_login.php:27
+msgid "Inloggen"
+msgstr "Inloggen"
+
+#: core/includes/custom_login.php:51
+msgid "Je wachtwoord vergeten?"
+msgstr "Je wachtwoord vergeten?"
+
+#. Description of the plugin
+msgid "Plugin that compliments custom built themes produced by Studio Tempel"
+msgstr ""
+"Plugin die de custom thema's van Studiotempel complimenteert met extra "
+"instellingen"
+
+#. Author of the plugin
+msgid "Studio Tempel"
+msgstr "Studio Tempel"
+
+#. Name of the plugin
+msgid "Tempel settings"
+msgstr "Tempel Instellingen"
+
+msgid "Widget Settings"
+msgstr "Widget Instellingen"

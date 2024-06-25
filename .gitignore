@@ -4,3 +4,5 @@ node_modules
 vendor/composer
 composer.lock
 testing/
+trash
+.DS_Store

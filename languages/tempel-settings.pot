@@ -1,0 +1,186 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Tempel settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-24 19:32+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Domain: tempel-settings"
+
+#: admin/pages/general-settings-page.php:48
+msgid ""
+"A collection of general settings to disable unused features of Wordpress."
+msgstr ""
+
+#: admin/pages/widget-settings.php:141
+msgid "Backup interval"
+msgstr ""
+
+#: admin/pages/widget-settings.php:340
+msgid "Clear"
+msgstr ""
+
+#: admin/pages/widget-settings.php:334
+msgid "Clear FAQ Cache"
+msgstr ""
+
+#: admin/pages/login-settings.php:45
+msgid "Content"
+msgstr ""
+
+#: admin/pages/widget-settings.php:48
+msgid "Conversion Widget"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:81
+msgid "Disable Comments"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:104
+msgid "Disable the built in PT"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:58
+msgid "Enable Branding"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:184
+msgid "Enable SVG Support & Sanitization"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:161
+msgid "Enable Widgets"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:151
+msgid "Extra"
+msgstr ""
+
+#: admin/pages/widget-settings.php:286
+msgid "FAQ Link"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:45
+msgid "General"
+msgstr ""
+
+#: admin/pages/login-settings.php:25 admin/pages/general-settings-page.php:20
+#: admin/pages/general-settings-page.php:25 admin/pages/widget-settings.php:27
+msgid "General Settings"
+msgstr ""
+
+#: admin/pages/login-settings.php:59
+msgid "Get Login BG Image from Studiotempel.nl"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:127
+msgid "Hide Dashboard Widgets"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://studiotempel.nl"
+msgstr ""
+
+#: admin/pages/login-settings.php:82
+msgid "Login Background Image"
+msgstr ""
+
+#: admin/pages/login-settings.php:31
+msgid "Login Settings"
+msgstr ""
+
+#: core/widgets/status_widget.php:100
+msgid "Now"
+msgstr ""
+
+#: admin/pages/widget-settings.php:211
+msgid "Package Type"
+msgstr ""
+
+#: admin/pages/widget-settings.php:246
+msgid "Package URL"
+msgstr ""
+
+#. Description of the plugin
+msgid "Plugin that compliments custom built themes produced by Studio Tempel"
+msgstr ""
+
+#: admin/pages/widget-settings.php:176
+msgid "Reset checkup"
+msgstr ""
+
+#: admin/pages/widget-settings.php:199
+msgid "Reset date"
+msgstr ""
+
+#: admin/pages/widget-settings.php:188
+msgid "Reset last update date"
+msgstr ""
+
+#: admin/pages/general-settings-page.php:208
+#: admin/pages/widget-settings.php:354
+msgid "Save Settings"
+msgstr ""
+
+#: admin/pages/widget-settings.php:62
+msgid "Selectable Forms"
+msgstr ""
+
+#: admin/pages/widget-settings.php:51
+msgid "Settings for the conversion widget"
+msgstr ""
+
+#: admin/pages/widget-settings.php:131
+msgid "Settings for the status widget"
+msgstr ""
+
+#: admin/pages/widget-settings.php:276
+msgid "Settings for the support widget"
+msgstr ""
+
+#: admin/pages/widget-settings.php:128
+msgid "Status Widget"
+msgstr ""
+
+#. Author of the plugin
+msgid "Studio Tempel"
+msgstr ""
+
+#: admin/pages/widget-settings.php:310
+msgid "Support Ticket Link"
+msgstr ""
+
+#: admin/pages/widget-settings.php:273
+msgid "Support Widget"
+msgstr ""
+
+#. Name of the plugin
+msgid "Tempel settings"
+msgstr ""
+
+#: core/widgets/status_widget.php:102
+msgid "Today"
+msgstr ""
+
+#: admin/pages/login-settings.php:93
+msgid "Upload"
+msgstr ""
+
+#: admin/pages/login-settings.php:20 admin/pages/login-settings.php:28
+#: admin/pages/general-settings-page.php:28 admin/pages/widget-settings.php:22
+#: admin/pages/widget-settings.php:30
+msgid "Widget Settings"
+msgstr ""
+
+#: core/widgets/status_widget.php:98
+msgid "Yesterday"
+msgstr ""

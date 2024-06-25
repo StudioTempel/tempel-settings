@@ -1,0 +1,259 @@
+#widget-status {
+  background: #000000;
+}
+
+#widget-conversion {
+  background: #f3f438;
+  color: #000000;
+}
+
+#widget-status,
+#widget-conversion,
+#widget-support {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#widget-status .postbox-header,
+#widget-conversion .postbox-header,
+#widget-support .postbox-header {
+  border: none !important;
+  min-height: 35px;
+  max-height: 35px;
+}
+
+#widget-status .postbox-header *,
+#widget-conversion .postbox-header *,
+#widget-support .postbox-header * {
+  /*display: none;*/
+}
+
+#widget-status .postbox-header h2,
+#widget-conversion .postbox-header h2,
+#widget-support .postbox-header h2 {
+  opacity: 0;
+}
+
+#widget-status .postbox-header .handle-actions,
+#widget-conversion .postbox-header .handle-actions,
+#widget-support .postbox-header .handle-actions {
+  display: none;
+}
+
+#widget-status .inside,
+#widget-conversion .inside,
+#widget-support .inside {
+  margin: 0;
+  padding: 0;
+}
+
+.tmpl_widget {
+  padding: 20px 30px 20px 30px;
+
+  .widget__inner {
+    position: relative;
+
+    .widget__icon {
+      position: absolute;
+      top: -20px;
+      right: 0;
+    }
+
+    .widget__total_conversion_value {
+      font-size: 110px;
+      line-height: 110px;
+      font-weight: 700;
+    }
+
+    .widget__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+
+      .widget__title {
+        font-size: 40px;
+        line-height: 40px;
+        font-weight: 700;
+      }
+
+      .widget__scope {
+        font-size: 14px;
+        line-height: 15px;
+        font-weight: 500;
+        max-width: 75px;
+      }
+    }
+
+    .widget__content {
+      margin: 20px 0 0 0;
+
+      .widget__content__item {
+        display: flex;
+        justify-content: space-between;
+        border: solid #000000;
+        border-width: 1px 0 0 0;
+        padding: 20px 0;
+
+        &.widget__content__dropdown {
+          display: block;
+
+          &.active .item__dropdown__label::after {
+            transform: rotate(180deg) translateY(50%);
+          }
+
+          .item__dropdown__label {
+            position: relative;
+            font-size: 18px;
+            line-height: 21px;
+            font-weight: 500;
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+              display: inline-block;
+              mask: url("data:image/svg+xml,%0A%3Csvg width='14px' height='17px' viewBox='0 0 14 17' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='Artboard' transform='translate(-1391.5, -393.5)' fill='%23000000' fill-rule='nonzero'%3E%3Cg id='Group' transform='translate(1028, 252)'%3E%3Cpolygon id='Fill-1-Copy-2-Copy-22' transform='translate(370.5, 150) rotate(90) translate(-370.5, -150)' points='372.149928 143 372.149928 148.602517 362 148.602517 362 151.398881 372.149928 151.398881 372.149928 157 379 150.000699'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+              mask-size: 100% 100%;
+              mask-repeat: no-repeat;
+              mask-position: center;
+              width: 14px;
+              height: 17px;
+              background: #000000;
+              transition: all 0.3s ease;
+            }
+          }
+
+          .item__dropdown__value {
+            display: none;
+          }
+        }
+
+        .item__link {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          gap: 0 40px;
+          justify-content: space-between;
+          width: 100%;
+
+          .item__value {
+            padding: 0 30px 0 0;
+
+            &.item__value--red {
+              color: #fa5000;
+
+              &::after {
+                background: #fa5000 !important;
+              }
+            }
+
+            &::after {
+              content: "";
+              position: absolute;
+              top: 50%;
+              right: 0;
+              transform: translateY(-50%);
+              display: inline-block;
+              mask: url("data:image/svg+xml,%0A%3Csvg width='17px' height='14px' viewBox='0 0 17 14' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg id='Page-1' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3E%3Cg id='Artboard' transform='translate(-516, -505)' fill='%23000000' fill-rule='nonzero'%3E%3Cg id='Group-2' transform='translate(154, 252)'%3E%3Cpolygon id='Fill-1-Copy-2-Copy-16' points='372.149928 253 372.149928 258.602517 362 258.602517 362 261.398882 372.149928 261.398882 372.149928 267 379 260.000699'%3E%3C/polygon%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+              mask-size: 100% 100%;
+              mask-repeat: no-repeat;
+              mask-position: center;
+              width: 17px;
+              height: 14px;
+              background: #000000;
+            }
+          }
+        }
+
+        .item__label {
+          font-size: 20px;
+          line-height: 20px;
+          font-weight: 500;
+          place-items: center;
+          display: flex;
+        }
+
+        .item__value {
+          position: relative;
+          font-size: 25px;
+          line-height: 25px;
+          font-weight: 700;
+          place-items: center;
+          display: flex;
+        }
+      }
+    }
+  }
+
+  &.widget--yellow {
+    background: #f3f438;
+    color: #000000;
+  }
+
+  &.widget--white {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  &.widget--black {
+    background: #000;
+    color: #ffffff;
+
+    .widget__inner .widget__content .widget__content__item {
+      .item__link .item__value::after {
+        background: #fff;
+      }
+
+      border-color: #979797;
+    }
+
+    .widget__icon svg path {
+      fill: #ffffff;
+    }
+  }
+
+  .widget__inner .widget__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  a {
+    color: inherit;
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .widget__button {
+    appearance: none;
+    padding: 15px 25px;
+    background: #f3f438;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #000000;
+      color: #f3f438;
+    }
+  }
+
+  .tmpl_widget__error {
+    color: #ff0000;
+    font-size: 12px;
+    line-height: 1.2;
+    max-width: 150px;
+    text-align: right;
+  }
+}
+
+#widget-conversion .item__label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}

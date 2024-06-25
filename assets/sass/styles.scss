@@ -3,14 +3,11 @@
 @import "utility/mixins";
 
 html {
-
 }
 
-body.toplevel_page_tempel-settings {
-  background: $purple !important;
-  
-}
-
+//body.toplevel_page_tempel-settings {
+//  background: $purple !important;
+//}
 
 @import "defaults";
 @import "fields/field-checkbox";
