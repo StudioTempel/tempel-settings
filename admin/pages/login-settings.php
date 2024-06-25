@@ -172,8 +172,8 @@ class LoginPageSettings extends Page
         if(isset($_GET['page']) && $_GET['page'] === 'tempel-login-settings') {
             // Vendor assets
             // Filepond
-            wp_enqueue_style('tmpl-settings-filepond', plugin_dir_url(__FILE__) . '../../assets/vendor/filepond.min.css');
-            wp_enqueue_script('tmpl-settings-filepond', plugin_dir_url(__FILE__) . '../../assets/vendor/filepond.min.js');
+            wp_enqueue_style('tmpl-settings-filepond', plugin_dir_url(__FILE__) . '../../dist/vendor/filepond.min.css');
+            wp_enqueue_script('tmpl-settings-filepond', plugin_dir_url(__FILE__) . '../../dist/vendor/filepond.min.js');
         }
     }
     

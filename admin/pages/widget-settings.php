@@ -459,11 +459,11 @@ class WidgetSettingsPage extends Page
         if(isset($_GET['page']) && $_GET['page'] === 'tempel-widget-settings') {
             // Vendor assets
             // Select2
-            wp_enqueue_style('tmpl-settings-select2', plugin_dir_url(__FILE__) . '../../assets/vendor/select2.min.css');
-            wp_enqueue_script('tmpl-settings-select2', plugin_dir_url(__FILE__) . '../../assets/vendor/select2.full.min.js');
+            wp_enqueue_style('tmpl-settings-select2', plugin_dir_url(__FILE__) . '../../dist/vendor/select2.min.css');
+            wp_enqueue_script('tmpl-settings-select2', plugin_dir_url(__FILE__) . '../../dist/vendor/select2.full.min.js');
             // Flatpickr
-            wp_enqueue_style('tmpl-settings-flatpickr.min.js', plugin_dir_url(__FILE__) . '../../assets/vendor/flatpickr.min.css');
-            wp_enqueue_script('tmpl-settings-flatpickr.min.js', plugin_dir_url(__FILE__) . '../../assets/vendor/flatpickr.min.js');
+            wp_enqueue_style('tmpl-settings-flatpickr.min.js', plugin_dir_url(__FILE__) . '../../dist/vendor/flatpickr.min.css');
+            wp_enqueue_script('tmpl-settings-flatpickr.min.js', plugin_dir_url(__FILE__) . '../../dist/vendor/flatpickr.min.js');
         }
     }
     

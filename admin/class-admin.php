@@ -80,6 +80,6 @@ class Admin
     
     public function get_menu_icon()
     {
-        return plugins_url('assets/images/admin-logo.svg', dirname(__FILE__));
+        return plugins_url('dist/images/admin-logo.svg', dirname(__FILE__));
     }
 }
