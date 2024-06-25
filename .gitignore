@@ -6,3 +6,4 @@ composer.lock
 testing/
 trash
 .DS_Store
+dist/cache/faq_items_cache.json
