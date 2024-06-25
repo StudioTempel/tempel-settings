@@ -102,6 +102,18 @@ class Tempel
             'tmpl_disable_default_posts'        => 'on',
         );
         update_option('tempel-settings-data', $default);
+        
+        $widget_defaults = array(
+            'gf_form_select_field' => '',
+            'backup-interval-field' => '12:30',
+            'last-checkup-date' => '',
+            'last-update-date' => '',
+            'package-type-field' => 'basic',
+            'package-url-field' => 'https://studiotempel.nl',
+            'faq-link-field' => TMPL_DEFAULT_FAQ_LINK,
+            'support-ticket-link-field' => TMPL_DEFAULT_CONTACT_LINK,
+        );
+        update_option('tempel-widget-settings-data', $widget_defaults);
 
         register_activation_hook(__FILE__, array("Tempel", 'setup'));
     }
