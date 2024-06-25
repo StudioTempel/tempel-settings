@@ -22,8 +22,9 @@ class UpdateChecker
             'tempel-settings'
         );
 
-        $tempelUpdateChecker->setBranch('production');
-
-        $tempelUpdateChecker->setAuthentication('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');
+        $tempelUpdateChecker->setBranch('prod');
+        
+        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets();
+        
     }
 }
