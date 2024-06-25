@@ -144,7 +144,7 @@ class Branding
      */
     public function enqueue_admin_bar_theme()
     {
-        wp_enqueue_style('admin-styles', TMPL_PLUGIN_PATH . 'assets/branding/admin-bar.css');
+        wp_enqueue_style('admin-styles', TMPL_PLUGIN_CSS_URL . 'toolbar-theme.css');
     }
 
 

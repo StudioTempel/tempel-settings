@@ -21,10 +21,7 @@ class UpdateChecker
             plugin_dir_path(__DIR__) . 'tempel.php',
             'tempel-settings'
         );
-
-        $tempelUpdateChecker->setBranch('prod');
         
-        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets('tempel-settings');
-        
+        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets('/ts-(.*).zip/', 0);
     }
 }
