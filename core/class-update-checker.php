@@ -22,6 +22,6 @@ class UpdateChecker
             'tempel-settings'
         );
         
-        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets('/ts-(.*).zip/', 0);
+        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets();
     }
 }
