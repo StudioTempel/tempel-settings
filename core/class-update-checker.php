@@ -24,7 +24,7 @@ class UpdateChecker
 
         $tempelUpdateChecker->setBranch('prod');
         
-        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets();
+        $tempelUpdateChecker->getVcsApi()->enableReleaseAssets('tempel-settings');
         
     }
 }
