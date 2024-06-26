@@ -1,8 +1,9 @@
 <?php
 
-namespace Tempel\Core\Widgets;
+namespace Tempel\Admin\Widgets;
 
-require_once "widget.php";
+require_once TMPL_PLUGIN_DIR . "admin/abstract/Widget.php";
+use Tempel\admin\abstract\Widget;
 
 class SupportWidget extends Widget
 {

@@ -1,19 +1,18 @@
 <?php
 
-namespace Tempel\UpdateChecker;
+namespace Tempel;
 
 require plugin_dir_path(__FILE__) . '../vendor/autoload.php';
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
-class UpdateChecker
+class TempelUpdateChecker
 {
-
     public function __construct()
     {
         $this->tempel_update_checker();
     }
-
+    
     public function tempel_update_checker()
     {
         $tempelUpdateChecker = PucFactory::buildUpdateChecker(

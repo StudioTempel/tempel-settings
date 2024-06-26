@@ -15,7 +15,7 @@
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
- * Domain Path:       /languages/
+ * Domain Path:       /lang/
  * Requires at least: 6
  * Requires PHP:      7.4
  */
@@ -25,6 +25,7 @@ namespace Tempel;
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
 define('TMPL_PLUGIN_PATH', plugin_dir_url(__FILE__));
+define('TMPL_PLUGIN_DIR', plugin_dir_path(__FILE__));
 
 define('TMPL_PLUGIN_UPLOAD_PATH', plugin_dir_path(__FILE__) . 'dist/uploads/');
 define('TMPL_PLUGIN_UPLOAD_URL', plugin_dir_url(__FILE__) . 'dist/uploads/');
@@ -43,20 +44,19 @@ define('TMPL_DEFAULT_FAQ_LINK', 'https://studiotempel.nl/veelgestelde-vragen');
 define('TMPL_DEFAULT_CONTACT_LINK', 'https://studiotempel.nl/contact');
 define('TMPL_DEFAULT_LOGIN_SCREEN_IMAGE', TMPL_PLUGIN_IMG_URL . 'login-screen-bg,webp');
 
-require 'admin/class-admin.php';
-require 'core/class-core.php';
-require 'core/class-update-checker.php';
+require 'admin/TempelSettingsAdmin.php';
+require 'public/TempelSettingsPublic.php';
+require 'includes/TempelUpdateChecker.php';
 
-use Tempel\Admin;
-use Tempel\Core;
-use Tempel\UpdateChecker;
+use Tempel\Admin\TempelSettingsAdmin;
+use Tempel\Public\TempelSettingsPublic;
 
 class Tempel
 {
 
     public $admin;
 
-    public $core;
+    public $public;
 
     public $updateChecker;
 
@@ -71,11 +71,11 @@ class Tempel
 
 
         if (is_admin()) {
-            $this->admin = new Admin\Admin();
-            $this->updateChecker = new UpdateChecker\UpdateChecker();
+            $this->admin = new TempelSettingsAdmin();
+            $this->updateChecker = new TempelUpdateChecker();
         }
 
-        $this->core = new Core\Core();
+        $this->public = new TempelSettingsPublic();
     }
 
     public static function get_instance()
@@ -120,11 +120,9 @@ class Tempel
     
     public function load_textdomain()
     {
-        load_plugin_textdomain('tempel-settings', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('tempel-settings', false, dirname(plugin_basename(__FILE__)) . '/lang/');
     }
 }
-
-//Tempel::get_instance();
 
 add_action('init', function() {
     Tempel::get_instance();

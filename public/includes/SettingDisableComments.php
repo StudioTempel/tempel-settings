@@ -7,9 +7,9 @@
 */
 
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
-class DisableComments
+class SettingDisableComments
 {
 
     function __construct()

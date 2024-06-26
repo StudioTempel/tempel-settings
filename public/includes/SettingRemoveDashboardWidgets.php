@@ -7,9 +7,9 @@
  */
 
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
-class RemoveDashboardWidgets
+class SettingRemoveDashboardWidgets
 {
     /**
      * Constructor

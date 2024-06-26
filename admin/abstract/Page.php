@@ -1,6 +1,6 @@
 <?php
 
-namespace Tempel\Admin;
+namespace Tempel\Admin\Abstract;
 
 class Page
 {

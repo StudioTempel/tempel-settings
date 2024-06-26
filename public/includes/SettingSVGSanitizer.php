@@ -7,11 +7,11 @@
  */
 
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
 use enshrined\svgSanitize\Sanitizer;
 
-class SVGSanitizer
+class SettingSVGSanitizer
 {
     /**
      * Constructor

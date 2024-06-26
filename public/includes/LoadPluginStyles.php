@@ -1,6 +1,6 @@
 <?php
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
 class LoadPluginStyles
 {

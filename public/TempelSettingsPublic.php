@@ -1,20 +1,23 @@
 <?php
 
-namespace Tempel\Core;
 
-require_once "settings/branding.php";
-require_once "settings/disable_comments.php";
-require_once "settings/disable_default_pt.php";
-require_once "settings/remove_dashboard_widgets.php";
-require_once "settings/svg_sanitizer.php";
-require_once "includes/load_styles.php";
+namespace Tempel\Public;
 
-// widgets
-require_once "widgets/status_widget.php";
-require_once "widgets/conversion_widget.php";
-require_once "widgets/support_widget.php";
+require_once "includes/SettingBranding.php";
+require_once "includes/SettingDisableComments.php";
+require_once "includes/SettingDisableDefaultPT.php";
+require_once "includes/SettingRemoveDashboardWidgets.php";
+require_once "includes/SettingSVGSanitizer.php";
+require_once "includes/LoadPluginStyles.php";
 
-class Core
+use Tempel\Public\SettingBranding;
+use Tempel\Public\SettingDisableComments;
+use Tempel\Public\SettingDisableDefaultPT;
+use Tempel\Public\SettingRemoveDashboardWidgets;
+use Tempel\Public\SettingSVGSanitizer;
+use Tempel\Public\LoadPluginStyles;
+
+class TempelSettingsPublic
 {
     /**
      * Constructor
@@ -22,44 +25,34 @@ class Core
     public function __construct()
     {
         new LoadPluginStyles();
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
-            new Branding();
-        }
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_enable_svg'))) {
-            new SVGSanitizer();
-        }
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
-            new DisableComments();
-        }
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_default_posts'))) {
-            new DisableDefaultPT();
-        }
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_hide_dashboard_widgets'))) {
-            new RemoveDashboardWidgets();
-        }
-
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_enable_widget'))) {
-        }
-
-        new Widgets\StatusWidget();
-
-        new Widgets\SupportWidget();
         
-        if (class_exists('GFForms')) {
-            new Widgets\ConversionWidget();
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
+            new SettingBranding();
         }
+        
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_enable_svg'))) {
+            new SettingSVGSanitizer();
+        }
+        
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
+            new SettingDisableComments();
+        }
+        
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_default_posts'))) {
+            new SettingDisableDefaultPT();
+        }
+        
+        if ($this->sanitize_checkbox_value($this->return_option('tmpl_hide_dashboard_widgets'))) {
+            new SettingRemoveDashboardWidgets();
+        }
+        
     }
-
+    
     /**
      * Returns the option value from the database by option name
-     * 
-     * @since 1.0.0
+     *
      * @param string $option_name
+     * @since 1.0.0
      */
     function return_option($option_name)
     {
@@ -70,11 +63,12 @@ class Core
             return false;
         }
     }
+    
     /**
      * Sanitize checkbox value to not return 'on' but true
-     * 
-     * @since 1.0.0
+     *
      * @param string $val
+     * @since 1.0.0
      */
     function sanitize_checkbox_value($val)
     {

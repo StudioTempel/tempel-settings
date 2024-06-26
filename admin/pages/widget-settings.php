@@ -2,9 +2,9 @@
 
 namespace Tempel\Admin\Pages;
 
-require_once plugin_dir_path(__FILE__) . '../class-page.php';
+require_once TMPL_PLUGIN_DIR . 'admin/abstract/Page.php';
 
-use Tempel\Admin\Page;
+use Tempel\Admin\Abstract\Page;
 
 class WidgetSettingsPage extends Page
 {

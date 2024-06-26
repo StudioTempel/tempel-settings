@@ -6,9 +6,9 @@
  * @since 1.0.0
  */
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
-class Branding
+class SettingBranding
 {
     /**
      * Constructor

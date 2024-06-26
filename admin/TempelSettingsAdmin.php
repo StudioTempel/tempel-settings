@@ -2,29 +2,32 @@
 
 namespace Tempel\Admin;
 
+// Abstracts
+require_once 'abstract/Page.php';
+require_once 'abstract/Widget.php';
+
 // Pages
 require_once 'pages/general-settings-page.php';
 require_once 'pages/widget-settings.php';
 require_once 'pages/login-settings.php';
 
 // Includes
-require_once 'includes/ajax-callbacks.php';
-require_once 'includes/load-admin-assets.php';
+require_once 'includes/AjaxCallbacks.php';
+require_once 'includes/LoadAdminAssets.php';
+require_once 'includes/LoadWidgets.php';
 
-use Tempel\Admin\Pages;
-
-class Admin
+class TempelSettingsAdmin
 {
     
     public $pages = array();
-    
     
     public function __construct()
     {
         add_action('admin_menu', array($this, 'add_menu_pages'));
         add_action('admin_init', array($this, 'tempel_register_settings'));
         
-
+        
+        new LoadWidgets();
         new LoadAdminAssets();
         new PluginSettingsAjaxCallbacks();
     }

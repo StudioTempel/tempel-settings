@@ -6,9 +6,9 @@
  * @since 1.0.0
  */
 
-namespace Tempel\Core;
+namespace Tempel\Public;
 
-class DisableDefaultPT
+class SettingDisableDefaultPT
 {
     /**
      * Constructor
