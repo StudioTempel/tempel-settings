@@ -96,24 +96,28 @@ class Tempel
     public static function install()
     {
         $default = array(
-            'tmpl_branding'                     => 'on',
-            'tmpl_hide_dashboard_widgets'       => 'on',
-            'tmpl_disable_comments'             => 'on',
-            'tmpl_disable_default_posts'        => 'on',
+            'enable_branding'                   => 'on',
+            'disable_comments'                  => 'on',
+            'disable_default_pt'                => 'off',
+            'hide_dashboard_widgets'            => 'on',
+            'enable_widgets'                    => 'off',
+            'svg_support'                       => 'of',
         );
-        update_option('tempel-settings-data', $default);
+        update_option('tmpl_settings', $default);
         
         $widget_defaults = array(
-            'gf_form_select_field' => '',
-            'backup-interval-field' => '12:30',
-            'last-checkup-date' => '',
-            'last-update-date' => '',
-            'package-type-field' => 'basic',
-            'package-url-field' => 'https://studiotempel.nl',
-            'faq-link-field' => TMPL_DEFAULT_FAQ_LINK,
-            'support-ticket-link-field' => TMPL_DEFAULT_CONTACT_LINK,
+            'conversion_selected_forms'                 => '',
+            'status_safeupdate_day'                     => 'monday',
+            'status_backup_interval'                    => '12:30',
+            'status_last_checkup_date'                  => '06/2024',
+            'status_show_service_contract_tier'         => 'on',
+            'status_service_contract_upgradable'        => 'on',
+            'status_service_contract_tier'              => 'Plus',
+            'status_service_contract_upgrade_link'      => 'https://studiotempel.nl/servicecontract',
+            'support_faq_link'                          => TMPL_DEFAULT_FAQ_LINK,
+            'support_ticket_link'                       => TMPL_DEFAULT_CONTACT_LINK,
         );
-        update_option('tempel-widget-settings-data', $widget_defaults);
+        update_option('tmpl_widget_settings', $widget_defaults);
 
         register_activation_hook(__FILE__, array("Tempel", 'setup'));
     }

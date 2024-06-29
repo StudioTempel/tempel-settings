@@ -39,7 +39,7 @@ class WidgetSettingsPage extends Page
                     <div class="settings__body">
                         <div class="body__inner">
                             <form action="options.php" method="post">
-                                <?php settings_fields('tempel-widget-settings'); ?>
+                                <?php settings_fields('tempel_widget_settings'); ?>
 
                                 <!-- Settings Category -->
                                 <div class="settings__category">
@@ -55,23 +55,23 @@ class WidgetSettingsPage extends Page
                                         
                                         <!-- Settings Field | Selectable Forms -->
                                         <?php if ($selectable_forms): ?>
-                                            <div class="settings__field" id="gf_form_select">
+                                            <div class="settings__field" id="conversion_selected_forms_settings">
                                                 <div class="settings__field__inner">
                                                     <div class="settings__label__wrap">
-                                                        <label for="gf_form_select_field">
+                                                        <label for="conversion_selected_forms">
                                                             <?php _e('Selectable Forms', 'tempel-settings'); ?>
                                                         </label>
                                                     </div>
                                                     <div class="settings__input__wrap">
                                                         <?php
-                                                        $selected_forms = $this->get_settings('gf_form_select_field');
+                                                        $selected_forms = $this->get_settings('conversion_selected_forms');
                                                         if (!is_array($selected_forms) && $selected_forms) {
                                                             $selected_forms = explode(',', $selected_forms);
                                                         }
                                                         ?>
                                                         <select class="settings__input"
-                                                                name="tempel-widget-settings-data[gf_form_select_field][]"
-                                                                id="gf_form_select_field"
+                                                                name="tmpl_widget_settings[conversion_selected_forms][]"
+                                                                id="conversion_selected_forms"
                                                                 multiple
                                                         >
                                                             <?php foreach ($selectable_forms as $form):
@@ -133,11 +133,37 @@ class WidgetSettingsPage extends Page
                                     </div>
                                     <div class="category__content">
 
-                                        <!-- Settings Field | Backup Interval -->
-                                        <div id="backup-interval" class="settings__field">
+                                        <!-- Settings Field | Update Interval -->
+                                        <div id="status_safeupdate_day_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="backup-interval-field">
+                                                    <label for="status_safeupdate_day">
+                                                        <?php _e('Safeupdate day', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <select class="settings__input"
+                                                            name="tmpl_widget_settings[status_safeupdate_day]"
+                                                            id="status_safeupdate_day"
+                                                    >
+                                                        <option value="monday"><?php _e('Monday', 'tempel-settings'); ?></option>
+                                                        <option value="tuesday"><?php _e('Tuesday', 'tempel-settings'); ?></option>
+                                                        <option value="wednesday"><?php _e('Wednesday', 'tempel-settings'); ?></option>
+                                                        <option value="thursday"><?php _e('Thursday', 'tempel-settings'); ?></option>
+                                                        <option value="friday"><?php _e('Friday', 'tempel-settings'); ?></option>
+                                                        <option value="saturday"><?php _e('Saturday', 'tempel-settings'); ?></option>
+                                                        <option value="sunday"><?php _e('Sunday', 'tempel-settings'); ?></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Update Interval -->
+
+                                        <!-- Settings Field | Backup Interval -->
+                                        <div id="status_backup_interval_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="status_backup_interval">
                                                         <?php _e('Backup interval', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
@@ -145,11 +171,11 @@ class WidgetSettingsPage extends Page
                                                     <input
                                                             type="time"
                                                             class="settings__input"
-                                                            name="tempel-widget-settings-data[backup-interval-field]"
-                                                            id="backup-interval-field"
+                                                            name="tmpl_widget_settings[status_backup_interval]"
+                                                            id="status_backup_interval"
                                                             placeholder="00:00"
-                                                        <?php if ($this->get_settings('backup-interval-field')): ?>
-                                                            value="<?= $this->get_settings('backup-interval-field'); ?>"
+                                                        <?php if ($this->get_settings('status_backup_interval')): ?>
+                                                            value="<?= $this->get_settings('status_backup_interval'); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -158,20 +184,20 @@ class WidgetSettingsPage extends Page
                                         <!-- Settings Field | Backup Interval -->
                                         
                                         <!-- Settings Field | Reset Checkup -->
-                                        <div id="reset-checkup" class="settings__field">
+                                        <div id="status_reset_checkup_date_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="reset-checkup-field">
+                                                    <label for="status_last_checkup_date">
                                                         <?php _e('Reset checkup'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
                                                             type="hidden"
-                                                            name="tempel-widget-settings-data[last-checkup-date]"
-                                                            value="<?= $this->get_settings('last-checkup-date'); ?>"
+                                                            name="tmpl_widget_settings[status_last_checkup_date]"
+                                                            value="<?= $this->get_settings('status_last_checkup_date'); ?>"
                                                     >
-                                                    <button id="reset-checkup-button" type="button"
+                                                    <button id="reset_status_last_checkup_date" type="button"
                                                             class="button button-primary">
                                                         <?php _e('Reset checkup', 'tempel-settings'); ?>
                                                     </button>
@@ -180,81 +206,92 @@ class WidgetSettingsPage extends Page
                                         </div>
                                         <!-- Settings Field | Reset Checkup -->
 
-                                        <!-- Settings Field | Reset Update Date -->
-                                        <div id="reset-last-update-date" class="settings__field">
+                                        <!-- Settings Field | Enable Service Contract Tier -->
+                                        <div id="status_show_service_contract_tier_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="reset-checkup-field">
-                                                        <?php _e('Reset last update date', 'tempel-settings'); ?>
+                                                    <label for="status_show_service_contract_tier">
+                                                        <?php _e('Show service contract', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label class="checkbox__switch" for="status_show_service_contract_tier">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_widget_settings[status_show_service_contract_tier]"
+                                                                id="status_show_service_contract_tier"
+                                                            <?php echo $this->is_checked('status_show_service_contract_tier'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable Service Contract Tier  -->
+
+                                        <!-- Settings Field | Enable Service Upgrade Link -->
+                                        <div id="status_service_contract_upgradable_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="status_service_contract_upgradable">
+                                                        <?php _e('Service contract is upgradable', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label class="checkbox__switch" for="status_service_contract_upgradable">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_widget_settings[status_service_contract_upgradable]"
+                                                                id="status_service_contract_upgradable"
+                                                            <?php echo $this->is_checked('status_service_contract_upgradable'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable Service Upgrade Link  -->
+
+                                        <!-- Settings Field | Service Contract Tier -->
+                                        <div id="status_service_contract_tier_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="status_service_contract_tier">
+                                                        <?php _e('Service contract tier', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="hidden"
-                                                            name="tempel-widget-settings-data[last-update-date]"
-                                                            value="<?= $this->get_settings('last-update-date'); ?>"
-                                                    >
-                                                    <button id="reset-last-update-date" type="button"
-                                                            class="button button-primary">
-                                                        <?php _e('Reset date', 'tempel-settings'); ?>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | Reset Update Date -->
-
-                                        <!-- Settings Field | Package Type -->
-                                        <div id="package-type" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="package-type-field">
-                                                        <?php _e('Package Type', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <?php
-                                                    $options = array(
-                                                        'basic' => 'Basic',
-                                                        'pro' => 'Pro'
-                                                    );
-                                                    
-                                                    $package_type_selected = $this->get_settings('package-type-field');
-                                                    ?>
-                                                    <select
+                                                            type="text"
+                                                            name="tmpl_widget_settings[status_service_contract_tier]"
+                                                            id="status_service_contract_tier"
                                                             class="settings__input"
-                                                            name="tempel-widget-settings-data[package-type-field]"
-                                                            id="package-type-field"
+                                                        <?php if ($this->get_settings('status_service_contract_tier')): ?>
+                                                            value="<?= $this->get_settings('status_service_contract_tier'); ?>"
+                                                        <?php endif; ?>
                                                     >
-                                                        <?php foreach ($options as $key => $value): ?>
-                                                            <option
-                                                                    value="<?= $key; ?>"
-                                                                <?php if ($package_type_selected == $key) echo 'selected'; ?>>
-                                                                <?= $value; ?>
-                                                            </option>
-                                                        <?php endforeach; ?>
-                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- Settings Field | Package Type -->
+                                        <!-- Settings Field | Service Contact Tier -->
 
-                                        <!-- Settings Field | Package URL -->
-                                        <div id="package-url" class="settings__field">
+                                        <!-- Settings Field | Service Contract Info URL -->
+                                        <div id="status_service_contract_upgrade_link_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="package-url-field">
-                                                        <?php _e('Package URL', 'tempel-settings'); ?>
+                                                    <label for="status_service_contract_upgrade_link">
+                                                        <?php _e('Service contract info link', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
                                                             type="url"
                                                             class="settings__input"
-                                                            name="tempel-widget-settings-data[package-url-field]"
-                                                            id="package-url-field"
+                                                            name="tmpl_widget_settings[status_service_contract_upgrade_link]"
+                                                            id="status_service_contract_upgrade_link"
                                                             placeholder="https://studiotempel.nl/pakketten/"
-                                                        <?php if ($this->get_settings('package-type-field')): ?>
-                                                            value="<?= $this->get_settings('package-url-field'); ?>"
+                                                        <?php if ($this->get_settings('status_service_contract_upgrade_link')): ?>
+                                                            value="<?= $this->get_settings('status_service_contract_upgrade_link'); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -279,10 +316,10 @@ class WidgetSettingsPage extends Page
                                     <div class="category__content">
                                         
                                         <!-- Settings Field | FAQ Link -->
-                                        <div id="faq-link" class="settings__field">
+                                        <div id="support_faq_link_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="faq-link-field">
+                                                    <label for="support_faq_link">
                                                         <?php _e('FAQ Link', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
@@ -290,11 +327,11 @@ class WidgetSettingsPage extends Page
                                                     <input
                                                             type="url"
                                                             class="settings__input"
-                                                            name="tempel-widget-settings-data[faq-link-field]"
-                                                            id="faq-link-field"
+                                                            name="tmpl_widget_settings[support_faq_link]"
+                                                            id="support_faq_link"
                                                             placeholder="https://studiotempel.nl/faq/"
-                                                        <?php if ($this->get_settings('support-widget-faq-link')): ?>
-                                                            value="<?= $this->get_settings('support-widget-faq-link'); ?>"
+                                                        <?php if ($this->get_settings('support_faq_link')): ?>
+                                                            value="<?= $this->get_settings('support_faq_link'); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -303,10 +340,10 @@ class WidgetSettingsPage extends Page
                                         <!-- Settings Field | FAQ Link -->
                                         
                                         <!-- Settings Field | Support Ticket Link -->
-                                        <div class="settings__field" id="support-ticket-link">
+                                        <div class="settings__field" id="support_ticket_link_setting">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="support-ticket-link-field">
+                                                    <label for="support_ticket_link">
                                                         <?php _e('Support Ticket Link', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
@@ -314,11 +351,11 @@ class WidgetSettingsPage extends Page
                                                     <input
                                                             type="url"
                                                             class="settings__input"
-                                                            name="tempel-widget-settings-data[support-ticket-link-field]"
-                                                            id="support-ticket-link-field"
+                                                            name="tmpl_widget_settings[support_ticket_link]"
+                                                            id="support_ticket_link"
                                                             placeholder="https://studiotempel.nl/support/"
-                                                        <?php if ($this->get_settings('support-widget-ticker-link')): ?>
-                                                            value="<?= $this->get_settings('support-widget-ticket-link'); ?>"
+                                                        <?php if ($this->get_settings('support_ticket_link')): ?>
+                                                            value="<?= $this->get_settings('support_ticket_link'); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -327,15 +364,15 @@ class WidgetSettingsPage extends Page
                                         <!-- Settings Field | Support Ticket Link -->
 
                                         <!-- Settings Field | Clear FAQ Cache -->
-                                        <div id="clear-faq-cache" class="settings__field">
+                                        <div id="support_clear_faq_cache_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="reset-checkup-field">
+                                                    <label for="support_clear_faq_cache">
                                                         <?php _e('Clear FAQ Cache', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
-                                                    <button id="clear-faq-cache" type="button"
+                                                    <button id="support_clear_faq_cache" type="button"
                                                             class="button button-primary">
                                                         <?php _e('Clear', 'tempel-settings'); ?>
                                                     </button>
@@ -368,31 +405,37 @@ class WidgetSettingsPage extends Page
             jQuery(document).ready(function ($) {
 
                 // Init select2 for forms
-                $('#gf_form_select_field').select2({
+                $('#conversion_selected_forms').select2({
                     placeholder: 'Selecteer formulieren',
                     allowClear: true,
                     multiple: true
                 });
-
-                // Init select2 for package type
-                $('#package-type-field').select2({
-                    allowClear: true,
-                    minimumResultsForSearch: -1
+                
+                $('#status_safeupdate_day').select2({
+                    minimumResultsForSearch: -1,
+                    placeholder: 'Selecteer de dag waarop de safeupdate plaatsvind'
                 });
                 
                 $('#total-conversion-scope').select2({
                     minimumResultsForSearch: -1
                 });
-
+                // $('input#update-interval').flatpickr({
+                //     enableTime: true,
+                //     dateFormat: "H:i",
+                //     time_24hr: true,
+                //     noCalendar: true
+                // })
                 // Init flatpickr for backup interval
-                $('#backup-interval-field').flatpickr({
+                $('#status_backup_interval').flatpickr({
                     enableTime: true,
                     dateFormat: "H:i",
                     time_24hr: true,
                     noCalendar: true
                 });
 
-                $('button#reset-checkup-button').on('click', function () {
+
+
+                $('button#reset_status_last_checkup_date').on('click', function () {
                     if (confirm('Weet je zeker dat je de checkup wilt resetten?')) {
                         $.ajax({
                             url: ajaxurl,
@@ -411,26 +454,26 @@ class WidgetSettingsPage extends Page
                     }
                 });
                 
-                $('button#reset-last-update-date').on('click', function () {
-                    if (confirm('Weet je zeker dat je de laatste update datum wilt resetten?')) {
-                        $.ajax({
-                            url: ajaxurl,
-                            type: 'POST',
-                            data: {
-                                action: 'reset_update',
-                            },
-                            success: function (response) {
-                                alert('Laatste update datum is gereset');
-                                console.log(response);
-                            },
-                            error: function (error) {
-                                console.error(error);
-                            }
-                        });
-                    }
-                });
+                // $('button#reset-last-update-date').on('click', function () {
+                //     if (confirm('Weet je zeker dat je de laatste update datum wilt resetten?')) {
+                //         $.ajax({
+                //             url: ajaxurl,
+                //             type: 'POST',
+                //             data: {
+                //                 action: 'reset_update',
+                //             },
+                //             success: function (response) {
+                //                 alert('Laatste update datum is gereset');
+                //                 console.log(response);
+                //             },
+                //             error: function (error) {
+                //                 console.error(error);
+                //             }
+                //         });
+                //     }
+                // });
                 
-                $('button#clear-faq-cache').on('click', function () {
+                $('button#support_clear_faq_cache').on('click', function () {
                     if (confirm('Weet je zeker dat je de FAQ cache wilt legen?')) {
                         $.ajax({
                             url: ajaxurl,
@@ -492,12 +535,24 @@ class WidgetSettingsPage extends Page
     
     public function get_settings($option)
     {
-        $options = get_option('tempel-widget-settings-data');
+        $options = get_option('tmpl_widget_settings');
         
         if (!isset($options[$option])) {
             return '';
         }
         
         return $options[$option];
+    }
+    
+    public function is_checked($args)
+    {
+        $option = get_option('tmpl_widget_settings');
+        if ($option) {
+            $checkbox_value = $option[$args] ?? false;
+        } else {
+            $checkbox_value = false;
+        }
+        
+        return checked("on", $checkbox_value, false);
     }
 }

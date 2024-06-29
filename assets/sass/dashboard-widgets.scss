@@ -236,6 +236,10 @@
     border-radius: 25px;
     transition: all 0.3s ease;
 
+    &.widget__button_color__black {
+      color: #000;
+    }
+
     &:hover {
       background: #000000;
       color: #f3f438;

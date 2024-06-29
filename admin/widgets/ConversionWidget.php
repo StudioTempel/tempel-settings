@@ -19,10 +19,6 @@ class ConversionWidget extends Widget
     
     public function render_widget()
     {
-        $color = $this->color;
-        $title = $this->title;
-        $type = $this->type;
-        
         echo $this->widget_markup();
     }
     
@@ -77,27 +73,12 @@ class ConversionWidget extends Widget
         <?php
     }
     
-    public function get_forms_submissions(): array
-    {
-        $forms = \GFAPI::get_forms();
-        $forms_submissions = [];
-        
-        foreach ($forms as $form) {
-            $form_id = $form['id'];
-            $form_title = $form['title'];
-            $form_link = admin_url('admin.php?page=gf_entries&view=entries&id=' . $form_id);
-            $form_submissions = \GFAPI::count_entries($form_id);
-            
-            $forms_submissions[] = [
-                'title' => $form_title,
-                'link' => $form_link,
-                'submissions' => $form_submissions
-            ];
-        }
-        
-        return $forms_submissions;
-    }
     
+    /**
+     * Get the form submissions made in the last 30 days
+     *
+     * @return array
+     */
     function get_form_submissions_by_id() : array
     {
         $form_ids = $this->get_selected_forms();
@@ -112,7 +93,29 @@ class ConversionWidget extends Widget
             $form = \GFAPI::get_form($form_id);
             $form_title = $form['title'];
             $form_link = admin_url('admin.php?page=gf_entries&view=entries&id=' . $form_id);
-            $form_submissions = \GFAPI::count_entries($form_id);
+            
+            // only get the entries from the last 30 days
+            $end_date = date('Y-m-d H:i:s');
+            $start_date = date('Y-m-d H:i:s', strtotime('-30 days'));
+            
+            $search_criteria = array(
+                'status'        => 'active',
+                'field_filters' => array(
+                    array(
+                        'key'   => 'date_created',
+                        'value' => $start_date,
+                        'operator' => '>=',
+                    ),
+                    array(
+                        'key'   => 'date_created',
+                        'value' => $end_date,
+                        'operator' => '<=',
+                    ),
+                ),
+            );
+            
+            $form_submissions = \GFAPI::count_entries($form_id, $search_criteria);
+            
             
             $forms_submissions[] = [
                 'title' => $form_title,
@@ -124,6 +127,11 @@ class ConversionWidget extends Widget
         return $forms_submissions;
     }
     
+    /**
+     * Get the total number of submissions made in the last 30 days
+     *
+     * @return int
+     */
     public function get_total_submissions(): int
     {
         if (!class_exists('GFAPI')) {
@@ -160,12 +168,21 @@ class ConversionWidget extends Widget
         return count($entries);
     }
     
+    /**
+     * Get the selected forms from the settings
+     *
+     * @return array
+     */
     public function get_selected_forms()
     {
-        $forms = $this->get_settings('gf_form_select_field');
+        $forms = $this->get_settings('conversion_selected_forms');
         
         if (is_wp_error($forms)) {
             return null;
+        }
+        
+        if (!$forms) {
+            return [];
         }
         
         if (!is_array($forms)) {
@@ -176,7 +193,7 @@ class ConversionWidget extends Widget
     }
     public function get_settings($option)
     {
-        $settings = get_option('tempel-widget-settings-data');
+        $settings = get_option('tmpl_widget_settings');
         return $settings[$option];
     }
 }

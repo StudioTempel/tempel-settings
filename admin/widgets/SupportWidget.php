@@ -75,7 +75,7 @@ class SupportWidget extends Widget
     
     function get_faq_link()
     {
-        $faq_link = $this->get_settings('faq-link-field');
+        $faq_link = $this->get_settings('support_faq_link');
         
         if (empty($faq_link) || !filter_var($faq_link, FILTER_VALIDATE_URL)) {
             return TMPL_DEFAULT_FAQ_LINK;
@@ -86,7 +86,7 @@ class SupportWidget extends Widget
     
     function get_contact_link()
     {
-        $contact_link = $this->get_settings('support-ticket-link-field');
+        $contact_link = $this->get_settings('support_ticket_link');
         
         if (empty($contact_link) || !filter_var($contact_link, FILTER_VALIDATE_URL)) {
             return TMPL_DEFAULT_CONTACT_LINK;
@@ -147,7 +147,7 @@ class SupportWidget extends Widget
     
     public function get_settings($option)
     {
-        $settings = get_option('tempel-widget-settings-data');
+        $settings = get_option('tmpl_widget_settings');
         return $settings[$option];
     }
 }

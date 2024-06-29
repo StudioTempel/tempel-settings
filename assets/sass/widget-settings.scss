@@ -168,55 +168,54 @@
                       outline: none;
                     }
                   }
-
-                  label.checkbox__switch {
-                    display: inline-block;
-                    height: 25px;
-                    position: relative;
-                    width: 50px;
-
-                    input[type="checkbox"] {
-                      display: none;
-                    }
-
-                    span.checkbox__switch__slider {
-                      background-color: #ddd;
-                      bottom: 0;
-                      cursor: pointer;
-                      left: 0;
-                      position: absolute;
-                      right: 0;
-                      top: 0;
-                      transition: 0.4s;
-                      border-radius: 34px;
-
-                      &::before {
-                        background-color: #fff;
-                        bottom: 4px;
-                        content: "";
-                        height: 17px;
-                        left: 4px;
-                        position: absolute;
-                        transition: 0.4s;
-                        width: 17px;
-                        border-radius: 50%;
-                      }
-                    }
-
-                    input[type="checkbox"]:checked
-                      + span.checkbox__switch__slider {
-                      background-color: #2271b1;
-
-                      &::before {
-                        transform: translateX(23px);
-                      }
-                    }
-                  }
                 }
               }
             }
           }
         }
+      }
+    }
+  }
+
+  label.checkbox__switch {
+    display: inline-block;
+    height: 25px;
+    position: relative;
+    width: 50px;
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    span.checkbox__switch__slider {
+      background-color: #ddd;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.4s;
+      border-radius: 34px;
+
+      &::before {
+        background-color: #fff;
+        bottom: 4px;
+        content: "";
+        height: 17px;
+        left: 4px;
+        position: absolute;
+        transition: 0.4s;
+        width: 17px;
+        border-radius: 50%;
+      }
+    }
+
+    input[type="checkbox"]:checked + span.checkbox__switch__slider {
+      background-color: #2271b1;
+
+      &::before {
+        transform: translateX(23px);
       }
     }
   }

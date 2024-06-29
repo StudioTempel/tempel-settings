@@ -66,13 +66,13 @@ class TempelSettingsAdmin
     public function tempel_register_settings()
     {
         register_setting(
-            'tempel-settings',
-            'tempel-settings-data'
+            'tempel_settings',
+            'tmpl_settings'
         );
         
         register_setting(
-            'tempel-widget-settings',
-            'tempel-widget-settings-data'
+            'tempel_widget_settings',
+            'tmpl_widget_settings'
         );
         
 //        register_setting(

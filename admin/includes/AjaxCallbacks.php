@@ -15,19 +15,19 @@ class PluginSettingsAjaxCallbacks
     
     public function reset_checkup(): void
     {
-        $option = get_option('tempel-widget-settings-data');
-        $option['last-checkup-date'] = date('m/Y');
+        $option = get_option('tmpl_widget_settings');
+        $option['status_last_checkup_date'] = date('m/Y');
         
         if ($option) {
-            update_option('tempel-widget-settings-data', $option);
+            update_option('tmpl_widget_settings', $option);
         } else {
-            add_option('tempel-widget-settings-data', $option);
+            add_option('tmpl_widget_settings', $option);
         }
         
         echo json_encode(
             array(
                 'status' => 'success',
-                'option' => get_option('tempel-widget-settings-data')
+                'option' => get_option('tmpl_widget_settings')
             )
         );
     }
