@@ -85,23 +85,6 @@ class StatusWidget extends Widget
                         <?php endif; ?>
                     </div>
                 </div>
-                <?php
-                $show_empty_cache = false;
-                if($show_empty_cache === true): ?>
-                <div class="widget__footer">
-                    <?php if (is_plugin_active('breeze/breeze.php')):
-                        $current_screen_url = admin_url();
-                        $clear_cache_url = wp_nonce_url(add_query_arg('breeze_purge', 1, $current_screen_url), 'breeze_purge_cache');
-                        ?>
-                        <a
-                                href="<?= $clear_cache_url; ?>"
-                                class="widget__button widget__button__yellow widget__button_color__black"
-                        >
-                            Leeg cache
-                        </a>
-                    <?php endif; ?>
-                </div>
-                <?php endif; ?>
             </div>
         </div>
         <?php
@@ -111,7 +94,7 @@ class StatusWidget extends Widget
     {
         $option = $this->get_settings('status_backup_interval');
         
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">Kon de laatste backup datum niet ophalen</span>';
+        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Kon de laatste backup datum niet ophalen', 'tempel-settings') . '</span>';
         
         $time_now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
         
@@ -138,7 +121,7 @@ class StatusWidget extends Widget
         ];
         $option = $this->get_settings('status_last_checkup_date');
         
-        if (is_wp_error($option) || empty($option)) return ['error' => '<span class="tmpl_widget__error">Kon de laatste checkup datum niet ophalen</span>'];
+        if (is_wp_error($option) || empty($option)) return ['error' => '<span class="tmpl_widget__error">' . __('Kon de laatste checkup datum niet ophalen', 'tempel-settings') . '</span>'];
         
         $lastCheckup['date'] = $option;
         
@@ -156,7 +139,7 @@ class StatusWidget extends Widget
     {
         $option = $this->get_settings('status_safeupdate_day');
         
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">Could not retrieve last update date</span>';
+        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve last update date', 'tempel-settings') . '</span>';
         
         $now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
         $lastUpdate = $now->modify('last ' . $option);
@@ -187,7 +170,7 @@ class StatusWidget extends Widget
     {
         $option = $this->get_settings('status_service_contract_tier');
         
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">Kon het pakket niet ophalen</span>';
+        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Kon het pakket niet ophalen', 'tempel-settings') . '</span>';
         
         $option = ucfirst($option);
         

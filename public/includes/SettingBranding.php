@@ -22,12 +22,13 @@ class SettingBranding
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_theme'));
         add_action('login_enqueue_scripts', array($this, 'enqueue_login_theme'));
         add_action('login_enqueue_scripts', array($this, 'dequeue_login_styles'));
+        add_action('admin_footer_text', array($this, 'admin_footer_text'));
 
 
         // add_action('login_footer', array($this, 'add_script_to_login'));
         add_action('login_header', [$this, 'add_header_to_login']);
         add_filter('gettext', [$this, 'change_lost_password_text']);
-        add_action('login_enqueue_scripts', [$this, 'add_background_image_to_login']);
+//        add_action('login_enqueue_scripts', [$this, 'add_background_image_to_login']);
     }
 
     function change_lost_password_text($text)
@@ -116,7 +117,7 @@ class SettingBranding
             global $wp_admin_bar;
             $wp_admin_bar->add_menu(array(
                 'id' => 'studiotempel',
-                'title' => '<img src="/wp-content/plugins/tempel-settings/assets/images/admin-logo.svg" width="500" height="600" />',
+                'title' => '<img src="' . TMPL_PLUGIN_IMG_URL . 'admin-logo.svg' .  '" width="500" height="600" />',
                 'href' => 'studiotempel.nl',
                 'meta' => array(
                     'target' => '_blank', // Opens the link with a new tab
@@ -169,7 +170,6 @@ class SettingBranding
     {
         if ($this->is_wplogin()) {
             wp_enqueue_script('login', TMPL_PLUGIN_JS_URL . 'login-screen.js', array('jquery'), null, true);
-
             wp_enqueue_style('login-styles-v2', TMPL_PLUGIN_CSS_URL . 'login-screen.css');
         }
     }
@@ -183,5 +183,10 @@ class SettingBranding
     {
         $ABSPATH_MY = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ABSPATH);
         return ((in_array($ABSPATH_MY . 'wp-login.php', get_included_files()) || in_array($ABSPATH_MY . 'wp-register.php', get_included_files())) || (isset($_GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') || $_SERVER['PHP_SELF'] == '/wp-login.php');
+    }
+    
+    public function admin_footer_text()
+    {
+        echo '<span id="footer-thankyou">Developed by <a href="https://studiotempel.nl" target="_blank">Studio Tempel</a></span>';
     }
 }

@@ -1,0 +1,300 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Tempel settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-19 20:38+0000\n"
+"PO-Revision-Date: 2024-08-22 12:50+0000\n"
+"Last-Translator: \n"
+"Language-Team: Nederlands\n"
+"Language: nl_NL\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Domain: tempel-settings"
+
+#: admin/pages/general-settings-page.php:48
+#: package/tempel-settings/admin/pages/general-settings-page.php:48
+msgid ""
+"A collection of general settings to disable unused features of Wordpress."
+msgstr ""
+"Een aantal algemene instellingen om ongebruikte Wordpress functionaliteiten "
+"uit te schakelen."
+
+#: admin/pages/widget-settings.php:152
+#: package/tempel-settings/admin/pages/widget-settings.php:167
+msgid "Backup interval"
+msgstr "Backup-interval"
+
+#: admin/pages/widget-settings.php:362
+#: package/tempel-settings/admin/pages/widget-settings.php:377
+msgid "Clear"
+msgstr "Leeg"
+
+#: admin/pages/widget-settings.php:356
+#: package/tempel-settings/admin/pages/widget-settings.php:371
+msgid "Clear FAQ Cache"
+msgstr "Leeg FAQ Cache"
+
+#: admin/pages/login-settings.php:45
+#: package/tempel-settings/admin/pages/login-settings.php:45
+msgid "Content"
+msgstr "Inhoud"
+
+#: admin/pages/widget-settings.php:45
+#: package/tempel-settings/admin/pages/widget-settings.php:48
+msgid "Conversion Widget"
+msgstr "Conversie Widget"
+
+#: admin/widgets/StatusWidget.php:142
+msgid "Could not retrieve last update date"
+msgstr "Kon de laatste update datum niet ophalen"
+
+#: admin/pages/general-settings-page.php:81
+#: package/tempel-settings/admin/pages/general-settings-page.php:81
+msgid "Disable Comments"
+msgstr "Reacties uitschakelen"
+
+#: admin/pages/general-settings-page.php:104
+#: package/tempel-settings/admin/pages/general-settings-page.php:104
+msgid "Disable the built in PT"
+msgstr "Schakel het ingebouwde post type uit"
+
+#: admin/pages/general-settings-page.php:58
+#: package/tempel-settings/admin/pages/general-settings-page.php:58
+msgid "Enable Branding"
+msgstr "Branding inschakelen"
+
+#: admin/pages/general-settings-page.php:184
+#: package/tempel-settings/admin/pages/general-settings-page.php:184
+msgid "Enable SVG Support & Sanitization"
+msgstr "SVG Support inschakelen"
+
+#: admin/pages/general-settings-page.php:161
+#: package/tempel-settings/admin/pages/general-settings-page.php:161
+msgid "Enable Widgets"
+msgstr "Widgets inschakelen"
+
+#: admin/pages/general-settings-page.php:151
+#: package/tempel-settings/admin/pages/general-settings-page.php:151
+msgid "Extra"
+msgstr "Extra"
+
+#: admin/pages/widget-settings.php:308
+#: package/tempel-settings/admin/pages/widget-settings.php:323
+msgid "FAQ Link"
+msgstr "FAQ link"
+
+#: admin/pages/widget-settings.php:114
+#: package/tempel-settings/admin/pages/widget-settings.php:153
+msgid "Friday"
+msgstr "Vrijdag"
+
+#: admin/pages/general-settings-page.php:45
+#: package/tempel-settings/admin/pages/general-settings-page.php:45
+msgid "General"
+msgstr "Algemeen"
+
+#: admin/pages/login-settings.php:25 admin/pages/general-settings-page.php:20
+#: admin/pages/general-settings-page.php:25 admin/pages/widget-settings.php:27
+#: package/tempel-settings/admin/pages/login-settings.php:25
+#: package/tempel-settings/admin/pages/general-settings-page.php:20
+#: package/tempel-settings/admin/pages/general-settings-page.php:25
+#: package/tempel-settings/admin/pages/widget-settings.php:27
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: admin/pages/login-settings.php:59
+#: package/tempel-settings/admin/pages/login-settings.php:59
+msgid "Get Login BG Image from Studiotempel.nl"
+msgstr "Login achtergrond afbeelding ophalen van studiotempel.nl"
+
+#: admin/pages/general-settings-page.php:127
+#: package/tempel-settings/admin/pages/general-settings-page.php:127
+msgid "Hide Dashboard Widgets"
+msgstr "Dashboardwidgets verbergen"
+
+#. Author URI of the plugin
+msgid "https://studiotempel.nl"
+msgstr "https://studiotempel.nl"
+
+#: admin/widgets/StatusWidget.php:97
+msgid "Kon de laatste backup datum niet ophalen"
+msgstr ""
+
+#: admin/widgets/StatusWidget.php:124
+msgid "Kon de laatste checkup datum niet ophalen"
+msgstr ""
+
+#: admin/widgets/StatusWidget.php:173
+msgid "Kon het pakket niet ophalen"
+msgstr ""
+
+#: admin/pages/login-settings.php:82
+#: package/tempel-settings/admin/pages/login-settings.php:82
+msgid "Login Background Image"
+msgstr "Login achtergrond afbeelding"
+
+#: admin/pages/login-settings.php:31
+#: package/tempel-settings/admin/pages/login-settings.php:31
+msgid "Login Settings"
+msgstr "Login instellingen"
+
+#: admin/pages/widget-settings.php:110
+#: package/tempel-settings/admin/pages/widget-settings.php:149
+msgid "Monday"
+msgstr "Maandag"
+
+#: admin/widgets/StatusWidget.php:107
+#: package/tempel-settings/admin/widgets/StatusWidget.php:124
+msgid "Now"
+msgstr "Nu"
+
+#. Description of the plugin
+#, fuzzy
+#| msgid ""
+#| "Plugin that compliments custom built themes produced by Studio Tempel"
+msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
+msgstr ""
+"Plugin die de custom thema's van Studiotempel complimenteert met extra "
+"instellingen"
+
+#: admin/pages/widget-settings.php:187
+#: package/tempel-settings/admin/pages/widget-settings.php:202
+msgid "Reset checkup"
+msgstr "Reset controle"
+
+#: admin/pages/widget-settings.php:123
+#: package/tempel-settings/admin/pages/widget-settings.php:141
+msgid "Safeupdate day"
+msgstr "Safeupdate dag"
+
+#: admin/pages/widget-settings.php:115
+#: package/tempel-settings/admin/pages/widget-settings.php:154
+msgid "Saturday"
+msgstr "Zaterdag"
+
+#: admin/pages/general-settings-page.php:208
+#: admin/pages/widget-settings.php:376
+#: package/tempel-settings/admin/pages/general-settings-page.php:208
+#: package/tempel-settings/admin/pages/widget-settings.php:391
+msgid "Save Settings"
+msgstr "Instellingen opslaan"
+
+#: admin/pages/widget-settings.php:59
+msgid "Select forms to show in widget"
+msgstr "Kies formulieren voor gebruik in de widget"
+
+#: package/tempel-settings/admin/pages/widget-settings.php:62
+msgid "Selectable Forms"
+msgstr "Selecteerbare formulieren"
+
+#: admin/pages/widget-settings.php:131
+msgid "Selecteer de dag waarop de safeupdate plaatsvind"
+msgstr ""
+
+#: admin/pages/widget-settings.php:268
+#: package/tempel-settings/admin/pages/widget-settings.php:283
+msgid "Service contract info link"
+msgstr "Service contract info link"
+
+#: admin/pages/widget-settings.php:222
+#: package/tempel-settings/admin/pages/widget-settings.php:237
+msgid "Service contract is upgradable"
+msgstr ""
+
+#: admin/pages/widget-settings.php:245
+#: package/tempel-settings/admin/pages/widget-settings.php:260
+msgid "Service contract tier"
+msgstr ""
+
+#: admin/pages/widget-settings.php:48
+#: package/tempel-settings/admin/pages/widget-settings.php:51
+msgid "Settings for the conversion widget"
+msgstr "Instellingen voor de conversie widget"
+
+#: admin/pages/widget-settings.php:102
+#: package/tempel-settings/admin/pages/widget-settings.php:131
+msgid "Settings for the status widget"
+msgstr "Instellingen voor de status widget"
+
+#: admin/pages/widget-settings.php:298
+#: package/tempel-settings/admin/pages/widget-settings.php:313
+msgid "Settings for the support widget"
+msgstr "Instellingen voor de support widget"
+
+#: admin/pages/widget-settings.php:199
+#: package/tempel-settings/admin/pages/widget-settings.php:214
+msgid "Show service contract"
+msgstr "Toon service contract"
+
+#: admin/pages/widget-settings.php:99
+#: package/tempel-settings/admin/pages/widget-settings.php:128
+msgid "Status Widget"
+msgstr "Status widget"
+
+#. Author of the plugin
+msgid "Studio Tempel"
+msgstr "Studio Tempel"
+
+#: admin/pages/widget-settings.php:116
+#: package/tempel-settings/admin/pages/widget-settings.php:155
+msgid "Sunday"
+msgstr "Zondag"
+
+#: admin/pages/widget-settings.php:332
+#: package/tempel-settings/admin/pages/widget-settings.php:347
+msgid "Support Ticket Link"
+msgstr "Support ticket link"
+
+#: admin/pages/widget-settings.php:295
+#: package/tempel-settings/admin/pages/widget-settings.php:310
+msgid "Support Widget"
+msgstr "Support widget"
+
+#. Name of the plugin
+msgid "Tempel settings"
+msgstr "Tempel Instellingen"
+
+#: admin/pages/widget-settings.php:113
+#: package/tempel-settings/admin/pages/widget-settings.php:152
+msgid "Thursday"
+msgstr "Donderdag"
+
+#: admin/widgets/StatusWidget.php:109
+#: package/tempel-settings/admin/widgets/StatusWidget.php:126
+msgid "Today"
+msgstr "Vandaag"
+
+#: admin/pages/widget-settings.php:111
+#: package/tempel-settings/admin/pages/widget-settings.php:150
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+#: admin/pages/login-settings.php:93
+#: package/tempel-settings/admin/pages/login-settings.php:93
+msgid "Upload"
+msgstr "Uploaden"
+
+#: admin/pages/widget-settings.php:112
+#: package/tempel-settings/admin/pages/widget-settings.php:151
+msgid "Wednesday"
+msgstr "Woensdag"
+
+#: admin/pages/login-settings.php:20 admin/pages/login-settings.php:28
+#: admin/pages/general-settings-page.php:28 admin/pages/widget-settings.php:22
+#: admin/pages/widget-settings.php:30
+#: package/tempel-settings/admin/pages/login-settings.php:20
+#: package/tempel-settings/admin/pages/login-settings.php:28
+#: package/tempel-settings/admin/pages/general-settings-page.php:28
+#: package/tempel-settings/admin/pages/widget-settings.php:22
+#: package/tempel-settings/admin/pages/widget-settings.php:30
+msgid "Widget Settings"
+msgstr "Widget Instellingen"
+
+#: admin/widgets/StatusWidget.php:105
+#: package/tempel-settings/admin/widgets/StatusWidget.php:122
+msgid "Yesterday"
+msgstr "Gisteren"

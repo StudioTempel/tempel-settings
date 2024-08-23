@@ -29,9 +29,6 @@ class WidgetSettingsPage extends Page
                                     <a href="/wp-admin/admin.php?page=tempel-widget-settings" class="nav__item active">
                                         <?php _e('Widget Settings', 'tempel-settings'); ?>
                                     </a>
-<!--                                    <a href="/wp-admin/admin.php?page=tempel-login-settings" class="nav__item">-->
-                                        <?php //_e('Login Settings', 'tempel-settings'); ?>
-<!--                                    </a>-->
                                 </div>
                             </div>
                         </div>
@@ -59,7 +56,7 @@ class WidgetSettingsPage extends Page
                                                 <div class="settings__field__inner">
                                                     <div class="settings__label__wrap">
                                                         <label for="conversion_selected_forms">
-                                                            <?php _e('Selectable Forms', 'tempel-settings'); ?>
+                                                            <?php _e('Select forms to show in widget', 'tempel-settings'); ?>
                                                         </label>
                                                     </div>
                                                     <div class="settings__input__wrap">
@@ -94,32 +91,6 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         <?php endif; ?>
                                         <!-- Settings Field | Selectable Forms -->
-
-                                        <!-- Settings Field | Total Conversions Scope -->
-<!--                                        <div class="settings__field" id="total_conversions_scope">-->
-<!--                                            <div class="settings__field__inner">-->
-<!--                                                <div class="settings__label__wrap">-->
-<!--                                                    <label for="gf_form_select_field">-->
-<!--                                                        --><?php //_e('Scope Total Conversions', 'tempel'); ?>
-<!--                                                    </label>-->
-<!--                                                </div>-->
-<!--                                                <div class="settings__input__wrap">-->
-<!--                                                    <div class="settings__input">-->
-<!--                                                        <select-->
-<!--                                                                class="settings__input"-->
-<!--                                                                name="tempel-widget-settings-data[total-conversion-scope]"-->
-<!--                                                                id="total-conversion-scope"-->
-<!--                                                        >-->
-<!--                                                            <option selected value="last30days">--><?php //_e('Last 30 days', 'tempel-settings'); ?><!--</option>-->
-<!--                                                            <option value="last7days">--><?php //_e('Last 7 days', 'tempel-settings'); ?><!--</option>-->
-<!--                                                            <option value="today">--><?php //_e('Today', 'tempel-settings'); ?><!--</option>-->
-<!--                                                        </select>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-                                        <!-- Settings Field | Total Conversions Scope -->
-                                        
                                     </div>
                                 </div>
                                 <div class="settings__category">
@@ -134,6 +105,17 @@ class WidgetSettingsPage extends Page
                                     <div class="category__content">
 
                                         <!-- Settings Field | Update Interval -->
+                                        <?php
+                                            $days = [
+                                                'monday' => __('Monday', 'tempel-settings'),
+                                                'tuesday' => __('Tuesday', 'tempel-settings'),
+                                                'wednesday' => __('Wednesday', 'tempel-settings'),
+                                                'thursday' => __('Thursday', 'tempel-settings'),
+                                                'friday' => __('Friday', 'tempel-settings'),
+                                                'saturday' => __('Saturday', 'tempel-settings'),
+                                                'sunday' => __('Sunday', 'tempel-settings'),
+                                            ];
+                                        ?>
                                         <div id="status_safeupdate_day_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
@@ -146,13 +128,16 @@ class WidgetSettingsPage extends Page
                                                             name="tmpl_widget_settings[status_safeupdate_day]"
                                                             id="status_safeupdate_day"
                                                     >
-                                                        <option value="monday"><?php _e('Monday', 'tempel-settings'); ?></option>
-                                                        <option value="tuesday"><?php _e('Tuesday', 'tempel-settings'); ?></option>
-                                                        <option value="wednesday"><?php _e('Wednesday', 'tempel-settings'); ?></option>
-                                                        <option value="thursday"><?php _e('Thursday', 'tempel-settings'); ?></option>
-                                                        <option value="friday"><?php _e('Friday', 'tempel-settings'); ?></option>
-                                                        <option value="saturday"><?php _e('Saturday', 'tempel-settings'); ?></option>
-                                                        <option value="sunday"><?php _e('Sunday', 'tempel-settings'); ?></option>
+                                                        <option value=""><?php _e('Selecteer de dag waarop de safeupdate plaatsvind', 'tempel-settings'); ?></option>
+                                                        <?php foreach ($days as $key => $day): ?>
+                                                            <option value="<?= $key; ?>"
+                                                                <?php if ($this->get_settings('status_safeupdate_day') === $key): ?>
+                                                                    selected
+                                                                <?php endif; ?>
+                                                            >
+                                                                <?= $day; ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </div>
                                             </div>

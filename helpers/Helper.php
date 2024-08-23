@@ -4,7 +4,7 @@ namespace Tempel\Helpers;
 
 class Helper
 {
-    public function get_option($option_name)
+    public static function get_option($option_name)
     {
         return get_option($option_name);
     }
@@ -15,9 +15,9 @@ class Helper
      * @param string $option_name
      * @since 1.0.0
      */
-    public function return_option($option_name)
+    public static function return_option($option_name)
     {
-        $option = get_option('tempel-settings-data');
+        $option = get_option('tmpl_settings');
         
         return $option[$option_name] ?? false;
     }
@@ -28,7 +28,7 @@ class Helper
      * @param string $val
      * @since 1.0.0
      */
-    public function sanitize_checkbox_value($val)
+    public static function sanitize_checkbox_value($val)
     {
         if ($val == 'on') {
             return true;

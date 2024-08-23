@@ -26,23 +26,23 @@ class TempelSettingsPublic
     {
         new LoadPluginStyles();
         
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_branding'))) {
+        if ($this->sanitize_checkbox_value($this->return_option('enable_branding'))) {
             new SettingBranding();
         }
         
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_enable_svg'))) {
+        if ($this->sanitize_checkbox_value($this->return_option('svg_support'))) {
             new SettingSVGSanitizer();
         }
         
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_comments'))) {
+        if ($this->sanitize_checkbox_value($this->return_option('disable_comments'))) {
             new SettingDisableComments();
         }
         
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_disable_default_posts'))) {
+        if ($this->sanitize_checkbox_value($this->return_option('disable_default_pt'))) {
             new SettingDisableDefaultPT();
         }
         
-        if ($this->sanitize_checkbox_value($this->return_option('tmpl_hide_dashboard_widgets'))) {
+        if ($this->sanitize_checkbox_value($this->return_option('hide_dashboard_widgets'))) {
             new SettingRemoveDashboardWidgets();
         }
         
@@ -56,7 +56,7 @@ class TempelSettingsPublic
      */
     function return_option($option_name)
     {
-        $option = get_option('tempel-settings-data');
+        $option = get_option('tmpl_settings');
         if ($option) {
             return $option[$option_name] ?? false;
         } else {

@@ -17,6 +17,8 @@ class SettingRemoveDashboardWidgets
     function __construct()
     {
         add_action('wp_dashboard_setup', array($this, 'remove_dashboard_widgets'));
+        
+        add_action('admin_init', array($this, 'remove_all_dashboard_widgets'), 999);
     }
 
     /**
@@ -36,5 +38,14 @@ class SettingRemoveDashboardWidgets
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);                  // Recent Drafts
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);                        // WordPress blog
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);                      // Other WordPress News
+    }
+    
+    function remove_all_dashboard_widgets()
+    {
+        global $wp_meta_boxes;
+        $dashboard = $wp_meta_boxes['dashboard'];
+//        foreach ($dashboard as $key => $value) {
+//            unset($wp_meta_boxes['dashboard'][$key]);
+//        }
     }
 }

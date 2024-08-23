@@ -2,6 +2,8 @@
 
 namespace Tempel\Admin;
 
+
+
 // Abstracts
 require_once 'abstract/Page.php';
 require_once 'abstract/Widget.php';
@@ -52,15 +54,6 @@ class TempelSettingsAdmin
             true
         );
         
-//        $this->pages['tempel-login-settings'] = new Pages\LoginPageSettings(
-//            'Login Page Settings',
-//            'Login Page Settings',
-//            'tempel-login-settings',
-//            $this->get_menu_icon(),
-//            2,
-//            'tempel-settings',
-//            true
-//        );
     }
     
     public function tempel_register_settings()
@@ -74,11 +67,6 @@ class TempelSettingsAdmin
             'tempel_widget_settings',
             'tmpl_widget_settings'
         );
-        
-//        register_setting(
-//            'tempel-login-page-settings',
-//            'tempel-login-page-settings-data'
-//        );
     }
     
     public function get_menu_icon()

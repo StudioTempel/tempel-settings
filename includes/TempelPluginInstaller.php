@@ -4,20 +4,15 @@ namespace Tempel;
 
 class TempelPluginInstaller
 {
-    public function __construct()
-    {
-    
-    }
-    
-    private function addDefaultSettings()
+    public static function setup()
     {
         $default = array(
             'enable_branding'                   => 'on',
             'disable_comments'                  => 'on',
-            'disable_default_pt'                => 'off',
+            'disable_default_pt'                => 'on',
             'hide_dashboard_widgets'            => 'on',
-            'enable_widgets'                    => 'off',
-            'svg_support'                       => 'of',
+            'enable_widgets'                    => 'on',
+            'svg_support'                       => 'ofs',
         );
         update_option('tmpl_settings', $default);
         
@@ -30,11 +25,9 @@ class TempelPluginInstaller
             'status_service_contract_upgradable'        => 'on',
             'status_service_contract_tier'              => 'Plus',
             'status_service_contract_upgrade_link'      => 'https://studiotempel.nl/servicecontract',
-            'support_faq_link'                          => TMPL_DEFAULT_FAQ_LINK,
-            'support_ticket_link'                       => TMPL_DEFAULT_CONTACT_LINK,
+            'support_faq_link'                          => 'https://studiotempel.nl/veelgestelde-vragen',
+            'support_ticket_link'                       => 'https://studiotempel.nl/contact',
         );
         update_option('tmpl_widget_settings', $widget_defaults);
-        
-        register_activation_hook(__FILE__, array("Tempel", 'setup'));
     }
 }

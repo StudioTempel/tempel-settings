@@ -3,8 +3,7 @@ node_modules
 .vscode
 vendor/composer
 composer.lock
-testing/
 trash
 .DS_Store
 dist/cache/faq_items_cache.json
-dist/cache/faq_items_cache.json
+build

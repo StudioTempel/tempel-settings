@@ -37,9 +37,11 @@ class SettingDisableDefaultPT
      * 
      * @since 1.0.0
      */
-    function remove_post_from_admin_bar($wp_admin_bar)
+    function remove_post_from_admin_bar()
     {
+        global $wp_admin_bar;
         $wp_admin_bar->remove_node('new-post');
+        $wp_admin_bar->remove_node('new-content');
     }
 
     /**

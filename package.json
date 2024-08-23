@@ -1,44 +1,45 @@
 {
   "name": "studiotempel",
+  "description": "Plugin that adds convenient settings to the WordPress admin area.",
+  "type": "module",
   "version": "2.1.0",
-  "description": "Clean and productive WordPress theme for professionals",
-  "main": "style.css",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bootstrap": "wpackio-scripts bootstrap",
+    "build": "wpackio-scripts build",
+    "start": "wpackio-scripts start",
+    "archive": "wpackio-scripts pack",
+    "archiver": "node ./archiver.config.js"
   },
-  "keywords": [
-    "WordPress",
-    "Theme",
-    "Productivity"
-  ],
-  "author": "Dorus Bos",
+  "author": "Studiotempel",
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "https://bitbucket.org/studiotempel/tempel"
+    "url": "https://github.com/StudioTempel/tempel-settings"
   },
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "7.23.9",
-    "@babel/preset-env": "7.23.9",
-    "@babel/register": "7.23.7",
-    "@prettier/plugin-php": "^0.22.2",
-    "bourbon": "7.3.0",
-    "bourbon-neat": "git+https://git@github.com/thoughtbot/neat.git",
-    "browser-sync": "3.0.2",
-    "gulp": "4.0.2",
-    "gulp-autoprefixer": "6.0.0",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/register": "^7.24.6",
+    "archiver": "^7.0.1",
+    "autoprefixer": "^10.4.20",
+    "browser-sync": "^3.0.2",
+    "gulp": "^5.0.0",
+    "gulp-autoprefixer": "^9.0.0",
     "gulp-babel": "^8.0.0",
-    "gulp-cli": "gulpjs/gulp-cli",
+    "gulp-cli": "^3.0.0",
     "gulp-concat": "^2.6.1",
+    "gulp-imagemin": "^9.1.0",
     "gulp-jshint": "^2.1.0",
-    "gulp-plumber": "1.2.1",
-    "gulp-sass": "5.1.0",
-    "gulp-sourcemaps": "2.6.5",
-    "gulp-uglify": "3.0.2",
-    "jshint": "2.13.6",
+    "gulp-plumber": "^1.2.1",
+    "gulp-postcss": "^10.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-uglify": "^3.0.2",
+    "jshint": "^2.13.6",
     "jshint-stylish": "^2.2.1",
-    "prettier": "^3.3.2",
-    "sass": "^1.71.1"
+    "postcss": "^8.4.39",
+    "prettier": "3.3.2",
+    "sass": "^1.77.6"
   }
 }
