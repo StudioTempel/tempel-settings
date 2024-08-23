@@ -2,11 +2,11 @@
 
 namespace Tempel\Admin\Pages;
 
-require_once TMPL_PLUGIN_DIR . 'admin/abstract/Page.php';
+require_once TMPL_PLUGIN_DIR . 'src/abstract/page.php';
 
-use Tempel\Admin\Abstract\Page;
+use Tempel\Abstracts\Page;
 
-class WidgetSettingsPage extends Page
+class Widget_Settings extends Page
 {
     public function render()
     {
@@ -37,7 +37,7 @@ class WidgetSettingsPage extends Page
                         <div class="body__inner">
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_widget_settings'); ?>
-
+                                
                                 <!-- Settings Category -->
                                 <div class="settings__category">
                                     <div class="category__header">
@@ -79,7 +79,7 @@ class WidgetSettingsPage extends Page
                                                                 }
                                                                 ?>
                                                                 <option
-                                                                        value="<?= $form['id']; ?>"
+                                                                    value="<?= $form['id']; ?>"
                                                                     <?= $is_selected; ?>
                                                                 >
                                                                     <?= $form['title']; ?>
@@ -103,18 +103,18 @@ class WidgetSettingsPage extends Page
                                         </div>
                                     </div>
                                     <div class="category__content">
-
+                                        
                                         <!-- Settings Field | Update Interval -->
                                         <?php
-                                            $days = [
-                                                'monday' => __('Monday', 'tempel-settings'),
-                                                'tuesday' => __('Tuesday', 'tempel-settings'),
-                                                'wednesday' => __('Wednesday', 'tempel-settings'),
-                                                'thursday' => __('Thursday', 'tempel-settings'),
-                                                'friday' => __('Friday', 'tempel-settings'),
-                                                'saturday' => __('Saturday', 'tempel-settings'),
-                                                'sunday' => __('Sunday', 'tempel-settings'),
-                                            ];
+                                        $days = [
+                                            'monday' => __('Monday', 'tempel-settings'),
+                                            'tuesday' => __('Tuesday', 'tempel-settings'),
+                                            'wednesday' => __('Wednesday', 'tempel-settings'),
+                                            'thursday' => __('Thursday', 'tempel-settings'),
+                                            'friday' => __('Friday', 'tempel-settings'),
+                                            'saturday' => __('Saturday', 'tempel-settings'),
+                                            'sunday' => __('Sunday', 'tempel-settings'),
+                                        ];
                                         ?>
                                         <div id="status_safeupdate_day_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -143,7 +143,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Update Interval -->
-
+                                        
                                         <!-- Settings Field | Backup Interval -->
                                         <div id="status_backup_interval_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -154,11 +154,11 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="time"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[status_backup_interval]"
-                                                            id="status_backup_interval"
-                                                            placeholder="00:00"
+                                                        type="time"
+                                                        class="settings__input"
+                                                        name="tmpl_widget_settings[status_backup_interval]"
+                                                        id="status_backup_interval"
+                                                        placeholder="00:00"
                                                         <?php if ($this->get_settings('status_backup_interval')): ?>
                                                             value="<?= $this->get_settings('status_backup_interval'); ?>"
                                                         <?php endif; ?>
@@ -178,9 +178,9 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="hidden"
-                                                            name="tmpl_widget_settings[status_last_checkup_date]"
-                                                            value="<?= $this->get_settings('status_last_checkup_date'); ?>"
+                                                        type="hidden"
+                                                        name="tmpl_widget_settings[status_last_checkup_date]"
+                                                        value="<?= $this->get_settings('status_last_checkup_date'); ?>"
                                                     >
                                                     <button id="reset_status_last_checkup_date" type="button"
                                                             class="button button-primary">
@@ -190,7 +190,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Reset Checkup -->
-
+                                        
                                         <!-- Settings Field | Enable Service Contract Tier -->
                                         <div id="status_show_service_contract_tier_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -202,9 +202,9 @@ class WidgetSettingsPage extends Page
                                                 <div class="settings__input__wrap">
                                                     <label class="checkbox__switch" for="status_show_service_contract_tier">
                                                         <input
-                                                                type="checkbox"
-                                                                name="tmpl_widget_settings[status_show_service_contract_tier]"
-                                                                id="status_show_service_contract_tier"
+                                                            type="checkbox"
+                                                            name="tmpl_widget_settings[status_show_service_contract_tier]"
+                                                            id="status_show_service_contract_tier"
                                                             <?php echo $this->is_checked('status_show_service_contract_tier'); ?>
                                                         >
                                                         <span class="checkbox__switch__slider"></span>
@@ -213,7 +213,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Enable Service Contract Tier  -->
-
+                                        
                                         <!-- Settings Field | Enable Service Upgrade Link -->
                                         <div id="status_service_contract_upgradable_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -225,9 +225,9 @@ class WidgetSettingsPage extends Page
                                                 <div class="settings__input__wrap">
                                                     <label class="checkbox__switch" for="status_service_contract_upgradable">
                                                         <input
-                                                                type="checkbox"
-                                                                name="tmpl_widget_settings[status_service_contract_upgradable]"
-                                                                id="status_service_contract_upgradable"
+                                                            type="checkbox"
+                                                            name="tmpl_widget_settings[status_service_contract_upgradable]"
+                                                            id="status_service_contract_upgradable"
                                                             <?php echo $this->is_checked('status_service_contract_upgradable'); ?>
                                                         >
                                                         <span class="checkbox__switch__slider"></span>
@@ -236,7 +236,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Enable Service Upgrade Link  -->
-
+                                        
                                         <!-- Settings Field | Service Contract Tier -->
                                         <div id="status_service_contract_tier_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -247,10 +247,10 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="text"
-                                                            name="tmpl_widget_settings[status_service_contract_tier]"
-                                                            id="status_service_contract_tier"
-                                                            class="settings__input"
+                                                        type="text"
+                                                        name="tmpl_widget_settings[status_service_contract_tier]"
+                                                        id="status_service_contract_tier"
+                                                        class="settings__input"
                                                         <?php if ($this->get_settings('status_service_contract_tier')): ?>
                                                             value="<?= $this->get_settings('status_service_contract_tier'); ?>"
                                                         <?php endif; ?>
@@ -259,7 +259,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Service Contact Tier -->
-
+                                        
                                         <!-- Settings Field | Service Contract Info URL -->
                                         <div id="status_service_contract_upgrade_link_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -270,11 +270,11 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="url"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[status_service_contract_upgrade_link]"
-                                                            id="status_service_contract_upgrade_link"
-                                                            placeholder="https://studiotempel.nl/pakketten/"
+                                                        type="url"
+                                                        class="settings__input"
+                                                        name="tmpl_widget_settings[status_service_contract_upgrade_link]"
+                                                        id="status_service_contract_upgrade_link"
+                                                        placeholder="https://studiotempel.nl/pakketten/"
                                                         <?php if ($this->get_settings('status_service_contract_upgrade_link')): ?>
                                                             value="<?= $this->get_settings('status_service_contract_upgrade_link'); ?>"
                                                         <?php endif; ?>
@@ -283,11 +283,11 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Package URL -->
-
+                                    
                                     </div>
                                 </div>
                                 <!-- Settings Category -->
-
+                                
                                 <!-- Settings Category -->
                                 <div class="settings__category">
                                     <div class="category__header">
@@ -310,11 +310,11 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="url"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[support_faq_link]"
-                                                            id="support_faq_link"
-                                                            placeholder="https://studiotempel.nl/faq/"
+                                                        type="url"
+                                                        class="settings__input"
+                                                        name="tmpl_widget_settings[support_faq_link]"
+                                                        id="support_faq_link"
+                                                        placeholder="https://studiotempel.nl/faq/"
                                                         <?php if ($this->get_settings('support_faq_link')): ?>
                                                             value="<?= $this->get_settings('support_faq_link'); ?>"
                                                         <?php endif; ?>
@@ -334,11 +334,11 @@ class WidgetSettingsPage extends Page
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
-                                                            type="url"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[support_ticket_link]"
-                                                            id="support_ticket_link"
-                                                            placeholder="https://studiotempel.nl/support/"
+                                                        type="url"
+                                                        class="settings__input"
+                                                        name="tmpl_widget_settings[support_ticket_link]"
+                                                        id="support_ticket_link"
+                                                        placeholder="https://studiotempel.nl/support/"
                                                         <?php if ($this->get_settings('support_ticket_link')): ?>
                                                             value="<?= $this->get_settings('support_ticket_link'); ?>"
                                                         <?php endif; ?>
@@ -347,7 +347,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Support Ticket Link -->
-
+                                        
                                         <!-- Settings Field | Clear FAQ Cache -->
                                         <div id="support_clear_faq_cache_setting" class="settings__field">
                                             <div class="settings__field__inner">
@@ -365,7 +365,7 @@ class WidgetSettingsPage extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Clear FAQ Cache -->
-                                        
+                                    
                                     </div>
                                 </div>
                                 <!-- Settings Category -->
@@ -381,7 +381,7 @@ class WidgetSettingsPage extends Page
                         </div>
                     </div>
                     <div class="settings__footer">
-
+                    
                     </div>
                 </div>
             </div>
@@ -395,12 +395,12 @@ class WidgetSettingsPage extends Page
                     allowClear: true,
                     multiple: true
                 });
-                
+
                 $('#status_safeupdate_day').select2({
                     minimumResultsForSearch: -1,
                     placeholder: 'Selecteer de dag waarop de safeupdate plaatsvind'
                 });
-                
+
                 $('#total-conversion-scope').select2({
                     minimumResultsForSearch: -1
                 });
@@ -438,7 +438,7 @@ class WidgetSettingsPage extends Page
                         });
                     }
                 });
-                
+
                 // $('button#reset-last-update-date').on('click', function () {
                 //     if (confirm('Weet je zeker dat je de laatste update datum wilt resetten?')) {
                 //         $.ajax({
@@ -457,7 +457,7 @@ class WidgetSettingsPage extends Page
                 //         });
                 //     }
                 // });
-                
+
                 $('button#support_clear_faq_cache').on('click', function () {
                     if (confirm('Weet je zeker dat je de FAQ cache wilt legen?')) {
                         $.ajax({

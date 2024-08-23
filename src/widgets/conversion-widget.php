@@ -3,10 +3,10 @@
 namespace Tempel\Admin\Widgets;
 
 
-require_once TMPL_PLUGIN_DIR . "admin/abstract/Widget.php";
-use Tempel\admin\abstract\Widget;
+require_once TMPL_PLUGIN_DIR . 'src/abstract/Widget.php';
+use Tempel\Abstracts\Widget;
 
-class ConversionWidget extends Widget
+class Conversion_Widget extends Widget
 {
     public function __construct()
     {
@@ -52,7 +52,7 @@ class ConversionWidget extends Widget
                                 $link = $submission['link'];
                                 $submissions = $submission['submissions'];
                                 ?>
-
+                                
                                 <div class="widget__content__item">
                                     <a href="<?= $link; ?>" class="item__link">
                                         <div class="item__label"><?= $title; ?></div>

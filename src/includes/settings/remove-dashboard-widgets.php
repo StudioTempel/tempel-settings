@@ -2,14 +2,14 @@
 
 /**
  * Removes default dashboard widgets
- * 
+ *
  * @since 1.0.0
  */
 
 
-namespace Tempel\Public;
+namespace Tempel\Settings;
 
-class SettingRemoveDashboardWidgets
+class Remove_Dashboard_Widgets
 {
     /**
      * Constructor
@@ -20,10 +20,10 @@ class SettingRemoveDashboardWidgets
         
         add_action('admin_init', array($this, 'remove_all_dashboard_widgets'), 999);
     }
-
+    
     /**
      * Remove dashboard widgets
-     * 
+     *
      * @since 1.0.0
      */
     function remove_dashboard_widgets()

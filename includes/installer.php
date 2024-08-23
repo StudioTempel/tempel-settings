@@ -2,7 +2,7 @@
 
 namespace Tempel;
 
-class TempelPluginInstaller
+class Installer
 {
     public static function setup()
     {

@@ -2,7 +2,7 @@
 
 namespace Tempel;
 
-class TempelPluginLocalization
+class Locale
 {
     public function load_textdomain() : void
     {

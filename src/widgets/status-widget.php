@@ -2,11 +2,10 @@
 
 namespace Tempel\Admin\Widgets;
 
-require_once TMPL_PLUGIN_DIR . "admin/abstract/Widget.php";
+require_once TMPL_PLUGIN_DIR . 'src/abstract/Widget.php';
+use Tempel\Abstracts\Widget;
 
-use Tempel\admin\abstract\Widget;
-
-class StatusWidget extends Widget
+class Status_Widget extends Widget
 {
     public function __construct()
     {
@@ -70,10 +69,10 @@ class StatusWidget extends Widget
                             <div class="widget__content__item">
                                 <?php if ($this->serviceContractUpgradable() === true): ?>
                                 <a
-                                        rel="nofollow"
-                                        target="_blank"
-                                        href="<?= $this->getServiceContractUpgradeLink(); ?>"
-                                        class="item__link"
+                                    rel="nofollow"
+                                    target="_blank"
+                                    href="<?= $this->getServiceContractUpgradeLink(); ?>"
+                                    class="item__link"
                                 >
                                     <?php endif; ?>
                                     <div class="item__label">Onderhoudscontract</div>

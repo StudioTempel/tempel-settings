@@ -1,6 +1,6 @@
 <?php
 
-namespace Tempel\Helpers;
+namespace Tempel;
 
 class Helper
 {

@@ -2,7 +2,7 @@
 
 namespace Tempel\Admin;
 
-class PluginSettingsAjaxCallbacks
+class AJAX_Functions
 {
     public function __construct()
     {

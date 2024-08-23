@@ -1,12 +1,12 @@
 <?php
 
-namespace Tempel\Admin\Pages;
+namespace Tempel\Admin\Views;
 
-require_once TMPL_PLUGIN_DIR . 'admin/abstract/Page.php';
+require_once TMPL_PLUGIN_DIR . 'src/abstract/page.php';
 
-use Tempel\Admin\Abstract\Page;
+use Tempel\Abstracts\Page;
 
-class LoginPageSettings extends Page
+class Login_Page extends Page
 {
     public function render()
     {
@@ -38,7 +38,7 @@ class LoginPageSettings extends Page
                         <div class="body__inner">
                             <form id="login-settings-form" action="options.php" method="post">
                                 <?php settings_fields('tempel-login-page-settings'); ?>
-
+                                
                                 <div class="settings__category">
                                     <div class="category__header">
                                         <div class="category__title">
@@ -50,7 +50,7 @@ class LoginPageSettings extends Page
                                     </div>
                                     
                                     <div class="category__content">
-
+                                        
                                         <!-- Settings Field | Use Image from Hub -->
                                         <div id="login-bg-image-src-hub" class="settings__field">
                                             <div class="settings__field__inner">
@@ -62,9 +62,9 @@ class LoginPageSettings extends Page
                                                 <div class="settings__input__wrap">
                                                     <label class="checkbox__switch" for="login_bg_img_src">
                                                         <input
-                                                                type="checkbox"
-                                                                name="tempel-settings-data[login_bg_img_src]"
-                                                                id="login_bg_img_src"
+                                                            type="checkbox"
+                                                            name="tempel-settings-data[login_bg_img_src]"
+                                                            id="login_bg_img_src"
                                                             <?php echo $this->is_checked('login_bg_img_src'); ?>
                                                         >
                                                         <span class="checkbox__switch__slider"></span>
@@ -73,7 +73,7 @@ class LoginPageSettings extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Use Image from Hub -->
-
+                                        
                                         <!-- Settings Field | Login Background Image Upload -->
                                         <div id="login-bg-image" class="settings__field">
                                             <div class="settings__field__inner">
@@ -85,9 +85,9 @@ class LoginPageSettings extends Page
                                                 <div class="settings__input__wrap">
                                                     <div class="input__wrap__inner">
                                                         <input
-                                                                type="file"
-                                                                name="login_bg_image"
-                                                                id="login_bg_image"
+                                                            type="file"
+                                                            name="login_bg_image"
+                                                            id="login_bg_image"
                                                         >
                                                         <button class="button button-secondary" id="upload_login_bg_image">
                                                             <?php _e('Upload', 'tempel-settings'); ?>
@@ -97,11 +97,11 @@ class LoginPageSettings extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Login Background Image Upload -->
-                                        
+                                    
                                     </div>
                                 </div>
                                 
-
+                                
                                 
                                 <!-- Settings Form Footer -->
                                 <div class="settings__form__footer">
@@ -122,9 +122,9 @@ class LoginPageSettings extends Page
         <script>
             let pondFile,
                 formData;
-            
+
             jQuery(document).ready(function ($) {
-                
+
                 let imagePond = FilePond.create(
                     document.querySelector("input#login_bg_image"), {
                         allowMultiple: false,
@@ -135,17 +135,17 @@ class LoginPageSettings extends Page
                         acceptedFileTypes: ['image/*'],
                     }
                 )
-                
+
                 $("#upload_login_bg_image").click(function (e) {
                     e.preventDefault();
-                    
+
                     pondFile = imagePond.getFile();
                     formData = new FormData();
-                    
+
                     if(pondFile) {
                         formData.append('pondFile', pondFile.file);
                         formData.append('action', 'save_login_image_to_plugin_upload_folder');
-                        
+
                         $.ajax({
                             url: ajaxurl,
                             type: 'POST',

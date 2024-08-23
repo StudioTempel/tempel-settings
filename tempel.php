@@ -40,9 +40,6 @@ define('TMPL_PLUGIN_VENDOR_URL', TMPL_PLUGIN_DIST_URL . 'vendor/');
 define('TMPL_PLUGIN_CACHE_URL', TMPL_PLUGIN_DIST_URL . 'cache/');
 define('TMPL_PLUGIN_CACHE_PATH', plugin_dir_path(__FILE__) . 'dist/cache/');
 
-use Tempel\Admin\TempelSettingsAdmin;
-use Tempel\Public\TempelSettingsPublic;
-
 class TempelSettings
 {
     
@@ -63,35 +60,35 @@ class TempelSettings
         
         
         if (is_admin()) {
-            $this->admin = new TempelSettingsAdmin();
-            $this->updateChecker = new TempelUpdateChecker();
+            $this->admin = new Admin();
+            $this->updateChecker = new Updater();
         }
         
-        $this->public = new TempelSettingsPublic();
+        $this->public = Settings::load_settings();
     }
     
     private function load_dependencies()
     {
-        require_once 'includes/TempelPluginInstaller.php';
+        require_once 'includes/installer.php';
         
-        require_once 'includes/TempelPluginLocalization.php';
+        require_once 'includes/locale.php';
         
-        require 'admin/TempelSettingsAdmin.php';
+        require_once 'src/admin.php';
+
+        require_once 'src/settings.php';
         
-        require 'public/TempelSettingsPublic.php';
-        
-        require 'includes/TempelUpdateChecker.php';
+        require_once 'includes/updater.php';
     }
     
     private function set_locale()
     {
-        $plugin_i18n = new TempelPluginLocalization();
+        $plugin_i18n = new Locale();
         add_action('plugins_loaded', array($plugin_i18n, 'load_textdomain'));
     }
     
     private function setup()
     {
-        TempelPluginInstaller::setup();
+        Installer::setup();
     }
     public static function get_instance()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Tempel\Admin\Abstract;
+namespace Tempel\Abstracts;
 
-class Page
+abstract class Page
 {
     protected string $page_title;
     
@@ -24,7 +24,7 @@ class Page
         $this->capability = $capability;
         $this->icon_url = $icon_url;
         $this->position = $position;
-        
+
         if ($is_submenu === true && $parent_slug) {
             add_submenu_page(
                 $parent_slug,                               // Parent slug
@@ -46,7 +46,7 @@ class Page
                 $position                                   // Position
             );
         }
-        
+
         add_action('admin_enqueue_scripts', array($this, 'enqueue_scripts'));
     }
     
@@ -61,6 +61,6 @@ class Page
     
     public function enqueue_scripts()
     {
-
+    
     }
 }

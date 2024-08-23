@@ -2,10 +2,10 @@
 
 namespace Tempel\Admin\Widgets;
 
-require_once TMPL_PLUGIN_DIR . "admin/abstract/Widget.php";
-use Tempel\admin\abstract\Widget;
+require_once TMPL_PLUGIN_DIR . 'src/abstract/Widget.php';
+use Tempel\Abstracts\Widget;
 
-class SupportWidget extends Widget
+class Support_Widget extends Widget
 {
     public function __construct()
     {
@@ -108,11 +108,11 @@ class SupportWidget extends Widget
         if (file_exists($cache_file)) {
             $cache_time = filemtime($cache_file);
             $interval = 60 * 60 * 24; // 1 day
-
+            
             if ($cache_time > time() - $interval) {
                 $faq_items = file_get_contents($cache_file);
                 $faq_items = json_decode($faq_items, true);
-
+                
                 return $faq_items;
             }
         }
@@ -123,7 +123,7 @@ class SupportWidget extends Widget
     function fetch_new_faq_items()
     {
         $response = wp_remote_get('https://studiotempel.nl/wp-json/tmpl/v1/faq?show_in_widget_value=1');
-
+        
         if (!is_array($response) || is_wp_error($response)) {
             return [];
         }

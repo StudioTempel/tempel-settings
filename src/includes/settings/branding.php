@@ -2,13 +2,13 @@
 
 /**
  * Load the branding styles and scripts
- * 
+ *
  * @since 1.0.0
  */
 
-namespace Tempel\Public;
+namespace Tempel\Settings;
 
-class SettingBranding
+class Branding
 {
     /**
      * Constructor
@@ -23,14 +23,14 @@ class SettingBranding
         add_action('login_enqueue_scripts', array($this, 'enqueue_login_theme'));
         add_action('login_enqueue_scripts', array($this, 'dequeue_login_styles'));
         add_action('admin_footer_text', array($this, 'admin_footer_text'));
-
-
+        
+        
         // add_action('login_footer', array($this, 'add_script_to_login'));
         add_action('login_header', [$this, 'add_header_to_login']);
         add_filter('gettext', [$this, 'change_lost_password_text']);
 //        add_action('login_enqueue_scripts', [$this, 'add_background_image_to_login']);
     }
-
+    
     function change_lost_password_text($text)
     {
         if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
@@ -39,7 +39,7 @@ class SettingBranding
             }
             return $text;
         }
-
+        
         return $text;
     }
     
@@ -59,15 +59,15 @@ class SettingBranding
             <?php
         }
     }
-
+    
     /**
      * Add the Studio Tempel logo to the login screen
-     * 
+     *
      * @since 1.0.0
      */
     function add_header_to_login()
     {
-?>
+        ?>
         <div class="header">
             <div class="logo">
                 <svg width="131px" height="20px" viewBox="0 0 131 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -82,33 +82,33 @@ class SettingBranding
                 <p><?php _e('Inloggen', 'tempel'); ?></p>
             </div>
         </div>
-<?php
+        <?php
     }
-
-
+    
+    
     /**
      * Dequeue the default login styles
-     * 
+     *
      * @since 1.0.0
      */
     function dequeue_login_styles()
     {
         wp_dequeue_style('login');
     }
-
+    
     /**
      * Remove the admin bar bump callback action
-     * 
+     *
      * @since 1.0.0
      */
     public function remove_admin_bar_callback_action()
     {
         remove_action('wp_head', '_admin_bar_bump_cb');
     }
-
+    
     /**
      *  Add the Studio Tempel logo to the admin bar
-     * 
+     *
      * @since 1.0.0
      */
     public function add_logo_to_admin_bar()
@@ -123,35 +123,35 @@ class SettingBranding
                     'target' => '_blank', // Opens the link with a new tab
                     'title' => __('Studio Tempel'), // Text will be shown on hovering
                 ),
-
+            
             ));
         }
     }
-
+    
     /**
      * Remove the WordPress logo from the admin bar
-     * 
+     *
      * @since 1.0.0
      */
     function remove_wp_logo_from_admin_bar($wp_admin_bar)
     {
         $wp_admin_bar->remove_node('wp-logo');
     }
-
+    
     /**
      * Enqueue the admin bar styles
-     * 
+     *
      * @since 1.0.0
      */
     public function enqueue_admin_bar_theme()
     {
         wp_enqueue_style('admin-styles', TMPL_PLUGIN_CSS_URL . 'toolbar-theme.css');
     }
-
-
+    
+    
     /**
      * Enqueue the admin styles
-     * 
+     *
      * @since 1.0.0
      */
     public function enqueue_admin_theme()
@@ -160,10 +160,10 @@ class SettingBranding
         wp_enqueue_style('dashboard-widgets', TMPL_PLUGIN_CSS_URL . 'dashboard-widgets.css');
         wp_enqueue_script('admin', TMPL_PLUGIN_JS_URL . 'admin-theme.js', array('jquery'), null, true);
     }
-
+    
     /**
      * Enqueue branding on the login screen
-     * 
+     *
      * @since 1.0.0
      */
     public function enqueue_login_theme()
@@ -173,10 +173,10 @@ class SettingBranding
             wp_enqueue_style('login-styles-v2', TMPL_PLUGIN_CSS_URL . 'login-screen.css');
         }
     }
-
+    
     /**
      * Helper funtcion to check if the current page is the login page
-     * 
+     *
      * @since 1.0.0
      */
     public function is_wplogin()

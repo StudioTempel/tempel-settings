@@ -6,7 +6,7 @@ require plugin_dir_path(__FILE__) . '../vendor/autoload.php';
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
-class TempelUpdateChecker
+class Updater
 {
     public function __construct()
     {

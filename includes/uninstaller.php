@@ -2,7 +2,7 @@
 
 namespace Tempel;
 
-class TempelPluginUninstaller
+class Uninstaller
 {
     public function __construct()
     {
