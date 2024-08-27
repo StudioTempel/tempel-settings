@@ -3,7 +3,7 @@
 namespace Tempel\Admin\Widgets;
 
 
-require_once TMPL_PLUGIN_DIR . 'src/abstract/Widget.php';
+require_once TMPL_PLUGIN_DIR . 'src/abstract/widget.php';
 use Tempel\Abstracts\Widget;
 
 class Conversion_Widget extends Widget
