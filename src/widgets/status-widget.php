@@ -43,25 +43,25 @@ class Status_Widget extends Widget
                 <div class="widget__content">
                     <div class="widget__content__inner">
                         <div class="widget__content__item">
-                            <div class="item__label">Laatste update ronde</div>
+                            <div class="item__label"><?php _e('Last round of updates', 'tempel-settings') ?></div>
                             <div class="item__value"><?= $this->getSafeupdateDay(); ?></div>
                         </div>
                         <div class="widget__content__item">
-                            <div class="item__label">Laatste backup</div>
+                            <div class="item__label"><?php _e('Last backup', 'tempel-settings'); ?></div>
                             <div class="item__value"><?= $this->get_backup_interval(); ?></div>
                         </div>
                         <div class="widget__content__item">
                             <?php $last_checkup = $this->get_last_checkup(); ?>
                             <?php if ($last_checkup['error'] && $last_checkup['error'] !== '') : ?>
-                                <div class="item__label">Laatste checkup</div>
+                                <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                                 <div class="item__value"><?= $last_checkup['error']; ?></div>
                             <?php elseif ($last_checkup['show_link'] === true): ?>
                                 <a href="#" class="item__link">
-                                    <div class="item__label">Laatste checkup</div>
+                                    <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                                     <div class="item__value item__value--red"><?= $last_checkup['date']; ?></div>
                                 </a>
                             <?php else: ?>
-                                <div class="item__label">Laatste checkup</div>
+                                <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                                 <div class="item__value"><?= $last_checkup['date']; ?></div>
                             <?php endif; ?>
                         </div>
@@ -75,7 +75,7 @@ class Status_Widget extends Widget
                                     class="item__link"
                                 >
                                     <?php endif; ?>
-                                    <div class="item__label">Onderhoudscontract</div>
+                                    <div class="item__label"><?php _e('Servicecontract', 'tempel-settings'); ?></div>
                                     <div class="item__value"><?= $this->get_customer_package(); ?></div>
                                     <?php if ($this->serviceContractUpgradable() === true): ?>
                                 </a>
@@ -93,7 +93,7 @@ class Status_Widget extends Widget
     {
         $option = $this->get_settings('status_backup_interval');
         
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Kon de laatste backup datum niet ophalen', 'tempel-settings') . '</span>';
+        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve the last backup date', 'tempel-settings') . '</span>';
         
         $time_now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
         
@@ -120,7 +120,7 @@ class Status_Widget extends Widget
         ];
         $option = $this->get_settings('status_last_checkup_date');
         
-        if (is_wp_error($option) || empty($option)) return ['error' => '<span class="tmpl_widget__error">' . __('Kon de laatste checkup datum niet ophalen', 'tempel-settings') . '</span>'];
+        if (is_wp_error($option) || empty($option)) return ['error' => '<span class="tmpl_widget__error">' . __('Could not retrieve the last checkup date', 'tempel-settings') . '</span>'];
         
         $lastCheckup['date'] = $option;
         
@@ -169,7 +169,7 @@ class Status_Widget extends Widget
     {
         $option = $this->get_settings('status_service_contract_tier');
         
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Kon het pakket niet ophalen', 'tempel-settings') . '</span>';
+        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve support tier', 'tempel-settings') . '</span>';
         
         $option = ucfirst($option);
         

@@ -2,7 +2,7 @@
   "name": "studiotempel",
   "description": "Plugin that adds convenient settings to the WordPress admin area.",
   "type": "module",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "scripts": {
     "bootstrap": "wpackio-scripts bootstrap",
     "build": "wpackio-scripts build",

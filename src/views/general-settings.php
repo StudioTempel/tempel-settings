@@ -27,9 +27,6 @@ class General_Settings extends Page
                                     <a href="/wp-admin/admin.php?page=tempel-widget-settings" class="nav__item">
                                         <?php _e('Widget Settings', 'tempel-settings'); ?>
                                     </a>
-                                    <!--                                    <a href="/wp-admin/admin.php?page=tempel-login-settings" class="nav__item">-->
-                                    <?php //_e('Login Settings', 'tempel-settings'); ?>
-                                    <!--                                    </a>-->
                                 </div>
                             </div>
                         </div>

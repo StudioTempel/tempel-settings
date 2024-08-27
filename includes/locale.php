@@ -4,8 +4,8 @@ namespace Tempel;
 
 class Locale
 {
-    public function load_textdomain() : void
+    public function __construct()
     {
-        load_plugin_textdomain('tempel-settings', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+        load_plugin_textdomain('tempel-settings', false, TMPL_PLUGIN_LANG_PATH);
     }
 }

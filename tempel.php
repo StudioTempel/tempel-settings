@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.0.9
+ * Version:           2.1.1
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -40,14 +40,15 @@ define('TMPL_PLUGIN_VENDOR_URL', TMPL_PLUGIN_DIST_URL . 'vendor/');
 define('TMPL_PLUGIN_CACHE_URL', TMPL_PLUGIN_DIST_URL . 'cache/');
 define('TMPL_PLUGIN_CACHE_PATH', plugin_dir_path(__FILE__) . 'dist/cache/');
 
+define('TMPL_PLUGIN_LANG_PATH', dirname(plugin_basename(__FILE__)) . '/languages');
+
 class TempelSettings
 {
-    
     public $admin;
     
-    public $public;
+    public $settings;
     
-    public $updateChecker;
+    public $update_checker;
     
     static $instance;
     
@@ -58,13 +59,12 @@ class TempelSettings
         $this->load_dependencies();
         $this->set_locale();
         
-        
         if (is_admin()) {
             $this->admin = new Admin();
-            $this->updateChecker = new Updater();
+            $this->update_checker = new Updater();
         }
         
-        $this->public = Settings::load_settings();
+        $this->settings = Settings::load_settings();
     }
     
     private function load_dependencies()
@@ -83,7 +83,7 @@ class TempelSettings
     private function set_locale()
     {
         $plugin_i18n = new Locale();
-        add_action('plugins_loaded', array($plugin_i18n, 'load_textdomain'));
+        add_action('plugins_loaded', array($plugin_i18n, 'load_plugin_textdomain'));
     }
     
     private function setup()

@@ -42,7 +42,7 @@ class Conversion_Widget extends Widget
                             echo 'Conversie';
                         } ?>
                     </div>
-                    <div class="widget__scope">Afgelopen 30 dagen</div>
+                    <div class="widget__scope"><?php _e('Last 30 days', 'tempel-settings'); ?></div>
                 </div>
                 <div class="widget__content">
                     <div class="widget__content__inner">
@@ -63,7 +63,7 @@ class Conversion_Widget extends Widget
                             <?php endforeach; ?>
                         <?php else: ?>
                             <div class="widget__content__item">
-                                <div class="item__label">Geen formulieren gevonden</div>
+                                <div class="item__label"><?php _e('No forms selected', 'tempel-settings'); ?></div>
                             </div>
                         <?php endif; ?>
                     </div>

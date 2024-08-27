@@ -58,15 +58,14 @@ class Support_Widget extends Widget
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
-                            <p>Geen veelgestelde vragen gevonden.</p>
+                            <p><?php _e('No FAQ items found', 'tempel-settings'); ?></p>
                         <?php endif; ?>
                     </div>
                 </div>
                 <div class="widget__footer">
-                    <a href="<?= $this->get_faq_link(); ?>" rel="nofollow" target="_blank">Bekijk
-                        alles</a>
+                    <a href="<?= $this->get_faq_link(); ?>" rel="nofollow" target="_blank"><?php _e('View all', 'tempel-settings'); ?></a>
                     <a href="https://studiotempel.nl/contact" target="_blank" rel="nofollow"
-                       class="widget__button widget__button__yellow">Stel een vraag</a>
+                       class="widget__button widget__button__yellow"><?php _e('Ask a question', 'tempel-settings'); ?></a>
                 </div>
             </div>
         </div>
@@ -78,7 +77,7 @@ class Support_Widget extends Widget
         $faq_link = $this->get_settings('support_faq_link');
         
         if (empty($faq_link) || !filter_var($faq_link, FILTER_VALIDATE_URL)) {
-            return TMPL_DEFAULT_FAQ_LINK;
+            return 'https://studiotempel.nl/faq';
         }
         
         return $faq_link;
@@ -89,7 +88,7 @@ class Support_Widget extends Widget
         $contact_link = $this->get_settings('support_ticket_link');
         
         if (empty($contact_link) || !filter_var($contact_link, FILTER_VALIDATE_URL)) {
-            return TMPL_DEFAULT_CONTACT_LINK;
+            return 'https://studiotempel.nl/contact';
         }
         
         return $contact_link;

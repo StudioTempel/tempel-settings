@@ -87,6 +87,13 @@ body.folded {
 
         div.wp-menu-image {
           height: 42px !important;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          img {
+            padding: 0;
+          }
 
           &:before {
             padding: 12px 0;
@@ -117,6 +124,10 @@ body.folded {
               .wp-menu-image {
                 &::before {
                   color: $admin-sidebar-active-icon;
+                }
+
+                img {
+                  filter: invert(1);
                 }
               }
             }

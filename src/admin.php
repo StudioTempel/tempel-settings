@@ -89,6 +89,7 @@ if (!class_exists('Admin')) {
                 'toplevel_page_tempel-settings',
                 'tempel-settings_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-login-settings',
+                'tempel-settings_page_tempel-test-settings',
             );
             
             if (in_array($screen->id, $screens)) {

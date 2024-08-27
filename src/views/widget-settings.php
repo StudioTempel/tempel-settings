@@ -128,7 +128,7 @@ class Widget_Settings extends Page
                                                             name="tmpl_widget_settings[status_safeupdate_day]"
                                                             id="status_safeupdate_day"
                                                     >
-                                                        <option value=""><?php _e('Selecteer de dag waarop de safeupdate plaatsvind', 'tempel-settings'); ?></option>
+                                                        <option value=""><?php _e('What day do the automatic updates take place', 'tempel-settings'); ?></option>
                                                         <?php foreach ($days as $key => $day): ?>
                                                             <option value="<?= $key; ?>"
                                                                 <?php if ($this->get_settings('status_safeupdate_day') === $key): ?>

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-27 09:15+0000\n"
+"POT-Creation-Date: 2024-08-27 08:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -19,10 +19,6 @@ msgstr ""
 #: src/views/general-settings.php:45
 msgid ""
 "A collection of general settings to disable unused features of Wordpress."
-msgstr ""
-
-#: src/widgets/support-widget.php:68
-msgid "Ask a question"
 msgstr ""
 
 #: src/views/widget-settings.php:152
@@ -43,18 +39,6 @@ msgstr ""
 
 #: src/widgets/status-widget.php:141
 msgid "Could not retrieve last update date"
-msgstr ""
-
-#: src/widgets/status-widget.php:172
-msgid "Could not retrieve support tier"
-msgstr ""
-
-#: src/widgets/status-widget.php:96
-msgid "Could not retrieve the last backup date"
-msgstr ""
-
-#: src/widgets/status-widget.php:123
-msgid "Could not retrieve the last checkup date"
 msgstr ""
 
 #: src/views/general-settings.php:78
@@ -106,33 +90,20 @@ msgstr ""
 msgid "https://studiotempel.nl"
 msgstr ""
 
-#: src/widgets/conversion-widget.php:45
-msgid "Last 30 days"
+#: src/widgets/status-widget.php:96
+msgid "Kon de laatste backup datum niet ophalen"
 msgstr ""
 
-#: src/widgets/status-widget.php:50
-msgid "Last backup"
+#: src/widgets/status-widget.php:123
+msgid "Kon de laatste checkup datum niet ophalen"
 msgstr ""
 
-#: src/widgets/status-widget.php:56 src/widgets/status-widget.php:60
-#: src/widgets/status-widget.php:64
-msgid "Last checkup"
-msgstr ""
-
-#: src/widgets/status-widget.php:46
-msgid "Last round of updates"
+#: src/widgets/status-widget.php:172
+msgid "Kon het pakket niet ophalen"
 msgstr ""
 
 #: src/views/widget-settings.php:110
 msgid "Monday"
-msgstr ""
-
-#: src/widgets/support-widget.php:61
-msgid "No FAQ items found"
-msgstr ""
-
-#: src/widgets/conversion-widget.php:66
-msgid "No forms selected"
 msgstr ""
 
 #: src/widgets/status-widget.php:106
@@ -163,6 +134,10 @@ msgstr ""
 msgid "Select forms to show in widget"
 msgstr ""
 
+#: src/views/widget-settings.php:131
+msgid "Selecteer de dag waarop de safeupdate plaatsvind"
+msgstr ""
+
 #: src/views/widget-settings.php:268
 msgid "Service contract info link"
 msgstr ""
@@ -173,10 +148,6 @@ msgstr ""
 
 #: src/views/widget-settings.php:245
 msgid "Service contract tier"
-msgstr ""
-
-#: src/widgets/status-widget.php:78
-msgid "Servicecontract"
 msgstr ""
 
 #: src/views/widget-settings.php:48
@@ -231,16 +202,8 @@ msgstr ""
 msgid "Tuesday"
 msgstr ""
 
-#: src/widgets/support-widget.php:66
-msgid "View all"
-msgstr ""
-
 #: src/views/widget-settings.php:112
 msgid "Wednesday"
-msgstr ""
-
-#: src/views/widget-settings.php:131
-msgid "What day do the automatic updates take place"
 msgstr ""
 
 #: src/views/general-settings.php:28 src/views/widget-settings.php:22
