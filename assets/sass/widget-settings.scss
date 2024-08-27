@@ -1,7 +1,5 @@
 .tmpl_settings__wrap {
   .tmpl_settings__page {
-    //background-color: #f4f4ec;
-
     .tmpl_settings__inner {
       .settings__header {
         padding: 50px 0 0 0;
@@ -27,7 +25,6 @@
             font-weight: 700;
             margin: 0 0 30px 0;
             color: #000;
-            //color: #fff;
           }
 
           .header__nav {
@@ -86,10 +83,6 @@
                 border: solid #eef0f1;
                 border-width: 2px 0 0 0;
                 margin: 0;
-
-                //&:last-child {
-                //  border-bottom-width: 2px;
-                //}
 
                 .settings__field__inner {
                   padding: 20px 0;
@@ -168,50 +161,6 @@
                       outline: none;
                     }
                   }
-
-                  label.checkbox__switch {
-                    display: inline-block;
-                    height: 25px;
-                    position: relative;
-                    width: 50px;
-
-                    input[type="checkbox"] {
-                      display: none;
-                    }
-
-                    span.checkbox__switch__slider {
-                      background-color: #ddd;
-                      bottom: 0;
-                      cursor: pointer;
-                      left: 0;
-                      position: absolute;
-                      right: 0;
-                      top: 0;
-                      transition: 0.4s;
-                      border-radius: 34px;
-
-                      &::before {
-                        background-color: #fff;
-                        bottom: 4px;
-                        content: "";
-                        height: 17px;
-                        left: 4px;
-                        position: absolute;
-                        transition: 0.4s;
-                        width: 17px;
-                        border-radius: 50%;
-                      }
-                    }
-
-                    input[type="checkbox"]:checked
-                      + span.checkbox__switch__slider {
-                      background-color: #2271b1;
-
-                      &::before {
-                        transform: translateX(23px);
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -220,11 +169,54 @@
       }
     }
   }
+
+  label.checkbox__switch {
+    display: inline-block;
+    height: 25px;
+    position: relative;
+    width: 50px;
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    span.checkbox__switch__slider {
+      background-color: #ddd;
+      bottom: 0;
+      cursor: pointer;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+      transition: 0.4s;
+      border-radius: 34px;
+
+      &::before {
+        background-color: #fff;
+        bottom: 4px;
+        content: "";
+        height: 17px;
+        left: 4px;
+        position: absolute;
+        transition: 0.4s;
+        width: 17px;
+        border-radius: 50%;
+      }
+    }
+
+    input[type="checkbox"]:checked + span.checkbox__switch__slider {
+      background-color: #2271b1;
+
+      &::before {
+        transform: translateX(23px);
+      }
+    }
+  }
 }
 
-body.tempel-settings_page_tempel-widget-settings,
-body.tempel-settings_page_tempel-login-settings,
-body.toplevel_page_tempel-settings {
+body.wp-admin.tempel-settings_page_tempel-widget-settings,
+body.wp-admin.tempel-settings_page_tempel-login-settings,
+body.wp-admin.toplevel_page_tempel-settings {
   background-color: #fff !important;
 
   #wpcontent {

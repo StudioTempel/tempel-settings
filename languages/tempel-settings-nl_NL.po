@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-19 20:38+0000\n"
-"PO-Revision-Date: 2024-06-24 19:40+0000\n"
+"PO-Revision-Date: 2024-08-27 09:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: Nederlands\n"
 "Language: nl_NL\n"
@@ -12,78 +12,94 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Domain: tempel-settings"
 
-#: admin/pages/general-settings-page.php:48
+#: src/views/general-settings.php:45
 msgid ""
 "A collection of general settings to disable unused features of Wordpress."
 msgstr ""
 "Een aantal algemene instellingen om ongebruikte Wordpress functionaliteiten "
 "uit te schakelen."
 
-#: admin/pages/widget-settings.php:141
+#: src/widgets/support-widget.php:68
+msgid "Ask a question"
+msgstr "Stel een vraag"
+
+#: src/views/widget-settings.php:152
 msgid "Backup interval"
 msgstr "Backup-interval"
 
-#: admin/pages/widget-settings.php:340
+#: src/views/widget-settings.php:362
 msgid "Clear"
 msgstr "Leeg"
 
-#: admin/pages/widget-settings.php:334
+#: src/views/widget-settings.php:356
 msgid "Clear FAQ Cache"
 msgstr "Leeg FAQ Cache"
 
-#: admin/pages/login-settings.php:45
-msgid "Content"
-msgstr "Inhoud"
-
-#: admin/pages/widget-settings.php:48
+#: src/views/widget-settings.php:45
 msgid "Conversion Widget"
 msgstr "Conversie Widget"
 
-#: admin/pages/general-settings-page.php:81
+#: src/widgets/status-widget.php:141
+msgid "Could not retrieve last update date"
+msgstr "Kon de laatste update datum niet ophalen"
+
+#: src/widgets/status-widget.php:172
+msgid "Could not retrieve support tier"
+msgstr "Kon het servicecontract niet ophalen"
+
+#: src/widgets/status-widget.php:96
+msgid "Could not retrieve the last backup date"
+msgstr "Kon de laatste backup datum niet ophalen"
+
+#: src/widgets/status-widget.php:123
+msgid "Could not retrieve the last checkup date"
+msgstr "Kon de laatste checkup datum niet ophalen"
+
+#: src/views/general-settings.php:78
 msgid "Disable Comments"
 msgstr "Reacties uitschakelen"
 
-#: admin/pages/general-settings-page.php:104
+#: src/views/general-settings.php:101
 msgid "Disable the built in PT"
 msgstr "Schakel het ingebouwde post type uit"
 
-#: admin/pages/general-settings-page.php:58
+#: src/views/general-settings.php:55
 msgid "Enable Branding"
 msgstr "Branding inschakelen"
 
-#: admin/pages/general-settings-page.php:184
+#: src/views/general-settings.php:181
 msgid "Enable SVG Support & Sanitization"
 msgstr "SVG Support inschakelen"
 
-#: admin/pages/general-settings-page.php:161
+#: src/views/general-settings.php:158
 msgid "Enable Widgets"
 msgstr "Widgets inschakelen"
 
-#: admin/pages/general-settings-page.php:151
+#: src/views/general-settings.php:148
 msgid "Extra"
 msgstr "Extra"
 
-#: admin/pages/widget-settings.php:286
+#: src/views/widget-settings.php:308
 msgid "FAQ Link"
 msgstr "FAQ link"
 
-#: admin/pages/general-settings-page.php:45
+#: src/views/widget-settings.php:114
+msgid "Friday"
+msgstr "Vrijdag"
+
+#: src/views/general-settings.php:42
 msgid "General"
 msgstr "Algemeen"
 
-#: admin/pages/login-settings.php:25 admin/pages/general-settings-page.php:20
-#: admin/pages/general-settings-page.php:25 admin/pages/widget-settings.php:27
+#: src/views/general-settings.php:20 src/views/general-settings.php:25
+#: src/views/widget-settings.php:27
 msgid "General Settings"
 msgstr "Algemene instellingen"
 
-#: admin/pages/login-settings.php:59
-msgid "Get Login BG Image from Studiotempel.nl"
-msgstr "Login achtergrond afbeelding ophalen van studiotempel.nl"
-
-#: admin/pages/general-settings-page.php:127
+#: src/views/general-settings.php:124
 msgid "Hide Dashboard Widgets"
 msgstr "Dashboardwidgets verbergen"
 
@@ -91,66 +107,100 @@ msgstr "Dashboardwidgets verbergen"
 msgid "https://studiotempel.nl"
 msgstr "https://studiotempel.nl"
 
-#: admin/pages/login-settings.php:82
-msgid "Login Background Image"
-msgstr "Login achtergrond afbeelding"
+#: src/widgets/conversion-widget.php:45
+msgid "Last 30 days"
+msgstr "Laatste 30 dagen"
 
-#: admin/pages/login-settings.php:31
-msgid "Login Settings"
-msgstr "Login instellingen"
+#: src/widgets/status-widget.php:50
+msgid "Last backup"
+msgstr "Laatste backup"
 
-#: core/widgets/status_widget.php:100
+#: src/widgets/status-widget.php:56 src/widgets/status-widget.php:60
+#: src/widgets/status-widget.php:64
+msgid "Last checkup"
+msgstr "Laatste checkup"
+
+#: src/widgets/status-widget.php:46
+msgid "Last round of updates"
+msgstr "Laatste updates"
+
+#: src/views/widget-settings.php:110
+msgid "Monday"
+msgstr "Maandag"
+
+#: src/widgets/support-widget.php:61
+msgid "No FAQ items found"
+msgstr "Geen FAQ items gevonden"
+
+#: src/widgets/conversion-widget.php:66
+msgid "No forms selected"
+msgstr "Geen formulieren geselecteerd"
+
+#: src/widgets/status-widget.php:106
 msgid "Now"
 msgstr "Nu"
 
-#: admin/pages/widget-settings.php:211
-msgid "Package Type"
-msgstr "Pakket type"
-
-#: admin/pages/widget-settings.php:246
-msgid "Package URL"
-msgstr "Pakket link"
-
 #. Description of the plugin
-msgid "Plugin that compliments custom built themes produced by Studio Tempel"
+#| msgid ""
+#| "Plugin that compliments custom built themes produced by Studio Tempel"
+msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
 msgstr ""
 "Plugin die de custom thema's van Studiotempel complimenteert met extra "
 "instellingen"
 
-#: admin/pages/widget-settings.php:176
+#: src/views/widget-settings.php:187
 msgid "Reset checkup"
 msgstr "Reset controle"
 
-#: admin/pages/widget-settings.php:199
-msgid "Reset date"
-msgstr "Reset datum"
+#: src/views/widget-settings.php:123
+msgid "Safeupdate day"
+msgstr "Safeupdate dag"
 
-#: admin/pages/widget-settings.php:188
-msgid "Reset last update date"
-msgstr "Reset laatste update datum"
+#: src/views/widget-settings.php:115
+msgid "Saturday"
+msgstr "Zaterdag"
 
-#: admin/pages/general-settings-page.php:208
-#: admin/pages/widget-settings.php:354
+#: src/views/general-settings.php:205 src/views/widget-settings.php:376
 msgid "Save Settings"
 msgstr "Instellingen opslaan"
 
-#: admin/pages/widget-settings.php:62
-msgid "Selectable Forms"
-msgstr "Selecteerbare formulieren"
+#: src/views/widget-settings.php:59
+msgid "Select forms to show in widget"
+msgstr "Kies formulieren voor gebruik in de widget"
 
-#: admin/pages/widget-settings.php:51
+#: src/views/widget-settings.php:268
+msgid "Service contract info link"
+msgstr "Service contract info link"
+
+#: src/views/widget-settings.php:222
+msgid "Service contract is upgradable"
+msgstr "Is het servicecontract upgradebaar?"
+
+#: src/views/widget-settings.php:245
+msgid "Service contract tier"
+msgstr "Soort servicecontract"
+
+#: src/widgets/status-widget.php:78
+msgid "Servicecontract"
+msgstr "Servicecontract"
+
+#: src/views/widget-settings.php:48
 msgid "Settings for the conversion widget"
 msgstr "Instellingen voor de conversie widget"
 
-#: admin/pages/widget-settings.php:131
+#: src/views/widget-settings.php:102
 msgid "Settings for the status widget"
 msgstr "Instellingen voor de status widget"
 
-#: admin/pages/widget-settings.php:276
+#: src/views/widget-settings.php:298
 msgid "Settings for the support widget"
 msgstr "Instellingen voor de support widget"
 
-#: admin/pages/widget-settings.php:128
+#: src/views/widget-settings.php:199
+msgid "Show service contract"
+msgstr "Toon service contract"
+
+#: src/views/widget-settings.php:99
 msgid "Status Widget"
 msgstr "Status widget"
 
@@ -158,11 +208,15 @@ msgstr "Status widget"
 msgid "Studio Tempel"
 msgstr "Studio Tempel"
 
-#: admin/pages/widget-settings.php:310
+#: src/views/widget-settings.php:116
+msgid "Sunday"
+msgstr "Zondag"
+
+#: src/views/widget-settings.php:332
 msgid "Support Ticket Link"
 msgstr "Support ticket link"
 
-#: admin/pages/widget-settings.php:273
+#: src/views/widget-settings.php:295
 msgid "Support Widget"
 msgstr "Support widget"
 
@@ -170,20 +224,35 @@ msgstr "Support widget"
 msgid "Tempel settings"
 msgstr "Tempel Instellingen"
 
-#: core/widgets/status_widget.php:102
+#: src/views/widget-settings.php:113
+msgid "Thursday"
+msgstr "Donderdag"
+
+#: src/widgets/status-widget.php:108
 msgid "Today"
 msgstr "Vandaag"
 
-#: admin/pages/login-settings.php:93
-msgid "Upload"
-msgstr "Uploaden"
+#: src/views/widget-settings.php:111
+msgid "Tuesday"
+msgstr "Dinsdag"
 
-#: admin/pages/login-settings.php:20 admin/pages/login-settings.php:28
-#: admin/pages/general-settings-page.php:28 admin/pages/widget-settings.php:22
-#: admin/pages/widget-settings.php:30
+#: src/widgets/support-widget.php:66
+msgid "View all"
+msgstr "Bekijk alles"
+
+#: src/views/widget-settings.php:112
+msgid "Wednesday"
+msgstr "Woensdag"
+
+#: src/views/widget-settings.php:131
+msgid "What day do the automatic updates take place"
+msgstr "Op welke dag vinden de automatische updates plaats?"
+
+#: src/views/general-settings.php:28 src/views/widget-settings.php:22
+#: src/views/widget-settings.php:30
 msgid "Widget Settings"
 msgstr "Widget Instellingen"
 
-#: core/widgets/status_widget.php:98
+#: src/widgets/status-widget.php:104
 msgid "Yesterday"
 msgstr "Gisteren"

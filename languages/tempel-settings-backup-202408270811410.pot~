@@ -1,0 +1,216 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Tempel settings\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-08-27 08:08+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Domain: tempel-settings"
+
+#: src/views/general-settings.php:45
+msgid ""
+"A collection of general settings to disable unused features of Wordpress."
+msgstr ""
+
+#: src/views/widget-settings.php:152
+msgid "Backup interval"
+msgstr ""
+
+#: src/views/widget-settings.php:362
+msgid "Clear"
+msgstr ""
+
+#: src/views/widget-settings.php:356
+msgid "Clear FAQ Cache"
+msgstr ""
+
+#: src/views/widget-settings.php:45
+msgid "Conversion Widget"
+msgstr ""
+
+#: src/widgets/status-widget.php:141
+msgid "Could not retrieve last update date"
+msgstr ""
+
+#: src/widgets/status-widget.php:172
+msgid "Could not retrieve support tier"
+msgstr ""
+
+#: src/widgets/status-widget.php:96
+msgid "Could not retrieve the last backup date"
+msgstr ""
+
+#: src/widgets/status-widget.php:123
+msgid "Could not retrieve the last checkup date"
+msgstr ""
+
+#: src/views/general-settings.php:78
+msgid "Disable Comments"
+msgstr ""
+
+#: src/views/general-settings.php:101
+msgid "Disable the built in PT"
+msgstr ""
+
+#: src/views/general-settings.php:55
+msgid "Enable Branding"
+msgstr ""
+
+#: src/views/general-settings.php:181
+msgid "Enable SVG Support & Sanitization"
+msgstr ""
+
+#: src/views/general-settings.php:158
+msgid "Enable Widgets"
+msgstr ""
+
+#: src/views/general-settings.php:148
+msgid "Extra"
+msgstr ""
+
+#: src/views/widget-settings.php:308
+msgid "FAQ Link"
+msgstr ""
+
+#: src/views/widget-settings.php:114
+msgid "Friday"
+msgstr ""
+
+#: src/views/general-settings.php:42
+msgid "General"
+msgstr ""
+
+#: src/views/general-settings.php:20 src/views/general-settings.php:25
+#: src/views/widget-settings.php:27
+msgid "General Settings"
+msgstr ""
+
+#: src/views/general-settings.php:124
+msgid "Hide Dashboard Widgets"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://studiotempel.nl"
+msgstr ""
+
+#: src/views/widget-settings.php:110
+msgid "Monday"
+msgstr ""
+
+#: src/widgets/status-widget.php:106
+msgid "Now"
+msgstr ""
+
+#. Description of the plugin
+msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
+msgstr ""
+
+#: src/views/widget-settings.php:187
+msgid "Reset checkup"
+msgstr ""
+
+#: src/views/widget-settings.php:123
+msgid "Safeupdate day"
+msgstr ""
+
+#: src/views/widget-settings.php:115
+msgid "Saturday"
+msgstr ""
+
+#: src/views/general-settings.php:205 src/views/widget-settings.php:376
+msgid "Save Settings"
+msgstr ""
+
+#: src/views/widget-settings.php:59
+msgid "Select forms to show in widget"
+msgstr ""
+
+#: src/views/widget-settings.php:131
+msgid "Selecteer de dag waarop de safeupdate plaatsvind"
+msgstr ""
+
+#: src/views/widget-settings.php:268
+msgid "Service contract info link"
+msgstr ""
+
+#: src/views/widget-settings.php:222
+msgid "Service contract is upgradable"
+msgstr ""
+
+#: src/views/widget-settings.php:245
+msgid "Service contract tier"
+msgstr ""
+
+#: src/views/widget-settings.php:48
+msgid "Settings for the conversion widget"
+msgstr ""
+
+#: src/views/widget-settings.php:102
+msgid "Settings for the status widget"
+msgstr ""
+
+#: src/views/widget-settings.php:298
+msgid "Settings for the support widget"
+msgstr ""
+
+#: src/views/widget-settings.php:199
+msgid "Show service contract"
+msgstr ""
+
+#: src/views/widget-settings.php:99
+msgid "Status Widget"
+msgstr ""
+
+#. Author of the plugin
+msgid "Studio Tempel"
+msgstr ""
+
+#: src/views/widget-settings.php:116
+msgid "Sunday"
+msgstr ""
+
+#: src/views/widget-settings.php:332
+msgid "Support Ticket Link"
+msgstr ""
+
+#: src/views/widget-settings.php:295
+msgid "Support Widget"
+msgstr ""
+
+#. Name of the plugin
+msgid "Tempel settings"
+msgstr ""
+
+#: src/views/widget-settings.php:113
+msgid "Thursday"
+msgstr ""
+
+#: src/widgets/status-widget.php:108
+msgid "Today"
+msgstr ""
+
+#: src/views/widget-settings.php:111
+msgid "Tuesday"
+msgstr ""
+
+#: src/views/widget-settings.php:112
+msgid "Wednesday"
+msgstr ""
+
+#: src/views/general-settings.php:28 src/views/widget-settings.php:22
+#: src/views/widget-settings.php:30
+msgid "Widget Settings"
+msgstr ""
+
+#: src/widgets/status-widget.php:104
+msgid "Yesterday"
+msgstr ""

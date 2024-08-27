@@ -8,7 +8,7 @@ body.login {
   place-items: center;
   min-height: 100vh;
   max-height: 100vh;
-  background-image: url("../images/login-screen-bg.webp");
+  background-image: url("../images/login-bg.webp");
   background-size: cover;
   font-family: "aktiv-grotesk", sans-serif;
   overflow: hidden;
@@ -59,6 +59,9 @@ body.login {
   padding: 0 25px 30px 25px;
   background: #fff;
   border-radius: 0 0 8px 8px;
+
+  display: flex;
+  flex-direction: column;
 
   > h1 {
     display: none;
@@ -169,7 +172,7 @@ p#nav {
 }
 
 .wpdef-2fa-form {
-  padding: 0 0 50px 0 !important;
+  //padding: 0 0 50px 0 !important;
 }
 
 #login .wpdef-2fa-form .wpdef-2fa-label.wpdef-2fa-label {
@@ -214,7 +217,19 @@ p#nav {
     }
   }
 
+  p.notification {
+    margin-top: 0;
+    order: -1;
+    border: solid #f3f438;
+    border-width: 0 0 0 4px;
+    padding: 15px 10px;
+    margin-bottom: 20px;
+  }
+
   #wrap-nav {
+    order: 999;
+    margin: 0;
+
     p {
       margin: 0;
       padding: 0;
@@ -233,14 +248,18 @@ p#nav {
   }
 }
 
-.wpdef-2fa-email-resend input {
-  color: #000 !important;
+.wpdef-2fa-email-resend {
+  margin-top: 32px;
+  input {
+    color: #000 !important;
+  }
 }
 
 #login_error {
   border: solid red;
   border-width: 0 0 0 4px;
   padding: 15px 10px;
+  margin-bottom: 20px;
 
   p {
     margin: 0;

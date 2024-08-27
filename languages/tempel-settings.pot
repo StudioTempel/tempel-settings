@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-24 19:32+0000\n"
+"POT-Creation-Date: 2024-08-27 09:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,73 +16,89 @@ msgstr ""
 "X-Loco-Version: 2.6.10; wp-6.5.4\n"
 "X-Domain: tempel-settings"
 
-#: admin/pages/general-settings-page.php:48
+#: src/views/general-settings.php:45
 msgid ""
 "A collection of general settings to disable unused features of Wordpress."
 msgstr ""
 
-#: admin/pages/widget-settings.php:141
+#: src/widgets/support-widget.php:68
+msgid "Ask a question"
+msgstr ""
+
+#: src/views/widget-settings.php:152
 msgid "Backup interval"
 msgstr ""
 
-#: admin/pages/widget-settings.php:340
+#: src/views/widget-settings.php:362
 msgid "Clear"
 msgstr ""
 
-#: admin/pages/widget-settings.php:334
+#: src/views/widget-settings.php:356
 msgid "Clear FAQ Cache"
 msgstr ""
 
-#: admin/pages/login-settings.php:45
-msgid "Content"
-msgstr ""
-
-#: admin/pages/widget-settings.php:48
+#: src/views/widget-settings.php:45
 msgid "Conversion Widget"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:81
+#: src/widgets/status-widget.php:141
+msgid "Could not retrieve last update date"
+msgstr ""
+
+#: src/widgets/status-widget.php:172
+msgid "Could not retrieve support tier"
+msgstr ""
+
+#: src/widgets/status-widget.php:96
+msgid "Could not retrieve the last backup date"
+msgstr ""
+
+#: src/widgets/status-widget.php:123
+msgid "Could not retrieve the last checkup date"
+msgstr ""
+
+#: src/views/general-settings.php:78
 msgid "Disable Comments"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:104
+#: src/views/general-settings.php:101
 msgid "Disable the built in PT"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:58
+#: src/views/general-settings.php:55
 msgid "Enable Branding"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:184
+#: src/views/general-settings.php:181
 msgid "Enable SVG Support & Sanitization"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:161
+#: src/views/general-settings.php:158
 msgid "Enable Widgets"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:151
+#: src/views/general-settings.php:148
 msgid "Extra"
 msgstr ""
 
-#: admin/pages/widget-settings.php:286
+#: src/views/widget-settings.php:308
 msgid "FAQ Link"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:45
+#: src/views/widget-settings.php:114
+msgid "Friday"
+msgstr ""
+
+#: src/views/general-settings.php:42
 msgid "General"
 msgstr ""
 
-#: admin/pages/login-settings.php:25 admin/pages/general-settings-page.php:20
-#: admin/pages/general-settings-page.php:25 admin/pages/widget-settings.php:27
+#: src/views/general-settings.php:20 src/views/general-settings.php:25
+#: src/views/widget-settings.php:27
 msgid "General Settings"
 msgstr ""
 
-#: admin/pages/login-settings.php:59
-msgid "Get Login BG Image from Studiotempel.nl"
-msgstr ""
-
-#: admin/pages/general-settings-page.php:127
+#: src/views/general-settings.php:124
 msgid "Hide Dashboard Widgets"
 msgstr ""
 
@@ -90,64 +106,96 @@ msgstr ""
 msgid "https://studiotempel.nl"
 msgstr ""
 
-#: admin/pages/login-settings.php:82
-msgid "Login Background Image"
+#: src/widgets/conversion-widget.php:45
+msgid "Last 30 days"
 msgstr ""
 
-#: admin/pages/login-settings.php:31
-msgid "Login Settings"
+#: src/widgets/status-widget.php:50
+msgid "Last backup"
 msgstr ""
 
-#: core/widgets/status_widget.php:100
+#: src/widgets/status-widget.php:56 src/widgets/status-widget.php:60
+#: src/widgets/status-widget.php:64
+msgid "Last checkup"
+msgstr ""
+
+#: src/widgets/status-widget.php:46
+msgid "Last round of updates"
+msgstr ""
+
+#: src/views/widget-settings.php:110
+msgid "Monday"
+msgstr ""
+
+#: src/widgets/support-widget.php:61
+msgid "No FAQ items found"
+msgstr ""
+
+#: src/widgets/conversion-widget.php:66
+msgid "No forms selected"
+msgstr ""
+
+#: src/widgets/status-widget.php:106
 msgid "Now"
 msgstr ""
 
-#: admin/pages/widget-settings.php:211
-msgid "Package Type"
-msgstr ""
-
-#: admin/pages/widget-settings.php:246
-msgid "Package URL"
-msgstr ""
-
 #. Description of the plugin
-msgid "Plugin that compliments custom built themes produced by Studio Tempel"
+msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
 msgstr ""
 
-#: admin/pages/widget-settings.php:176
+#: src/views/widget-settings.php:187
 msgid "Reset checkup"
 msgstr ""
 
-#: admin/pages/widget-settings.php:199
-msgid "Reset date"
+#: src/views/widget-settings.php:123
+msgid "Safeupdate day"
 msgstr ""
 
-#: admin/pages/widget-settings.php:188
-msgid "Reset last update date"
+#: src/views/widget-settings.php:115
+msgid "Saturday"
 msgstr ""
 
-#: admin/pages/general-settings-page.php:208
-#: admin/pages/widget-settings.php:354
+#: src/views/general-settings.php:205 src/views/widget-settings.php:376
 msgid "Save Settings"
 msgstr ""
 
-#: admin/pages/widget-settings.php:62
-msgid "Selectable Forms"
+#: src/views/widget-settings.php:59
+msgid "Select forms to show in widget"
 msgstr ""
 
-#: admin/pages/widget-settings.php:51
+#: src/views/widget-settings.php:268
+msgid "Service contract info link"
+msgstr ""
+
+#: src/views/widget-settings.php:222
+msgid "Service contract is upgradable"
+msgstr ""
+
+#: src/views/widget-settings.php:245
+msgid "Service contract tier"
+msgstr ""
+
+#: src/widgets/status-widget.php:78
+msgid "Servicecontract"
+msgstr ""
+
+#: src/views/widget-settings.php:48
 msgid "Settings for the conversion widget"
 msgstr ""
 
-#: admin/pages/widget-settings.php:131
+#: src/views/widget-settings.php:102
 msgid "Settings for the status widget"
 msgstr ""
 
-#: admin/pages/widget-settings.php:276
+#: src/views/widget-settings.php:298
 msgid "Settings for the support widget"
 msgstr ""
 
-#: admin/pages/widget-settings.php:128
+#: src/views/widget-settings.php:199
+msgid "Show service contract"
+msgstr ""
+
+#: src/views/widget-settings.php:99
 msgid "Status Widget"
 msgstr ""
 
@@ -155,11 +203,15 @@ msgstr ""
 msgid "Studio Tempel"
 msgstr ""
 
-#: admin/pages/widget-settings.php:310
+#: src/views/widget-settings.php:116
+msgid "Sunday"
+msgstr ""
+
+#: src/views/widget-settings.php:332
 msgid "Support Ticket Link"
 msgstr ""
 
-#: admin/pages/widget-settings.php:273
+#: src/views/widget-settings.php:295
 msgid "Support Widget"
 msgstr ""
 
@@ -167,20 +219,35 @@ msgstr ""
 msgid "Tempel settings"
 msgstr ""
 
-#: core/widgets/status_widget.php:102
+#: src/views/widget-settings.php:113
+msgid "Thursday"
+msgstr ""
+
+#: src/widgets/status-widget.php:108
 msgid "Today"
 msgstr ""
 
-#: admin/pages/login-settings.php:93
-msgid "Upload"
+#: src/views/widget-settings.php:111
+msgid "Tuesday"
 msgstr ""
 
-#: admin/pages/login-settings.php:20 admin/pages/login-settings.php:28
-#: admin/pages/general-settings-page.php:28 admin/pages/widget-settings.php:22
-#: admin/pages/widget-settings.php:30
+#: src/widgets/support-widget.php:66
+msgid "View all"
+msgstr ""
+
+#: src/views/widget-settings.php:112
+msgid "Wednesday"
+msgstr ""
+
+#: src/views/widget-settings.php:131
+msgid "What day do the automatic updates take place"
+msgstr ""
+
+#: src/views/general-settings.php:28 src/views/widget-settings.php:22
+#: src/views/widget-settings.php:30
 msgid "Widget Settings"
 msgstr ""
 
-#: core/widgets/status_widget.php:98
+#: src/widgets/status-widget.php:104
 msgid "Yesterday"
 msgstr ""
