@@ -36,7 +36,7 @@ class Branding
     {
         if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
             if ($text == 'Je wachtwoord vergeten?') {
-                $text = 'Vergeten?';
+                $text = 'Wachtwoord vergeten?';
             }
             return $text;
         }

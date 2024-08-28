@@ -1,21 +1,7 @@
 import fs from "fs";
 import archiver from "archiver";
 
-const inputGlobArray = [
-  "**/*.php",
-  "admin/**/*",
-  "helpers/**/*",
-  "includes/**/*",
-  "vendor/**/*",
-  "public/**/*",
-  "dist/**/*",
-  "languages/**/*",
-  "*.md",
-  "LICENSE",
-];
-
-const version = "2.1.1";
-const filename = `tempel-settings-${version}.zip`;
+const filename = `tempel-settings.zip`;
 
 const output = fs.createWriteStream("build/" + filename);
 const archive = archiver("zip", {
