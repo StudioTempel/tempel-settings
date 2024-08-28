@@ -28,6 +28,7 @@ class Branding
         // add_action('login_footer', array($this, 'add_script_to_login'));
         add_action('login_header', [$this, 'add_header_to_login']);
         add_filter('gettext', [$this, 'change_lost_password_text']);
+        add_filter('gettext', [$this, 'change_new_password_text']);
 //        add_action('login_enqueue_scripts', [$this, 'add_background_image_to_login']);
     }
     
@@ -36,6 +37,18 @@ class Branding
         if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
             if ($text == 'Je wachtwoord vergeten?') {
                 $text = 'Vergeten?';
+            }
+            return $text;
+        }
+        
+        return $text;
+    }
+    
+    function change_new_password_text($text)
+    {
+        if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
+            if ($text == 'Nieuw wachtwoord aanmaken') {
+                $text = 'Verzend';
             }
             return $text;
         }

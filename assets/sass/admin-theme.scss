@@ -111,14 +111,42 @@ body.folded {
           background: $admin-sidebar-separator;
         }
 
+        li.opensub {
+          div.wp-menu-image {
+            &::before {
+              color: $admin-sidebar-icon-hvr;
+            }
+          }
+        }
+
         li {
+          &.menu-top,
+          &.opensub {
+            &:hover {
+              background-color: $admin-sidebar-submenu-bg;
+              color: $admin-sidebar-txt-hvr;
+
+              &::after {
+                border-right-color: $admin-sidebar-txt-hvr;
+                display: none;
+              }
+
+              .wp-menu-image {
+                &::before {
+                  color: $admin-sidebar-txt-hvr;
+                }
+              }
+            }
+          }
+
           &.wp-has-current-submenu {
             a.wp-has-current-submenu {
               background: $admin-sidebar-active-bg;
               color: $admin-sidebar-active-txt;
 
               &::after {
-                border-right-color: $admin-sidebar-active-arrow;
+                border-right-color: $admin-sidebar-active-bg;
+                display: none;
               }
 
               .wp-menu-image {
@@ -189,7 +217,19 @@ body.folded {
         .ab-top-menu {
           > li {
             > .ab-item {
-              &:focus {
+              background: transparent;
+              color: $admin-sidebar-txt;
+
+              .ab-label {
+                color: $admin-sidebar-txt;
+              }
+
+              &::before {
+                color: $admin-sidebar-icon;
+              }
+
+              &:focus,
+              &:hover {
                 background: transparent !important;
                 color: #f3f438;
 
@@ -214,14 +254,14 @@ body.folded {
               &:hover,
               &:focus {
                 background: transparent !important;
-                color: #f3f438;
+                color: #f3f438 !important;
 
                 &::before {
-                  color: #f3f438;
+                  color: #f3f438 !important;
                 }
 
                 .ab-label {
-                  color: #f3f438;
+                  color: #f3f438 !important;
                 }
               }
             }
@@ -296,6 +336,10 @@ body.folded {
   border: none !important;
   box-shadow: 0 2px 0 #e6e6e6;
   border-radius: 4px;
+
+  &:only-child {
+    margin-bottom: 0;
+  }
 }
 
 .notice {

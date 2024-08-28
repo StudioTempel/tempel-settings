@@ -145,6 +145,7 @@ class Conversion_Widget extends Widget
         // Set up search criteria
         $search_criteria = array(
             'status'        => 'active',
+            'trash'         => false,
             'field_filters' => array(
                 array(
                     'key'   => 'date_created',

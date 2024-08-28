@@ -14,7 +14,8 @@ const inputGlobArray = [
   "LICENSE",
 ];
 
-const filename = `tempel-settings.zip`;
+const version = "2.1.1";
+const filename = `tempel-settings-${version}.zip`;
 
 const output = fs.createWriteStream("build/" + filename);
 const archive = archiver("zip", {
@@ -46,13 +47,15 @@ archive.on("error", function (err) {
 
 archive.pipe(output);
 
-archive.directory("dist/", "dist");
-archive.directory("includes/", "includes");
-archive.directory("vendor/", "vendor");
-archive.directory("languages/", "languages");
-archive.directory("src/", "src");
+archive.directory("tempel-settings", "/");
 
-archive.file("tempel.php", { name: "tempel.php" });
-archive.file("README.md", { name: "README.md" });
+archive.directory("dist/", "tempel-settings/dist");
+archive.directory("includes/", "tempel-settings/includes");
+archive.directory("vendor/", "tempel-settings/vendor");
+archive.directory("languages/", "tempel-settings/languages");
+archive.directory("src/", "tempel-settings/src");
+
+archive.file("tempel.php", { name: "tempel-settings/tempel.php" });
+archive.file("README.md", { name: "tempel-settings/README.md" });
 
 archive.finalize();
