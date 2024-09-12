@@ -7,7 +7,7 @@
  */
 
 
-namespace Tempel\Settings;
+namespace Tempel;
 
 class Remove_Dashboard_Widgets
 {
@@ -16,9 +16,8 @@ class Remove_Dashboard_Widgets
      */
     function __construct()
     {
-        add_action('wp_dashboard_setup', array($this, 'remove_dashboard_widgets'));
-        
-        add_action('admin_init', array($this, 'remove_all_dashboard_widgets'), 999);
+        add_action('wp_dashboard_setup', array($this, 'remove_core_widgets'), 999);
+        add_action('admin_init', array($this, 'remove_welcome_panel'), 999);
     }
     
     /**
@@ -26,7 +25,7 @@ class Remove_Dashboard_Widgets
      *
      * @since 1.0.0
      */
-    function remove_dashboard_widgets()
+    function remove_core_widgets()
     {
         global $wp_meta_boxes;
         unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);                    // Right Now
@@ -38,14 +37,11 @@ class Remove_Dashboard_Widgets
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']);                  // Recent Drafts
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);                        // WordPress blog
         unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);                      // Other WordPress News
+        unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_site_health']);                  // Site Health
     }
     
-    function remove_all_dashboard_widgets()
+    function remove_welcome_panel()
     {
-        global $wp_meta_boxes;
-        $dashboard = $wp_meta_boxes['dashboard'];
-//        foreach ($dashboard as $key => $value) {
-//            unset($wp_meta_boxes['dashboard'][$key]);
-//        }
+        remove_action('welcome_panel', 'wp_welcome_panel');
     }
 }

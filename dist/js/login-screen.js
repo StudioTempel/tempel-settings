@@ -1,1 +1,1 @@
-"use strict";jQuery(document).ready(function(e){e("#user_login").attr("placeholder","Emailadres"),e("#user_pass").attr("placeholder","Wachtwoord")});
+jQuery(document).ready(function(e){e("#user_login").attr("placeholder","Emailadres"),e("#user_pass").attr("placeholder","Wachtwoord")});

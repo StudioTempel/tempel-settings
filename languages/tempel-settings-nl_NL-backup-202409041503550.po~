@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-19 20:38+0000\n"
-"PO-Revision-Date: 2024-08-27 08:10+0000\n"
+"PO-Revision-Date: 2024-09-04 13:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: Nederlands\n"
 "Language: nl_NL\n"
@@ -12,90 +12,117 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Domain: tempel-settings"
 
 #: src/views/general-settings.php:45
+#: build/tempel-settings/src/views/general-settings.php:45
 msgid ""
 "A collection of general settings to disable unused features of Wordpress."
 msgstr ""
 "Een aantal algemene instellingen om ongebruikte Wordpress functionaliteiten "
 "uit te schakelen."
 
+#: src/widgets/support-widget.php:68
+#: build/tempel-settings/src/widgets/support-widget.php:68
+msgid "Ask a question"
+msgstr "Stel een vraag"
+
 #: src/views/widget-settings.php:152
+#: build/tempel-settings/src/views/widget-settings.php:152
 msgid "Backup interval"
 msgstr "Backup-interval"
 
 #: src/views/widget-settings.php:362
+#: build/tempel-settings/src/views/widget-settings.php:362
 msgid "Clear"
 msgstr "Leeg"
 
 #: src/views/widget-settings.php:356
+#: build/tempel-settings/src/views/widget-settings.php:356
 msgid "Clear FAQ Cache"
 msgstr "Leeg FAQ Cache"
 
 #: src/views/widget-settings.php:45
+#: build/tempel-settings/src/views/widget-settings.php:45
 msgid "Conversion Widget"
 msgstr "Conversie Widget"
 
 #: src/widgets/status-widget.php:141
+#: build/tempel-settings/src/widgets/status-widget.php:141
 msgid "Could not retrieve last update date"
 msgstr "Kon de laatste update datum niet ophalen"
 
 #: src/widgets/status-widget.php:172
+#: build/tempel-settings/src/widgets/status-widget.php:172
 msgid "Could not retrieve support tier"
 msgstr "Kon het servicecontract niet ophalen"
 
 #: src/widgets/status-widget.php:96
+#: build/tempel-settings/src/widgets/status-widget.php:96
 msgid "Could not retrieve the last backup date"
 msgstr "Kon de laatste backup datum niet ophalen"
 
 #: src/widgets/status-widget.php:123
+#: build/tempel-settings/src/widgets/status-widget.php:123
 msgid "Could not retrieve the last checkup date"
 msgstr "Kon de laatste checkup datum niet ophalen"
 
 #: src/views/general-settings.php:78
+#: build/tempel-settings/src/views/general-settings.php:78
 msgid "Disable Comments"
 msgstr "Reacties uitschakelen"
 
 #: src/views/general-settings.php:101
+#: build/tempel-settings/src/views/general-settings.php:101
 msgid "Disable the built in PT"
 msgstr "Schakel het ingebouwde post type uit"
 
 #: src/views/general-settings.php:55
+#: build/tempel-settings/src/views/general-settings.php:55
 msgid "Enable Branding"
 msgstr "Branding inschakelen"
 
 #: src/views/general-settings.php:181
+#: build/tempel-settings/src/views/general-settings.php:181
 msgid "Enable SVG Support & Sanitization"
 msgstr "SVG Support inschakelen"
 
 #: src/views/general-settings.php:158
+#: build/tempel-settings/src/views/general-settings.php:158
 msgid "Enable Widgets"
 msgstr "Widgets inschakelen"
 
 #: src/views/general-settings.php:148
+#: build/tempel-settings/src/views/general-settings.php:148
 msgid "Extra"
 msgstr "Extra"
 
 #: src/views/widget-settings.php:308
+#: build/tempel-settings/src/views/widget-settings.php:308
 msgid "FAQ Link"
 msgstr "FAQ link"
 
 #: src/views/widget-settings.php:114
+#: build/tempel-settings/src/views/widget-settings.php:114
 msgid "Friday"
 msgstr "Vrijdag"
 
 #: src/views/general-settings.php:42
+#: build/tempel-settings/src/views/general-settings.php:42
 msgid "General"
 msgstr "Algemeen"
 
 #: src/views/general-settings.php:20 src/views/general-settings.php:25
 #: src/views/widget-settings.php:27
+#: build/tempel-settings/src/views/general-settings.php:20
+#: build/tempel-settings/src/views/general-settings.php:25
+#: build/tempel-settings/src/views/widget-settings.php:27
 msgid "General Settings"
 msgstr "Algemene instellingen"
 
 #: src/views/general-settings.php:124
+#: build/tempel-settings/src/views/general-settings.php:124
 msgid "Hide Dashboard Widgets"
 msgstr "Dashboardwidgets verbergen"
 
@@ -103,16 +130,49 @@ msgstr "Dashboardwidgets verbergen"
 msgid "https://studiotempel.nl"
 msgstr "https://studiotempel.nl"
 
+#: src/widgets/conversion-widget.php:45
+#: build/tempel-settings/src/widgets/conversion-widget.php:45
+msgid "Last 30 days"
+msgstr "Laatste 30 dagen"
+
+#: src/widgets/status-widget.php:50
+#: build/tempel-settings/src/widgets/status-widget.php:50
+msgid "Last backup"
+msgstr "Laatste backup"
+
+#: src/widgets/status-widget.php:56 src/widgets/status-widget.php:60
+#: build/tempel-settings/src/widgets/status-widget.php:56
+#: build/tempel-settings/src/widgets/status-widget.php:60
+#: build/tempel-settings/src/widgets/status-widget.php:64
+msgid "Last checkup"
+msgstr "Laatste checkup"
+
+#: src/widgets/status-widget.php:46
+#: build/tempel-settings/src/widgets/status-widget.php:46
+msgid "Last round of updates"
+msgstr "Laatste updates"
+
 #: src/views/widget-settings.php:110
+#: build/tempel-settings/src/views/widget-settings.php:110
 msgid "Monday"
 msgstr "Maandag"
 
+#: src/widgets/support-widget.php:61
+#: build/tempel-settings/src/widgets/support-widget.php:61
+msgid "No FAQ items found"
+msgstr "Geen FAQ items gevonden"
+
+#: src/widgets/conversion-widget.php:66
+#: build/tempel-settings/src/widgets/conversion-widget.php:66
+msgid "No forms selected"
+msgstr "Geen formulieren geselecteerd"
+
 #: src/widgets/status-widget.php:106
+#: build/tempel-settings/src/widgets/status-widget.php:106
 msgid "Now"
 msgstr "Nu"
 
 #. Description of the plugin
-#, fuzzy
 #| msgid ""
 #| "Plugin that compliments custom built themes produced by Studio Tempel"
 msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
@@ -121,58 +181,77 @@ msgstr ""
 "instellingen"
 
 #: src/views/widget-settings.php:187
+#: build/tempel-settings/src/views/widget-settings.php:187
 msgid "Reset checkup"
 msgstr "Reset controle"
 
 #: src/views/widget-settings.php:123
+#: build/tempel-settings/src/views/widget-settings.php:123
 msgid "Safeupdate day"
 msgstr "Safeupdate dag"
 
 #: src/views/widget-settings.php:115
+#: build/tempel-settings/src/views/widget-settings.php:115
 msgid "Saturday"
 msgstr "Zaterdag"
 
 #: src/views/general-settings.php:205 src/views/widget-settings.php:376
+#: build/tempel-settings/src/views/general-settings.php:205
+#: build/tempel-settings/src/views/widget-settings.php:376
 msgid "Save Settings"
 msgstr "Instellingen opslaan"
 
 #: src/views/widget-settings.php:59
+#: build/tempel-settings/src/views/widget-settings.php:59
 msgid "Select forms to show in widget"
 msgstr "Kies formulieren voor gebruik in de widget"
 
-#: src/views/widget-settings.php:131
-msgid "Selecteer de dag waarop de safeupdate plaatsvind"
-msgstr ""
-
 #: src/views/widget-settings.php:268
+#: build/tempel-settings/src/views/widget-settings.php:268
 msgid "Service contract info link"
 msgstr "Service contract info link"
 
 #: src/views/widget-settings.php:222
+#: build/tempel-settings/src/views/widget-settings.php:222
 msgid "Service contract is upgradable"
-msgstr "Kan het servicecontract upgradebaar"
+msgstr "Is het servicecontract upgradebaar?"
 
 #: src/views/widget-settings.php:245
+#: build/tempel-settings/src/views/widget-settings.php:245
 msgid "Service contract tier"
 msgstr "Soort servicecontract"
 
+#: src/widgets/status-widget.php:78
+#: build/tempel-settings/src/widgets/status-widget.php:78
+msgid "Servicecontract"
+msgstr "Servicecontract"
+
 #: src/views/widget-settings.php:48
+#: build/tempel-settings/src/views/widget-settings.php:48
 msgid "Settings for the conversion widget"
 msgstr "Instellingen voor de conversie widget"
 
 #: src/views/widget-settings.php:102
+#: build/tempel-settings/src/views/widget-settings.php:102
 msgid "Settings for the status widget"
 msgstr "Instellingen voor de status widget"
 
 #: src/views/widget-settings.php:298
+#: build/tempel-settings/src/views/widget-settings.php:298
 msgid "Settings for the support widget"
 msgstr "Instellingen voor de support widget"
 
 #: src/views/widget-settings.php:199
+#: build/tempel-settings/src/views/widget-settings.php:199
 msgid "Show service contract"
 msgstr "Toon service contract"
 
+#: src/widgets/status-widget.php:64
+msgid "SiteScan"
+msgstr "SiteScan"
+
 #: src/views/widget-settings.php:99
+#: build/tempel-settings/src/views/widget-settings.php:99
 msgid "Status Widget"
 msgstr "Status widget"
 
@@ -181,14 +260,17 @@ msgid "Studio Tempel"
 msgstr "Studio Tempel"
 
 #: src/views/widget-settings.php:116
+#: build/tempel-settings/src/views/widget-settings.php:116
 msgid "Sunday"
 msgstr "Zondag"
 
 #: src/views/widget-settings.php:332
+#: build/tempel-settings/src/views/widget-settings.php:332
 msgid "Support Ticket Link"
 msgstr "Support ticket link"
 
 #: src/views/widget-settings.php:295
+#: build/tempel-settings/src/views/widget-settings.php:295
 msgid "Support Widget"
 msgstr "Support widget"
 
@@ -197,26 +279,44 @@ msgid "Tempel settings"
 msgstr "Tempel Instellingen"
 
 #: src/views/widget-settings.php:113
+#: build/tempel-settings/src/views/widget-settings.php:113
 msgid "Thursday"
 msgstr "Donderdag"
 
 #: src/widgets/status-widget.php:108
+#: build/tempel-settings/src/widgets/status-widget.php:108
 msgid "Today"
 msgstr "Vandaag"
 
 #: src/views/widget-settings.php:111
+#: build/tempel-settings/src/views/widget-settings.php:111
 msgid "Tuesday"
 msgstr "Dinsdag"
 
+#: src/widgets/support-widget.php:66
+#: build/tempel-settings/src/widgets/support-widget.php:66
+msgid "View all"
+msgstr "Bekijk alles"
+
 #: src/views/widget-settings.php:112
+#: build/tempel-settings/src/views/widget-settings.php:112
 msgid "Wednesday"
 msgstr "Woensdag"
 
+#: src/views/widget-settings.php:131
+#: build/tempel-settings/src/views/widget-settings.php:131
+msgid "What day do the automatic updates take place"
+msgstr "Op welke dag vinden de automatische updates plaats?"
+
 #: src/views/general-settings.php:28 src/views/widget-settings.php:22
 #: src/views/widget-settings.php:30
+#: build/tempel-settings/src/views/general-settings.php:28
+#: build/tempel-settings/src/views/widget-settings.php:22
+#: build/tempel-settings/src/views/widget-settings.php:30
 msgid "Widget Settings"
 msgstr "Widget Instellingen"
 
 #: src/widgets/status-widget.php:104
+#: build/tempel-settings/src/widgets/status-widget.php:104
 msgid "Yesterday"
 msgstr "Gisteren"

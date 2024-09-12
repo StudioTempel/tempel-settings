@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-06-19 20:38+0000\n"
-"PO-Revision-Date: 2024-08-27 08:15+0000\n"
+"PO-Revision-Date: 2024-08-27 09:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: Nederlands\n"
 "Language: nl_NL\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.6.10; wp-6.5.4\n"
+"X-Loco-Version: 2.6.11; wp-6.6.1\n"
 "X-Domain: tempel-settings"
 
 #: src/views/general-settings.php:45
@@ -21,6 +21,10 @@ msgid ""
 msgstr ""
 "Een aantal algemene instellingen om ongebruikte Wordpress functionaliteiten "
 "uit te schakelen."
+
+#: src/widgets/support-widget.php:68
+msgid "Ask a question"
+msgstr "Stel een vraag"
 
 #: src/views/widget-settings.php:152
 msgid "Backup interval"
@@ -103,9 +107,34 @@ msgstr "Dashboardwidgets verbergen"
 msgid "https://studiotempel.nl"
 msgstr "https://studiotempel.nl"
 
+#: src/widgets/conversion-widget.php:45
+msgid "Last 30 days"
+msgstr "Laatste 30 dagen"
+
+#: src/widgets/status-widget.php:50
+msgid "Last backup"
+msgstr "Laatste backup"
+
+#: src/widgets/status-widget.php:56 src/widgets/status-widget.php:60
+#: src/widgets/status-widget.php:64
+msgid "Last checkup"
+msgstr "Laatste checkup"
+
+#: src/widgets/status-widget.php:46
+msgid "Last round of updates"
+msgstr "Laatste updates"
+
 #: src/views/widget-settings.php:110
 msgid "Monday"
 msgstr "Maandag"
+
+#: src/widgets/support-widget.php:61
+msgid "No FAQ items found"
+msgstr "Geen FAQ items gevonden"
+
+#: src/widgets/conversion-widget.php:66
+msgid "No forms selected"
+msgstr "Geen formulieren geselecteerd"
 
 #: src/widgets/status-widget.php:106
 msgid "Now"
@@ -145,11 +174,15 @@ msgstr "Service contract info link"
 
 #: src/views/widget-settings.php:222
 msgid "Service contract is upgradable"
-msgstr "Kan het servicecontract upgradebaar"
+msgstr "Is het servicecontract upgradebaar?"
 
 #: src/views/widget-settings.php:245
 msgid "Service contract tier"
 msgstr "Soort servicecontract"
+
+#: src/widgets/status-widget.php:78
+msgid "Servicecontract"
+msgstr "Servicecontract"
 
 #: src/views/widget-settings.php:48
 msgid "Settings for the conversion widget"
@@ -202,6 +235,10 @@ msgstr "Vandaag"
 #: src/views/widget-settings.php:111
 msgid "Tuesday"
 msgstr "Dinsdag"
+
+#: src/widgets/support-widget.php:66
+msgid "View all"
+msgstr "Bekijk alles"
 
 #: src/views/widget-settings.php:112
 msgid "Wednesday"

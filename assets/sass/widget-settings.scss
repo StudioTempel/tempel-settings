@@ -63,6 +63,13 @@
 
             .category__header {
               margin: 0 0 20px 0;
+              display: flex;
+              align-items: center;
+
+              .category__label__wrap {
+                width: 35%;
+                padding-right: 50px;
+              }
 
               .category__title {
                 font-size: 1.5rem;
@@ -76,9 +83,20 @@
                 font-weight: 400;
                 color: #828c96;
               }
+
+              .category__input__wrap {
+              }
             }
 
             .category__content {
+              &.content__collapsable {
+                display: none;
+              }
+
+              &.content__open {
+                display: block;
+              }
+
               .settings__field {
                 border: solid #eef0f1;
                 border-width: 2px 0 0 0;
@@ -92,7 +110,7 @@
 
                 .settings__label__wrap {
                   display: inline-block;
-                  width: 25%;
+                  width: 35%;
                   padding-right: 50px;
 
                   label {

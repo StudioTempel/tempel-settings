@@ -6,7 +6,7 @@
  * @since 1.0.0
  */
 
-namespace Tempel\Settings;
+namespace Tempel;
 
 class Branding
 {
@@ -25,18 +25,16 @@ class Branding
         add_action('admin_footer_text', array($this, 'admin_footer_text'));
         
         
-        // add_action('login_footer', array($this, 'add_script_to_login'));
         add_action('login_header', [$this, 'add_header_to_login']);
         add_filter('gettext', [$this, 'change_lost_password_text']);
         add_filter('gettext', [$this, 'change_new_password_text']);
-//        add_action('login_enqueue_scripts', [$this, 'add_background_image_to_login']);
     }
     
     function change_lost_password_text($text)
     {
         if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
             if ($text == 'Je wachtwoord vergeten?') {
-                $text = 'Wachtwoord vergeten?';
+                $text = __('Forgot password?', 'tempel-settings');
             }
             return $text;
         }
@@ -48,29 +46,12 @@ class Branding
     {
         if (in_array($GLOBALS['pagenow'], array('wp-login.php'))) {
             if ($text == 'Nieuw wachtwoord aanmaken') {
-                $text = 'Verzend';
+                $text = __('Send', 'tempel-settings');
             }
             return $text;
         }
         
         return $text;
-    }
-    
-    function add_background_image_to_login()
-    {
-        $option = get_option('tempel-login-page-settings-data');
-        $login_bg_image = $option['login-bg-image'] ?? false;
-        if ($login_bg_image) {
-            ?>
-            <style>
-                body.login {
-                    background-image: url('<?= $login_bg_image; ?>') !important;
-                    background-size: cover;
-                    background-position: center;
-                }
-            </style>
-            <?php
-        }
     }
     
     /**
@@ -130,7 +111,7 @@ class Branding
             global $wp_admin_bar;
             $wp_admin_bar->add_menu(array(
                 'id' => 'studiotempel',
-                'title' => '<img src="' . TMPL_PLUGIN_IMG_URL . 'admin-logo.svg' .  '" width="500" height="600" />',
+                'title' => '<img src="' . TEMPEL_SETTINGS_ASSET_URL . 'images/admin-logo.svg' .  '" width="500" height="600" />',
                 'href' => 'studiotempel.nl',
                 'meta' => array(
                     'target' => '_blank', // Opens the link with a new tab
@@ -158,9 +139,8 @@ class Branding
      */
     public function enqueue_admin_bar_theme()
     {
-        wp_enqueue_style('admin-styles', TMPL_PLUGIN_CSS_URL . 'toolbar-theme.css');
+        wp_enqueue_style('admin-styles', TEMPEL_SETTINGS_ASSET_URL . 'css/toolbar-theme.css');
     }
-    
     
     /**
      * Enqueue the admin styles
@@ -169,9 +149,8 @@ class Branding
      */
     public function enqueue_admin_theme()
     {
-        wp_enqueue_style('admin-styles', TMPL_PLUGIN_CSS_URL . 'admin-theme.css');
-        wp_enqueue_style('dashboard-widgets', TMPL_PLUGIN_CSS_URL . 'dashboard-widgets.css');
-        wp_enqueue_script('admin', TMPL_PLUGIN_JS_URL . 'admin-theme.js', array('jquery'), null, true);
+        wp_enqueue_style('admin-styles', TEMPEL_SETTINGS_ASSET_URL . 'css/admin-theme.css');
+        wp_enqueue_script('admin', TEMPEL_SETTINGS_ASSET_URL . 'js/admin-theme.js', array('jquery'), null, true);
     }
     
     /**
@@ -181,25 +160,14 @@ class Branding
      */
     public function enqueue_login_theme()
     {
-        if ($this->is_wplogin()) {
-            wp_enqueue_script('login', TMPL_PLUGIN_JS_URL . 'login-screen.js', array('jquery'), null, true);
-            wp_enqueue_style('login-styles-v2', TMPL_PLUGIN_CSS_URL . 'login-screen.css');
+        if (is_login()) {
+            wp_enqueue_script('login', TEMPEL_SETTINGS_ASSET_URL . 'js/login-screen.js', array('jquery'), null, true);
+            wp_enqueue_style('login-styles-v2', TEMPEL_SETTINGS_ASSET_URL . 'css/login-screen.css');
         }
-    }
-    
-    /**
-     * Helper funtcion to check if the current page is the login page
-     *
-     * @since 1.0.0
-     */
-    public function is_wplogin()
-    {
-        $ABSPATH_MY = str_replace(array('\\', '/'), DIRECTORY_SEPARATOR, ABSPATH);
-        return ((in_array($ABSPATH_MY . 'wp-login.php', get_included_files()) || in_array($ABSPATH_MY . 'wp-register.php', get_included_files())) || (isset($_GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') || $_SERVER['PHP_SELF'] == '/wp-login.php');
     }
     
     public function admin_footer_text()
     {
-        echo '<span id="footer-thankyou">Developed by <a href="https://studiotempel.nl" target="_blank">Studio Tempel</a></span>';
+        echo '<span id="footer-thankyou">' . __('Developed by', 'tempel-settings') .   ' <a href="https://studiotempel.nl" target="_blank">Studio Tempel</a></span>';
     }
 }

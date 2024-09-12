@@ -1,18 +1,18 @@
 <?php
 
-namespace Tempel\Abstracts;
+namespace Tempel;
 
 abstract class Widget
 {
-    public $widget_id;
+    public string $widget_id;
     
-    public $color;
+    public string $color;
     
-    public $title;
+    public string $title;
     
-    public $type;
+    public string $type;
     
-    public $widget;
+    public mixed $widget;
     
     public function __construct()
     {
@@ -24,7 +24,7 @@ abstract class Widget
         add_action('wp_dashboard_setup', array($this, 'add_widget'));
     }
     
-    public function add_widget($widget)
+    public function add_widget()
     {
         wp_add_dashboard_widget(
             $this->widget_id,
@@ -45,8 +45,8 @@ abstract class Widget
         echo $this->widget;
     }
     
-    public function get_widget_icon()
+    public static function get_widget_icon()
     {
-        return include(TMPL_PLUGIN_DIR . 'src/partials/widget-icon.php');
+        return include(TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-icon.php');
     }
 }

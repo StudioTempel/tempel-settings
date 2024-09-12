@@ -8,35 +8,29 @@ require_once 'includes/settings/disable-post.php';
 require_once 'includes/settings/remove-dashboard-widgets.php';
 require_once 'includes/settings/svg-support.php';
 
-use Tempel\Settings\Branding;
-use Tempel\Settings\Disable_Comments;
-use Tempel\Settings\Disable_Post;
-use Tempel\Settings\Remove_Dashboard_Widgets;
-use Tempel\Settings\SVG_Support;
-
-require_once 'includes/helper.php';
+require_once 'includes/helper-functions.php';
 
 if(!class_exists('Settings')) {
     class Settings {
-        public static function load_settings() : void
+        public static function load_settings()
         {
-            if(Helper::sanitize_checkbox_value(Helper::return_option('enable_branding'))) {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'enable_branding'))) {
                 new Branding();
             }
             
-            if(Helper::sanitize_checkbox_value(Helper::return_option('disable_comments'))) {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'disable_comments'))) {
                 new Disable_Comments();
             }
             
-            if(Helper::sanitize_checkbox_value(Helper::return_option('disable_default_pt'))) {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'disable_default_pt'))) {
                 new Disable_Post();
             }
             
-            if(Helper::sanitize_checkbox_value(Helper::return_option('hide_dashboard_widgets'))) {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'hide_dashboard_widgets'))) {
                 new Remove_Dashboard_Widgets();
             }
             
-            if(Helper::sanitize_checkbox_value(Helper::return_option('svg_support'))) {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'svg_support'))) {
                 new SVG_Support();
             }
         }

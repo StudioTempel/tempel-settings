@@ -202,14 +202,14 @@ body.folded {
   * Admin Theme | WP Content
   */
   #wpcontent {
-    padding-top: 20px;
+    //padding-top: 20px;
 
     /* WP Admin Topbar */
     #wpadminbar {
       padding: 8px !important;
       box-sizing: border-box;
       height: 48px !important;
-      border-radius: 0 0 30px 0;
+      //border-radius: 0 0 30px 0;
       background: #000000 !important;
 
       &:not(.mobile),
@@ -307,6 +307,22 @@ body.folded {
     }
   }
 
+  #wpbody {
+    #dashboard-widgets {
+      .postbox-container {
+        width: 33.3% !important;
+
+        &:nth-child(4) {
+          display: none;
+        }
+
+        @media screen and (max-width: 1280px) {
+          width: 50% !important;
+        }
+      }
+    }
+  }
+
   /**
   * Admin Theme | WP Footer
   */
@@ -328,6 +344,39 @@ body.folded {
   border: none !important;
   box-shadow: 0 2px 0 #e6e6e6;
   border-radius: 0 0 4px 4px;
+}
+
+//#screen-meta {
+//  //background-color: transparent;
+//  color: $admin-sidebar-txt;
+//  background: $admin-sidebar-bg;
+//
+//  .metabox-prefs-container {
+//    input {
+//      background: $admin-sidebar-bg;
+//      color: $admin-sidebar-txt;
+//      border: 1px solid $admin-sidebar-txt;
+//      border-radius: 4px;
+//    }
+//  }
+//}
+
+#screen-meta-links {
+  .button {
+    background-color: $admin-sidebar-bg;
+    color: $admin-sidebar-txt;
+    border-radius: 0 0 10px 10px !important;
+
+    &::after {
+      height: 20px;
+      width: 20px;
+    }
+
+    &:hover,
+    &:focus {
+      color: $admin-sidebar-txt-hvr;
+    }
+  }
 }
 
 #titlediv #title,
