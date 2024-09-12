@@ -51,12 +51,12 @@ class Status_Widget extends Widget
                         <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                         <div class="item__value"><?= $last_checkup['error']; ?></div>
                     <?php elseif ($last_checkup['show_link'] === true): ?>
-                        <a id="send-sitescan-email" href="#" class="item__link">
-                            <div class="item__label"><?php _e('Last SiteScan', 'tempel-settings'); ?></div>
+                        <a href="https://studiotempel/contact" target="_blank" class="item__link">
+                            <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                             <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
                         </a>
                     <?php else: ?>
-                        <div class="item__label"><?php _e('SiteScan', 'tempel-settings'); ?></div>
+                        <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
                         <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
                     <?php endif; ?>
                 </div>
@@ -80,23 +80,6 @@ class Status_Widget extends Widget
             </div>
         </div>
         <?php widget_footer(); ?>
-        <script>
-            jQuery(document).ready(function ($) {
-                $('#send-sitescan-email').on('click', function (e) {
-                    e.preventDefault();
-                    $.ajax({
-                        url: ajaxurl,
-                        type: 'POST',
-                        data: {
-                            action: 'send_sitescan_email'
-                        },
-                        success: function (response) {
-                            console.log(response);
-                        }
-                    });
-                });
-            });
-        </script>
         <?php
     }
 }

@@ -33,14 +33,6 @@ class Support_Widget extends Widget
         
         $faq_items = get_faq_items();
         ?>
-        <script>
-            jQuery(document).ready(function ($) {
-                $('.widget__content__dropdown').on('click', function () {
-                    $(this).toggleClass('active');
-                    $(this).find('.item__dropdown__value').slideToggle();
-                });
-            });
-        </script>
         <?php widget_header($this->widget_id, $this->title, $this->type, $this->color); ?>
                 <div class="widget__content">
                     <div class="widget__content_inner">

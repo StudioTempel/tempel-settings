@@ -64,6 +64,7 @@ if (!class_exists('Admin')) {
         {
             if (is_admin() && get_current_screen()->id === 'dashboard') {
                 wp_enqueue_style('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'css/dashboard-widgets.css');
+                wp_enqueue_script('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'js/widgets.js', array('jquery'), '1.0', true);
             }
         }
         

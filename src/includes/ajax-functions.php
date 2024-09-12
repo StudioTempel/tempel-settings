@@ -2,30 +2,30 @@
 
 namespace Tempel;
 
-function send_sitescan_email() : void
-{
-    $email = 'job@studiotempel.nl';
-    $site = 'https://www.studiotempel.nl';
-    $name = 'test';
-    
-    $subject = 'SiteScan aanvraag';
-    $message = 'Beste ' . $name . ',<br><br>';
-    $message .= 'Sitescan aanvraag van ' . $site . '.<br><br>';
-    
-    $headers = array('Content-Type: text/html; charset=UTF-8');
-    
-    wp_mail($email, $subject, $message, $headers);
-    
-    echo json_encode(
-        array(
-            'status' => 'success',
-            'email' => $email,
-            'site' => $site,
-            'name' => $name
-        )
-    );
-}
-add_action('wp_ajax_send_sitescan_email', 'send_sitescan_email');
+//function send_sitescan_email() : void
+//{
+//    $email = 'job@studiotempel.nl';
+//    $site = 'https://www.studiotempel.nl';
+//    $name = 'test';
+//
+//    $subject = 'SiteScan aanvraag';
+//    $message = 'Beste ' . $name . ',<br><br>';
+//    $message .= 'Sitescan aanvraag van ' . $site . '.<br><br>';
+//
+//    $headers = array('Content-Type: text/html; charset=UTF-8');
+//
+//    wp_mail($email, $subject, $message, $headers);
+//
+//    echo json_encode(
+//        array(
+//            'status' => 'success',
+//            'email' => $email,
+//            'site' => $site,
+//            'name' => $name
+//        )
+//    );
+//}
+//add_action('wp_ajax_send_sitescan_email', 'send_sitescan_email');
 
 function reset_checkup(): void
 {
