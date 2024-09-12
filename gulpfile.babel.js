@@ -35,6 +35,8 @@ const paths = {
       "assets/js/scripts.js",
       "assets/js/admin-theme.js",
       "assets/js/login-screen.js",
+      "assets/js/widgets.js",
+      "assets/js/settings.js",
     ],
     destination: "dist/js",
     destinationWatcher: "dist/js/scripts.min.js",
@@ -93,7 +95,6 @@ export function scripts() {
     .pipe(jshint(".jshintrc"))
     .pipe(jshint.reporter(stylish))
     .pipe(uglify())
-    .pipe(concat("scripts.min.js"))
     .pipe(gulp.dest(paths.scripts.destination));
 }
 

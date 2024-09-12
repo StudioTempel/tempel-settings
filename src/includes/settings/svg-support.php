@@ -7,7 +7,7 @@
  */
 
 
-namespace Tempel\Settings;
+namespace Tempel;
 
 use enshrined\svgSanitize\Sanitizer;
 

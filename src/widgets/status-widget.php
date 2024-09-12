@@ -1,9 +1,13 @@
 <?php
 
-namespace Tempel\Admin\Widgets;
+namespace Tempel;
 
-require_once TMPL_PLUGIN_DIR . 'src/abstract/widget.php';
-use Tempel\Abstracts\Widget;
+require_once TEMPEL_SETTINGS_DIR . 'src/abstract/widget.php';
+
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/widget-status-helper-functions.php';
+
+require_once 'partials/widget-header.php';
+require_once 'partials/widget-footer.php';
 
 class Status_Widget extends Widget
 {
@@ -23,171 +27,76 @@ class Status_Widget extends Widget
         $title = $this->title;
         $type = $this->type;
         
-        $widget = $this->widget_markup();
-        
-        echo $widget;
+        echo $this->widget_markup();
     }
     
     function widget_markup()
     {
         
         ?>
-        <div class="tmpl_widget widget--<?= $this->type; ?> widget--<?= $this->color; ?>">
-            <div class="widget__inner">
-                <div class="widget__icon">
-                    <?php $this->get_widget_icon(); ?>
+        <?php widget_header($this->widget_id, $this->title, $this->type, $this->color); ?>
+        <div class="widget__content">
+            <div class="widget__content__inner">
+                <div class="widget__content__item">
+                    <div class="item__label"><?php _e('Last round of updates', 'tempel-settings') ?></div>
+                    <div class="item__value"><?= get_safeupdate_day(); ?></div>
                 </div>
-                <div class="widget__header">
-                    <div class="widget__title"><?= $this->title; ?></div>
+                <div class="widget__content__item">
+                    <div class="item__label"><?php _e('Last backup', 'tempel-settings'); ?></div>
+                    <div class="item__value"><?= get_backup_interval(); ?></div>
                 </div>
-                <div class="widget__content">
-                    <div class="widget__content__inner">
-                        <div class="widget__content__item">
-                            <div class="item__label"><?php _e('Last round of updates', 'tempel-settings') ?></div>
-                            <div class="item__value"><?= $this->getSafeupdateDay(); ?></div>
-                        </div>
-                        <div class="widget__content__item">
-                            <div class="item__label"><?php _e('Last backup', 'tempel-settings'); ?></div>
-                            <div class="item__value"><?= $this->get_backup_interval(); ?></div>
-                        </div>
-                        <div class="widget__content__item">
-                            <?php $last_checkup = $this->get_last_checkup(); ?>
-                            <?php if ($last_checkup['error'] && $last_checkup['error'] !== '') : ?>
-                                <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                                <div class="item__value"><?= $last_checkup['error']; ?></div>
-                            <?php elseif ($last_checkup['show_link'] === true): ?>
-                                <a href="#" class="item__link">
-                                    <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                                    <div class="item__value item__value--red"><?= $last_checkup['date']; ?></div>
-                                </a>
-                            <?php else: ?>
-                                <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                                <div class="item__value"><?= $last_checkup['date']; ?></div>
+                <div class="widget__content__item">
+                    <?php $last_checkup = get_last_checkup(); ?>
+                    <?php if ($last_checkup['error'] && $last_checkup['error'] !== '') : ?>
+                        <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
+                        <div class="item__value"><?= $last_checkup['error']; ?></div>
+                    <?php elseif ($last_checkup['show_link'] === true): ?>
+                        <a id="send-sitescan-email" href="#" class="item__link">
+                            <div class="item__label"><?php _e('Last SiteScan', 'tempel-settings'); ?></div>
+                            <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
+                        </a>
+                    <?php else: ?>
+                        <div class="item__label"><?php _e('SiteScan', 'tempel-settings'); ?></div>
+                        <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
+                    <?php endif; ?>
+                </div>
+                <?php if (get_customer_package() && show_service_contract_tier() === true): ?>
+                    <div class="widget__content__item">
+                        <?php if (service_contract_upgradable() === true): ?>
+                        <a
+                                rel="nofollow"
+                                target="_blank"
+                                href="<?= get_service_contract_upgrade_link(); ?>"
+                                class="item__link"
+                        >
                             <?php endif; ?>
-                        </div>
-                        <?php if ($this->get_customer_package() && $this->showServiceContractTier() === true): ?>
-                            <div class="widget__content__item">
-                                <?php if ($this->serviceContractUpgradable() === true): ?>
-                                <a
-                                    rel="nofollow"
-                                    target="_blank"
-                                    href="<?= $this->getServiceContractUpgradeLink(); ?>"
-                                    class="item__link"
-                                >
-                                    <?php endif; ?>
-                                    <div class="item__label"><?php _e('Servicecontract', 'tempel-settings'); ?></div>
-                                    <div class="item__value"><?= $this->get_customer_package(); ?></div>
-                                    <?php if ($this->serviceContractUpgradable() === true): ?>
-                                </a>
-                            <?php endif; ?>
-                            </div>
-                        <?php endif; ?>
+                            <div class="item__label"><?php _e('Servicecontract', 'tempel-settings'); ?></div>
+                            <div class="item__value"><?= get_customer_package(); ?></div>
+                            <?php if (service_contract_upgradable() === true): ?>
+                        </a>
+                    <?php endif; ?>
                     </div>
-                </div>
+                <?php endif; ?>
             </div>
         </div>
+        <?php widget_footer(); ?>
+        <script>
+            jQuery(document).ready(function ($) {
+                $('#send-sitescan-email').on('click', function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: ajaxurl,
+                        type: 'POST',
+                        data: {
+                            action: 'send_sitescan_email'
+                        },
+                        success: function (response) {
+                            console.log(response);
+                        }
+                    });
+                });
+            });
+        </script>
         <?php
-    }
-    
-    public function get_backup_interval(): string
-    {
-        $option = $this->get_settings('status_backup_interval');
-        
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve the last backup date', 'tempel-settings') . '</span>';
-        
-        $time_now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
-        
-        $time_now = strtotime($time_now->format('H:i'));
-        $time_last_backup = strtotime($option);
-        
-        if ($time_last_backup > $time_now) {
-            $option = __('Yesterday', 'tempel-settings');
-        } else if ($time_last_backup == $time_now) {
-            $option = __('Now', 'tempel-settings');
-        } else {
-            $option = __('Today', 'tempel-settings');
-        }
-        
-        return $option;
-    }
-    
-    public function get_last_checkup() : array
-    {
-        $lastCheckup = [
-            'date' => '',
-            'show_link' => false,
-            'error' => ''
-        ];
-        $option = $this->get_settings('status_last_checkup_date');
-        
-        if (is_wp_error($option) || empty($option)) return ['error' => '<span class="tmpl_widget__error">' . __('Could not retrieve the last checkup date', 'tempel-settings') . '</span>'];
-        
-        $lastCheckup['date'] = $option;
-        
-        $dateLastCheckup = \DateTime::createFromFormat('m/Y', $lastCheckup['date']);
-        $now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
-        
-        if ($dateLastCheckup->diff($now)->days > 30) {
-            $lastCheckup['show_link'] = true;
-        }
-        
-        return $lastCheckup;
-    }
-    
-    private function getSafeupdateDay(): string
-    {
-        $option = $this->get_settings('status_safeupdate_day');
-        
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve last update date', 'tempel-settings') . '</span>';
-        
-        $now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
-        $lastUpdate = $now->modify('last ' . $option);
-        return $lastUpdate->format('d/m');
-    }
-    
-    
-    // Service contract
-    private function showServiceContractTier(): bool
-    {
-        $option = $this->get_settings('status_show_service_contract_tier');
-        
-        if (is_wp_error($option) || empty($option)) return false;
-        
-        return true;
-    }
-    
-    private function serviceContractUpgradable(): bool
-    {
-        $option = $this->get_settings('status_service_contract_upgradable');
-        
-        if (is_wp_error($option) || empty($option)) return false;
-        
-        return true;
-    }
-    
-    public function get_customer_package(): string
-    {
-        $option = $this->get_settings('status_service_contract_tier');
-        
-        if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve support tier', 'tempel-settings') . '</span>';
-        
-        $option = ucfirst($option);
-        
-        return $option;
-    }
-    
-    private function getServiceContractUpgradeLink() : string
-    {
-        $option = $this->get_settings('status_service_contract_upgrade_link');
-        
-        if (is_wp_error($option) || empty($option)) return '';
-        
-        return $option;
-    }
-    
-    public function get_settings($option)
-    {
-        $settings = get_option('tmpl_widget_settings');
-        return $settings[$option] ?? false;
     }
 }

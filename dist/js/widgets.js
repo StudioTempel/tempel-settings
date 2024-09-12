@@ -1,0 +1,1 @@
+jQuery(document).ready(function(e){e(".widget__content__dropdown").on("click",function(){e(this).toggleClass("active"),e(this).find(".item__dropdown__value").slideToggle()})});

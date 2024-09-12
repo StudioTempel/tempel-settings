@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.1.3
+ * Version:           2.1.4
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,82 +24,63 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-define('TMPL_PLUGIN_PATH', plugin_dir_url(__FILE__));
-define('TMPL_PLUGIN_DIR', plugin_dir_path(__FILE__));
-define('TMPL_PLUGIN_BASENAME', plugin_basename(__FILE__));
-define('TMPL_PLUGIN_MAIN_FILE', __FILE__);
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.1.4');
+if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
+if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
+if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
+if ( ! defined('TEMPEL_SETTINGS_URL') ) define('TEMPEL_SETTINGS_URL', plugin_dir_url(__FILE__));
 
-define('TMPL_PLUGIN_UPLOAD_PATH', plugin_dir_path(__FILE__) . 'dist/uploads/');
-define('TMPL_PLUGIN_UPLOAD_URL', plugin_dir_url(__FILE__) . 'dist/uploads/');
-
-define('TMPL_PLUGIN_DIST_URL', plugin_dir_url(__FILE__) . 'dist/');
-define('TMPL_PLUGIN_CSS_URL', TMPL_PLUGIN_DIST_URL . 'css/');
-define('TMPL_PLUGIN_JS_URL', TMPL_PLUGIN_DIST_URL . 'js/');
-define('TMPL_PLUGIN_IMG_URL', TMPL_PLUGIN_DIST_URL . 'images/');
-define('TMPL_PLUGIN_VENDOR_URL', TMPL_PLUGIN_DIST_URL . 'vendor/');
-define('TMPL_PLUGIN_CACHE_URL', TMPL_PLUGIN_DIST_URL . 'cache/');
-define('TMPL_PLUGIN_CACHE_PATH', plugin_dir_path(__FILE__) . 'dist/cache/');
-
-define('TMPL_PLUGIN_LANG_PATH', dirname(plugin_basename(__FILE__)) . '/languages');
+if ( ! defined ('TEMPEL_SETTINGS_ASSET_URL') ) define('TEMPEL_SETTINGS_ASSET_URL', plugin_dir_url(__FILE__) . 'dist/');
+if ( ! defined('TEMPEL_SETTINGS_ASSET_DIR') ) define('TEMPEL_SETTINGS_ASSET_DIR', plugin_dir_path(__FILE__) . 'dist/');
+if( ! defined('TEMPEL_SETTINGS_LANG_DIR') ) define('TEMPEL_SETTINGS_LANG_DIR', dirname(plugin_basename(__FILE__)) . '/languages');
 
 class TempelSettings
 {
-    public $admin;
-    
-    public $settings;
-    
-    public $update_checker;
-    
     static $instance;
     
     public function __construct()
     {
-        register_activation_hook( __FILE__, array($this, 'setup') );
-        
         $this->load_dependencies();
         $this->set_locale();
         
         if (is_admin()) {
-            $this->admin = new Admin();
-            $this->update_checker = new Updater();
+            new Admin();
+            new Updater();
         }
         
-        $this->settings = Settings::load_settings();
+        Settings::load_settings();
     }
     
     private function load_dependencies()
     {
-        require_once 'includes/installer.php';
-        
-        require_once 'includes/locale.php';
-        
+        require_once 'includes/localization.php';
         require_once 'src/admin.php';
-
         require_once 'src/settings.php';
-        
         require_once 'includes/updater.php';
     }
     
     private function set_locale()
     {
-        $plugin_i18n = new Locale();
+        $plugin_i18n = new Localization();
         add_action('plugins_loaded', array($plugin_i18n, 'load_plugin_textdomain'));
-    }
-    
-    private function setup()
-    {
-        Installer::setup();
     }
     public static function get_instance()
     {
-        
         if (null === self::$instance) {
             self::$instance = new self();
         }
         
         return self::$instance;
     }
+    
+    static function activate()
+    {
+        require_once 'includes/activator.php';
+        Activator::activate();
+    }
 }
+
+register_activation_hook(__FILE__, ['Tempel\TempelSettings', 'activate']);
 
 add_action('init', function () {
     TempelSettings::get_instance();
