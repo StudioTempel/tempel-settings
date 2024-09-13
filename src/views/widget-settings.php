@@ -3,6 +3,8 @@
 namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/page.php';
+require_once 'partials/settings-navigation.php';
+
 class Widget_Settings extends Page
 {
     public function render()
@@ -16,7 +18,7 @@ class Widget_Settings extends Page
         <div class="tmpl_settings__wrap">
             <div class="tmpl_settings__page" id="tmpl_widget_settings">
                 <div class="tmpl_settings__inner">
-                    <?php settings_header(); ?>
+                    <?php settings_navigation(); ?>
                     <div class="settings__body">
                         <div class="body__inner">
                             <form action="options.php" method="post">

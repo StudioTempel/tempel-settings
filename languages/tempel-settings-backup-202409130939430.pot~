@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tempel settings\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-13 09:39+0000\n"
+"POT-Creation-Date: 2024-09-12 12:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -16,27 +16,27 @@ msgstr ""
 "X-Loco-Version: 2.6.10; wp-6.5.4\n"
 "X-Domain: tempel-settings"
 
-#: src/views/general-settings.php:113
+#: src/views/general-settings.php:112
 msgid "Appearance"
 msgstr ""
 
-#: src/widgets/support-widget.php:57
+#: src/widgets/support-widget.php:65
 msgid "Ask a question"
 msgstr ""
 
-#: src/views/widget-settings.php:183
+#: src/views/widget-settings.php:180
 msgid "Backup interval"
 msgstr ""
 
-#: src/views/general-settings.php:28
+#: src/views/general-settings.php:27
 msgid "Cleanup"
 msgstr ""
 
-#: src/views/widget-settings.php:414
+#: src/views/widget-settings.php:411
 msgid "Clear"
 msgstr ""
 
-#: src/views/widget-settings.php:408
+#: src/views/widget-settings.php:405
 msgid "Clear FAQ Cache"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Conversion"
 msgstr ""
 
-#: src/views/widget-settings.php:33
+#: src/views/widget-settings.php:30
 msgid "Conversion Widget"
 msgstr ""
 
@@ -72,23 +72,23 @@ msgstr ""
 msgid "Developed by"
 msgstr ""
 
-#: src/views/general-settings.php:42
+#: src/views/general-settings.php:41
 msgid "Disable Comments"
 msgstr ""
 
-#: src/views/general-settings.php:65
+#: src/views/general-settings.php:64
 msgid "Disable the built in PT"
 msgstr ""
 
-#: src/views/general-settings.php:127
+#: src/views/general-settings.php:126
 msgid "Enable Branding"
 msgstr ""
 
-#: src/views/general-settings.php:166
+#: src/views/general-settings.php:165
 msgid "Enable SVG Support & Sanitization"
 msgstr ""
 
-#: src/views/widget-settings.php:360
+#: src/views/widget-settings.php:357
 msgid "FAQ Link"
 msgstr ""
 
@@ -96,15 +96,11 @@ msgstr ""
 msgid "Forgot password?"
 msgstr ""
 
-#: src/views/widget-settings.php:145
+#: src/views/widget-settings.php:142
 msgid "Friday"
 msgstr ""
 
-#: src/admin.php:78
-msgid "General"
-msgstr ""
-
-#: src/views/general-settings.php:88
+#: src/views/general-settings.php:87
 msgid "Hide Dashboard Widgets"
 msgstr ""
 
@@ -120,8 +116,7 @@ msgstr ""
 msgid "Last backup"
 msgstr ""
 
-#: src/widgets/status-widget.php:51 src/widgets/status-widget.php:55
-#: src/widgets/status-widget.php:59
+#: src/widgets/status-widget.php:51
 msgid "Last checkup"
 msgstr ""
 
@@ -129,11 +124,15 @@ msgstr ""
 msgid "Last round of updates"
 msgstr ""
 
-#: src/views/general-settings.php:152
+#: src/widgets/status-widget.php:55
+msgid "Last SiteScan"
+msgstr ""
+
+#: src/views/general-settings.php:151
 msgid "Media"
 msgstr ""
 
-#: src/views/widget-settings.php:141
+#: src/views/widget-settings.php:138
 msgid "Monday"
 msgstr ""
 
@@ -141,7 +140,7 @@ msgstr ""
 msgid "No Blog items found"
 msgstr ""
 
-#: src/widgets/support-widget.php:50
+#: src/widgets/support-widget.php:58
 msgid "No FAQ items found"
 msgstr ""
 
@@ -153,7 +152,7 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: src/views/general-settings.php:31
+#: src/views/general-settings.php:30
 msgid "Options that disable some of WordPress's core functionality"
 msgstr ""
 
@@ -161,23 +160,23 @@ msgstr ""
 msgid "Plugin that compliments custom-built themes produced by Studio Tempel"
 msgstr ""
 
-#: src/views/widget-settings.php:218
+#: src/views/widget-settings.php:215
 msgid "Reset checkup"
 msgstr ""
 
-#: src/views/widget-settings.php:154
+#: src/views/widget-settings.php:151
 msgid "Safeupdate day"
 msgstr ""
 
-#: src/views/widget-settings.php:146
+#: src/views/widget-settings.php:143
 msgid "Saturday"
 msgstr ""
 
-#: src/views/general-settings.php:189 src/views/widget-settings.php:428
+#: src/views/general-settings.php:188 src/views/widget-settings.php:425
 msgid "Save Settings"
 msgstr ""
 
-#: src/views/widget-settings.php:65
+#: src/views/widget-settings.php:62
 msgid "Select forms to show in widget"
 msgstr ""
 
@@ -185,15 +184,15 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: src/views/widget-settings.php:301
+#: src/views/widget-settings.php:298
 msgid "Service contract info link"
 msgstr ""
 
-#: src/views/widget-settings.php:254
+#: src/views/widget-settings.php:251
 msgid "Service contract is upgradable"
 msgstr ""
 
-#: src/views/widget-settings.php:278
+#: src/views/widget-settings.php:275
 msgid "Service contract tier"
 msgstr ""
 
@@ -201,33 +200,33 @@ msgstr ""
 msgid "Servicecontract"
 msgstr ""
 
-#: src/views/partials/settings-navigation.php:14
-msgid "Settings"
-msgstr ""
-
-#: src/views/widget-settings.php:36
+#: src/views/widget-settings.php:33
 msgid "Settings for the conversion widget"
 msgstr ""
 
-#: src/views/widget-settings.php:115
+#: src/views/widget-settings.php:112
 msgid "Settings for the status widget"
 msgstr ""
 
-#: src/views/widget-settings.php:332
+#: src/views/widget-settings.php:329
 msgid "Settings for the support widget"
 msgstr ""
 
-#: src/views/widget-settings.php:230
+#: src/views/widget-settings.php:227
 msgid "Show service contract"
 msgstr ""
 
-#: src/views/widget-settings.php:98
+#: src/widgets/status-widget.php:59
+msgid "SiteScan"
+msgstr ""
+
+#: src/views/widget-settings.php:95
 msgid ""
 "Something went wrong. Is Gravity Forms active and does it have at least one "
 "active form"
 msgstr ""
 
-#: src/views/widget-settings.php:112
+#: src/views/widget-settings.php:109
 msgid "Status Widget"
 msgstr ""
 
@@ -235,15 +234,15 @@ msgstr ""
 msgid "Studio Tempel"
 msgstr ""
 
-#: src/views/widget-settings.php:147
+#: src/views/widget-settings.php:144
 msgid "Sunday"
 msgstr ""
 
-#: src/views/widget-settings.php:384
+#: src/views/widget-settings.php:381
 msgid "Support Ticket Link"
 msgstr ""
 
-#: src/views/widget-settings.php:329
+#: src/views/widget-settings.php:326
 msgid "Support Widget"
 msgstr ""
 
@@ -251,15 +250,15 @@ msgstr ""
 msgid "Tempel settings"
 msgstr ""
 
-#: src/views/general-settings.php:155
+#: src/views/general-settings.php:154
 msgid "These options bring changes to the WordPress media handling and/or page"
 msgstr ""
 
-#: src/views/general-settings.php:116
+#: src/views/general-settings.php:115
 msgid "These options change the look and feel of WordPress"
 msgstr ""
 
-#: src/views/widget-settings.php:144
+#: src/views/widget-settings.php:141
 msgid "Thursday"
 msgstr ""
 
@@ -267,24 +266,20 @@ msgstr ""
 msgid "Today"
 msgstr ""
 
-#: src/views/widget-settings.php:142
+#: src/views/widget-settings.php:139
 msgid "Tuesday"
 msgstr ""
 
-#: src/widgets/support-widget.php:55
+#: src/widgets/support-widget.php:63
 msgid "View all"
 msgstr ""
 
-#: src/views/widget-settings.php:143
+#: src/views/widget-settings.php:140
 msgid "Wednesday"
 msgstr ""
 
-#: src/views/widget-settings.php:162
+#: src/views/widget-settings.php:159
 msgid "What day do the automatic updates take place"
-msgstr ""
-
-#: src/admin.php:86
-msgid "Widget"
 msgstr ""
 
 #: src/includes/widget-status-helper-functions.php:19
