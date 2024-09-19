@@ -1,27 +1,34 @@
 jQuery(document).ready(function ($) {
   // Init select2 for forms
-  $("#conversion_selected_forms").select2({
-    placeholder: "Selecteer formulieren",
-    allowClear: true,
-    multiple: true,
-  });
 
-  $("#status_safeupdate_day").select2({
-    minimumResultsForSearch: -1,
-    placeholder: "Selecteer de dag waarop de safeupdate plaatsvind",
-  });
+  if ($("#conversion_selected_forms").length) {
+    $("#conversion_selected_forms").select2({
+      placeholder: "Selecteer formulieren",
+      allowClear: true,
+      multiple: true,
+    });
+  }
 
-  $("#total-conversion-scope").select2({
-    minimumResultsForSearch: -1,
-  });
+  if ($("#status_safeupdate_day").length) {
+    $("#status_safeupdate_day").select2({
+      minimumResultsForSearch: -1,
+      placeholder: "Selecteer de dag waarop de safeupdate plaatsvind",
+    });
+  }
+
+  // $("#total-conversion-scope").select2({
+  //   minimumResultsForSearch: -1,
+  // });
 
   // Init flatpickr for backup interval
-  $("#status_backup_interval").flatpickr({
-    enableTime: true,
-    dateFormat: "H:i",
-    time_24hr: true,
-    noCalendar: true,
-  });
+  if ($("#status_backup_interval").length) {
+    $("#status_backup_interval").flatpickr({
+      enableTime: true,
+      dateFormat: "H:i",
+      time_24hr: true,
+      noCalendar: true,
+    });
+  }
 
   $("button#reset_status_last_checkup_date").on("click", function () {
     if (confirm("Weet je zeker dat je de checkup wilt resetten?")) {

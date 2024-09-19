@@ -75,16 +75,16 @@ if (!class_exists('Admin')) {
         public function load_pages(): void
         {
             $this->pages['tempel-settings'] = new General_Settings(
-                'Tempel Settings',
-                'Tempel Settings',
+                __('General', 'tempel-settings'),
+                __('Tempel Settings', 'tempel-settings'),
                 'tempel-settings',
                 $this->get_menu_icon(),
                 99,
             );
             
             $this->pages['tempel-widget-settings'] = new Widget_Settings(
-                'Widget Settings',
-                'Widget Settings',
+                __('Widget', 'tempel-settings'),
+                __('Widgets', 'tempel-settings'),
                 'tempel-widget-settings',
                 $this->get_menu_icon(),
                 1,
@@ -127,6 +127,7 @@ if (!class_exists('Admin')) {
             
             $screens = array(
                 'toplevel_page_tempel-settings',
+                'toplevel_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-login-settings',
             );
