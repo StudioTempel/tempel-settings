@@ -12,7 +12,7 @@ namespace Tempel;
  *
  * @since 1.0.0
  */
-function return_option(string $option_group, string $option_name) : mixed
+function return_option(string $option_group, string $option_name)
 {
     $option = get_option($option_group);
     
