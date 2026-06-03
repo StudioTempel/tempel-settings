@@ -49,7 +49,6 @@ class Activator
             'status_service_contract_upgrade_link'      => 'https://studiotempel.nl/servicecontract',
             
             'support_widget_enabled'                    => 'on',
-            'support_faq_link'                          => 'https://studiotempel.nl/veelgestelde-vragen',
             'support_ticket_link'                       => 'https://studiotempel.nl/contact',
         ];
         add_option('tmpl_widget_settings', $widget_defaults);

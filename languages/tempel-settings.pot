@@ -36,6 +36,38 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
+#: src/widgets/support-widget.php:34
+msgid "Clear cache"
+msgstr ""
+
+#: src/widgets/support-widget.php:40
+msgid "Send test email"
+msgstr ""
+
+#: src/admin.php:111
+msgid "Clear the site cache?"
+msgstr ""
+
+#: src/admin.php:112
+msgid "Cache cleared."
+msgstr ""
+
+#: src/admin.php:113
+msgid "Cache could not be cleared."
+msgstr ""
+
+#: src/admin.php:114
+msgid "Send a test email to your account?"
+msgstr ""
+
+#: src/admin.php:115
+msgid "Test email sent."
+msgstr ""
+
+#: src/admin.php:116
+msgid "Test email could not be sent."
+msgstr ""
+
 #: src/views/widget-settings.php:408
 msgid "Clear FAQ Cache"
 msgstr ""
@@ -183,6 +215,42 @@ msgstr ""
 
 #: src/includes/ajax-functions.php:87
 msgid "You are not allowed to clear the FAQ cache."
+msgstr ""
+
+#: src/includes/ajax-functions.php:88
+msgid "You are not allowed to clear the site cache."
+msgstr ""
+
+#: src/includes/ajax-functions.php:101
+msgid "No supported cache plugin is active."
+msgstr ""
+
+#: src/includes/ajax-functions.php:108
+msgid "Cache cleared for: %s."
+msgstr ""
+
+#: src/includes/ajax-functions.php:121
+msgid "You are not allowed to send a test email."
+msgstr ""
+
+#: src/includes/ajax-functions.php:128
+msgid "Your account has no valid email address."
+msgstr ""
+
+#: src/includes/ajax-functions.php:134
+msgid "[%s] Test email"
+msgstr ""
+
+#: src/includes/ajax-functions.php:139
+msgid "This is a test email from %s. If you received this message, WordPress email sending works."
+msgstr ""
+
+#: src/includes/ajax-functions.php:147
+msgid "WordPress could not send the test email."
+msgstr ""
+
+#: src/includes/ajax-functions.php:155
+msgid "Test email sent to %s."
 msgstr ""
 
 #: src/views/widget-settings.php:58

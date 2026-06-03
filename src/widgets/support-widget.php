@@ -30,31 +30,27 @@ class Support_Widget extends Widget
     
     public function widget_markup()
     {
-        
-        $faq_items = get_faq_items();
         ?>
         <?php widget_header($this->widget_id, $this->title, $this->type, $this->color); ?>
                 <div class="widget__content">
                     <div class="widget__content_inner">
-                        <?php if ($faq_items): ?>
-                            <?php foreach ($faq_items as $faq_item):
-                                $title = $faq_item['title'] ?? '';
-                                $content = $faq_item['content'] ?? '';
-                                ?>
-                                <div class="widget__content__item widget__content__dropdown">
-                                    <div class="item__dropdown__label"><?= esc_html($title); ?></div>
-                                    <div class="item__dropdown__value"><?= wp_kses_post($content); ?></div>
-                                </div>
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <p><?php _e('No FAQ items found', 'tempel-settings'); ?></p>
-                        <?php endif; ?>
+                        <div class="widget__content__item">
+                            <button type="button" class="item__link tempel-support-action" data-tempel-support-action="clear-cache">
+                                <span class="item__label"><?php _e('Clear cache', 'tempel-settings'); ?></span>
+                                <span class="item__value" data-tempel-support-action-status></span>
+                            </button>
+                        </div>
+                        <div class="widget__content__item">
+                            <button type="button" class="item__link tempel-support-action" data-tempel-support-action="send-test-mail">
+                                <span class="item__label"><?php _e('Send test email', 'tempel-settings'); ?></span>
+                                <span class="item__value" data-tempel-support-action-status></span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="widget__footer">
-                    <a href="<?= esc_url(get_faq_link()); ?>" rel="nofollow noopener" target="_blank"><?php _e('View all', 'tempel-settings'); ?></a>
-                    <a href="https://studiotempel.nl/contact" target="_blank" rel="nofollow"
-                       rel="nofollow noopener"
+                    <span data-tempel-support-message></span>
+                    <a href="<?= esc_url(get_support_ticket_link()); ?>" target="_blank" rel="nofollow noopener"
                        class="widget__button widget__button__yellow"><?php _e('Ask a question', 'tempel-settings'); ?></a>
                 </div>
         <?php widget_footer(); ?>

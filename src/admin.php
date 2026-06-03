@@ -99,6 +99,18 @@ if (!class_exists('Admin')) {
                         'error' => __('Visitors could not be retrieved.', 'tempel-settings'),
                     ),
                 ));
+                wp_localize_script('dashboard-widgets', 'tempelSupportActions', array(
+                    'ajaxUrl' => admin_url('admin-ajax.php'),
+                    'nonce' => wp_create_nonce('tempel_support_actions'),
+                    'messages' => array(
+                        'cacheConfirm' => __('Clear the site cache?', 'tempel-settings'),
+                        'cacheSuccess' => __('Cache cleared.', 'tempel-settings'),
+                        'cacheError' => __('Cache could not be cleared.', 'tempel-settings'),
+                        'mailConfirm' => __('Send a test email to your account?', 'tempel-settings'),
+                        'mailSuccess' => __('Test email sent.', 'tempel-settings'),
+                        'mailError' => __('Test email could not be sent.', 'tempel-settings'),
+                    ),
+                ));
             }
         }
         
@@ -191,7 +203,6 @@ if (!class_exists('Admin')) {
 
             $output['status_service_contract_tier'] = isset($input['status_service_contract_tier']) ? sanitize_text_field($input['status_service_contract_tier']) : '';
             $output['status_service_contract_upgrade_link'] = isset($input['status_service_contract_upgrade_link']) ? esc_url_raw($input['status_service_contract_upgrade_link']) : '';
-            $output['support_faq_link'] = isset($input['support_faq_link']) ? esc_url_raw($input['support_faq_link']) : '';
             $output['support_ticket_link'] = isset($input['support_ticket_link']) ? esc_url_raw($input['support_ticket_link']) : '';
             $output['post_type_count_post_type'] = isset($input['post_type_count_post_type']) ? sanitize_key($input['post_type_count_post_type']) : '';
 

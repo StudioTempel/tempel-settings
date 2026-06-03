@@ -52,34 +52,6 @@ jQuery(document).ready(function($) {
         });
     });
 
-    $('button#support_clear_faq_cache').on('click', function() {
-        if (!confirm('Weet je zeker dat je de FAQ cache wilt legen?')) {
-            return;
-        }
-
-        $.ajax({
-            url: ajaxurl,
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                action: 'clear_faq_cache',
-                nonce: tmplWidgetSettings.nonce
-            },
-            success: function(response) {
-                if (response.success) {
-                    alert('FAQ cache is geleegd');
-                    return;
-                }
-
-                alert('FAQ cache kon niet worden geleegd');
-            },
-            error: function(error) {
-                console.error(error);
-                alert('FAQ cache kon niet worden geleegd');
-            }
-        });
-    });
-
     $(".category__header input[type='checkbox']").on('change', function() {
         $(this).closest('.settings__category').find('.category__content.content__collapsable').slideToggle();
     });

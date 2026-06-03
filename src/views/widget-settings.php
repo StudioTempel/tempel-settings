@@ -472,30 +472,6 @@ class Widget_Settings extends Page
                                     ?>
                                     <div class="category__content content__collapsable <?= esc_attr($class); ?>">
 
-                                        <!-- Settings Field | FAQ Link -->
-                                        <div id="support_faq_link_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="support_faq_link">
-                                                        <?php _e('FAQ Link', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <input
-                                                            type="url"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[support_faq_link]"
-                                                            id="support_faq_link"
-                                                            placeholder="https://studiotempel.nl/faq/"
-                                                        <?php if ($this->get_settings('support_faq_link')): ?>
-                                                            value="<?= esc_url($this->get_settings('support_faq_link')); ?>"
-                                                        <?php endif; ?>
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | FAQ Link -->
-
                                         <!-- Settings Field | Support Ticket Link -->
                                         <div class="settings__field" id="support_ticket_link_setting">
                                             <div class="settings__field__inner">
@@ -519,24 +495,6 @@ class Widget_Settings extends Page
                                             </div>
                                         </div>
                                         <!-- Settings Field | Support Ticket Link -->
-
-                                        <!-- Settings Field | Clear FAQ Cache -->
-                                        <div id="support_clear_faq_cache_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="support_clear_faq_cache">
-                                                        <?php _e('Clear FAQ Cache', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <button id="support_clear_faq_cache" type="button"
-                                                            class="button button-primary">
-                                                        <?php _e('Clear', 'tempel-settings'); ?>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | Clear FAQ Cache -->
 
                                     </div>
                                 </div>

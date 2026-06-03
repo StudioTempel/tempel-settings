@@ -4,6 +4,56 @@ jQuery(document).ready(function($) {
         $(this).find('.item__dropdown__value').slideToggle();
     });
 
+    $('.tempel-support-action').on('click', function() {
+        var $button = $(this);
+        var action = $button.data('tempel-support-action');
+        var $widget = $button.closest('.tmpl_widget');
+        var $status = $button.find('[data-tempel-support-action-status]');
+        var $message = $widget.find('[data-tempel-support-message]');
+
+        if (typeof tempelSupportActions === 'undefined') {
+            return;
+        }
+
+        var isCacheAction = action === 'clear-cache';
+        var confirmMessage = isCacheAction ? tempelSupportActions.messages.cacheConfirm : tempelSupportActions.messages.mailConfirm;
+
+        if (!confirm(confirmMessage)) {
+            return;
+        }
+
+        $button.prop('disabled', true);
+        $status.text('...');
+        $message.text('');
+
+        $.ajax({
+            url: tempelSupportActions.ajaxUrl,
+            method: 'POST',
+            dataType: 'json',
+            data: {
+                action: isCacheAction ? 'tempel_clear_site_cache' : 'tempel_send_test_mail',
+                nonce: tempelSupportActions.nonce
+            }
+        }).done(function(response) {
+            var successMessage = isCacheAction ? tempelSupportActions.messages.cacheSuccess : tempelSupportActions.messages.mailSuccess;
+            var errorMessage = isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError;
+
+            if (response && response.success) {
+                $status.text('OK');
+                $message.text(response.data && response.data.message ? response.data.message : successMessage);
+                return;
+            }
+
+            $status.text('!');
+            $message.text(response && response.data && response.data.message ? response.data.message : errorMessage);
+        }).fail(function() {
+            $status.text('!');
+            $message.text(isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError);
+        }).always(function() {
+            $button.prop('disabled', false);
+        });
+    });
+
     var $analyticsWidget = $('[data-tempel-analytics-widget]');
 
     if (!$analyticsWidget.length) {

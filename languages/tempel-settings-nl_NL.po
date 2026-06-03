@@ -35,6 +35,38 @@ msgstr "Opschonen"
 msgid "Clear"
 msgstr "Leeg"
 
+#: src/widgets/support-widget.php:34
+msgid "Clear cache"
+msgstr "Cache legen"
+
+#: src/widgets/support-widget.php:40
+msgid "Send test email"
+msgstr "Testmail sturen"
+
+#: src/admin.php:111
+msgid "Clear the site cache?"
+msgstr "Sitecache legen?"
+
+#: src/admin.php:112
+msgid "Cache cleared."
+msgstr "Cache geleegd."
+
+#: src/admin.php:113
+msgid "Cache could not be cleared."
+msgstr "Cache kon niet worden geleegd."
+
+#: src/admin.php:114
+msgid "Send a test email to your account?"
+msgstr "Testmail naar je account sturen?"
+
+#: src/admin.php:115
+msgid "Test email sent."
+msgstr "Testmail verstuurd."
+
+#: src/admin.php:116
+msgid "Test email could not be sent."
+msgstr "Testmail kon niet worden verstuurd."
+
 #: src/views/widget-settings.php:408
 msgid "Clear FAQ Cache"
 msgstr "Leeg FAQ Cache"
@@ -183,6 +215,42 @@ msgstr "Je hebt geen rechten om de updatedatum te resetten."
 #: src/includes/ajax-functions.php:87
 msgid "You are not allowed to clear the FAQ cache."
 msgstr "Je hebt geen rechten om de FAQ-cache te legen."
+
+#: src/includes/ajax-functions.php:88
+msgid "You are not allowed to clear the site cache."
+msgstr "Je hebt geen rechten om de sitecache te legen."
+
+#: src/includes/ajax-functions.php:101
+msgid "No supported cache plugin is active."
+msgstr "Er is geen ondersteunde cacheplugin actief."
+
+#: src/includes/ajax-functions.php:108
+msgid "Cache cleared for: %s."
+msgstr "Cache geleegd voor: %s."
+
+#: src/includes/ajax-functions.php:121
+msgid "You are not allowed to send a test email."
+msgstr "Je hebt geen rechten om een testmail te sturen."
+
+#: src/includes/ajax-functions.php:128
+msgid "Your account has no valid email address."
+msgstr "Je account heeft geen geldig e-mailadres."
+
+#: src/includes/ajax-functions.php:134
+msgid "[%s] Test email"
+msgstr "[%s] Testmail"
+
+#: src/includes/ajax-functions.php:139
+msgid "This is a test email from %s. If you received this message, WordPress email sending works."
+msgstr "Dit is een testmail vanaf %s. Als je dit bericht hebt ontvangen, werkt WordPress e-mail."
+
+#: src/includes/ajax-functions.php:147
+msgid "WordPress could not send the test email."
+msgstr "WordPress kon de testmail niet versturen."
+
+#: src/includes/ajax-functions.php:155
+msgid "Test email sent to %s."
+msgstr "Testmail verstuurd naar %s."
 
 #: src/views/widget-settings.php:58
 msgid "Post Type Count Widget"
