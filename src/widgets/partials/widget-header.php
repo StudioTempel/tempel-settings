@@ -5,7 +5,7 @@ namespace Tempel;
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/widget.php';
 
-function widget_header($widget_id, $title, $type, $color)
+function widget_header($widget_id, $title, $type, $color, $total_value = null)
 {
     ?>
 <div class="tmpl_widget widget--<?= $type; ?> widget--<?= $color; ?>">
@@ -17,6 +17,10 @@ function widget_header($widget_id, $title, $type, $color)
         $total_submissions = get_total_submissions();
         ?>
         <div class="widget__total_conversion_value"><?= $total_submissions; ?></div>
+    <?php elseif ($widget_id === 'widget-analytics'): ?>
+        <div class="widget__total_conversion_value" data-tempel-analytics-visitors>...</div>
+    <?php elseif ($widget_id === 'widget-post-type-count'): ?>
+        <div class="widget__total_conversion_value"><?= esc_html($total_value); ?></div>
     <?php endif; ?>
     <div class="widget__header">
         
@@ -34,7 +38,7 @@ function widget_header($widget_id, $title, $type, $color)
             <div class="widget__title"><?= $title; ?></div>
         <?php endif; ?>
         
-        <?php if ($widget_id === 'widget-conversion'): ?>
+    <?php if ($widget_id === 'widget-conversion'): ?>
             <div class="widget__scope"><?php _e('Last 30 days', 'tempel-settings'); ?></div>
         <?php endif; ?>
     </div>

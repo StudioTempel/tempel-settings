@@ -1,0 +1,29 @@
+#widget-post-type-count {
+    background: #fff;
+    color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#widget-post-type-count .postbox-header {
+    border: none !important;
+    min-height: 35px;
+    max-height: 35px;
+}
+
+#widget-post-type-count .postbox-header h2 {
+    opacity: 0;
+}
+
+#widget-post-type-count .postbox-header .handle-actions {
+    display: none;
+}
+
+#widget-post-type-count .inside {
+    margin: 0;
+    padding: 0;
+}
+
+#widget-post-type-count .widget__content__item .item__value {
+    text-align: right;
+}

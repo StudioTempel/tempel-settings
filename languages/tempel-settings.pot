@@ -149,6 +149,74 @@ msgstr ""
 msgid "No forms selected"
 msgstr ""
 
+#: src/admin.php:97
+msgid "Connect Google Site Kit and Analytics to show visitors."
+msgstr ""
+
+#: src/views/widget-settings.php:32
+msgid "Analytics Widget"
+msgstr ""
+
+#: src/views/widget-settings.php:35
+msgid "Settings for the Google Site Kit visitors widget"
+msgstr ""
+
+#: src/widgets/analytics-widget.php:17
+msgid "Visitors"
+msgstr ""
+
+#: src/widgets/analytics-widget.php:33
+msgid "Last 7 days"
+msgstr ""
+
+#: src/admin.php:98
+msgid "Visitors could not be retrieved."
+msgstr ""
+
+#: src/views/widget-settings.php:58
+msgid "Post Type Count Widget"
+msgstr ""
+
+#: src/views/widget-settings.php:61
+msgid "Show the number of items for a selected post type"
+msgstr ""
+
+#: src/views/widget-settings.php:88
+msgid "Widget title"
+msgstr ""
+
+#: src/views/widget-settings.php:98
+msgid "Orders"
+msgstr ""
+
+#: src/widgets/post-type-count-widget.php:30 src/views/widget-settings.php:115
+msgid "Post type"
+msgstr ""
+
+#: src/views/widget-settings.php:124
+msgid "Select a post type"
+msgstr ""
+
+#: src/views/widget-settings.php:144
+msgid "Statuses to count"
+msgstr ""
+
+#: src/views/widget-settings.php:154
+msgid "Leave empty to count all statuses"
+msgstr ""
+
+#: src/widgets/post-type-count-widget.php:55
+msgid "Items"
+msgstr ""
+
+#: src/widgets/post-type-count-widget.php:85
+msgid "Select a valid post type."
+msgstr ""
+
+#: src/widgets/post-type-count-widget.php:40
+msgid "Status"
+msgstr ""
+
 #: src/includes/widget-status-helper-functions.php:21
 msgid "Now"
 msgstr ""

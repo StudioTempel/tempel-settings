@@ -6,12 +6,12 @@
  * @package           tempel-settings
  * @link              https://github.com/StudioTempel/tempel-settings
  * @author            Studio Tempel & Job Ligthart
- * @copyright         2024 Studio Tempel
+ * @copyright         20245 Studio Tempel
  * @license           GPL v2 or later
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.1.5
+ * Version:           2.4.0
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.1.5');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.4.0');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -40,7 +40,9 @@ class TempelSettings
     
     public function __construct()
     {
+
         $this->load_dependencies();
+
         $this->set_locale();
         
         if (is_admin()) {
@@ -48,8 +50,11 @@ class TempelSettings
             new Updater();
         }
         
+        
         Settings::load_settings();
     }
+    
+
     
     private function load_dependencies()
     {

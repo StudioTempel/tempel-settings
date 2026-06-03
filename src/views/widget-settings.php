@@ -13,6 +13,7 @@ class Widget_Settings extends Page
         if (class_exists('GFAPI')) {
             $selectable_forms = $this->get_forms();
         }
+        $selectable_post_types = $this->get_countable_post_types();
         
         ?>
         <div class="tmpl_settings__wrap">
@@ -23,6 +24,136 @@ class Widget_Settings extends Page
                         <div class="body__inner">
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_widget_settings'); ?>
+
+                                <!-- Settings Category -->
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
+                                                <?php _e('Analytics Widget', 'tempel-settings'); ?>
+                                            </div>
+                                            <div class="category__description">
+                                                <?php _e('Settings for the Google Site Kit visitors widget', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="category__input__wrap">
+                                            <label class="checkbox__switch" for="analytics_widget_enabled">
+                                                <input
+                                                        type="checkbox"
+                                                        name="tmpl_widget_settings[analytics_widget_enabled]"
+                                                        id="analytics_widget_enabled"
+                                                    <?php echo $this->is_checked('analytics_widget_enabled'); ?>
+                                                >
+                                                <span class="checkbox__switch__slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Settings Category -->
+
+                                <!-- Settings Category -->
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
+                                                <?php _e('Post Type Count Widget', 'tempel-settings'); ?>
+                                            </div>
+                                            <div class="category__description">
+                                                <?php _e('Show the number of items for a selected post type', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="category__input__wrap">
+                                            <label class="checkbox__switch" for="post_type_count_widget_enabled">
+                                                <input
+                                                        type="checkbox"
+                                                        name="tmpl_widget_settings[post_type_count_widget_enabled]"
+                                                        id="post_type_count_widget_enabled"
+                                                    <?php echo $this->is_checked('post_type_count_widget_enabled'); ?>
+                                                >
+                                                <span class="checkbox__switch__slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <?php
+                                    $class = '';
+                                    if($this->is_checked('post_type_count_widget_enabled')) {
+                                        $class = 'content__open';
+                                    }
+                                    ?>
+                                    <div class="category__content content__collapsable <?= $class; ?>">
+                                        <div class="settings__field" id="post_type_count_widget_title_setting">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="post_type_count_widget_title">
+                                                        <?php _e('Widget title', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="text"
+                                                            class="settings__input"
+                                                            name="tmpl_widget_settings[post_type_count_widget_title]"
+                                                            id="post_type_count_widget_title"
+                                                            placeholder="<?php esc_attr_e('Orders', 'tempel-settings'); ?>"
+                                                        <?php if ($this->get_settings('post_type_count_widget_title')): ?>
+                                                            value="<?= esc_attr($this->get_settings('post_type_count_widget_title')); ?>"
+                                                        <?php endif; ?>
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="settings__field" id="post_type_count_post_type_setting">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="post_type_count_post_type">
+                                                        <?php _e('Post type', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <select class="settings__input"
+                                                            name="tmpl_widget_settings[post_type_count_post_type]"
+                                                            id="post_type_count_post_type"
+                                                    >
+                                                        <option value=""><?php _e('Select a post type', 'tempel-settings'); ?></option>
+                                                        <?php foreach ($selectable_post_types as $post_type): ?>
+                                                            <option value="<?= esc_attr($post_type['name']); ?>"
+                                                                <?php if ($this->get_settings('post_type_count_post_type') === $post_type['name']): ?>
+                                                                    selected
+                                                                <?php endif; ?>
+                                                            >
+                                                                <?= esc_html($post_type['label']); ?>
+                                                            </option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="settings__field" id="post_type_count_statuses_setting">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="post_type_count_statuses">
+                                                        <?php _e('Statuses to count', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="text"
+                                                            class="settings__input"
+                                                            name="tmpl_widget_settings[post_type_count_statuses]"
+                                                            id="post_type_count_statuses"
+                                                            placeholder="<?php esc_attr_e('Leave empty to count all statuses', 'tempel-settings'); ?>"
+                                                        <?php if ($this->get_settings('post_type_count_statuses')): ?>
+                                                            value="<?= esc_attr($this->get_settings('post_type_count_statuses')); ?>"
+                                                        <?php endif; ?>
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Settings Category -->
 
                                 <!-- Settings Category -->
                                 <div class="settings__category">
@@ -474,6 +605,47 @@ class Widget_Settings extends Page
         }
         
         return $selectable_forms;
+    }
+
+    public function get_countable_post_types(): array
+    {
+        $post_types = get_post_types(array('show_ui' => true), 'objects');
+        $countable_post_types = array();
+
+        foreach ($post_types as $post_type) {
+            if ($post_type->name === 'attachment') {
+                continue;
+            }
+
+            $countable_post_types[] = array(
+                'name' => $post_type->name,
+                'label' => $post_type->labels->name,
+            );
+        }
+
+        if (function_exists('wc_get_orders')) {
+            $has_orders = false;
+
+            foreach ($countable_post_types as $post_type) {
+                if ($post_type['name'] === 'shop_order') {
+                    $has_orders = true;
+                    break;
+                }
+            }
+
+            if (!$has_orders) {
+                $countable_post_types[] = array(
+                    'name' => 'shop_order',
+                    'label' => __('Orders', 'tempel-settings'),
+                );
+            }
+        }
+
+        usort($countable_post_types, function ($a, $b) {
+            return strcasecmp($a['label'], $b['label']);
+        });
+
+        return $countable_post_types;
     }
     
     public function get_settings($option)

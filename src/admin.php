@@ -11,8 +11,10 @@ require_once 'widgets/status-widget.php';
 require_once 'widgets/support-widget.php';
 require_once 'widgets/conversion-widget.php';
 require_once 'widgets/blog-widget.php';
+require_once 'widgets/analytics-widget.php';
+require_once 'widgets/post-type-count-widget.php';
 
-require_once 'includes/ajax-functions.php';
+
 require_once 'includes/helper-functions.php';
 
 if (!class_exists('Admin')) {
@@ -26,6 +28,7 @@ if (!class_exists('Admin')) {
          */
         public function __construct()
         {
+            add_action('init', array($this, 'load_ajax_functions'));
             // Hook setting registration
             add_action('admin_init', array($this, 'register_plugin_settings'));
             
@@ -37,6 +40,11 @@ if (!class_exists('Admin')) {
             
             // Load widgets
             $this->load_widgets();
+        }
+        
+        function load_ajax_functions()
+        {
+            require_once 'includes/ajax-functions.php';
         }
         
         /**
@@ -58,13 +66,44 @@ if (!class_exists('Admin')) {
             if (class_exists('GFForms') && sanitize_checkbox_value(return_option('tmpl_widget_settings', 'conversion_widget_enabled'))) {
                 $this->widgets['conversion-widget'] = new Conversion_Widget();
             }
+
+            if (sanitize_checkbox_value(return_option('tmpl_widget_settings', 'analytics_widget_enabled')) && $this->is_site_kit_active()) {
+                $this->widgets['analytics-widget'] = new Analytics_Widget();
+            }
+
+            if (sanitize_checkbox_value(return_option('tmpl_widget_settings', 'post_type_count_widget_enabled'))) {
+                $this->widgets['post-type-count-widget'] = new Post_Type_Count_Widget();
+            }
+        }
+
+        public function is_site_kit_active(): bool
+        {
+            if (class_exists('Google\Site_Kit\Plugin')) {
+                return true;
+            }
+
+            if (!function_exists('is_plugin_active')) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            return \is_plugin_active('google-site-kit/google-site-kit.php') || \is_plugin_active_for_network('google-site-kit/google-site-kit.php');
         }
         
         function load_widget_assets()
         {
             if (is_admin() && get_current_screen()->id === 'dashboard') {
                 wp_enqueue_style('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'css/dashboard-widgets.css');
-                wp_enqueue_script('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'js/widgets.js', array('jquery'), '1.0', true);
+                wp_enqueue_style('analytics-widget', TEMPEL_SETTINGS_ASSET_URL . 'css/analytics-widget.css', array('dashboard-widgets'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/analytics-widget.css'));
+                wp_enqueue_style('post-type-count-widget', TEMPEL_SETTINGS_ASSET_URL . 'css/post-type-count-widget.css', array('dashboard-widgets'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/post-type-count-widget.css'));
+                wp_enqueue_script('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'js/widgets.js', array('jquery'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/widgets.js'), true);
+                wp_localize_script('dashboard-widgets', 'tempelAnalyticsWidget', array(
+                    'endpoint' => rest_url('google-site-kit/v1/modules/analytics-4/data/report'),
+                    'nonce' => wp_create_nonce('wp_rest'),
+                    'messages' => array(
+                        'unavailable' => __('Connect Google Site Kit and Analytics to show visitors.', 'tempel-settings'),
+                        'error' => __('Visitors could not be retrieved.', 'tempel-settings'),
+                    ),
+                ));
             }
         }
         
@@ -107,13 +146,46 @@ if (!class_exists('Admin')) {
         {
             register_setting(
                 'tempel_settings',
-                'tmpl_settings'
+                'tmpl_settings',
+                array(
+                    'sanitize_callback' => array($this, 'sanitize_general_settings'),
+                )
             );
             
             register_setting(
                 'tempel_widget_settings',
                 'tmpl_widget_settings'
             );
+        }
+
+        public function sanitize_general_settings($input): array
+        {
+            $input = is_array($input) ? $input : array();
+            $current = get_option('tmpl_settings', array());
+            $output = is_array($current) ? $current : array();
+
+            $checkboxes = array(
+                'enable_branding',
+                'disable_comments',
+                'disable_default_pt',
+                'hide_dashboard_widgets',
+                'svg_support',
+                'taxonomy_order',
+                'gf_bag_address_enabled',
+                'magic_login_enabled',
+                'magic_login_allow_admins',
+            );
+
+            foreach ($checkboxes as $key) {
+                $output[$key] = isset($input[$key]) && $input[$key] === 'on' ? 'on' : '';
+            }
+
+            $output['gf_bag_address_api_key'] = isset($input['gf_bag_address_api_key']) ? sanitize_text_field($input['gf_bag_address_api_key']) : '';
+            $output['gf_bag_address_endpoint'] = isset($input['gf_bag_address_endpoint']) ? esc_url_raw($input['gf_bag_address_endpoint']) : '';
+            $output['gf_bag_address_timeout'] = isset($input['gf_bag_address_timeout']) ? (string) max(1, min(30, absint($input['gf_bag_address_timeout']))) : '8';
+            $output['magic_login_expiration'] = isset($input['magic_login_expiration']) ? (string) max(1, min(60, absint($input['magic_login_expiration']))) : '10';
+
+            return $output;
         }
         
         /**
@@ -134,6 +206,7 @@ if (!class_exists('Admin')) {
             
             if (in_array($screen->id, $screens)) {
                 wp_enqueue_style('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'css/widget-settings.css');
+                wp_enqueue_style('tmpl-settings-overrides', TEMPEL_SETTINGS_ASSET_URL . 'css/settings-overrides.css', array('tmpl-settings-page'));
                 wp_enqueue_script('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'js/settings.js', array('jquery'), '1.0', true);
             }
         }

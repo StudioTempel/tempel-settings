@@ -1,0 +1,12 @@
+.tmpl_settings__wrap .settings__input__wrap input.settings-input-light {
+    color: #111;
+    background-color: #fff;
+    border: 1px solid #d0d5dd;
+}
+
+.tmpl_settings__wrap .settings__input__wrap input.settings-input-code {
+    color: #fff;
+    background-color: #000;
+    border: 1px solid #292929;
+    font-family: monospace;
+}

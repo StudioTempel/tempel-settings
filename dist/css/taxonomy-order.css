@@ -1,0 +1,8 @@
+#the-list.tmpl-taxonomy-order-ready tr {
+    cursor: move;
+}
+
+#the-list.tmpl-taxonomy-order-ready tr.inline-edit-row,
+#the-list.tmpl-taxonomy-order-ready tr.no-items {
+    cursor: default;
+}

@@ -17,6 +17,14 @@ class Activator
             'disable_default_pt'                => 'on',
             'hide_dashboard_widgets'            => 'on',
             'svg_support'                       => 'on',
+            'taxonomy_order'                    => 'on',
+            'gf_bag_address_enabled'            => '',
+            'gf_bag_address_api_key'            => '',
+            'gf_bag_address_endpoint'           => 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid',
+            'gf_bag_address_timeout'            => '8',
+            'magic_login_enabled'               => '',
+            'magic_login_expiration'            => '10',
+            'magic_login_allow_admins'          => '',
         ];
         add_option('tmpl_settings', $option_defaults);
     }

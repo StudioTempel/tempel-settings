@@ -1,0 +1,28 @@
+.gfbag-address-lookup {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.gfbag-address-lookup .ginput_full {
+  display: block;
+}
+
+.gfbag-address-lookup label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.gfbag-address-lookup .gfbag-message {
+  min-height: 1.25rem;
+  font-size: 0.875rem;
+}
+
+.gfbag-address-lookup .gfbag-message.is-error {
+  color: #b42318;
+}
+
+.gfbag-address-lookup .gfbag-message.is-loading {
+  color: #475467;
+}

@@ -24,10 +24,7 @@ class General_Settings extends Page
                                     <div class="category__header">
                                         <div class="category__label__wrap">
                                             <div class="category__title">
-                                                <?php _e('Cleanup', 'tempel-settings'); ?>
-                                            </div>
-                                            <div class="category__description">
-                                                <?php _e("Options that disable some of WordPress's core functionality", 'tempel-settings'); ?>
+                                                <?php _e('Opschonen', 'tempel-settings'); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -38,7 +35,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="disable_comments">
-                                                        <?php _e('Disable Comments', 'tempel-settings'); ?>
+                                                        <?php _e('Reacties uitschakelen', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -61,7 +58,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="disable_default_pt">
-                                                        <?php _e('Disable the built in PT', 'tempel-settings'); ?>
+                                                        <?php _e('Standaard berichttype uitschakelen', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -84,7 +81,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="hide_dashboard_widgets">
-                                                        <?php _e('Hide Dashboard Widgets', 'tempel-settings'); ?>
+                                                        <?php _e('Dashboard-widgets verbergen', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -109,10 +106,7 @@ class General_Settings extends Page
                                     <div class="category__header">
                                         <div class="category__label__wrap">
                                             <div class="category__title">
-                                                <?php _e('Appearance', 'tempel-settings'); ?>
-                                            </div>
-                                            <div class="category__description">
-                                                <?php _e('These options change the look and feel of WordPress', 'tempel-settings'); ?>
+                                                <?php _e('Uiterlijk', 'tempel-settings'); ?>
                                             </div>
                                         </div>
                                     </div>
@@ -123,7 +117,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="enable_branding">
-                                                        <?php _e('Enable Branding', 'tempel-settings'); ?>
+                                                        <?php _e('Branding inschakelen', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -150,9 +144,6 @@ class General_Settings extends Page
                                             <div class="category__title">
                                                 <?php _e('Media', 'tempel-settings'); ?>
                                             </div>
-                                            <div class="category__description">
-                                                <?php _e('These options bring changes to the WordPress media handling and/or page', 'tempel-settings'); ?>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="category__content">
@@ -162,7 +153,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="svg_support">
-                                                        <?php _e('Enable SVG Support & Sanitization', 'tempel-settings'); ?>
+                                                        <?php _e('SVG-ondersteuning en sanitization inschakelen', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -182,10 +173,230 @@ class General_Settings extends Page
                                     </div>
                                 </div>
 
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
+                                                <?php _e('Helpers', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+
+                                        <!-- Settings Field | Enable Taxonomy Order -->
+                                        <div id="taxonomy_order_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="taxonomy_order">
+                                                        <?php _e('Taxonomie-volgorde inschakelen', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="taxonomy_order" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[taxonomy_order]"
+                                                                id="taxonomy_order"
+                                                            <?php echo $this->is_checked('taxonomy_order'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable Taxonomy Order -->
+
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
+                                                <?php _e('Beveiliging', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+
+                                        <!-- Settings Field | Enable Magic Login -->
+                                        <div id="magic_login_enabled_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="magic_login_enabled">
+                                                        <?php _e('Magic login link inschakelen', 'tempel-settings'); ?>
+                                                        <span class="label__desc"><?php _e('Gebruikers kunnen een eenmalige inloglink per e-mail aanvragen.', 'tempel-settings'); ?></span>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="magic_login_enabled" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[magic_login_enabled]"
+                                                                id="magic_login_enabled"
+                                                            <?php echo $this->is_checked('magic_login_enabled'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable Magic Login -->
+
+                                        <!-- Settings Field | Magic Login Expiration -->
+                                        <div id="magic_login_expiration_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="magic_login_expiration">
+                                                        <?php _e('Link verloopt na minuten', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="number"
+                                                            min="1"
+                                                            max="60"
+                                                            name="tmpl_settings[magic_login_expiration]"
+                                                            id="magic_login_expiration"
+                                                            value="<?php echo esc_attr($this->get_value('magic_login_expiration', '10')); ?>"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Magic Login Expiration -->
+
+                                        <!-- Settings Field | Allow Admins Magic Login -->
+                                        <div id="magic_login_allow_admins_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="magic_login_allow_admins">
+                                                        <?php _e('Magic login toestaan voor beheerders', 'tempel-settings'); ?>
+                                                        <span class="label__desc"><?php _e('Standaard uitgeschakeld; veiliger voor accounts met volledige toegang.', 'tempel-settings'); ?></span>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="magic_login_allow_admins" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[magic_login_allow_admins]"
+                                                                id="magic_login_allow_admins"
+                                                            <?php echo $this->is_checked('magic_login_allow_admins'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Allow Admins Magic Login -->
+
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
+                                                <?php _e('Gravity Forms Postcode veld', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+
+                                        <!-- Settings Field | Enable GF BAG Address -->
+                                        <div id="gf_bag_address_enabled_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="gf_bag_address_enabled">
+                                                        <?php _e('Toon Gravity Forms Postcode veld', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="gf_bag_address_enabled" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[gf_bag_address_enabled]"
+                                                                id="gf_bag_address_enabled"
+                                                            <?php echo $this->is_checked('gf_bag_address_enabled'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable GF BAG Address -->
+
+                                        <!-- Settings Field | GF BAG API Key -->
+                                        <div id="gf_bag_address_api_key_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="gf_bag_address_api_key">
+                                                        <?php _e('BAG API-sleutel', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="text"
+                                                            name="tmpl_settings[gf_bag_address_api_key]"
+                                                            id="gf_bag_address_api_key"
+                                                            class="settings-input-code"
+                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_api_key')); ?>"
+                                                            autocomplete="off"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | GF BAG API Key -->
+
+                                        <!-- Settings Field | GF BAG Endpoint -->
+                                        <div id="gf_bag_address_endpoint_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="gf_bag_address_endpoint">
+                                                        <?php _e('BAG-endpoint', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="url"
+                                                            name="tmpl_settings[gf_bag_address_endpoint]"
+                                                            id="gf_bag_address_endpoint"
+                                                            class="settings-input-code"
+                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_endpoint', 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid')); ?>"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | GF BAG Endpoint -->
+
+                                        <!-- Settings Field | GF BAG Timeout -->
+                                        <div id="gf_bag_address_timeout_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="gf_bag_address_timeout">
+                                                        <?php _e('BAG-time-out (seconden)', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input
+                                                            type="number"
+                                                            min="1"
+                                                            max="30"
+                                                            name="tmpl_settings[gf_bag_address_timeout]"
+                                                            id="gf_bag_address_timeout"
+                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_timeout', '8')); ?>"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | GF BAG Timeout -->
+
+                                    </div>
+                                </div>
+
                                 <!-- Settings Form Footer -->
                                 <div class="settings__form__footer">
                                     <div class="form__footer__inner">
-                                        <?php submit_button(__('Save Settings', 'tempel-settings')); ?>
+                                        <?php submit_button(__('Instellingen opslaan', 'tempel-settings')); ?>
                                     </div>
                                 </div>
                                 <!-- Settings Form Footer -->
@@ -211,5 +422,16 @@ class General_Settings extends Page
         }
         
         return checked("on", $checkbox_value, false);
+    }
+
+    public function get_value($key, $default = '')
+    {
+        $option = get_option('tmpl_settings');
+
+        if (!$option || !is_array($option)) {
+            return $default;
+        }
+
+        return $option[$key] ?? $default;
     }
 }
