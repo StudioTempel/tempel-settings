@@ -24,7 +24,7 @@ class Support_Widget extends Widget
     {
         $widget = $this->widget_markup();
         if (is_wp_error($widget)) {
-            echo $widget->get_error_message();
+            echo esc_html($widget->get_error_message());
         }
     }
     
@@ -38,12 +38,12 @@ class Support_Widget extends Widget
                     <div class="widget__content_inner">
                         <?php if ($faq_items): ?>
                             <?php foreach ($faq_items as $faq_item):
-                                $title = $faq_item['title'];
-                                $content = $faq_item['content'];
+                                $title = $faq_item['title'] ?? '';
+                                $content = $faq_item['content'] ?? '';
                                 ?>
                                 <div class="widget__content__item widget__content__dropdown">
-                                    <div class="item__dropdown__label"><?= $title; ?></div>
-                                    <div class="item__dropdown__value"><?= $content; ?></div>
+                                    <div class="item__dropdown__label"><?= esc_html($title); ?></div>
+                                    <div class="item__dropdown__value"><?= wp_kses_post($content); ?></div>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -52,8 +52,9 @@ class Support_Widget extends Widget
                     </div>
                 </div>
                 <div class="widget__footer">
-                    <a href="<?= get_faq_link(); ?>" rel="nofollow" target="_blank"><?php _e('View all', 'tempel-settings'); ?></a>
+                    <a href="<?= esc_url(get_faq_link()); ?>" rel="nofollow noopener" target="_blank"><?php _e('View all', 'tempel-settings'); ?></a>
                     <a href="https://studiotempel.nl/contact" target="_blank" rel="nofollow"
+                       rel="nofollow noopener"
                        class="widget__button widget__button__yellow"><?php _e('Ask a question', 'tempel-settings'); ?></a>
                 </div>
         <?php widget_footer(); ?>

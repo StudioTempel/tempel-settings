@@ -29,9 +29,13 @@ function menu_loop($pages)
 {
     foreach ($pages as $page) {
         ?>
-        <a href="/wp-admin/admin.php?page=<?php echo $page->menu_slug; ?>"
-           class="nav__item <?php echo $page->menu_slug === $_GET['page'] ? 'active' : ''; ?>">
-            <?php echo $page->menu_title; ?>
+        <?php
+        $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+        $menu_slug = sanitize_key($page->menu_slug);
+        ?>
+        <a href="<?php echo esc_url(admin_url('admin.php?page=' . $menu_slug)); ?>"
+           class="nav__item <?php echo esc_attr($menu_slug === $current_page ? 'active' : ''); ?>">
+            <?php echo esc_html($page->menu_title); ?>
         </a>
         <?php
     }
@@ -40,8 +44,10 @@ function menu_loop($pages)
 function page_title() {
     $pages = get_admin_pages();
     foreach ($pages as $page) {
-        if ($page->menu_slug === $_GET['page']) {
-            echo __($page->page_title, 'tempel-settings');
+        $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+
+        if ($page->menu_slug === $current_page) {
+            echo esc_html($page->page_title);
         }
     }
 }

@@ -39,12 +39,12 @@ class Blog_Widget extends Widget
             <div class="widget__content__inner">
                 <?php if ($blog_items): ?>
                     <?php foreach ($blog_items as $blog_item):
-                        $title = $blog_item['title'];
-                        $permalink = $blog_item['permalink'];
+                        $title = $blog_item['title'] ?? '';
+                        $permalink = $blog_item['permalink'] ?? '';
                         ?>
                         <div class="widget__content__item">
-                            <a href="<?= $permalink; ?>" class="item__link" target="_blank">
-                                <div class="item__label has-arrow"><?= $title; ?></div>
+                            <a href="<?= esc_url($permalink); ?>" class="item__link" target="_blank" rel="noopener">
+                                <div class="item__label has-arrow"><?= esc_html($title); ?></div>
                             </a>
                         </div>
                     <?php endforeach; ?>

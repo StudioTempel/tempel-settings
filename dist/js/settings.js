@@ -33,7 +33,8 @@ jQuery(document).ready(function($) {
             type: 'POST',
             dataType: 'json',
             data: {
-                action: 'reset_checkup'
+                action: 'reset_checkup',
+                nonce: tmplWidgetSettings.nonce
             },
             success: function(response) {
                 if (response.success && response.data.status_last_checkup_date) {
@@ -61,7 +62,8 @@ jQuery(document).ready(function($) {
             type: 'POST',
             dataType: 'json',
             data: {
-                action: 'clear_faq_cache'
+                action: 'clear_faq_cache',
+                nonce: tmplWidgetSettings.nonce
             },
             success: function(response) {
                 if (response.success) {

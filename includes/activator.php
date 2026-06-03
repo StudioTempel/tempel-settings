@@ -34,6 +34,10 @@ class Activator
         $widget_defaults = [
             'conversion_widget_enabled'                 => 'on',
             'conversion_selected_forms'                 => '',
+            'conversion_include_woocommerce_orders'     => '',
+            'conversion_include_post_type'              => '',
+            'post_type_count_post_type'                 => '',
+            'post_type_count_statuses'                  => '',
             
             'status_widget_enabled'                     => 'on',
             'status_safeupdate_day'                     => 'monday',

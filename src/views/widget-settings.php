@@ -56,19 +56,19 @@ class Widget_Settings extends Page
                                     <div class="category__header">
                                         <div class="category__label__wrap">
                                             <div class="category__title">
-                                                <?php _e('Post Type Count Widget', 'tempel-settings'); ?>
+                                                <?php _e('Conversion Widget', 'tempel-settings'); ?>
                                             </div>
                                             <div class="category__description">
-                                                <?php _e('Show the number of items for a selected post type', 'tempel-settings'); ?>
+                                                <?php _e('Settings for the conversion widget', 'tempel-settings'); ?>
                                             </div>
                                         </div>
                                         <div class="category__input__wrap">
-                                            <label class="checkbox__switch" for="post_type_count_widget_enabled">
+                                            <label class="checkbox__switch" for="conversion_widget_enabled">
                                                 <input
                                                         type="checkbox"
-                                                        name="tmpl_widget_settings[post_type_count_widget_enabled]"
-                                                        id="post_type_count_widget_enabled"
-                                                    <?php echo $this->is_checked('post_type_count_widget_enabled'); ?>
+                                                        name="tmpl_widget_settings[conversion_widget_enabled]"
+                                                        id="conversion_widget_enabled"
+                                                    <?php echo $this->is_checked('conversion_widget_enabled'); ?>
                                                 >
                                                 <span class="checkbox__switch__slider"></span>
                                             </label>
@@ -76,29 +76,101 @@ class Widget_Settings extends Page
                                     </div>
                                     <?php
                                     $class = '';
-                                    if($this->is_checked('post_type_count_widget_enabled')) {
+                                    if($this->is_checked('conversion_widget_enabled')) {
                                         $class = 'content__open';
                                     }
                                     ?>
-                                    <div class="category__content content__collapsable <?= $class; ?>">
-                                        <div class="settings__field" id="post_type_count_widget_title_setting">
+                                    <div class="category__content content__collapsable <?= esc_attr($class); ?>">
+
+                                        <!-- Settings Field | Selectable Forms -->
+
+                                        <div class="settings__field" id="conversion_selected_forms_settings">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
-                                                    <label for="post_type_count_widget_title">
-                                                        <?php _e('Widget title', 'tempel-settings'); ?>
+                                                    <label for="conversion_selected_forms">
+                                                        <?php _e('Select forms to show in widget', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
-                                                    <input
-                                                            type="text"
-                                                            class="settings__input"
-                                                            name="tmpl_widget_settings[post_type_count_widget_title]"
-                                                            id="post_type_count_widget_title"
-                                                            placeholder="<?php esc_attr_e('Orders', 'tempel-settings'); ?>"
-                                                        <?php if ($this->get_settings('post_type_count_widget_title')): ?>
-                                                            value="<?= esc_attr($this->get_settings('post_type_count_widget_title')); ?>"
-                                                        <?php endif; ?>
-                                                    >
+                                                    <?php if ($selectable_forms): ?>
+                                                        <?php
+                                                        $selected_forms = $this->get_settings('conversion_selected_forms');
+                                                        if (!is_array($selected_forms) && $selected_forms) {
+                                                            $selected_forms = explode(',', $selected_forms);
+                                                        }
+                                                        $selected_forms = is_array($selected_forms) ? array_map('absint', $selected_forms) : array();
+                                                        ?>
+                                                        <select class="settings__input"
+                                                                name="tmpl_widget_settings[conversion_selected_forms][]"
+                                                                id="conversion_selected_forms"
+                                                                multiple
+                                                        >
+                                                            <?php foreach ($selectable_forms as $form):
+                                                                $is_selected = '';
+
+                                                                if (in_array((int) $form['id'], $selected_forms, true)) {
+                                                                    $is_selected = 'selected';
+                                                                }
+                                                                ?>
+                                                                <option
+                                                                        value="<?= esc_attr($form['id']); ?>"
+                                                                    <?= esc_attr($is_selected); ?>
+                                                                >
+                                                                    <?= esc_html($form['title']); ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    <?php else: ?>
+                                                        <span class="tmpl_widget__error">
+                                                                <?php _e('Something went wrong. Is Gravity Forms active and does it have at least one active form', 'tempel-settings'); ?>
+                                                            </span>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Settings Field | Selectable Forms -->
+
+                                        <?php if (function_exists('wc_get_orders')): ?>
+                                            <div class="settings__field" id="conversion_include_woocommerce_orders_setting">
+                                                <div class="settings__field__inner">
+                                                    <div class="settings__label__wrap">
+                                                        <label for="conversion_include_woocommerce_orders">
+                                                            <?php _e('Count WooCommerce orders as conversions', 'tempel-settings'); ?>
+                                                        </label>
+                                                    </div>
+                                                    <div class="settings__input__wrap">
+                                                        <label class="checkbox__switch" for="conversion_include_woocommerce_orders">
+                                                            <input
+                                                                    type="checkbox"
+                                                                    name="tmpl_widget_settings[conversion_include_woocommerce_orders]"
+                                                                    id="conversion_include_woocommerce_orders"
+                                                                <?php echo $this->is_checked('conversion_include_woocommerce_orders'); ?>
+                                                            >
+                                                            <span class="checkbox__switch__slider"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+
+                                        <div class="settings__field" id="conversion_include_post_type_setting">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="conversion_include_post_type">
+                                                        <?php _e('Count a post type as conversions', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label class="checkbox__switch" for="conversion_include_post_type">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_widget_settings[conversion_include_post_type]"
+                                                                id="conversion_include_post_type"
+                                                            <?php echo $this->is_checked('conversion_include_post_type'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -153,88 +225,6 @@ class Widget_Settings extends Page
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Settings Category -->
-
-                                <!-- Settings Category -->
-                                <div class="settings__category">
-                                    <div class="category__header">
-                                        <div class="category__label__wrap">
-                                            <div class="category__title">
-                                                <?php _e('Conversion Widget', 'tempel-settings'); ?>
-                                            </div>
-                                            <div class="category__description">
-                                                <?php _e('Settings for the conversion widget', 'tempel-settings'); ?>
-                                            </div>
-                                        </div>
-                                        <div class="category__input__wrap">
-                                            <label class="checkbox__switch" for="conversion_widget_enabled">
-                                                <input
-                                                        type="checkbox"
-                                                        name="tmpl_widget_settings[conversion_widget_enabled]"
-                                                        id="conversion_widget_enabled"
-                                                    <?php echo $this->is_checked('conversion_widget_enabled'); ?>
-                                                >
-                                                <span class="checkbox__switch__slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <?php
-                                    $class = '';
-                                    if($this->is_checked('conversion_widget_enabled')) {
-                                        $class = 'content__open';
-                                    }
-                                    ?>
-                                    <div class="category__content content__collapsable <?= $class; ?>">
-
-                                        <!-- Settings Field | Selectable Forms -->
-
-                                        <div class="settings__field" id="conversion_selected_forms_settings">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="conversion_selected_forms">
-                                                        <?php _e('Select forms to show in widget', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <?php if ($selectable_forms): ?>
-                                                        <?php
-                                                        $selected_forms = $this->get_settings('conversion_selected_forms');
-                                                        if (!is_array($selected_forms) && $selected_forms) {
-                                                            $selected_forms = explode(',', $selected_forms);
-                                                        }
-                                                        ?>
-                                                        <select class="settings__input"
-                                                                name="tmpl_widget_settings[conversion_selected_forms][]"
-                                                                id="conversion_selected_forms"
-                                                                multiple
-                                                        >
-                                                            <?php foreach ($selectable_forms as $form):
-                                                                $is_selected = '';
-                                                                
-                                                                if (is_array($selected_forms) && in_array($form['id'], $selected_forms)) {
-                                                                    $is_selected = 'selected';
-                                                                }
-                                                                ?>
-                                                                <option
-                                                                        value="<?= $form['id']; ?>"
-                                                                    <?= $is_selected; ?>
-                                                                >
-                                                                    <?= $form['title']; ?>
-                                                                </option>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                    <?php else: ?>
-                                                        <span class="tmpl_widget__error">
-                                                                <?php _e('Something went wrong. Is Gravity Forms active and does it have at least one active form', 'tempel-settings'); ?>
-                                                            </span>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Settings Field | Selectable Forms -->
-                                    </div>
-                                </div>
                                 <div class="settings__category">
                                     <div class="category__header">
                                         <div class="category__label__wrap">
@@ -263,7 +253,7 @@ class Widget_Settings extends Page
                                         $class = 'content__open';
                                     }
                                     ?>
-                                    <div class="category__content content__collapsable <?= $class; ?>">
+                                    <div class="category__content content__collapsable <?= esc_attr($class); ?>">
 
                                         <!-- Settings Field | Update Interval -->
                                         <?php
@@ -291,12 +281,12 @@ class Widget_Settings extends Page
                                                     >
                                                         <option value=""><?php _e('What day do the automatic updates take place', 'tempel-settings'); ?></option>
                                                         <?php foreach ($days as $key => $day): ?>
-                                                            <option value="<?= $key; ?>"
+                                                            <option value="<?= esc_attr($key); ?>"
                                                                 <?php if ($this->get_settings('status_safeupdate_day') === $key): ?>
                                                                     selected
                                                                 <?php endif; ?>
                                                             >
-                                                                <?= $day; ?>
+                                                                <?= esc_html($day); ?>
                                                             </option>
                                                         <?php endforeach; ?>
                                                     </select>
@@ -321,7 +311,7 @@ class Widget_Settings extends Page
                                                             id="status_backup_interval"
                                                             placeholder="00:00"
                                                         <?php if ($this->get_settings('status_backup_interval')): ?>
-                                                            value="<?= $this->get_settings('status_backup_interval'); ?>"
+                                                            value="<?= esc_attr($this->get_settings('status_backup_interval')); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -334,14 +324,14 @@ class Widget_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="status_last_checkup_date">
-                                                        <?php _e('Reset checkup'); ?>
+                                                        <?php esc_html_e('Reset checkup', 'tempel-settings'); ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input
                                                             type="hidden"
                                                             name="tmpl_widget_settings[status_last_checkup_date]"
-                                                            value="<?= $this->get_settings('status_last_checkup_date'); ?>"
+                                                            value="<?= esc_attr($this->get_settings('status_last_checkup_date')); ?>"
                                                     >
                                                     <button id="reset_status_last_checkup_date" type="button"
                                                             class="button button-primary">
@@ -415,7 +405,7 @@ class Widget_Settings extends Page
                                                             id="status_service_contract_tier"
                                                             class="settings__input"
                                                         <?php if ($this->get_settings('status_service_contract_tier')): ?>
-                                                            value="<?= $this->get_settings('status_service_contract_tier'); ?>"
+                                                            value="<?= esc_attr($this->get_settings('status_service_contract_tier')); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -439,7 +429,7 @@ class Widget_Settings extends Page
                                                             id="status_service_contract_upgrade_link"
                                                             placeholder="https://studiotempel.nl/pakketten/"
                                                         <?php if ($this->get_settings('status_service_contract_upgrade_link')): ?>
-                                                            value="<?= $this->get_settings('status_service_contract_upgrade_link'); ?>"
+                                                            value="<?= esc_url($this->get_settings('status_service_contract_upgrade_link')); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -480,7 +470,7 @@ class Widget_Settings extends Page
                                             $class = 'content__open';
                                         }
                                     ?>
-                                    <div class="category__content content__collapsable <?= $class; ?>">
+                                    <div class="category__content content__collapsable <?= esc_attr($class); ?>">
 
                                         <!-- Settings Field | FAQ Link -->
                                         <div id="support_faq_link_setting" class="settings__field">
@@ -498,7 +488,7 @@ class Widget_Settings extends Page
                                                             id="support_faq_link"
                                                             placeholder="https://studiotempel.nl/faq/"
                                                         <?php if ($this->get_settings('support_faq_link')): ?>
-                                                            value="<?= $this->get_settings('support_faq_link'); ?>"
+                                                            value="<?= esc_url($this->get_settings('support_faq_link')); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -522,7 +512,7 @@ class Widget_Settings extends Page
                                                             id="support_ticket_link"
                                                             placeholder="https://studiotempel.nl/support/"
                                                         <?php if ($this->get_settings('support_ticket_link')): ?>
-                                                            value="<?= $this->get_settings('support_ticket_link'); ?>"
+                                                            value="<?= esc_url($this->get_settings('support_ticket_link')); ?>"
                                                         <?php endif; ?>
                                                     >
                                                 </div>
@@ -651,6 +641,10 @@ class Widget_Settings extends Page
     public function get_settings($option)
     {
         $options = get_option('tmpl_widget_settings');
+
+        if (!is_array($options)) {
+            return '';
+        }
         
         if (!isset($options[$option])) {
             return '';

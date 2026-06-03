@@ -15,6 +15,10 @@ namespace Tempel;
 function return_option(string $option_group, string $option_name)
 {
     $option = get_option($option_group);
+
+    if (!is_array($option)) {
+        return false;
+    }
     
     return $option[$option_name] ?? false;
 }
@@ -51,6 +55,6 @@ function create_upload_folder_if_not_exists() : void
     $upload_dir = $upload_dir . '/tempel-settings';
     
     if (!file_exists($upload_dir)) {
-        mkdir($upload_dir);
+        wp_mkdir_p($upload_dir);
     }
 }

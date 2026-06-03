@@ -173,6 +173,18 @@ msgstr ""
 msgid "Visitors could not be retrieved."
 msgstr ""
 
+#: src/includes/ajax-functions.php:35
+msgid "You are not allowed to reset the checkup date."
+msgstr ""
+
+#: src/includes/ajax-functions.php:61
+msgid "You are not allowed to reset the update date."
+msgstr ""
+
+#: src/includes/ajax-functions.php:87
+msgid "You are not allowed to clear the FAQ cache."
+msgstr ""
+
 #: src/views/widget-settings.php:58
 msgid "Post Type Count Widget"
 msgstr ""
@@ -275,6 +287,14 @@ msgstr ""
 
 #: src/views/widget-settings.php:36
 msgid "Settings for the conversion widget"
+msgstr ""
+
+#: src/views/widget-settings.php:239
+msgid "Count WooCommerce orders as conversions"
+msgstr ""
+
+#: src/views/widget-settings.php:161
+msgid "Count a post type as conversions"
 msgstr ""
 
 #: src/views/widget-settings.php:115

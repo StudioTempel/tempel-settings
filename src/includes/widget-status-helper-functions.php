@@ -42,6 +42,10 @@ function get_last_checkup(): array
     
     $dateLastCheckup = \DateTime::createFromFormat('m/Y', $lastCheckup['date']);
     $now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
+
+    if (!$dateLastCheckup) {
+        return ['error' => '<span class="tmpl_widget__error">' . __('Could not retrieve the last checkup date', 'tempel-settings') . '</span>'];
+    }
     
     if ($dateLastCheckup->diff($now)->days > 90) {
         $lastCheckup['show_link'] = true;
@@ -61,6 +65,12 @@ function get_safeupdate_day(): string
     $option = return_option('tmpl_widget_settings', 'status_safeupdate_day');
     
     if (is_wp_error($option) || empty($option)) return '<span class="tmpl_widget__error">' . __('Could not retrieve last update date', 'tempel-settings') . '</span>';
+
+    $valid_days = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+
+    if (!in_array($option, $valid_days, true)) {
+        return '<span class="tmpl_widget__error">' . __('Could not retrieve last update date', 'tempel-settings') . '</span>';
+    }
     
     $now = new \DateTime("now", new \DateTimeZone('Europe/Amsterdam'));
     $lastUpdate = $now->modify('last ' . $option);

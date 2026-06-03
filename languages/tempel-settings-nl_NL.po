@@ -172,6 +172,18 @@ msgstr "Afgelopen 7 dagen"
 msgid "Visitors could not be retrieved."
 msgstr "Bezoekers konden niet worden opgehaald."
 
+#: src/includes/ajax-functions.php:35
+msgid "You are not allowed to reset the checkup date."
+msgstr "Je hebt geen rechten om de controledatum te resetten."
+
+#: src/includes/ajax-functions.php:61
+msgid "You are not allowed to reset the update date."
+msgstr "Je hebt geen rechten om de updatedatum te resetten."
+
+#: src/includes/ajax-functions.php:87
+msgid "You are not allowed to clear the FAQ cache."
+msgstr "Je hebt geen rechten om de FAQ-cache te legen."
+
 #: src/views/widget-settings.php:58
 msgid "Post Type Count Widget"
 msgstr "Posttype teller widget"
@@ -279,6 +291,14 @@ msgstr "Instellingen"
 #: src/views/widget-settings.php:36
 msgid "Settings for the conversion widget"
 msgstr "Instellingen voor de conversie widget"
+
+#: src/views/widget-settings.php:239
+msgid "Count WooCommerce orders as conversions"
+msgstr "WooCommerce-bestellingen meetellen als conversies"
+
+#: src/views/widget-settings.php:161
+msgid "Count a post type as conversions"
+msgstr "Posttype meetellen als conversies"
 
 #: src/views/widget-settings.php:115
 msgid "Settings for the status widget"

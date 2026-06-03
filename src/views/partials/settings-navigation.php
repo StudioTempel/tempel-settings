@@ -11,7 +11,7 @@ function settings_navigation()
         <div class="sidebar__inner">
             <div class="sidebar__header">
                 <div class="sidebar__title">
-                    <?php echo __('Settings', 'tempel-settings'); ?>
+                    <?php esc_html_e('Settings', 'tempel-settings'); ?>
                 </div>
             </div>
             <div class="sidebar__nav">
@@ -34,9 +34,13 @@ function menu_loop($pages)
     foreach ($pages as $page) {
         ?>
         <li>
-            <a href="/wp-admin/admin.php?page=<?php echo $page->menu_slug; ?>"
-               class="nav__item <?php echo $page->menu_slug === $_GET['page'] ? 'active' : ''; ?>">
-                <?php echo $page->page_title; ?>
+            <?php
+            $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+            $menu_slug = sanitize_key($page->menu_slug);
+            ?>
+            <a href="<?php echo esc_url(admin_url('admin.php?page=' . $menu_slug)); ?>"
+               class="nav__item <?php echo esc_attr($menu_slug === $current_page ? 'active' : ''); ?>">
+                <?php echo esc_html($page->page_title); ?>
             </a>
         </li>
         <?php

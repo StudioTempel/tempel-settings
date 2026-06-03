@@ -39,39 +39,39 @@ class Status_Widget extends Widget
             <div class="widget__content__inner">
                 <div class="widget__content__item">
                     <div class="item__label"><?php _e('Last round of updates', 'tempel-settings') ?></div>
-                    <div class="item__value"><?= get_safeupdate_day(); ?></div>
+                    <div class="item__value"><?= wp_kses_post(get_safeupdate_day()); ?></div>
                 </div>
                 <div class="widget__content__item">
                     <div class="item__label"><?php _e('Last backup', 'tempel-settings'); ?></div>
-                    <div class="item__value"><?= get_backup_interval(); ?></div>
+                    <div class="item__value"><?= wp_kses_post(get_backup_interval()); ?></div>
                 </div>
                 <div class="widget__content__item">
                     <?php $last_checkup = get_last_checkup(); ?>
                     <?php if ($last_checkup['error'] && $last_checkup['error'] !== '') : ?>
                         <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                        <div class="item__value"><?= $last_checkup['error']; ?></div>
+                        <div class="item__value"><?= wp_kses_post($last_checkup['error']); ?></div>
                     <?php elseif ($last_checkup['show_link'] === true): ?>
-                        <a href="https://studiotempel/contact" target="_blank" class="item__link">
+                        <a href="https://studiotempel.nl/contact" target="_blank" rel="nofollow noopener" class="item__link">
                             <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                            <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
+                            <div class="item__value item__value--<?= esc_attr(sanitize_html_class($last_checkup['color'])); ?>"><?= esc_html($last_checkup['date']); ?></div>
                         </a>
                     <?php else: ?>
                         <div class="item__label"><?php _e('Last checkup', 'tempel-settings'); ?></div>
-                        <div class="item__value item__value--<?= $last_checkup['color']; ?>"><?= $last_checkup['date']; ?></div>
+                        <div class="item__value item__value--<?= esc_attr(sanitize_html_class($last_checkup['color'])); ?>"><?= esc_html($last_checkup['date']); ?></div>
                     <?php endif; ?>
                 </div>
                 <?php if (get_customer_package() && show_service_contract_tier() === true): ?>
                     <div class="widget__content__item">
                         <?php if (service_contract_upgradable() === true): ?>
                         <a
-                                rel="nofollow"
+                                rel="nofollow noopener"
                                 target="_blank"
-                                href="<?= get_service_contract_upgrade_link(); ?>"
+                                href="<?= esc_url(get_service_contract_upgrade_link()); ?>"
                                 class="item__link"
                         >
                             <?php endif; ?>
                             <div class="item__label"><?php _e('Servicecontract', 'tempel-settings'); ?></div>
-                            <div class="item__value"><?= get_customer_package(); ?></div>
+                            <div class="item__value"><?= wp_kses_post(get_customer_package()); ?></div>
                             <?php if (service_contract_upgradable() === true): ?>
                         </a>
                     <?php endif; ?>

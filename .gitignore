@@ -5,5 +5,7 @@ vendor/composer
 composer.lock
 trash
 .DS_Store
+*.zip
+languages/*~
 dist/cache/faq_items_cache.json
 build

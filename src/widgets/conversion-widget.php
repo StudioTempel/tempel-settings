@@ -28,7 +28,7 @@ class Conversion_Widget extends Widget
     
     function widget_markup()
     {
-        $forms_submissions = get_form_submissions_by_id();
+        $forms_submissions = get_conversion_items();
         $total_submissions = get_total_submissions();
         
         ?>
@@ -56,4 +56,3 @@ class Conversion_Widget extends Widget
         <?php
     }
 }
-

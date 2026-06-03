@@ -12,7 +12,6 @@ require_once 'widgets/support-widget.php';
 require_once 'widgets/conversion-widget.php';
 require_once 'widgets/blog-widget.php';
 require_once 'widgets/analytics-widget.php';
-require_once 'widgets/post-type-count-widget.php';
 
 
 require_once 'includes/helper-functions.php';
@@ -63,7 +62,7 @@ if (!class_exists('Admin')) {
                 $this->widgets['support-widget'] = new Support_Widget();
             }
             
-            if (class_exists('GFForms') && sanitize_checkbox_value(return_option('tmpl_widget_settings', 'conversion_widget_enabled'))) {
+            if (sanitize_checkbox_value(return_option('tmpl_widget_settings', 'conversion_widget_enabled'))) {
                 $this->widgets['conversion-widget'] = new Conversion_Widget();
             }
 
@@ -71,9 +70,6 @@ if (!class_exists('Admin')) {
                 $this->widgets['analytics-widget'] = new Analytics_Widget();
             }
 
-            if (sanitize_checkbox_value(return_option('tmpl_widget_settings', 'post_type_count_widget_enabled'))) {
-                $this->widgets['post-type-count-widget'] = new Post_Type_Count_Widget();
-            }
         }
 
         public function is_site_kit_active(): bool
@@ -94,7 +90,6 @@ if (!class_exists('Admin')) {
             if (is_admin() && get_current_screen()->id === 'dashboard') {
                 wp_enqueue_style('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'css/dashboard-widgets.css');
                 wp_enqueue_style('analytics-widget', TEMPEL_SETTINGS_ASSET_URL . 'css/analytics-widget.css', array('dashboard-widgets'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/analytics-widget.css'));
-                wp_enqueue_style('post-type-count-widget', TEMPEL_SETTINGS_ASSET_URL . 'css/post-type-count-widget.css', array('dashboard-widgets'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/post-type-count-widget.css'));
                 wp_enqueue_script('dashboard-widgets', TEMPEL_SETTINGS_ASSET_URL . 'js/widgets.js', array('jquery'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/widgets.js'), true);
                 wp_localize_script('dashboard-widgets', 'tempelAnalyticsWidget', array(
                     'endpoint' => rest_url('google-site-kit/v1/modules/analytics-4/data/report'),
@@ -154,8 +149,60 @@ if (!class_exists('Admin')) {
             
             register_setting(
                 'tempel_widget_settings',
-                'tmpl_widget_settings'
+                'tmpl_widget_settings',
+                array(
+                    'sanitize_callback' => array($this, 'sanitize_widget_settings'),
+                )
             );
+        }
+
+        public function sanitize_widget_settings($input): array
+        {
+            $input = is_array($input) ? $input : array();
+            $current = get_option('tmpl_widget_settings', array());
+            $output = is_array($current) ? $current : array();
+
+            $checkboxes = array(
+                'analytics_widget_enabled',
+                'conversion_widget_enabled',
+                'conversion_include_woocommerce_orders',
+                'conversion_include_post_type',
+                'status_widget_enabled',
+                'status_show_service_contract_tier',
+                'status_service_contract_upgradable',
+                'support_widget_enabled',
+            );
+
+            foreach ($checkboxes as $key) {
+                $output[$key] = isset($input[$key]) && $input[$key] === 'on' ? 'on' : '';
+            }
+
+            $days = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');
+            $safeupdate_day = isset($input['status_safeupdate_day']) ? sanitize_key($input['status_safeupdate_day']) : '';
+            $output['status_safeupdate_day'] = in_array($safeupdate_day, $days, true) ? $safeupdate_day : '';
+
+            $output['status_backup_interval'] = isset($input['status_backup_interval']) && preg_match('/^\d{2}:\d{2}$/', $input['status_backup_interval'])
+                ? sanitize_text_field($input['status_backup_interval'])
+                : '';
+
+            $output['status_last_checkup_date'] = isset($input['status_last_checkup_date']) && preg_match('/^\d{2}\/\d{4}$/', $input['status_last_checkup_date'])
+                ? sanitize_text_field($input['status_last_checkup_date'])
+                : current_time('m/Y');
+
+            $output['status_service_contract_tier'] = isset($input['status_service_contract_tier']) ? sanitize_text_field($input['status_service_contract_tier']) : '';
+            $output['status_service_contract_upgrade_link'] = isset($input['status_service_contract_upgrade_link']) ? esc_url_raw($input['status_service_contract_upgrade_link']) : '';
+            $output['support_faq_link'] = isset($input['support_faq_link']) ? esc_url_raw($input['support_faq_link']) : '';
+            $output['support_ticket_link'] = isset($input['support_ticket_link']) ? esc_url_raw($input['support_ticket_link']) : '';
+            $output['post_type_count_post_type'] = isset($input['post_type_count_post_type']) ? sanitize_key($input['post_type_count_post_type']) : '';
+
+            $statuses = isset($input['post_type_count_statuses']) ? explode(',', $input['post_type_count_statuses']) : array();
+            $statuses = array_filter(array_map('sanitize_key', array_map('trim', $statuses)));
+            $output['post_type_count_statuses'] = implode(',', $statuses);
+
+            $selected_forms = isset($input['conversion_selected_forms']) ? (array) $input['conversion_selected_forms'] : array();
+            $output['conversion_selected_forms'] = array_values(array_filter(array_map('absint', $selected_forms)));
+
+            return $output;
         }
 
         public function sanitize_general_settings($input): array
@@ -196,6 +243,10 @@ if (!class_exists('Admin')) {
         public function load_assets()
         {
             $screen = get_current_screen();
+
+            if (!$screen) {
+                return;
+            }
             
             $screens = array(
                 'toplevel_page_tempel-settings',
@@ -204,10 +255,13 @@ if (!class_exists('Admin')) {
                 'tempel-settings_page_tempel-login-settings',
             );
             
-            if (in_array($screen->id, $screens)) {
+            if (in_array($screen->id, $screens, true)) {
                 wp_enqueue_style('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'css/widget-settings.css');
                 wp_enqueue_style('tmpl-settings-overrides', TEMPEL_SETTINGS_ASSET_URL . 'css/settings-overrides.css', array('tmpl-settings-page'));
                 wp_enqueue_script('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'js/settings.js', array('jquery'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/settings.js'), true);
+                wp_localize_script('tmpl-settings-page', 'tmplWidgetSettings', array(
+                    'nonce' => wp_create_nonce('tmpl_widget_settings_action'),
+                ));
             }
         }
         
