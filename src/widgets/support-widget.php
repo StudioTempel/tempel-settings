@@ -36,17 +36,17 @@ class Support_Widget extends Widget
                     <div class="widget__content_inner">
                         <?php if (has_supported_cache_plugin()): ?>
                             <div class="widget__content__item">
-                                <button type="button" class="item__link tempel-support-action" data-tempel-support-action="clear-cache">
+                                <a href="#" class="item__link tempel-support-action" data-tempel-support-action="clear-cache">
                                     <span class="item__label"><?php _e('Clear cache', 'tempel-settings'); ?></span>
                                     <span class="item__value"></span>
-                                </button>
+                                </a>
                             </div>
                         <?php endif; ?>
                         <div class="widget__content__item">
-                            <button type="button" class="item__link tempel-support-action" data-tempel-support-action="send-test-mail">
+                            <a href="#" class="item__link tempel-support-action" data-tempel-support-action="send-test-mail">
                                 <span class="item__label"><?php _e('Send test email', 'tempel-settings'); ?></span>
                                 <span class="item__value"></span>
-                            </button>
+                            </a>
                         </div>
                         <div class="widget__content__item">
                             <a href="<?= esc_url(get_support_ticket_link()); ?>" target="_blank" rel="nofollow noopener" class="item__link">

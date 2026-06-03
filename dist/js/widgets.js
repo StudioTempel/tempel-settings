@@ -4,7 +4,9 @@ jQuery(document).ready(function($) {
         $(this).find('.item__dropdown__value').slideToggle();
     });
 
-    $('.tempel-support-action').on('click', function() {
+    $('.tempel-support-action').on('click', function(event) {
+        event.preventDefault();
+
         var $button = $(this);
         var action = $button.data('tempel-support-action');
 
@@ -24,7 +26,7 @@ jQuery(document).ready(function($) {
             return;
         }
 
-        $button.prop('disabled', true);
+        $button.addClass('is-disabled').attr('aria-disabled', 'true');
 
         $.ajax({
             url: tempelSupportActions.ajaxUrl,
@@ -47,7 +49,7 @@ jQuery(document).ready(function($) {
         }).fail(function() {
             alert(isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError);
         }).always(function() {
-            $button.prop('disabled', false);
+            $button.removeClass('is-disabled').removeAttr('aria-disabled');
         });
     });
 
