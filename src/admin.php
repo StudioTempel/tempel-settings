@@ -102,6 +102,7 @@ if (!class_exists('Admin')) {
                 wp_localize_script('dashboard-widgets', 'tempelSupportActions', array(
                     'ajaxUrl' => admin_url('admin-ajax.php'),
                     'nonce' => wp_create_nonce('tempel_support_actions'),
+                    'hasCacheAction' => \Tempel\has_supported_cache_plugin(),
                     'messages' => array(
                         'cacheConfirm' => __('Clear the site cache?', 'tempel-settings'),
                         'cacheSuccess' => __('Cache cleared.', 'tempel-settings'),

@@ -7,9 +7,6 @@ jQuery(document).ready(function($) {
     $('.tempel-support-action').on('click', function() {
         var $button = $(this);
         var action = $button.data('tempel-support-action');
-        var $widget = $button.closest('.tmpl_widget');
-        var $status = $button.find('[data-tempel-support-action-status]');
-        var $message = $widget.find('[data-tempel-support-message]');
 
         if (typeof tempelSupportActions === 'undefined') {
             return;
@@ -18,13 +15,16 @@ jQuery(document).ready(function($) {
         var isCacheAction = action === 'clear-cache';
         var confirmMessage = isCacheAction ? tempelSupportActions.messages.cacheConfirm : tempelSupportActions.messages.mailConfirm;
 
+        if (isCacheAction && !tempelSupportActions.hasCacheAction) {
+            alert(tempelSupportActions.messages.cacheError);
+            return;
+        }
+
         if (!confirm(confirmMessage)) {
             return;
         }
 
         $button.prop('disabled', true);
-        $status.text('...');
-        $message.text('');
 
         $.ajax({
             url: tempelSupportActions.ajaxUrl,
@@ -39,16 +39,13 @@ jQuery(document).ready(function($) {
             var errorMessage = isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError;
 
             if (response && response.success) {
-                $status.text('OK');
-                $message.text(response.data && response.data.message ? response.data.message : successMessage);
+                alert(response.data && response.data.message ? response.data.message : successMessage);
                 return;
             }
 
-            $status.text('!');
-            $message.text(response && response.data && response.data.message ? response.data.message : errorMessage);
+            alert(response && response.data && response.data.message ? response.data.message : errorMessage);
         }).fail(function() {
-            $status.text('!');
-            $message.text(isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError);
+            alert(isCacheAction ? tempelSupportActions.messages.cacheError : tempelSupportActions.messages.mailError);
         }).always(function() {
             $button.prop('disabled', false);
         });

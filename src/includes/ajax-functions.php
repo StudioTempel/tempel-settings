@@ -89,12 +89,12 @@ function clear_site_cache(): void
 
     $cleared = array();
 
-    if (is_breeze_active()) {
+    if (is_breeze_cache_plugin_active()) {
         clear_breeze_cache();
         $cleared[] = 'Breeze';
     }
 
-    if (is_hummingbird_active()) {
+    if (is_hummingbird_cache_plugin_active()) {
         clear_hummingbird_cache();
         $cleared[] = 'Hummingbird';
     }
@@ -158,7 +158,12 @@ function send_test_mail(): void
 }
 add_action('wp_ajax_tempel_send_test_mail', __NAMESPACE__ . '\send_test_mail');
 
-function is_breeze_active(): bool
+function has_supported_cache_plugin(): bool
+{
+    return is_breeze_cache_plugin_active() || is_hummingbird_cache_plugin_active();
+}
+
+function is_breeze_cache_plugin_active(): bool
 {
     return class_exists('Breeze_Admin') || class_exists('Breeze_PurgeCache') || has_action('breeze_clear_all_cache');
 }
@@ -180,7 +185,7 @@ function clear_breeze_cache(): void
     }
 }
 
-function is_hummingbird_active(): bool
+function is_hummingbird_cache_plugin_active(): bool
 {
     return defined('WPHB_VERSION') || class_exists('Hummingbird\\WP_Hummingbird') || class_exists('Hummingbird\\Core\\Utils');
 }
