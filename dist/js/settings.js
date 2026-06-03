@@ -1,1 +1,84 @@
-jQuery(document).ready(function(e){e("#conversion_selected_forms").length&&e("#conversion_selected_forms").select2({placeholder:"Selecteer formulieren",allowClear:!0,multiple:!0}),e("#status_safeupdate_day").length&&e("#status_safeupdate_day").select2({minimumResultsForSearch:-1,placeholder:"Selecteer de dag waarop de safeupdate plaatsvind"}),e("#status_backup_interval").length&&e("#status_backup_interval").flatpickr({enableTime:!0,dateFormat:"H:i",time_24hr:!0,noCalendar:!0}),e("button#reset_status_last_checkup_date").on("click",function(){confirm("Weet je zeker dat je de checkup wilt resetten?")&&e.ajax({url:ajaxurl,type:"POST",data:{action:"reset_checkup"},success:function(e){alert("Checkup is gereset"),console.log(e)},error:function(e){console.error(e)}})}),e("button#support_clear_faq_cache").on("click",function(){confirm("Weet je zeker dat je de FAQ cache wilt legen?")&&e.ajax({url:ajaxurl,type:"POST",data:{action:"clear_faq_cache"},success:function(e){alert("FAQ cache is geleegd"),console.log(e)},error:function(e){console.error(e)}})}),e(".category__header input[type='checkbox']").on("change",function(){console.log("change"),e(this).closest(".settings__category").find(".category__content.content__collapsable").slideToggle()})});
+jQuery(document).ready(function($) {
+    if ($('#conversion_selected_forms').length) {
+        $('#conversion_selected_forms').select2({
+            placeholder: 'Selecteer formulieren',
+            allowClear: true,
+            multiple: true
+        });
+    }
+
+    if ($('#status_safeupdate_day').length) {
+        $('#status_safeupdate_day').select2({
+            minimumResultsForSearch: -1,
+            placeholder: 'Selecteer de dag waarop de safeupdate plaatsvind'
+        });
+    }
+
+    if ($('#status_backup_interval').length) {
+        $('#status_backup_interval').flatpickr({
+            enableTime: true,
+            dateFormat: 'H:i',
+            time_24hr: true,
+            noCalendar: true
+        });
+    }
+
+    $('button#reset_status_last_checkup_date').on('click', function() {
+        if (!confirm('Weet je zeker dat je de checkup wilt resetten?')) {
+            return;
+        }
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'reset_checkup'
+            },
+            success: function(response) {
+                if (response.success && response.data.status_last_checkup_date) {
+                    $('input[name="tmpl_widget_settings[status_last_checkup_date]"]').val(response.data.status_last_checkup_date);
+                    alert('Checkup is gereset');
+                    return;
+                }
+
+                alert('Checkup kon niet worden gereset');
+            },
+            error: function(error) {
+                console.error(error);
+                alert('Checkup kon niet worden gereset');
+            }
+        });
+    });
+
+    $('button#support_clear_faq_cache').on('click', function() {
+        if (!confirm('Weet je zeker dat je de FAQ cache wilt legen?')) {
+            return;
+        }
+
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'clear_faq_cache'
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert('FAQ cache is geleegd');
+                    return;
+                }
+
+                alert('FAQ cache kon niet worden geleegd');
+            },
+            error: function(error) {
+                console.error(error);
+                alert('FAQ cache kon niet worden geleegd');
+            }
+        });
+    });
+
+    $(".category__header input[type='checkbox']").on('change', function() {
+        $(this).closest('.settings__category').find('.category__content.content__collapsable').slideToggle();
+    });
+});
