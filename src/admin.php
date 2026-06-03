@@ -28,7 +28,7 @@ if (!class_exists('Admin')) {
          */
         public function __construct()
         {
-            add_action('init', array($this, 'load_ajax_functions'));
+            $this->load_ajax_functions();
             // Hook setting registration
             add_action('admin_init', array($this, 'register_plugin_settings'));
             
