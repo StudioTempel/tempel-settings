@@ -2,7 +2,14 @@
 
 namespace Tempel;
 
-require plugin_dir_path(__FILE__) . '../vendor/autoload.php';
+$composer_autoload = plugin_dir_path(__FILE__) . '../vendor/autoload.php';
+$puc_loader = plugin_dir_path(__FILE__) . '../vendor/yahnis-elsts/plugin-update-checker/load-v5p4.php';
+
+if (file_exists(plugin_dir_path(__FILE__) . '../vendor/composer/autoload_real.php')) {
+    require $composer_autoload;
+} elseif (file_exists($puc_loader)) {
+    require $puc_loader;
+}
 
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
