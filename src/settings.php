@@ -9,6 +9,7 @@ require_once 'includes/settings/remove-dashboard-widgets.php';
 require_once 'includes/settings/svg-support.php';
 require_once 'includes/settings/gf-bag-address.php';
 require_once 'includes/settings/magic-login.php';
+require_once 'includes/settings/performance.php';
 require_once 'includes/settings/taxonomy-order.php';
 
 require_once 'includes/helper-functions.php';
@@ -43,6 +44,10 @@ if(!class_exists('Settings')) {
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'magic_login_enabled'))) {
                 new Magic_Login();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'performance_enabled'))) {
+                new Performance();
             }
 
             if (

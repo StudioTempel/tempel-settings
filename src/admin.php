@@ -233,6 +233,11 @@ if (!class_exists('Admin')) {
                 'gf_bag_address_enabled',
                 'magic_login_enabled',
                 'magic_login_allow_admins',
+                'performance_enabled',
+                'performance_disable_emojis',
+                'performance_disable_embeds',
+                'performance_disable_xmlrpc',
+                'performance_disable_heartbeat',
             );
 
             foreach ($checkboxes as $key) {
@@ -243,6 +248,10 @@ if (!class_exists('Admin')) {
             $output['gf_bag_address_endpoint'] = isset($input['gf_bag_address_endpoint']) ? esc_url_raw($input['gf_bag_address_endpoint']) : '';
             $output['gf_bag_address_timeout'] = isset($input['gf_bag_address_timeout']) ? (string) max(1, min(30, absint($input['gf_bag_address_timeout']))) : '8';
             $output['magic_login_expiration'] = isset($input['magic_login_expiration']) ? (string) max(1, min(60, absint($input['magic_login_expiration']))) : '10';
+            $output['performance_frontend_memory_limit'] = isset($input['performance_frontend_memory_limit']) ? (string) max(64, min(1024, absint($input['performance_frontend_memory_limit']))) : '128';
+            $output['performance_admin_memory_limit'] = isset($input['performance_admin_memory_limit']) ? (string) max(64, min(1024, absint($input['performance_admin_memory_limit']))) : '256';
+            $output['performance_revision_limit'] = isset($input['performance_revision_limit']) ? (string) max(1, min(50, absint($input['performance_revision_limit']))) : '5';
+            $output['performance_heartbeat_interval'] = isset($input['performance_heartbeat_interval']) ? (string) max(15, min(120, absint($input['performance_heartbeat_interval']))) : '60';
 
             return $output;
         }
