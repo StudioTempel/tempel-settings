@@ -63,7 +63,8 @@ class Gform_Address_Settings extends Page
                                                             name="tmpl_settings[gf_bag_address_api_key]"
                                                             id="gf_bag_address_api_key"
                                                             class="settings-input-code"
-                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_api_key')); ?>"
+                                                            value=""
+                                                            placeholder="<?php esc_attr_e('Vul je API-sleutel in', 'tempel-settings'); ?>"
                                                             autocomplete="off"
                                                     >
                                                 </div>
@@ -85,6 +86,29 @@ class Gform_Address_Settings extends Page
                                                             class="settings-input-code"
                                                             value="<?php echo esc_attr($this->get_postcode_api_endpoint_value()); ?>"
                                                     >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="gf_bag_address_test_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label>
+                                                        <?php esc_html_e('Test API verbinding', 'tempel-settings'); ?>
+                                                        <span class="label__desc"><?php esc_html_e('Doet een echte test met de opgeslagen key en endpoint.', 'tempel-settings'); ?></span>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <div class="tempel-api-test">
+                                                        <div class="tempel-api-test__fields">
+                                                            <input type="text" id="tempel_postcode_test_postcode" value="6545CA" aria-label="<?php esc_attr_e('Test postcode', 'tempel-settings'); ?>">
+                                                            <input type="text" id="tempel_postcode_test_huisnummer" value="29" aria-label="<?php esc_attr_e('Test huisnummer', 'tempel-settings'); ?>">
+                                                            <button type="button" class="button button-primary" id="tempel_test_postcode_api">
+                                                                <?php esc_html_e('Test API verbinding', 'tempel-settings'); ?>
+                                                            </button>
+                                                        </div>
+                                                        <div id="tempel_postcode_api_test_result" class="tempel-api-test__result" role="status" aria-live="polite"></div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -239,4 +263,5 @@ class Gform_Address_Settings extends Page
 
         return sprintf(__('Deze maand gebruikt: %1$d van %2$d aanvragen.', 'tempel-settings'), $count, $limit);
     }
+
 }

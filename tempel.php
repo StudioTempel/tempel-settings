@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.5.35
+ * Version:           2.6.8
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.5.35');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.6.8');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -44,6 +44,7 @@ class TempelSettings
         $this->load_dependencies();
 
         $this->set_locale();
+        $this->apply_update_defaults();
         
         if (is_admin()) {
             new Admin();
@@ -69,6 +70,25 @@ class TempelSettings
         $plugin_i18n = new Localization();
         add_action('plugins_loaded', array($plugin_i18n, 'load_plugin_textdomain'));
     }
+
+    private function apply_update_defaults(): void
+    {
+        $defaults_version = get_option('tempel_settings_defaults_version');
+
+        if (version_compare((string) $defaults_version, '2.6.3', '>=')) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+
+        if (is_array($settings)) {
+            $settings['gf_bag_address_enabled'] = '';
+            update_option('tmpl_settings', $settings);
+        }
+
+        update_option('tempel_settings_defaults_version', '2.6.3');
+    }
+
     public static function get_instance()
     {
         if (null === self::$instance) {

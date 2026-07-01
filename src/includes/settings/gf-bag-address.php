@@ -8,6 +8,7 @@ class GF_BAG_Address
     private const LEGACY_BAG_ENDPOINT = 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid';
     private const USAGE_OPTION = 'tmpl_gf_bag_address_usage';
     private const LAST_ERROR_OPTION = 'tmpl_gf_bag_address_last_error';
+    private const LAST_TEST_OPTION = 'tmpl_gf_bag_address_last_test';
 
     private static bool $field_registered = false;
 
@@ -122,6 +123,67 @@ class GF_BAG_Address
             'cache_days' => self::get_int_setting('gf_bag_address_cache_days', 30, 0, 365),
             'rate_limit' => self::get_int_setting('gf_bag_address_rate_limit', 20, 1, 300),
         );
+    }
+
+    public static function get_health_status(): array
+    {
+        $settings = self::get_settings();
+        $last_test = self::get_last_test();
+        $last_error = self::get_last_error();
+        $has_api_key = trim($settings['api_key']) !== '';
+
+        $connection_status = 'neutral';
+        $connection_message = __('Nog niet getest.', 'tempel-settings');
+
+        if (!empty($last_test)) {
+            $connection_status = !empty($last_test['success']) ? 'ok' : 'error';
+            $connection_message = (string) ($last_test['message'] ?? $connection_message);
+        } elseif (!empty($last_error['message'])) {
+            $connection_status = 'error';
+            $connection_message = (string) $last_error['message'];
+        } elseif (!$has_api_key) {
+            $connection_status = 'warning';
+            $connection_message = __('API-sleutel ontbreekt.', 'tempel-settings');
+        }
+
+        return array(
+            'gravity_forms' => array(
+                'label' => __('Gravity Forms', 'tempel-settings'),
+                'status' => class_exists('GFForms') || class_exists('GF_Fields') ? 'ok' : 'error',
+                'message' => class_exists('GFForms') || class_exists('GF_Fields') ? __('Actief', 'tempel-settings') : __('Niet actief', 'tempel-settings'),
+            ),
+            'api_key' => array(
+                'label' => __('API-key', 'tempel-settings'),
+                'status' => $has_api_key ? 'ok' : 'warning',
+                'message' => $has_api_key ? __('Aanwezig', 'tempel-settings') : __('Ontbreekt', 'tempel-settings'),
+            ),
+            'api_connection' => array(
+                'label' => __('PostcodeAPI', 'tempel-settings'),
+                'status' => $connection_status,
+                'message' => $connection_message,
+            ),
+            'cache' => array(
+                'label' => __('Cache', 'tempel-settings'),
+                'status' => $settings['cache_days'] > 0 ? 'ok' : 'warning',
+                'message' => $settings['cache_days'] > 0
+                    ? sprintf(__('Actief, %d dagen', 'tempel-settings'), $settings['cache_days'])
+                    : __('Uitgeschakeld', 'tempel-settings'),
+            ),
+            'performance' => array(
+                'label' => __('Performance', 'tempel-settings'),
+                'status' => sanitize_checkbox_value(return_option('tmpl_settings', 'performance_enabled')) ? 'ok' : 'warning',
+                'message' => sanitize_checkbox_value(return_option('tmpl_settings', 'performance_enabled')) ? __('Actief', 'tempel-settings') : __('Niet actief', 'tempel-settings'),
+            ),
+        );
+    }
+
+    public static function test_connection(string $postcode, string $huisnummer): array
+    {
+        $lookup = new self();
+        $result = $lookup->lookup_address($postcode, $huisnummer);
+        self::record_last_test($result);
+
+        return $result;
     }
 
     private static function get_endpoint(): string
@@ -383,6 +445,30 @@ class GF_BAG_Address
         $error = get_option(self::LAST_ERROR_OPTION, array());
 
         return is_array($error) ? $error : array();
+    }
+
+    public static function record_last_test(array $result): void
+    {
+        $message = !empty($result['success'])
+            ? __('Verbinding werkt.', 'tempel-settings')
+            : (string) ($result['message'] ?? __('Verbinding mislukt.', 'tempel-settings'));
+
+        update_option(
+            self::LAST_TEST_OPTION,
+            array(
+                'success' => !empty($result['success']),
+                'message' => $message,
+                'time' => current_time('timestamp'),
+            ),
+            false
+        );
+    }
+
+    public static function get_last_test(): array
+    {
+        $test = get_option(self::LAST_TEST_OPTION, array());
+
+        return is_array($test) ? $test : array();
     }
 
     public function render_usage_notice(): void

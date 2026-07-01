@@ -5,7 +5,9 @@ namespace Tempel;
 // Views
 require_once TEMPEL_SETTINGS_DIR . 'src/views/general-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/widget-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -45,6 +47,55 @@ if (!class_exists('Admin')) {
         function load_ajax_functions()
         {
             require_once TEMPEL_SETTINGS_DIR . 'src/includes/ajax-functions.php';
+            add_action('wp_ajax_tempel_test_postcode_api', array($this, 'test_postcode_api'));
+        }
+
+        public function test_postcode_api(): void
+        {
+            check_ajax_referer('tempel_postcode_api_test', 'nonce');
+
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error(
+                    array('message' => __('Je hebt geen rechten om deze test uit te voeren.', 'tempel-settings')),
+                    403
+                );
+            }
+
+            if (!class_exists('Tempel\GF_BAG_Address')) {
+                wp_send_json_error(
+                    array('message' => __('De Gform adres veld module is niet beschikbaar.', 'tempel-settings')),
+                    500
+                );
+            }
+
+            $postcode = isset($_POST['postcode']) ? sanitize_text_field(wp_unslash($_POST['postcode'])) : '';
+            $huisnummer = isset($_POST['huisnummer']) ? sanitize_text_field(wp_unslash($_POST['huisnummer'])) : '';
+            $result = GF_BAG_Address::test_connection($postcode, $huisnummer);
+
+            if (empty($result['success'])) {
+                wp_send_json_error(
+                    array(
+                        'message' => $result['message'] ?? __('Verbinding mislukt.', 'tempel-settings'),
+                    ),
+                    (int) ($result['status'] ?? 422)
+                );
+            }
+
+            $data = $result['data'] ?? array();
+            $address = trim(sprintf(
+                '%1$s %2$s, %3$s',
+                (string) ($data['straat'] ?? ''),
+                (string) ($data['huisnummer'] ?? ''),
+                (string) ($data['plaats'] ?? '')
+            ));
+
+            wp_send_json_success(
+                array(
+                    'message' => $address
+                        ? sprintf(__('Verbinding werkt. Adres: %s', 'tempel-settings'), $address)
+                        : __('Verbinding werkt.', 'tempel-settings'),
+                )
+            );
         }
         
         /**
@@ -122,20 +173,33 @@ if (!class_exists('Admin')) {
          */
         public function load_pages(): void
         {
-            $this->pages['tempel-settings'] = new General_Settings(
+            $general_page = new General_Settings(
                 __('General', 'tempel-settings'),
                 __('Tempel Settings', 'tempel-settings'),
                 'tempel-settings',
                 $this->get_menu_icon(),
                 99,
             );
+
+            $status_page = new Status_Settings(
+                __('Status', 'tempel-settings'),
+                __('Status', 'tempel-settings'),
+                'tempel-status-settings',
+                $this->get_menu_icon(),
+                1,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-status-settings'] = $status_page;
+            $this->pages['tempel-settings'] = $general_page;
             
             $this->pages['tempel-widget-settings'] = new Widget_Settings(
-                __('Widget', 'tempel-settings'),
+                __('Widgets', 'tempel-settings'),
                 __('Widgets', 'tempel-settings'),
                 'tempel-widget-settings',
                 $this->get_menu_icon(),
-                1,
+                2,
                 'tempel-settings',
                 true
             );
@@ -145,7 +209,17 @@ if (!class_exists('Admin')) {
                 __('Gform adres veld', 'tempel-settings'),
                 'tempel-gform-address-settings',
                 $this->get_menu_icon(),
-                2,
+                3,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-performance-settings'] = new Performance_Settings(
+                __('Performance', 'tempel-settings'),
+                __('Performance', 'tempel-settings'),
+                'tempel-performance-settings',
+                $this->get_menu_icon(),
+                4,
                 'tempel-settings',
                 true
             );
@@ -242,8 +316,6 @@ if (!class_exists('Admin')) {
                 'svg_support',
                 'taxonomy_order',
                 'gf_bag_address_enabled',
-                'magic_login_enabled',
-                'magic_login_allow_admins',
                 'performance_enabled',
                 'performance_disable_emojis',
                 'performance_disable_embeds',
@@ -259,12 +331,24 @@ if (!class_exists('Admin')) {
                 'gf_bag_address_cache_days',
                 'gf_bag_address_rate_limit',
             ));
-            $general_settings_submitted = $this->has_any_input_key($input, array(
-                'magic_login_expiration',
+            $performance_settings_submitted = $this->has_any_input_key($input, array(
+                'performance_enabled',
                 'performance_frontend_memory_limit',
                 'performance_admin_memory_limit',
                 'performance_revision_limit',
                 'performance_heartbeat_interval',
+                'performance_disable_heartbeat',
+                'performance_disable_emojis',
+                'performance_disable_embeds',
+                'performance_disable_xmlrpc',
+            ));
+            $general_settings_submitted = $this->has_any_input_key($input, array(
+                'enable_branding',
+                'disable_comments',
+                'disable_default_pt',
+                'hide_dashboard_widgets',
+                'svg_support',
+                'taxonomy_order',
             ));
 
             foreach ($checkboxes as $key) {
@@ -278,13 +362,22 @@ if (!class_exists('Admin')) {
                     continue;
                 }
 
-                if ($key !== 'gf_bag_address_enabled' && $general_settings_submitted) {
+                if (strpos($key, 'performance_') === 0 && $performance_settings_submitted) {
+                    $output[$key] = '';
+                    continue;
+                }
+
+                if ($key !== 'gf_bag_address_enabled' && strpos($key, 'performance_') !== 0 && $general_settings_submitted) {
                     $output[$key] = '';
                 }
             }
 
             if (isset($input['gf_bag_address_api_key'])) {
-                $output['gf_bag_address_api_key'] = sanitize_text_field($input['gf_bag_address_api_key']);
+                $api_key = sanitize_text_field($input['gf_bag_address_api_key']);
+
+                if ($api_key !== '') {
+                    $output['gf_bag_address_api_key'] = $api_key;
+                }
             }
 
             if (isset($input['gf_bag_address_endpoint'])) {
@@ -305,10 +398,6 @@ if (!class_exists('Admin')) {
 
             if (isset($input['gf_bag_address_rate_limit'])) {
                 $output['gf_bag_address_rate_limit'] = (string) max(1, min(300, absint($input['gf_bag_address_rate_limit'])));
-            }
-
-            if (isset($input['magic_login_expiration'])) {
-                $output['magic_login_expiration'] = (string) max(1, min(60, absint($input['magic_login_expiration'])));
             }
 
             if (isset($input['performance_frontend_memory_limit'])) {
@@ -357,9 +446,10 @@ if (!class_exists('Admin')) {
             $screens = array(
                 'toplevel_page_tempel-settings',
                 'toplevel_page_tempel-widget-settings',
+                'tempel-settings_page_tempel-status-settings',
                 'tempel-settings_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-gform-address-settings',
-                'tempel-settings_page_tempel-login-settings',
+                'tempel-settings_page_tempel-performance-settings',
             );
             
             if (in_array($screen->id, $screens, true)) {
@@ -369,6 +459,17 @@ if (!class_exists('Admin')) {
                 wp_localize_script('tmpl-settings-page', 'tmplWidgetSettings', array(
                     'nonce' => wp_create_nonce('tmpl_widget_settings_action'),
                 ));
+
+                if ($screen->id === 'tempel-settings_page_tempel-gform-address-settings') {
+                    wp_localize_script('tmpl-settings-page', 'tempelPostcodeApiTest', array(
+                        'ajaxUrl' => admin_url('admin-ajax.php'),
+                        'nonce' => wp_create_nonce('tempel_postcode_api_test'),
+                        'messages' => array(
+                            'testing' => __('API verbinding testen...', 'tempel-settings'),
+                            'error' => __('Test mislukt.', 'tempel-settings'),
+                        ),
+                    ));
+                }
             }
         }
         

@@ -25,9 +25,15 @@ class Activator
             'gf_bag_address_monthly_limit'      => '1000',
             'gf_bag_address_cache_days'         => '30',
             'gf_bag_address_rate_limit'         => '20',
-            'magic_login_enabled'               => '',
-            'magic_login_expiration'            => '10',
-            'magic_login_allow_admins'          => '',
+            'performance_enabled'               => '',
+            'performance_frontend_memory_limit' => '128',
+            'performance_admin_memory_limit'    => '256',
+            'performance_revision_limit'        => '5',
+            'performance_heartbeat_interval'    => '60',
+            'performance_disable_heartbeat'     => '',
+            'performance_disable_emojis'        => 'on',
+            'performance_disable_embeds'        => 'on',
+            'performance_disable_xmlrpc'        => 'on',
         ];
         add_option('tmpl_settings', $option_defaults);
     }

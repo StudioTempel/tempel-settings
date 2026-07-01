@@ -11,21 +11,240 @@
     font-family: monospace;
 }
 
+.tmpl_settings__wrap .settings__input__wrap input[type="text"],
+.tmpl_settings__wrap .settings__input__wrap input[type="url"],
+.tmpl_settings__wrap .settings__input__wrap input[type="password"],
+.tmpl_settings__wrap .settings__input__wrap input[type="number"],
+.tmpl_settings__wrap .settings__input__wrap input[type="time"],
+.tmpl_settings__wrap .settings__input__wrap select,
+.tmpl_settings__wrap .settings__input__wrap .select2-container {
+    width: 100% !important;
+    min-width: 360px;
+    box-sizing: border-box;
+}
+
+.tmpl_settings__wrap .settings__input__wrap input[type="text"],
+.tmpl_settings__wrap .settings__input__wrap input[type="url"],
+.tmpl_settings__wrap .settings__input__wrap input[type="password"],
+.tmpl_settings__wrap .settings__input__wrap input[type="number"],
+.tmpl_settings__wrap .settings__input__wrap input[type="time"],
+.tmpl_settings__wrap .settings__input__wrap select {
+    min-height: 48px;
+    padding: 0 18px;
+    line-height: 48px;
+    border-radius: 16px;
+}
+
 .tmpl_settings__wrap .settings__input__wrap input[type="number"] {
     color: #fff;
     background-color: #2b2b2b;
     border: 1px solid #444;
 }
 
-body.wp-admin.tempel-settings_page_tempel-gform-address-settings {
+.tmpl_settings__wrap .settings__input__wrap select.settings__input,
+.tmpl_settings__wrap .settings__input__wrap select {
+    color: #fff !important;
+    background-color: #2b2b2b !important;
+    border-color: #444 !important;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 6.75L9 11.25L13.5 6.75' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-position: right 18px center !important;
+    background-repeat: no-repeat !important;
+    padding-right: 48px !important;
+}
+
+.tmpl_settings__wrap .settings__input__wrap select option {
+    color: #fff;
+    background-color: #2b2b2b;
+}
+
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--single,
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--multiple {
+    color: #fff !important;
+    background-color: #2b2b2b !important;
+    border-color: #444 !important;
+    min-height: 48px !important;
+    padding: 0 48px 0 18px !important;
+    border-radius: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--single .select2-selection__rendered,
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--multiple .select2-selection__rendered,
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection__placeholder {
+    color: #fff !important;
+    line-height: 1.2 !important;
+    padding: 0 !important;
+}
+
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 48px !important;
+    right: 14px !important;
+    top: 0 !important;
+    width: 28px !important;
+}
+
+.tmpl_settings__wrap .settings__input__wrap .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border: 0 !important;
+    height: 18px !important;
+    left: 50% !important;
+    margin: -9px 0 0 -9px !important;
+    top: 50% !important;
+    width: 18px !important;
+    background-image: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.5 6.75L9 11.25L13.5 6.75' fill='none' stroke='%23ffffff' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+body.wp-admin .select2-container--default .select2-dropdown {
+    color: #fff;
+    background-color: #2b2b2b;
+    border-color: #444;
+}
+
+body.wp-admin .select2-container--default .select2-results__option--selected {
+    color: #000;
+    background-color: #f3f438;
+}
+
+body.wp-admin .select2-container--default .select2-results__option--highlighted.select2-results__option--selectable {
+    color: #000;
+    background-color: #f3f438;
+}
+
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings,
+body.wp-admin.tempel-settings_page_tempel-performance-settings,
+body.wp-admin.tempel-settings_page_tempel-status-settings {
     background-color: #000 !important;
 }
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent,
-body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent #wpbody #wpbody-content {
+body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent #wpbody #wpbody-content,
+body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent #wpbody #wpbody-content,
+body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent #wpbody #wpbody-content {
     padding: 0;
 }
 
-body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpfooter {
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpfooter,
+body.wp-admin.tempel-settings_page_tempel-performance-settings #wpfooter,
+body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter {
     display: none;
+}
+
+.tempel-health-status {
+    display: grid;
+    gap: 10px;
+    width: 100%;
+}
+
+.tempel-status-overview .settings__field__inner {
+    display: block;
+}
+
+.tempel-status-overview .settings__input__wrap {
+    width: 100%;
+    max-width: none;
+}
+
+.tempel-health-status__item {
+    display: grid;
+    grid-template-columns: 12px minmax(120px, 0.8fr) 1fr;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 10px 14px;
+    color: #fff;
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 14px;
+}
+
+.tempel-health-status__dot {
+    width: 10px;
+    height: 10px;
+    background-color: #8c8c8c;
+    border-radius: 999px;
+}
+
+.tempel-health-status__item--ok .tempel-health-status__dot {
+    background-color: #28d17c;
+}
+
+.tempel-health-status__item--warning .tempel-health-status__dot,
+.tempel-health-status__item--neutral .tempel-health-status__dot {
+    background-color: #f3f438;
+}
+
+.tempel-health-status__item--error .tempel-health-status__dot {
+    background-color: #ff5a3d;
+}
+
+.tempel-health-status__label {
+    font-weight: 700;
+}
+
+.tempel-health-status__message {
+    color: #b8b8b8;
+}
+
+.tempel-health-status__item--ok .tempel-health-status__message {
+    color: #bff5d8;
+}
+
+.tempel-health-status__item--error .tempel-health-status__message {
+    color: #ffb8aa;
+}
+
+.tempel-api-test {
+    width: 100%;
+}
+
+.tempel-api-test__fields {
+    display: grid;
+    grid-template-columns: minmax(120px, 1fr) minmax(90px, 0.6fr) auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.tmpl_settings__wrap .settings__input__wrap .tempel-api-test__fields input[type="text"] {
+    min-width: 0;
+    color: #fff;
+    background-color: #2b2b2b;
+    border-color: #444;
+}
+
+.tempel-api-test__fields .button {
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 16px;
+    font-weight: 700;
+}
+
+.tempel-api-test__result {
+    min-height: 26px;
+    margin-top: 12px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.tempel-api-test__result.is-loading {
+    color: #b8b8b8;
+}
+
+.tempel-api-test__result.is-success {
+    color: #28d17c;
+}
+
+.tempel-api-test__result.is-error {
+    color: #ff5a3d;
+}
+
+@media (max-width: 782px) {
+    .tempel-health-status__item,
+    .tempel-api-test__fields {
+        grid-template-columns: 1fr;
+    }
 }

@@ -8,7 +8,6 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-post.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widgets.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/svg-support.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-bag-address.php';
-require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/magic-login.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 
@@ -40,10 +39,6 @@ if(!class_exists('Settings')) {
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'taxonomy_order'))) {
                 new Taxonomy_Order();
-            }
-
-            if(sanitize_checkbox_value(return_option('tmpl_settings', 'magic_login_enabled'))) {
-                new Magic_Login();
             }
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'performance_enabled'))) {

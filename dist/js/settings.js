@@ -52,6 +52,68 @@ jQuery(document).ready(function($) {
         });
     });
 
+    $('#tempel_test_postcode_api').on('click', function() {
+        if (typeof tempelPostcodeApiTest === 'undefined') {
+            return;
+        }
+
+        var $button = $(this);
+        var $result = $('#tempel_postcode_api_test_result');
+        var $status = $('[data-tempel-status="api_connection"]');
+
+        $button.prop('disabled', true);
+        $result.removeClass('is-success is-error').addClass('is-loading').text(tempelPostcodeApiTest.messages.testing);
+
+        $.ajax({
+            url: tempelPostcodeApiTest.ajaxUrl,
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                action: 'tempel_test_postcode_api',
+                nonce: tempelPostcodeApiTest.nonce,
+                postcode: $('#tempel_postcode_test_postcode').val(),
+                huisnummer: $('#tempel_postcode_test_huisnummer').val()
+            },
+            success: function(response) {
+                var message = response && response.data && response.data.message
+                    ? response.data.message
+                    : tempelPostcodeApiTest.messages.error;
+
+                if (response && response.success) {
+                    $result.removeClass('is-loading is-error').addClass('is-success').text(message);
+                    $status
+                        .removeClass('tempel-health-status__item--neutral tempel-health-status__item--warning tempel-health-status__item--error')
+                        .addClass('tempel-health-status__item--ok')
+                        .find('.tempel-health-status__message')
+                        .text('Verbinding werkt.');
+                    return;
+                }
+
+                $result.removeClass('is-loading is-success').addClass('is-error').text(message);
+                $status
+                    .removeClass('tempel-health-status__item--neutral tempel-health-status__item--warning tempel-health-status__item--ok')
+                    .addClass('tempel-health-status__item--error')
+                    .find('.tempel-health-status__message')
+                    .text(message);
+            },
+            error: function(xhr) {
+                var message = xhr.responseJSON && xhr.responseJSON.data && xhr.responseJSON.data.message
+                    ? xhr.responseJSON.data.message
+                    : tempelPostcodeApiTest.messages.error;
+
+                $result.removeClass('is-loading is-success').addClass('is-error').text(message);
+                $status
+                    .removeClass('tempel-health-status__item--neutral tempel-health-status__item--warning tempel-health-status__item--ok')
+                    .addClass('tempel-health-status__item--error')
+                    .find('.tempel-health-status__message')
+                    .text(message);
+            },
+            complete: function() {
+                $button.prop('disabled', false);
+            }
+        });
+    });
+
     $(".category__header input[type='checkbox']").on('change', function() {
         $(this).closest('.settings__category').find('.category__content.content__collapsable').slideToggle();
     });
