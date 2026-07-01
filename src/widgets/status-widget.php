@@ -6,8 +6,8 @@ require_once TEMPEL_SETTINGS_DIR . 'src/abstract/widget.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/widget-status-helper-functions.php';
 
-require_once 'partials/widget-header.php';
-require_once 'partials/widget-footer.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-header.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-footer.php';
 
 class Status_Widget extends Widget
 {

@@ -2,17 +2,17 @@
 
 namespace Tempel;
 
-require_once 'includes/settings/branding.php';
-require_once 'includes/settings/disable-comments.php';
-require_once 'includes/settings/disable-post.php';
-require_once 'includes/settings/remove-dashboard-widgets.php';
-require_once 'includes/settings/svg-support.php';
-require_once 'includes/settings/gf-bag-address.php';
-require_once 'includes/settings/magic-login.php';
-require_once 'includes/settings/performance.php';
-require_once 'includes/settings/taxonomy-order.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/branding.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-comments.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-post.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widgets.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/svg-support.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-bag-address.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/magic-login.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 
-require_once 'includes/helper-functions.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
 if(!class_exists('Settings')) {
     class Settings {

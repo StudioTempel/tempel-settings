@@ -3,7 +3,7 @@
 namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/page.php';
-require_once 'partials/settings-navigation.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/partials/settings-navigation.php';
 
 class Widget_Settings extends Page
 {

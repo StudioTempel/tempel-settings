@@ -4,9 +4,9 @@ namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/widget.php';
 
-require_once 'partials/widget-header.php';
-require_once 'partials/widget-footer.php';
-require_once 'partials/widget-conversion-item.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-header.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-footer.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-conversion-item.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/widget-conversion-helper-functions.php';
 

@@ -1,7 +1,7 @@
 <?php
 namespace Tempel;
 
-require_once 'helper-functions.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
 
 function get_backup_interval(): string

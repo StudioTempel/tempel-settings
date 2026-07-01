@@ -1,10 +1,30 @@
 .gfbag-address-lookup {
   display: grid;
-  gap: 0.75rem;
+  grid-template-columns:
+    minmax(10rem, 1fr)
+    90px
+    90px
+    minmax(9rem, 1fr)
+    minmax(9rem, 1fr);
+  gap: 1rem;
+  align-items: start;
 }
 
 .gfbag-address-lookup .ginput_full {
   display: block;
+}
+
+.gfbag-address-lookup span.gfbag-huisnummer,
+.gfbag-address-lookup span.gfbag-toevoeging {
+  flex: 0 0 90px !important;
+  width: 90px !important;
+  min-width: 90px !important;
+  max-width: 90px !important;
+}
+
+.gfbag-address-lookup span.gfbag-huisnummer input,
+.gfbag-address-lookup span.gfbag-toevoeging input {
+  width: 100%;
 }
 
 .gfbag-address-lookup label {
@@ -15,8 +35,17 @@
 }
 
 .gfbag-address-lookup .gfbag-message {
-  min-height: 1.25rem;
-  font-size: 0.875rem;
+  grid-column: 1 / -1;
+  width: 100%;
+  min-height: 2rem;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  font-weight: 700;
+  padding-top: 0.25rem;
+}
+
+.gfbag-address-lookup .gfbag-message:empty {
+  display: none;
 }
 
 .gfbag-address-lookup .gfbag-message.is-error {
@@ -25,4 +54,60 @@
 
 .gfbag-address-lookup .gfbag-message.is-loading {
   color: #475467;
+}
+
+.gfbag-address-lookup input.gfbag-readonly {
+  background-color: #f7f7f7;
+  border-color: #dedede;
+  color: #b5b5b5;
+}
+
+.gfbag-address-lookup input.gfbag-readonly::placeholder {
+  color: #c9c9c9;
+  opacity: 1;
+}
+
+body .gform_wrapper .gfield_error .gfbag-address-lookup span.gfbag-toevoeging input[data-gfbag-optional="true"],
+body .gform_wrapper .gfield_error .gfbag-address-lookup span.gfbag-toevoeging input.gfbag-toevoeging[data-gfbag-optional="true"],
+.gfield_error .gfbag-address-lookup span.gfbag-toevoeging input[data-gfbag-optional="true"] {
+  border-color: #d0d5dd !important;
+  outline-color: transparent !important;
+  box-shadow: none !important;
+}
+
+body .gform_wrapper .gfield_error .gfbag-address-lookup + .gfield_validation_message,
+body .gform_wrapper .gfield_error .gfbag-address-lookup + .validation_message {
+  margin-top: 0.75rem !important;
+}
+
+.gfbag-address-lookup-preview input:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.gfbag-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 900px) {
+  .gfbag-address-lookup {
+    grid-template-columns:
+      minmax(8rem, 1fr)
+      90px
+      90px;
+  }
+}
+
+@media (max-width: 640px) {
+  .gfbag-address-lookup {
+    grid-template-columns: 1fr;
+  }
 }

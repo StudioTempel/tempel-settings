@@ -10,3 +10,22 @@
     border: 1px solid #292929;
     font-family: monospace;
 }
+
+.tmpl_settings__wrap .settings__input__wrap input[type="number"] {
+    color: #fff;
+    background-color: #2b2b2b;
+    border: 1px solid #444;
+}
+
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings {
+    background-color: #000 !important;
+}
+
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent #wpbody #wpbody-content {
+    padding: 0;
+}
+
+body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpfooter {
+    display: none;
+}

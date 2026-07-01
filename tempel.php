@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.5.8
+ * Version:           2.5.35
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.5.8');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.5.35');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -58,10 +58,10 @@ class TempelSettings
     
     private function load_dependencies()
     {
-        require_once 'includes/localization.php';
-        require_once 'src/admin.php';
-        require_once 'src/settings.php';
-        require_once 'includes/updater.php';
+        require_once TEMPEL_SETTINGS_DIR . 'includes/localization.php';
+        require_once TEMPEL_SETTINGS_DIR . 'src/admin.php';
+        require_once TEMPEL_SETTINGS_DIR . 'src/settings.php';
+        require_once TEMPEL_SETTINGS_DIR . 'includes/updater.php';
     }
     
     private function set_locale()
@@ -80,7 +80,7 @@ class TempelSettings
     
     static function activate()
     {
-        require_once 'includes/activator.php';
+        require_once TEMPEL_SETTINGS_DIR . 'includes/activator.php';
         Activator::activate();
     }
 }

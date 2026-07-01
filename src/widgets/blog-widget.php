@@ -6,8 +6,8 @@ require_once TEMPEL_SETTINGS_DIR . 'src/abstract/widget.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/widget-blog-helper-functions.php';
 
-require_once 'partials/widget-header.php';
-require_once 'partials/widget-footer.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-header.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/partials/widget-footer.php';
 
 class Blog_Widget extends Widget
 {

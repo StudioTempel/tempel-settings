@@ -3,7 +3,7 @@
 namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/page.php';
-require_once 'partials/settings-navigation.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/partials/settings-navigation.php';
 
 
 class General_Settings extends Page
@@ -493,107 +493,6 @@ class General_Settings extends Page
                                     </div>
                                 </div>
 
-                                <div class="settings__category">
-                                    <div class="category__header">
-                                        <div class="category__label__wrap">
-                                            <div class="category__title">
-                                                <?php _e('Gravity Forms Postcode veld', 'tempel-settings'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="category__content">
-
-                                        <!-- Settings Field | Enable GF BAG Address -->
-                                        <div id="gf_bag_address_enabled_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="gf_bag_address_enabled">
-                                                        <?php _e('Toon Gravity Forms Postcode veld', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <label for="gf_bag_address_enabled" class="checkbox__switch">
-                                                        <input
-                                                                type="checkbox"
-                                                                name="tmpl_settings[gf_bag_address_enabled]"
-                                                                id="gf_bag_address_enabled"
-                                                            <?php echo $this->is_checked('gf_bag_address_enabled'); ?>
-                                                        >
-                                                        <span class="checkbox__switch__slider"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | Enable GF BAG Address -->
-
-                                        <!-- Settings Field | GF BAG API Key -->
-                                        <div id="gf_bag_address_api_key_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="gf_bag_address_api_key">
-                                                        <?php _e('BAG API-sleutel', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <input
-                                                            type="text"
-                                                            name="tmpl_settings[gf_bag_address_api_key]"
-                                                            id="gf_bag_address_api_key"
-                                                            class="settings-input-code"
-                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_api_key')); ?>"
-                                                            autocomplete="off"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | GF BAG API Key -->
-
-                                        <!-- Settings Field | GF BAG Endpoint -->
-                                        <div id="gf_bag_address_endpoint_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="gf_bag_address_endpoint">
-                                                        <?php _e('BAG-endpoint', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <input
-                                                            type="url"
-                                                            name="tmpl_settings[gf_bag_address_endpoint]"
-                                                            id="gf_bag_address_endpoint"
-                                                            class="settings-input-code"
-                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_endpoint', 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid')); ?>"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | GF BAG Endpoint -->
-
-                                        <!-- Settings Field | GF BAG Timeout -->
-                                        <div id="gf_bag_address_timeout_setting" class="settings__field">
-                                            <div class="settings__field__inner">
-                                                <div class="settings__label__wrap">
-                                                    <label for="gf_bag_address_timeout">
-                                                        <?php _e('BAG-time-out (seconden)', 'tempel-settings'); ?>
-                                                    </label>
-                                                </div>
-                                                <div class="settings__input__wrap">
-                                                    <input
-                                                            type="number"
-                                                            min="1"
-                                                            max="30"
-                                                            name="tmpl_settings[gf_bag_address_timeout]"
-                                                            id="gf_bag_address_timeout"
-                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_timeout', '8')); ?>"
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Settings Field | GF BAG Timeout -->
-
-                                    </div>
-                                </div>
-
                                 <!-- Settings Form Footer -->
                                 <div class="settings__form__footer">
                                     <div class="form__footer__inner">
@@ -634,5 +533,36 @@ class General_Settings extends Page
         }
 
         return $option[$key] ?? $default;
+    }
+
+    public function get_postcode_api_endpoint_value(): string
+    {
+        $endpoint = $this->get_value('gf_bag_address_endpoint', 'https://api.postcodeapi.nu/v3/lookup');
+
+        if (rtrim($endpoint, '/') === 'https://api.bag.kadaster.nl/lvbag/individuelebevragingen/v2/adressenuitgebreid') {
+            return 'https://api.postcodeapi.nu/v3/lookup';
+        }
+
+        if (preg_match('#^https://(api|sandbox)\.postcodeapi\.nu/v3$#', rtrim($endpoint, '/'))) {
+            return rtrim($endpoint, '/') . '/lookup';
+        }
+
+        return $endpoint;
+    }
+
+    public function get_postcode_api_usage_label(): string
+    {
+        if (!class_exists('Tempel\GF_BAG_Address')) {
+            return __('Gebruik wordt bijgehouden zodra het veld actief is.', 'tempel-settings');
+        }
+
+        $count = GF_BAG_Address::get_usage_count();
+        $limit = GF_BAG_Address::get_monthly_limit();
+
+        if ($limit <= 0) {
+            return sprintf(__('Deze maand gebruikt: %d aanvragen. Limietcontrole staat uit.', 'tempel-settings'), $count);
+        }
+
+        return sprintf(__('Deze maand gebruikt: %1$d van %2$d aanvragen.', 'tempel-settings'), $count, $limit);
     }
 }

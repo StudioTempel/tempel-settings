@@ -3,18 +3,19 @@
 namespace Tempel;
 
 // Views
-require_once 'views/general-settings.php';
-require_once 'views/widget-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/general-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/widget-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 
 // Widgets
-require_once 'widgets/status-widget.php';
-require_once 'widgets/support-widget.php';
-require_once 'widgets/conversion-widget.php';
-require_once 'widgets/blog-widget.php';
-require_once 'widgets/analytics-widget.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/support-widget.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/conversion-widget.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/blog-widget.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/widgets/analytics-widget.php';
 
 
-require_once 'includes/helper-functions.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
 if (!class_exists('Admin')) {
     class Admin
@@ -43,7 +44,7 @@ if (!class_exists('Admin')) {
         
         function load_ajax_functions()
         {
-            require_once 'includes/ajax-functions.php';
+            require_once TEMPEL_SETTINGS_DIR . 'src/includes/ajax-functions.php';
         }
         
         /**
@@ -135,6 +136,16 @@ if (!class_exists('Admin')) {
                 'tempel-widget-settings',
                 $this->get_menu_icon(),
                 1,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-gform-address-settings'] = new Gform_Address_Settings(
+                __('Gform adres veld', 'tempel-settings'),
+                __('Gform adres veld', 'tempel-settings'),
+                'tempel-gform-address-settings',
+                $this->get_menu_icon(),
+                2,
                 'tempel-settings',
                 true
             );
@@ -240,20 +251,94 @@ if (!class_exists('Admin')) {
                 'performance_disable_heartbeat',
             );
 
+            $gform_address_submitted = $this->has_any_input_key($input, array(
+                'gf_bag_address_api_key',
+                'gf_bag_address_endpoint',
+                'gf_bag_address_timeout',
+                'gf_bag_address_monthly_limit',
+                'gf_bag_address_cache_days',
+                'gf_bag_address_rate_limit',
+            ));
+            $general_settings_submitted = $this->has_any_input_key($input, array(
+                'magic_login_expiration',
+                'performance_frontend_memory_limit',
+                'performance_admin_memory_limit',
+                'performance_revision_limit',
+                'performance_heartbeat_interval',
+            ));
+
             foreach ($checkboxes as $key) {
-                $output[$key] = isset($input[$key]) && $input[$key] === 'on' ? 'on' : '';
+                if (isset($input[$key])) {
+                    $output[$key] = $input[$key] === 'on' ? 'on' : '';
+                    continue;
+                }
+
+                if ($key === 'gf_bag_address_enabled' && $gform_address_submitted) {
+                    $output[$key] = '';
+                    continue;
+                }
+
+                if ($key !== 'gf_bag_address_enabled' && $general_settings_submitted) {
+                    $output[$key] = '';
+                }
             }
 
-            $output['gf_bag_address_api_key'] = isset($input['gf_bag_address_api_key']) ? sanitize_text_field($input['gf_bag_address_api_key']) : '';
-            $output['gf_bag_address_endpoint'] = isset($input['gf_bag_address_endpoint']) ? esc_url_raw($input['gf_bag_address_endpoint']) : '';
-            $output['gf_bag_address_timeout'] = isset($input['gf_bag_address_timeout']) ? (string) max(1, min(30, absint($input['gf_bag_address_timeout']))) : '8';
-            $output['magic_login_expiration'] = isset($input['magic_login_expiration']) ? (string) max(1, min(60, absint($input['magic_login_expiration']))) : '10';
-            $output['performance_frontend_memory_limit'] = isset($input['performance_frontend_memory_limit']) ? (string) max(64, min(1024, absint($input['performance_frontend_memory_limit']))) : '128';
-            $output['performance_admin_memory_limit'] = isset($input['performance_admin_memory_limit']) ? (string) max(64, min(1024, absint($input['performance_admin_memory_limit']))) : '256';
-            $output['performance_revision_limit'] = isset($input['performance_revision_limit']) ? (string) max(1, min(50, absint($input['performance_revision_limit']))) : '5';
-            $output['performance_heartbeat_interval'] = isset($input['performance_heartbeat_interval']) ? (string) max(15, min(120, absint($input['performance_heartbeat_interval']))) : '60';
+            if (isset($input['gf_bag_address_api_key'])) {
+                $output['gf_bag_address_api_key'] = sanitize_text_field($input['gf_bag_address_api_key']);
+            }
+
+            if (isset($input['gf_bag_address_endpoint'])) {
+                $output['gf_bag_address_endpoint'] = esc_url_raw($input['gf_bag_address_endpoint']);
+            }
+
+            if (isset($input['gf_bag_address_timeout'])) {
+                $output['gf_bag_address_timeout'] = (string) max(1, min(30, absint($input['gf_bag_address_timeout'])));
+            }
+
+            if (isset($input['gf_bag_address_monthly_limit'])) {
+                $output['gf_bag_address_monthly_limit'] = (string) max(0, min(1000000, absint($input['gf_bag_address_monthly_limit'])));
+            }
+
+            if (isset($input['gf_bag_address_cache_days'])) {
+                $output['gf_bag_address_cache_days'] = (string) max(0, min(365, absint($input['gf_bag_address_cache_days'])));
+            }
+
+            if (isset($input['gf_bag_address_rate_limit'])) {
+                $output['gf_bag_address_rate_limit'] = (string) max(1, min(300, absint($input['gf_bag_address_rate_limit'])));
+            }
+
+            if (isset($input['magic_login_expiration'])) {
+                $output['magic_login_expiration'] = (string) max(1, min(60, absint($input['magic_login_expiration'])));
+            }
+
+            if (isset($input['performance_frontend_memory_limit'])) {
+                $output['performance_frontend_memory_limit'] = (string) max(64, min(1024, absint($input['performance_frontend_memory_limit'])));
+            }
+
+            if (isset($input['performance_admin_memory_limit'])) {
+                $output['performance_admin_memory_limit'] = (string) max(64, min(1024, absint($input['performance_admin_memory_limit'])));
+            }
+
+            if (isset($input['performance_revision_limit'])) {
+                $output['performance_revision_limit'] = (string) max(1, min(50, absint($input['performance_revision_limit'])));
+            }
+
+            if (isset($input['performance_heartbeat_interval'])) {
+                $output['performance_heartbeat_interval'] = (string) max(15, min(120, absint($input['performance_heartbeat_interval'])));
+            }
 
             return $output;
+        }
+
+        private function has_any_input_key(array $input, array $keys): bool
+        {
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $input)) {
+                    return true;
+                }
+            }
+
+            return false;
         }
         
         /**
@@ -273,6 +358,7 @@ if (!class_exists('Admin')) {
                 'toplevel_page_tempel-settings',
                 'toplevel_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-widget-settings',
+                'tempel-settings_page_tempel-gform-address-settings',
                 'tempel-settings_page_tempel-login-settings',
             );
             
