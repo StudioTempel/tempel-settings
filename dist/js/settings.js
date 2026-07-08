@@ -7,6 +7,14 @@ jQuery(document).ready(function($) {
         });
     }
 
+    if ($('#tempel_mail_recipients').length && $.fn.select2) {
+        $('#tempel_mail_recipients').select2({
+            placeholder: 'Selecteer gebruikers',
+            allowClear: true,
+            multiple: true
+        });
+    }
+
     if ($('#status_safeupdate_day').length) {
         $('#status_safeupdate_day').select2({
             minimumResultsForSearch: -1,
@@ -72,7 +80,9 @@ jQuery(document).ready(function($) {
                 action: 'tempel_test_postcode_api',
                 nonce: tempelPostcodeApiTest.nonce,
                 postcode: $('#tempel_postcode_test_postcode').val(),
-                huisnummer: $('#tempel_postcode_test_huisnummer').val()
+                huisnummer: $('#tempel_postcode_test_huisnummer').val(),
+                api_key: $('#gf_bag_address_api_key').val(),
+                endpoint: $('#gf_bag_address_endpoint').val()
             },
             success: function(response) {
                 var message = response && response.data && response.data.message

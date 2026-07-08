@@ -115,22 +115,26 @@ body.wp-admin .select2-container--default .select2-results__option--highlighted.
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings,
 body.wp-admin.tempel-settings_page_tempel-performance-settings,
-body.wp-admin.tempel-settings_page_tempel-status-settings {
+body.wp-admin.tempel-settings_page_tempel-status-settings,
+body.wp-admin.tempel-settings_page_tempel-mail-settings {
     background-color: #000 !important;
 }
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-mail-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent #wpbody #wpbody-content,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent #wpbody #wpbody-content,
-body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent #wpbody #wpbody-content {
+body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent #wpbody #wpbody-content,
+body.wp-admin.tempel-settings_page_tempel-mail-settings #wpcontent #wpbody #wpbody-content {
     padding: 0;
 }
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpfooter,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpfooter,
-body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter {
+body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter,
+body.wp-admin.tempel-settings_page_tempel-mail-settings #wpfooter {
     display: none;
 }
 
@@ -173,9 +177,12 @@ body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter {
     background-color: #28d17c;
 }
 
-.tempel-health-status__item--warning .tempel-health-status__dot,
-.tempel-health-status__item--neutral .tempel-health-status__dot {
+.tempel-health-status__item--warning .tempel-health-status__dot {
     background-color: #f3f438;
+}
+
+.tempel-health-status__item--neutral .tempel-health-status__dot {
+    background-color: #8c8c8c;
 }
 
 .tempel-health-status__item--error .tempel-health-status__dot {
@@ -240,6 +247,80 @@ body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter {
 
 .tempel-api-test__result.is-error {
     color: #ff5a3d;
+}
+
+.tempel-mail-editor-field .settings__field__inner {
+    align-items: flex-start !important;
+}
+
+.tempel-mail-editor-field .settings__input__wrap,
+.tempel-mail-editor-field .wp-editor-wrap,
+.tempel-mail-editor-field .wp-editor-container,
+.tempel-mail-editor-field textarea {
+    width: 100%;
+    max-width: none;
+}
+
+.tempel-mail-editor-field .settings__input__wrap {
+    min-width: min(720px, 100%);
+}
+
+.tempel-mail-editor-field .wp-editor-wrap {
+    color: #1d2327;
+}
+
+.tempel-mail-editor-field .wp-editor-container {
+    border-color: #444;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tempel-mail-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    width: 100%;
+}
+
+.tempel-mail-tags--header {
+    margin-top: 16px;
+}
+
+.tempel-mail-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 0 12px;
+    color: #f3f438;
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 999px;
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tempel-settings-notice {
+    margin: 0 0 24px;
+    padding: 14px 18px;
+    color: #fff;
+    background-color: #1f1f1f;
+    border: 1px solid #333;
+    border-left-width: 4px;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.tempel-settings-notice--success {
+    border-left-color: #28d17c;
+}
+
+.tempel-settings-notice--warning {
+    border-left-color: #f3f438;
+}
+
+.tempel-settings-notice--error {
+    border-left-color: #ff5a3d;
 }
 
 @media (max-width: 782px) {

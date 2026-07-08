@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.6.8
+Stable tag: 2.7.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Studio Tempel helper plugin voor custom-built WordPress websites.
 
 == Description ==
 
-Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, SVG-ondersteuning, taxonomy ordering en performance-instellingen.
+Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, SVG-ondersteuning, taxonomy ordering en performance-instellingen.
 
 == Installation ==
 
@@ -21,6 +21,28 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.3 =
+* Preserve selected recipients, subject and WYSIWYG message content after sending a mail.
+
+= 2.7.2 =
+* Moved the mail placeholder tags to the top of the Mail settings page.
+
+= 2.7.1 =
+* Added mail tags for personalized user emails, including `[naam]`, `[voornaam]`, `[email]`, `[website_url]` and `[website_naam]`.
+* Moved the Mail settings tab to the end of the Tempel Settings navigation.
+
+= 2.7.0 =
+* Added a Mail settings page for sending HTML email from the website to selected WordPress users.
+* Added a WYSIWYG editor, user multi-select, permission checks and nonce-protected sending via `wp_mail()`.
+
+= 2.6.10 =
+* Show the saved PostcodeAPI.nu API key in the password field again.
+* Added a masked API-key preview below the API-key label.
+
+= 2.6.9 =
+* Changed the untested PostcodeAPI status from warning yellow to neutral grey.
+* Allowed the API test button to use a newly typed API key and endpoint before saving.
 
 = 2.6.8 =
 * Simplified the Status tab by removing duplicate helper text and letting status items use the full content width.
@@ -140,5 +162,5 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 
 == Upgrade Notice ==
 
-= 2.6.8 =
-Simplifies the Status tab layout.
+= 2.7.3 =
+Preserves the last Mail settings form values after sending.

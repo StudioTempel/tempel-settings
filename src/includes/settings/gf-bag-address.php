@@ -100,7 +100,7 @@ class GF_BAG_Address
         return rest_ensure_response($result['data']);
     }
 
-    private function lookup_address(string $postcode, string $huisnummer, string $toevoeging = ''): array
+    private function lookup_address(string $postcode, string $huisnummer, string $toevoeging = '', string $api_key = '', string $endpoint = ''): array
     {
         if ($postcode === '' || $huisnummer === '') {
             return array(
@@ -110,7 +110,7 @@ class GF_BAG_Address
             );
         }
 
-        return $this->bag_lookup($postcode, $huisnummer, $toevoeging);
+        return $this->bag_lookup($postcode, $huisnummer, $toevoeging, $api_key, $endpoint);
     }
 
     public static function get_settings(): array
@@ -177,10 +177,10 @@ class GF_BAG_Address
         );
     }
 
-    public static function test_connection(string $postcode, string $huisnummer): array
+    public static function test_connection(string $postcode, string $huisnummer, string $api_key = '', string $endpoint = ''): array
     {
         $lookup = new self();
-        $result = $lookup->lookup_address($postcode, $huisnummer);
+        $result = $lookup->lookup_address($postcode, $huisnummer, '', $api_key, $endpoint);
         self::record_last_test($result);
 
         return $result;
@@ -215,11 +215,12 @@ class GF_BAG_Address
         );
     }
 
-    private function bag_lookup(string $postcode, string $huisnummer, string $toevoeging = ''): array
+    private function bag_lookup(string $postcode, string $huisnummer, string $toevoeging = '', string $api_key_override = '', string $endpoint_override = ''): array
     {
         $settings = self::get_settings();
-        $api_key = trim($settings['api_key']);
-        $endpoint = $this->normalize_endpoint($settings['endpoint']);
+        $api_key = trim($api_key_override) !== '' ? trim($api_key_override) : trim($settings['api_key']);
+        $endpoint = trim($endpoint_override) !== '' ? $endpoint_override : $settings['endpoint'];
+        $endpoint = $this->normalize_endpoint($endpoint);
 
         if ($api_key === '') {
             self::record_last_error(__('PostcodeAPI.nu API key ontbreekt.', 'tempel-settings'));

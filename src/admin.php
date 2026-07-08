@@ -6,6 +6,7 @@ namespace Tempel;
 require_once TEMPEL_SETTINGS_DIR . 'src/views/general-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/widget-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/mail-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
 
@@ -48,6 +49,7 @@ if (!class_exists('Admin')) {
         {
             require_once TEMPEL_SETTINGS_DIR . 'src/includes/ajax-functions.php';
             add_action('wp_ajax_tempel_test_postcode_api', array($this, 'test_postcode_api'));
+            add_action('admin_post_tempel_send_user_mail', array($this, 'send_user_mail'));
         }
 
         public function test_postcode_api(): void
@@ -70,7 +72,9 @@ if (!class_exists('Admin')) {
 
             $postcode = isset($_POST['postcode']) ? sanitize_text_field(wp_unslash($_POST['postcode'])) : '';
             $huisnummer = isset($_POST['huisnummer']) ? sanitize_text_field(wp_unslash($_POST['huisnummer'])) : '';
-            $result = GF_BAG_Address::test_connection($postcode, $huisnummer);
+            $api_key = isset($_POST['api_key']) ? sanitize_text_field(wp_unslash($_POST['api_key'])) : '';
+            $endpoint = isset($_POST['endpoint']) ? esc_url_raw(wp_unslash($_POST['endpoint'])) : '';
+            $result = GF_BAG_Address::test_connection($postcode, $huisnummer, $api_key, $endpoint);
 
             if (empty($result['success'])) {
                 wp_send_json_error(
@@ -220,6 +224,16 @@ if (!class_exists('Admin')) {
                 'tempel-performance-settings',
                 $this->get_menu_icon(),
                 4,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-mail-settings'] = new Mail_Settings(
+                __('Mail', 'tempel-settings'),
+                __('Mail', 'tempel-settings'),
+                'tempel-mail-settings',
+                $this->get_menu_icon(),
+                5,
                 'tempel-settings',
                 true
             );
@@ -429,6 +443,97 @@ if (!class_exists('Admin')) {
 
             return false;
         }
+
+        public function send_user_mail(): void
+        {
+            if (!current_user_can('manage_options')) {
+                wp_die(esc_html__('Je hebt geen rechten om mails te versturen.', 'tempel-settings'));
+            }
+
+            check_admin_referer('tempel_send_user_mail', 'tempel_send_user_mail_nonce');
+
+            $recipient_ids = isset($_POST['tempel_mail_recipients']) ? (array) wp_unslash($_POST['tempel_mail_recipients']) : array();
+            $recipient_ids = array_values(array_filter(array_map('absint', $recipient_ids)));
+            $subject = isset($_POST['tempel_mail_subject']) ? sanitize_text_field(wp_unslash($_POST['tempel_mail_subject'])) : '';
+            $message = isset($_POST['tempel_mail_message']) ? wp_kses_post(wp_unslash($_POST['tempel_mail_message'])) : '';
+
+            $this->save_mail_draft($recipient_ids, $subject, $message);
+
+            if (empty($recipient_ids) || $subject === '' || trim(wp_strip_all_tags($message)) === '') {
+                $this->redirect_mail_page(array('tempel_mail_error' => 'missing'));
+            }
+
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            $sent = 0;
+            $failed = 0;
+
+            foreach ($recipient_ids as $recipient_id) {
+                $user = get_user_by('id', $recipient_id);
+
+                if (!$user || !is_email($user->user_email)) {
+                    $failed++;
+                    continue;
+                }
+
+                $personal_subject = $this->replace_mail_tags($subject, $user);
+                $personal_message = $this->replace_mail_tags($message, $user);
+                $mail_sent = wp_mail($user->user_email, $personal_subject, wpautop($personal_message), $headers);
+
+                if ($mail_sent) {
+                    $sent++;
+                    continue;
+                }
+
+                $failed++;
+            }
+
+            $this->redirect_mail_page(array(
+                'tempel_mail_sent' => $sent,
+                'tempel_mail_failed' => $failed,
+            ));
+        }
+
+        private function redirect_mail_page(array $args): void
+        {
+            wp_safe_redirect(add_query_arg($args, admin_url('admin.php?page=tempel-mail-settings')));
+            exit;
+        }
+
+        private function save_mail_draft(array $recipient_ids, string $subject, string $message): void
+        {
+            update_option(
+                'tmpl_mail_settings',
+                array(
+                    'recipients' => array_values(array_filter(array_map('absint', $recipient_ids))),
+                    'subject' => sanitize_text_field($subject),
+                    'message' => wp_kses_post($message),
+                ),
+                false
+            );
+        }
+
+        private function replace_mail_tags(string $content, \WP_User $user): string
+        {
+            $first_name = (string) get_user_meta($user->ID, 'first_name', true);
+            $last_name = (string) get_user_meta($user->ID, 'last_name', true);
+            $name = trim($first_name . ' ' . $last_name);
+
+            if ($name === '') {
+                $name = $user->display_name;
+            }
+
+            $replacements = array(
+                '[naam]' => $name,
+                '[voornaam]' => $first_name !== '' ? $first_name : $user->display_name,
+                '[achternaam]' => $last_name,
+                '[email]' => $user->user_email,
+                '[website_url]' => home_url('/'),
+                '[website url]' => home_url('/'),
+                '[website_naam]' => get_bloginfo('name'),
+            );
+
+            return str_replace(array_keys($replacements), array_values($replacements), $content);
+        }
         
         /**
          * Loads the assets used on the settings pages
@@ -448,6 +553,7 @@ if (!class_exists('Admin')) {
                 'toplevel_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-status-settings',
                 'tempel-settings_page_tempel-widget-settings',
+                'tempel-settings_page_tempel-mail-settings',
                 'tempel-settings_page_tempel-gform-address-settings',
                 'tempel-settings_page_tempel-performance-settings',
             );

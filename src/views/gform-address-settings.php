@@ -55,6 +55,9 @@ class Gform_Address_Settings extends Page
                                                 <div class="settings__label__wrap">
                                                     <label for="gf_bag_address_api_key">
                                                         <?php esc_html_e('PostcodeAPI.nu API-sleutel', 'tempel-settings'); ?>
+                                                        <?php if ($this->get_masked_postcode_api_key() !== '') : ?>
+                                                            <span class="label__desc"><?php echo esc_html(sprintf(__('Opgeslagen: %s', 'tempel-settings'), $this->get_masked_postcode_api_key())); ?></span>
+                                                        <?php endif; ?>
                                                     </label>
                                                 </div>
                                                 <div class="settings__input__wrap">
@@ -63,7 +66,7 @@ class Gform_Address_Settings extends Page
                                                             name="tmpl_settings[gf_bag_address_api_key]"
                                                             id="gf_bag_address_api_key"
                                                             class="settings-input-code"
-                                                            value=""
+                                                            value="<?php echo esc_attr($this->get_value('gf_bag_address_api_key')); ?>"
                                                             placeholder="<?php esc_attr_e('Vul je API-sleutel in', 'tempel-settings'); ?>"
                                                             autocomplete="off"
                                                     >
@@ -262,6 +265,22 @@ class Gform_Address_Settings extends Page
         }
 
         return sprintf(__('Deze maand gebruikt: %1$d van %2$d aanvragen.', 'tempel-settings'), $count, $limit);
+    }
+
+    public function get_masked_postcode_api_key(): string
+    {
+        $api_key = (string) $this->get_value('gf_bag_address_api_key', '');
+        $length = strlen($api_key);
+
+        if ($length === 0) {
+            return '';
+        }
+
+        if ($length <= 8) {
+            return str_repeat('*', $length);
+        }
+
+        return substr($api_key, 0, 4) . str_repeat('*', max(4, $length - 8)) . substr($api_key, -4);
     }
 
 }
