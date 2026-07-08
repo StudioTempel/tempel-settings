@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.7.3
+Stable tag: 2.7.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,21 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.8 =
+* Added extra spacing between the email address and password fields on the login screen.
+
+= 2.7.7 =
+* Updated the login screen to a dark background and card style with a yellow full-width login button.
+
+= 2.7.6 =
+* Updated the login screen button to full-width black styling and centered the lost password link below it.
+
+= 2.7.5 =
+* Added default Mail subject and message content for the WordPress admin URL notification.
+
+= 2.7.4 =
+* Updated the login screen styling: removed the background photo, centered the login form, switched to the yellow brand background and hid the privacy policy link.
 
 = 2.7.3 =
 * Preserve selected recipients, subject and WYSIWYG message content after sending a mail.
@@ -162,5 +177,5 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 
 == Upgrade Notice ==
 
-= 2.7.3 =
-Preserves the last Mail settings form values after sending.
+= 2.7.8 =
+Adds extra spacing between the login email and password fields.

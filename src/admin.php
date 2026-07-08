@@ -457,6 +457,14 @@ if (!class_exists('Admin')) {
             $subject = isset($_POST['tempel_mail_subject']) ? sanitize_text_field(wp_unslash($_POST['tempel_mail_subject'])) : '';
             $message = isset($_POST['tempel_mail_message']) ? wp_kses_post(wp_unslash($_POST['tempel_mail_message'])) : '';
 
+            if ($subject === '') {
+                $subject = Mail_Settings::get_default_subject();
+            }
+
+            if (trim(wp_strip_all_tags($message)) === '') {
+                $message = Mail_Settings::get_default_message();
+            }
+
             $this->save_mail_draft($recipient_ids, $subject, $message);
 
             if (empty($recipient_ids) || $subject === '' || trim(wp_strip_all_tags($message)) === '') {

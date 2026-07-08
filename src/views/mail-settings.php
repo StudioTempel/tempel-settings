@@ -146,12 +146,28 @@ class Mail_Settings extends Page
             $draft = array();
         }
 
+        $subject = isset($draft['subject']) ? (string) $draft['subject'] : '';
+        $message = isset($draft['message']) ? (string) $draft['message'] : '';
+
         return array(
             'recipients' => isset($draft['recipients']) && is_array($draft['recipients'])
                 ? array_values(array_filter(array_map('absint', $draft['recipients'])))
                 : array(),
-            'subject' => isset($draft['subject']) ? (string) $draft['subject'] : '',
-            'message' => isset($draft['message']) ? (string) $draft['message'] : '',
+            'subject' => $subject !== '' ? $subject : self::get_default_subject(),
+            'message' => trim(wp_strip_all_tags($message)) !== '' ? $message : self::get_default_message(),
+        );
+    }
+
+    public static function get_default_subject(): string
+    {
+        return __('Belangrijk: nieuwe WordPress admin-URL', 'tempel-settings');
+    }
+
+    public static function get_default_message(): string
+    {
+        return __(
+            "Beste [naam],\n\nOm veiligheidsredenen hebben wij de standaard WordPress admin URL aangepast.\n\nInloggen moet vanaf nu via: [website_url]st-beheer\n\nDe oude /wp-admin link is hiermee vervangen, zodat de website minder gevoelig is voor automatische loginpogingen en misbruik.\n\nMet vriendelijke groet,\nTeam StudioTempel",
+            'tempel-settings'
         );
     }
 

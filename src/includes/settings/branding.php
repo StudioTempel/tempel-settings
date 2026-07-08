@@ -12,7 +12,7 @@ namespace Tempel;
 
 
 // css version
-define('CSS_VERSION', '1.0.2');
+define('CSS_VERSION', '1.0.6');
 // js version
 define('JS_VERSION', '1.0.2');
 
