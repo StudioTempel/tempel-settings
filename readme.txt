@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.7.8
+Stable tag: 2.7.13
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,21 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.13 =
+* Fixed the masked-login security message line break when the message is escaped before rendering.
+
+= 2.7.12 =
+* Changed the masked-login security message line break to HTML so it displays correctly.
+
+= 2.7.11 =
+* Added the StudioTempel team sign-off to the masked-login security message.
+
+= 2.7.10 =
+* Updated the WP Defender masked-login security message text.
+
+= 2.7.9 =
+* Replaced the WP Defender masked-login security message with a clearer Dutch message.
 
 = 2.7.8 =
 * Added extra spacing between the email address and password fields on the login screen.
@@ -177,5 +192,5 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 
 == Upgrade Notice ==
 
-= 2.7.8 =
-Adds extra spacing between the login email and password fields.
+= 2.7.13 =
+Fixes escaped line breaks in the masked-login security message.

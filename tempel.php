@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.7.8
+ * Version:           2.7.13
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.8');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.13');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -33,6 +33,61 @@ if ( ! defined('TEMPEL_SETTINGS_URL') ) define('TEMPEL_SETTINGS_URL', plugin_dir
 if ( ! defined ('TEMPEL_SETTINGS_ASSET_URL') ) define('TEMPEL_SETTINGS_ASSET_URL', plugin_dir_url(__FILE__) . 'dist/');
 if ( ! defined('TEMPEL_SETTINGS_ASSET_DIR') ) define('TEMPEL_SETTINGS_ASSET_DIR', plugin_dir_path(__FILE__) . 'dist/');
 if( ! defined('TEMPEL_SETTINGS_LANG_DIR') ) define('TEMPEL_SETTINGS_LANG_DIR', dirname(plugin_basename(__FILE__)) . '/languages');
+
+add_filter('gettext', __NAMESPACE__ . '\filter_security_login_message', 20, 3);
+add_filter('wp_die_handler', __NAMESPACE__ . '\filter_security_login_die_handler', 20);
+
+function get_security_login_message(): string
+{
+    return "Om veiligheidsredenen hebben wij de standaard WordPress admin URL aangepast. Hierover is een mail verzonden met onderwerp: Belangrijk: nieuwe WordPress admin-URL\n\nTeam StudioTempel";
+}
+
+function filter_security_login_message($translation, $text, $domain)
+{
+    if ($text === 'This feature is temporarily forbidden for security reasons. Try logging in again.') {
+        return get_security_login_message();
+    }
+
+    return $translation;
+}
+
+function filter_security_login_die_handler($handler)
+{
+    if ($handler !== __NAMESPACE__ . '\handle_security_login_wp_die') {
+        $GLOBALS['tempel_settings_wp_die_handler'] = $handler;
+    }
+
+    return __NAMESPACE__ . '\handle_security_login_wp_die';
+}
+
+function handle_security_login_wp_die($message, $title = '', $args = array()): void
+{
+    if (is_string($message) && tempel_is_security_login_message($message)) {
+        _default_wp_die_handler(
+            '<p>' . nl2br(esc_html(get_security_login_message())) . '</p>',
+            $title,
+            $args
+        );
+
+        return;
+    }
+
+    $handler = $GLOBALS['tempel_settings_wp_die_handler'] ?? '_default_wp_die_handler';
+
+    if ($handler === __NAMESPACE__ . '\handle_security_login_wp_die') {
+        $handler = '_default_wp_die_handler';
+    }
+
+    call_user_func($handler, $message, $title, $args);
+}
+
+function tempel_is_security_login_message(string $message): bool
+{
+    $plain_message = html_entity_decode(wp_strip_all_tags($message), ENT_QUOTES, get_bloginfo('charset') ?: 'UTF-8');
+
+    return strpos($plain_message, 'Om veiligheidsredenen hebben wij de standaard WordPress admin URL aangepast.') !== false
+        || strpos($plain_message, 'This feature is temporarily forbidden for security reasons. Try logging in again.') !== false;
+}
 
 class TempelSettings
 {
