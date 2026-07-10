@@ -6,6 +6,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/branding.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-comments.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-post.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widgets.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/skip-bundled-themes.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/svg-support.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-bag-address.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
@@ -31,6 +32,10 @@ if(!class_exists('Settings')) {
             
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'hide_dashboard_widgets'))) {
                 new Remove_Dashboard_Widgets();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'skip_bundled_themes'))) {
+                new Skip_Bundled_Themes();
             }
             
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'svg_support'))) {

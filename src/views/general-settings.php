@@ -99,6 +99,29 @@ class General_Settings extends Page
                                         </div>
                                         <!-- Settings Field | Hide Dashboard Widgets -->
 
+                                        <!-- Settings Field | Skip Bundled Themes -->
+                                        <div id="skip_bundled_themes_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="skip_bundled_themes">
+                                                        <?php _e('Twenty-thema\'s niet automatisch downloaden', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="skip_bundled_themes" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[skip_bundled_themes]"
+                                                                id="skip_bundled_themes"
+                                                            <?php echo $this->is_checked('skip_bundled_themes'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Skip Bundled Themes -->
+
                                     </div>
                                 </div>
 

@@ -426,6 +426,7 @@ p#nav a:hover::after {
     margin: 0;
     padding: 0;
     border: none;
+    color: #f5f5f5;
     font-size: 15px;
     line-height: 17px
 }
@@ -439,6 +440,12 @@ p#nav a:hover::after {
     color: #f5f5f5;
     font-size: 15px;
     line-height: 17px
+}
+
+#login_error ul,
+#login_error li,
+#login_error a {
+    color: #f5f5f5
 }
 
 #lostpasswordform p input[type=text] {

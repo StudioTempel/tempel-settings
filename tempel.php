@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.7.13
+ * Version:           2.7.16
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.13');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.16');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -130,18 +130,22 @@ class TempelSettings
     {
         $defaults_version = get_option('tempel_settings_defaults_version');
 
-        if (version_compare((string) $defaults_version, '2.6.3', '>=')) {
+        if (version_compare((string) $defaults_version, '2.7.16', '>=')) {
             return;
         }
 
         $settings = get_option('tmpl_settings', array());
 
         if (is_array($settings)) {
-            $settings['gf_bag_address_enabled'] = '';
+            if (version_compare((string) $defaults_version, '2.6.3', '<')) {
+                $settings['gf_bag_address_enabled'] = '';
+            }
+
+            $settings['skip_bundled_themes'] = 'on';
             update_option('tmpl_settings', $settings);
         }
 
-        update_option('tempel_settings_defaults_version', '2.6.3');
+        update_option('tempel_settings_defaults_version', '2.7.16');
     }
 
     public static function get_instance()

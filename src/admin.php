@@ -280,8 +280,6 @@ if (!class_exists('Admin')) {
                 'conversion_include_woocommerce_orders',
                 'conversion_include_post_type',
                 'status_widget_enabled',
-                'status_show_service_contract_tier',
-                'status_service_contract_upgradable',
                 'support_widget_enabled',
             );
 
@@ -301,8 +299,6 @@ if (!class_exists('Admin')) {
                 ? sanitize_text_field($input['status_last_checkup_date'])
                 : current_time('m/Y');
 
-            $output['status_service_contract_tier'] = isset($input['status_service_contract_tier']) ? sanitize_text_field($input['status_service_contract_tier']) : '';
-            $output['status_service_contract_upgrade_link'] = isset($input['status_service_contract_upgrade_link']) ? esc_url_raw($input['status_service_contract_upgrade_link']) : '';
             $output['support_ticket_link'] = isset($input['support_ticket_link']) ? esc_url_raw($input['support_ticket_link']) : '';
             $output['post_type_count_post_type'] = isset($input['post_type_count_post_type']) ? sanitize_key($input['post_type_count_post_type']) : '';
 
@@ -327,6 +323,7 @@ if (!class_exists('Admin')) {
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
+                'skip_bundled_themes',
                 'svg_support',
                 'taxonomy_order',
                 'gf_bag_address_enabled',
@@ -361,6 +358,7 @@ if (!class_exists('Admin')) {
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
+                'skip_bundled_themes',
                 'svg_support',
                 'taxonomy_order',
             ));

@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.7.13
+Stable tag: 2.7.15
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,12 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.15 =
+* Removed the service contract settings and status widget output.
+
+= 2.7.14 =
+* Made login error messages and Defender attempt notices white on the dark login screen.
 
 = 2.7.13 =
 * Fixed the masked-login security message line break when the message is escaped before rendering.
@@ -192,5 +198,5 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 
 == Upgrade Notice ==
 
-= 2.7.13 =
-Fixes escaped line breaks in the masked-login security message.
+= 2.7.15 =
+Removes the service contract settings and status widget output.

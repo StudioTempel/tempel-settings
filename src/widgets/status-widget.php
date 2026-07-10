@@ -60,23 +60,6 @@ class Status_Widget extends Widget
                         <div class="item__value item__value--<?= esc_attr(sanitize_html_class($last_checkup['color'])); ?>"><?= esc_html($last_checkup['date']); ?></div>
                     <?php endif; ?>
                 </div>
-                <?php if (get_customer_package() && show_service_contract_tier() === true): ?>
-                    <div class="widget__content__item">
-                        <?php if (service_contract_upgradable() === true): ?>
-                        <a
-                                rel="nofollow noopener"
-                                target="_blank"
-                                href="<?= esc_url(get_service_contract_upgrade_link()); ?>"
-                                class="item__link"
-                        >
-                            <?php endif; ?>
-                            <div class="item__label"><?php _e('Servicecontract', 'tempel-settings'); ?></div>
-                            <div class="item__value"><?= wp_kses_post(get_customer_package()); ?></div>
-                            <?php if (service_contract_upgradable() === true): ?>
-                        </a>
-                    <?php endif; ?>
-                    </div>
-                <?php endif; ?>
             </div>
         </div>
         <?php widget_footer(); ?>

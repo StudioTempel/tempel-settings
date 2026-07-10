@@ -16,6 +16,7 @@ class Activator
             'disable_comments'                  => 'on',
             'disable_default_pt'                => 'on',
             'hide_dashboard_widgets'            => 'on',
+            'skip_bundled_themes'               => 'on',
             'svg_support'                       => 'on',
             'taxonomy_order'                    => 'on',
             'gf_bag_address_enabled'            => '',
@@ -52,10 +53,6 @@ class Activator
             'status_safeupdate_day'                     => 'monday',
             'status_backup_interval'                    => '12:30',
             'status_last_checkup_date'                  => '06/2024',
-            'status_show_service_contract_tier'         => 'on',
-            'status_service_contract_upgradable'        => 'on',
-            'status_service_contract_tier'              => 'Plus',
-            'status_service_contract_upgrade_link'      => 'https://studiotempel.nl/servicecontract',
             
             'support_widget_enabled'                    => 'on',
             'support_ticket_link'                       => 'https://studiotempel.nl/contact',
