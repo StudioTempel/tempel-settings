@@ -420,7 +420,7 @@ p#nav a:hover::after {
     color: #f3f438 !important
 }
 
-#login_error {
+#login #login_error {
     border: solid red;
     border-width: 0 0 0 4px;
     margin: 0;
@@ -431,21 +431,20 @@ p#nav a:hover::after {
     line-height: 17px
 }
 
-#login_error br {
+#login #login_error br {
     display: none
 }
 
-#login_error p {
+#login #login_error p {
     margin: 0;
     color: #f5f5f5;
     font-size: 15px;
     line-height: 17px
 }
 
-#login_error ul,
-#login_error li,
-#login_error a {
-    color: #f5f5f5
+#login #login_error,
+#login #login_error * {
+    color: #f5f5f5 !important
 }
 
 #lostpasswordform p input[type=text] {
