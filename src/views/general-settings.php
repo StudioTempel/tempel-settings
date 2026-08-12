@@ -229,6 +229,29 @@ class General_Settings extends Page
                                         </div>
                                         <!-- Settings Field | Enable Taxonomy Order -->
 
+                                        <!-- Settings Field | Enable Content Duplication -->
+                                        <div id="duplicate_content_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="duplicate_content">
+                                                        <?php _e('Dupliceren van content inschakelen', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="duplicate_content" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[duplicate_content]"
+                                                                id="duplicate_content"
+                                                            <?php echo $this->is_checked('duplicate_content'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable Content Duplication -->
+
                                     </div>
                                 </div>
 
