@@ -10,20 +10,127 @@ class Duplicate_Content
 
     public function __construct()
     {
-        add_action('admin_init', array($this, 'register_taxonomy_actions'));
+        add_action('admin_init', array($this, 'register_list_table_actions'));
+        add_action('admin_notices', array($this, 'render_bulk_notice'));
         add_filter('post_row_actions', array($this, 'add_post_action'), 10, 2);
         add_filter('page_row_actions', array($this, 'add_post_action'), 10, 2);
         add_action('admin_post_tmpl_duplicate_post', array($this, 'duplicate_post'));
         add_action('admin_post_tmpl_duplicate_term', array($this, 'duplicate_term'));
         add_action('admin_post_tmpl_duplicate_menu', array($this, 'duplicate_menu'));
+        add_action('admin_enqueue_scripts', array($this, 'enqueue_menu_styles'));
         add_action('admin_footer-nav-menus.php', array($this, 'render_menu_button'));
     }
 
-    public function register_taxonomy_actions(): void
+    public function enqueue_menu_styles(string $hook_suffix): void
     {
+        if ($hook_suffix !== 'nav-menus.php') {
+            return;
+        }
+
+        wp_enqueue_style(
+            'tmpl-duplicate-content',
+            TEMPEL_SETTINGS_ASSET_URL . 'css/duplicate-content.css',
+            array('dashicons'),
+            TEMPEL_SETTINGS_VERSION
+        );
+    }
+
+    public function register_list_table_actions(): void
+    {
+        foreach (get_post_types(array('show_ui' => true), 'names') as $post_type) {
+            if (!$this->supports_post_type($post_type)) {
+                continue;
+            }
+
+            add_filter('bulk_actions-edit-' . $post_type, array($this, 'add_bulk_action'));
+            add_filter('handle_bulk_actions-edit-' . $post_type, array($this, 'handle_post_bulk_action'), 10, 3);
+        }
+
         foreach (get_taxonomies(array('show_ui' => true), 'names') as $taxonomy) {
             add_filter($taxonomy . '_row_actions', array($this, 'add_term_action'), 10, 2);
+            add_filter('bulk_actions-edit-' . $taxonomy, array($this, 'add_bulk_action'));
+            add_filter('handle_bulk_actions-edit-' . $taxonomy, array($this, 'handle_term_bulk_action'), 10, 3);
         }
+    }
+
+    public function add_bulk_action(array $actions): array
+    {
+        $actions['tmpl_duplicate'] = __('Dupliceren', 'tempel-settings');
+
+        return $actions;
+    }
+
+    public function handle_post_bulk_action(string $redirect_url, string $action, array $post_ids): string
+    {
+        if ($action !== 'tmpl_duplicate') {
+            return $redirect_url;
+        }
+
+        $duplicated = 0;
+
+        foreach (array_map('absint', $post_ids) as $post_id) {
+            $post = get_post($post_id);
+
+            if (!$post || !$this->supports_post_type($post->post_type) || !current_user_can('edit_post', $post_id)) {
+                continue;
+            }
+
+            if (!is_wp_error($this->create_post_copy($post))) {
+                $duplicated++;
+            }
+        }
+
+        return add_query_arg('tmpl_duplicated', $duplicated, $redirect_url);
+    }
+
+    public function handle_term_bulk_action(string $redirect_url, string $action, array $term_ids): string
+    {
+        if ($action !== 'tmpl_duplicate') {
+            return $redirect_url;
+        }
+
+        $taxonomy_name = isset($_REQUEST['taxonomy']) ? sanitize_key(wp_unslash($_REQUEST['taxonomy'])) : '';
+        $taxonomy = get_taxonomy($taxonomy_name);
+        $duplicated = 0;
+
+        if (!$taxonomy || !current_user_can($taxonomy->cap->edit_terms)) {
+            return add_query_arg('tmpl_duplicated', 0, $redirect_url);
+        }
+
+        foreach (array_map('absint', $term_ids) as $term_id) {
+            $term = get_term($term_id, $taxonomy_name);
+
+            if (!$term || is_wp_error($term)) {
+                continue;
+            }
+
+            if (!is_wp_error($this->create_term_copy($term, $taxonomy_name))) {
+                $duplicated++;
+            }
+        }
+
+        return add_query_arg('tmpl_duplicated', $duplicated, $redirect_url);
+    }
+
+    public function render_bulk_notice(): void
+    {
+        if (!isset($_GET['tmpl_duplicated'])) {
+            return;
+        }
+
+        $count = absint($_GET['tmpl_duplicated']);
+        if ($count === 0) {
+            $class = 'notice-warning';
+            $message = __('Er konden geen items worden gedupliceerd.', 'tempel-settings');
+        } else {
+            $class = 'notice-success';
+            $message = $count === 1
+                ? __('1 item is gedupliceerd.', 'tempel-settings')
+                : sprintf(__('%d items zijn gedupliceerd.', 'tempel-settings'), $count);
+        }
+        ?>
+        <div class="notice <?php echo esc_attr($class); ?> is-dismissible"><p><?php echo esc_html($message); ?></p></div>
+        <?php
     }
 
     public function add_post_action(array $actions, \WP_Post $post): array
@@ -69,29 +176,12 @@ class Duplicate_Content
             wp_die(esc_html__('Je hebt geen rechten om deze content te dupliceren.', 'tempel-settings'));
         }
 
-        $post_data = get_object_vars($post);
-        unset($post_data['ID'], $post_data['guid'], $post_data['post_name'], $post_data['post_date'], $post_data['post_date_gmt'], $post_data['post_modified'], $post_data['post_modified_gmt'], $post_data['comment_count']);
-        $post_data['post_status'] = 'draft';
-        $post_data['post_author'] = get_current_user_id();
-        $post_data['post_parent'] = $post->post_parent;
-
-        $new_post_id = wp_insert_post(wp_slash($post_data), true);
+        $new_post_id = $this->create_post_copy($post);
 
         if (is_wp_error($new_post_id)) {
             wp_die(esc_html($new_post_id->get_error_message()));
         }
 
-        $this->copy_post_meta($post_id, $new_post_id, array('_edit_lock', '_edit_last', '_wp_old_slug'));
-
-        foreach (get_object_taxonomies($post->post_type) as $taxonomy) {
-            $term_ids = wp_get_object_terms($post_id, $taxonomy, array('fields' => 'ids'));
-
-            if (!is_wp_error($term_ids)) {
-                wp_set_object_terms($new_post_id, $term_ids, $taxonomy);
-            }
-        }
-
-        do_action('tmpl_content_duplicated', $new_post_id, $post_id, 'post');
         wp_safe_redirect(get_edit_post_link($new_post_id, 'raw'));
         exit;
     }
@@ -109,26 +199,13 @@ class Duplicate_Content
             wp_die(esc_html__('Je hebt geen rechten om deze term te dupliceren.', 'tempel-settings'));
         }
 
-        $name = $this->get_copy_name($term->name, function (string $candidate) use ($taxonomy_name): bool {
-            return term_exists($candidate, $taxonomy_name) !== 0 && term_exists($candidate, $taxonomy_name) !== null;
-        });
-        $result = wp_insert_term($name, $taxonomy_name, array(
-            'description' => $term->description,
-            'parent' => (int) $term->parent,
-        ));
+        $new_term_id = $this->create_term_copy($term, $taxonomy_name);
 
-        if (is_wp_error($result)) {
-            wp_die(esc_html($result->get_error_message()));
+        if (is_wp_error($new_term_id)) {
+            wp_die(esc_html($new_term_id->get_error_message()));
         }
 
-        foreach (get_term_meta($term_id) as $key => $values) {
-            foreach ($values as $value) {
-                add_term_meta($result['term_id'], $key, maybe_unserialize($value));
-            }
-        }
-
-        do_action('tmpl_content_duplicated', $result['term_id'], $term_id, 'term');
-        wp_safe_redirect(admin_url('term.php?taxonomy=' . rawurlencode($taxonomy_name) . '&tag_ID=' . $result['term_id'] . '&post_type=' . rawurlencode($this->get_taxonomy_post_type($taxonomy))));
+        wp_safe_redirect(admin_url('term.php?taxonomy=' . rawurlencode($taxonomy_name) . '&tag_ID=' . $new_term_id . '&post_type=' . rawurlencode($this->get_taxonomy_post_type($taxonomy))));
         exit;
     }
 
@@ -142,9 +219,13 @@ class Duplicate_Content
             return;
         }
 
-        $url = wp_nonce_url(
-            admin_url('admin-post.php?action=tmpl_duplicate_menu&menu=' . $menu_id),
-            self::MENU_NONCE_ACTION . $menu_id
+        $url = add_query_arg(
+            array(
+                'action' => 'tmpl_duplicate_menu',
+                'menu' => $menu_id,
+                '_wpnonce' => wp_create_nonce(self::MENU_NONCE_ACTION . $menu_id),
+            ),
+            admin_url('admin-post.php')
         );
         ?>
         <script>
@@ -155,9 +236,8 @@ class Duplicate_Content
 
                 const link = document.createElement('a');
                 link.href = <?php echo wp_json_encode($url); ?>;
-                link.className = 'button button-secondary';
+                link.className = 'button button-secondary tmpl-copy-menu';
                 link.textContent = <?php echo wp_json_encode(__('Menu kopiëren', 'tempel-settings')); ?>;
-                link.style.marginRight = '8px';
                 submit.insertBefore(link, submit.firstChild);
             });
         </script>
@@ -235,6 +315,64 @@ class Duplicate_Content
         $supported = $object && $object->show_ui && !in_array($post_type, $excluded, true);
 
         return (bool) apply_filters('tmpl_duplicate_supports_post_type', $supported, $post_type, $object);
+    }
+
+    private function create_post_copy(\WP_Post $post): int|\WP_Error
+    {
+        $post_data = get_object_vars($post);
+        unset($post_data['ID'], $post_data['guid'], $post_data['post_name'], $post_data['post_date'], $post_data['post_date_gmt'], $post_data['post_modified'], $post_data['post_modified_gmt'], $post_data['comment_count']);
+        $post_data['post_status'] = 'draft';
+        $post_data['post_author'] = get_current_user_id();
+        $post_data['post_parent'] = $post->post_parent;
+
+        $new_post_id = wp_insert_post(wp_slash($post_data), true);
+
+        if (is_wp_error($new_post_id)) {
+            return $new_post_id;
+        }
+
+        $this->copy_post_meta($post->ID, $new_post_id, array('_edit_lock', '_edit_last', '_wp_old_slug'));
+
+        foreach (get_object_taxonomies($post->post_type) as $taxonomy) {
+            $term_ids = wp_get_object_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+
+            if (!is_wp_error($term_ids)) {
+                wp_set_object_terms($new_post_id, $term_ids, $taxonomy);
+            }
+        }
+
+        do_action('tmpl_content_duplicated', $new_post_id, $post->ID, 'post');
+
+        return $new_post_id;
+    }
+
+    private function create_term_copy(\WP_Term $term, string $taxonomy_name): int|\WP_Error
+    {
+        $name = $this->get_copy_name($term->name, function (string $candidate) use ($taxonomy_name): bool {
+            $existing = term_exists($candidate, $taxonomy_name);
+
+            return $existing !== 0 && $existing !== null;
+        });
+        $result = wp_insert_term($name, $taxonomy_name, array(
+            'description' => $term->description,
+            'parent' => (int) $term->parent,
+        ));
+
+        if (is_wp_error($result)) {
+            return $result;
+        }
+
+        $new_term_id = (int) $result['term_id'];
+
+        foreach (get_term_meta($term->term_id) as $key => $values) {
+            foreach ($values as $value) {
+                add_term_meta($new_term_id, $key, maybe_unserialize($value));
+            }
+        }
+
+        do_action('tmpl_content_duplicated', $new_term_id, $term->term_id, 'term');
+
+        return $new_term_id;
     }
 
     private function copy_post_meta(int $source_id, int $target_id, array $excluded_keys = array()): void

@@ -1,0 +1,70 @@
+#nav-menu-footer .major-publishing-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#nav-menu-footer .delete-action {
+    order: 0;
+    float: none;
+}
+
+#nav-menu-footer .publishing-action {
+    order: 1;
+    display: flex;
+    float: none;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
+#nav-menu-footer .publishing-action .tmpl-copy-menu {
+    box-sizing: border-box;
+    height: 32px;
+    min-height: 32px;
+    padding: 0 12px;
+    line-height: 30px;
+}
+
+#nav-menu-footer .menu-delete.submitdelete.deletion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    background: transparent;
+    color: transparent !important;
+    font-size: 0;
+    line-height: 1;
+    text-decoration: none;
+}
+
+#nav-menu-footer .menu-delete.submitdelete.deletion::before {
+    color: #b32d2e;
+    content: "\f182";
+    font: normal 20px/1 dashicons;
+}
+
+#nav-menu-footer .menu-delete.submitdelete.deletion:hover,
+#nav-menu-footer .menu-delete.submitdelete.deletion:focus {
+    border-color: #b32d2e;
+    background: transparent;
+    box-shadow: none;
+    outline: none;
+}
+
+#nav-menu-footer .menu-delete.submitdelete.deletion:focus {
+    box-shadow: 0 0 0 1px #b32d2e;
+}
+
+@media screen and (max-width: 782px) {
+    #nav-menu-footer .major-publishing-actions,
+    #nav-menu-footer .publishing-action {
+        flex-wrap: wrap;
+    }
+}

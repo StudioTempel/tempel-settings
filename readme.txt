@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.7.17
+Stable tag: 2.7.20
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Studio Tempel helper plugin voor custom-built WordPress websites.
 
 == Description ==
 
-Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, SVG-ondersteuning, taxonomy ordering en performance-instellingen.
+Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, SVG-ondersteuning, content dupliceren, taxonomy ordering en performance-instellingen.
 
 == Installation ==
 
@@ -21,6 +21,18 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.20 =
+* Aligned the classic menu copy action with the save button on the right side.
+
+= 2.7.19 =
+* Added bulk duplication for supported posts, custom post types and taxonomy terms.
+* Improved the classic menu action layout and delete icon.
+* Fixed the menu duplication nonce URL.
+
+= 2.7.18 =
+* Added optional duplication actions for posts, pages, custom post types and taxonomy terms.
+* Added menu duplication with preserved item hierarchy and without assigning menu locations.
 
 = 2.7.17 =
 * Ensured login error messages from security plugins remain white on the dark login screen.
