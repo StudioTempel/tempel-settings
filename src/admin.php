@@ -9,6 +9,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/mail-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/changelog-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -234,6 +235,16 @@ if (!class_exists('Admin')) {
                 'tempel-mail-settings',
                 $this->get_menu_icon(),
                 5,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-changelog-settings'] = new Changelog_Settings(
+                __('Changelog', 'tempel-settings'),
+                __('Changelog', 'tempel-settings'),
+                'tempel-changelog-settings',
+                $this->get_menu_icon(),
+                6,
                 'tempel-settings',
                 true
             );
