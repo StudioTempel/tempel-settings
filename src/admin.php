@@ -5,11 +5,10 @@ namespace Tempel;
 // Views
 require_once TEMPEL_SETTINGS_DIR . 'src/views/general-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/widget-settings.php';
-require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/mail-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
-require_once TEMPEL_SETTINGS_DIR . 'src/views/changelog-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/info-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -186,17 +185,6 @@ if (!class_exists('Admin')) {
                 99,
             );
 
-            $status_page = new Status_Settings(
-                __('Status', 'tempel-settings'),
-                __('Status', 'tempel-settings'),
-                'tempel-status-settings',
-                $this->get_menu_icon(),
-                1,
-                'tempel-settings',
-                true
-            );
-
-            $this->pages['tempel-status-settings'] = $status_page;
             $this->pages['tempel-settings'] = $general_page;
             
             $this->pages['tempel-widget-settings'] = new Widget_Settings(
@@ -239,10 +227,10 @@ if (!class_exists('Admin')) {
                 true
             );
 
-            $this->pages['tempel-changelog-settings'] = new Changelog_Settings(
-                __('Changelog', 'tempel-settings'),
-                __('Changelog', 'tempel-settings'),
-                'tempel-changelog-settings',
+            $this->pages['tempel-info-settings'] = new Info_Settings(
+                __('Info', 'tempel-settings'),
+                __('Info', 'tempel-settings'),
+                'tempel-info-settings',
                 $this->get_menu_icon(),
                 6,
                 'tempel-settings',
@@ -570,11 +558,11 @@ if (!class_exists('Admin')) {
             $screens = array(
                 'toplevel_page_tempel-settings',
                 'toplevel_page_tempel-widget-settings',
-                'tempel-settings_page_tempel-status-settings',
                 'tempel-settings_page_tempel-widget-settings',
                 'tempel-settings_page_tempel-mail-settings',
                 'tempel-settings_page_tempel-gform-address-settings',
                 'tempel-settings_page_tempel-performance-settings',
+                'tempel-settings_page_tempel-info-settings',
             );
             
             if (in_array($screen->id, $screens, true)) {

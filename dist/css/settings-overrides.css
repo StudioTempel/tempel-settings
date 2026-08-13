@@ -115,25 +115,25 @@ body.wp-admin .select2-container--default .select2-results__option--highlighted.
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings,
 body.wp-admin.tempel-settings_page_tempel-performance-settings,
-body.wp-admin.tempel-settings_page_tempel-status-settings,
+body.wp-admin.tempel-settings_page_tempel-info-settings,
 body.wp-admin.tempel-settings_page_tempel-mail-settings {
     background-color: #000 !important;
 }
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent,
-body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-info-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-mail-settings #wpcontent,
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpcontent #wpbody #wpbody-content,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpcontent #wpbody #wpbody-content,
-body.wp-admin.tempel-settings_page_tempel-status-settings #wpcontent #wpbody #wpbody-content,
+body.wp-admin.tempel-settings_page_tempel-info-settings #wpcontent #wpbody #wpbody-content,
 body.wp-admin.tempel-settings_page_tempel-mail-settings #wpcontent #wpbody #wpbody-content {
     padding: 0;
 }
 
 body.wp-admin.tempel-settings_page_tempel-gform-address-settings #wpfooter,
 body.wp-admin.tempel-settings_page_tempel-performance-settings #wpfooter,
-body.wp-admin.tempel-settings_page_tempel-status-settings #wpfooter,
+body.wp-admin.tempel-settings_page_tempel-info-settings #wpfooter,
 body.wp-admin.tempel-settings_page_tempel-mail-settings #wpfooter {
     display: none;
 }

@@ -2,6 +2,11 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.7.23] - 2026-08-13
+- De laatste instellingstab hernoemd naar Info.
+- De pluginstatus en changelog samengevoegd op de Info-pagina.
+- De losse Status-tab verwijderd.
+
 ## [2.7.22] - 2026-08-13
 - Een aparte Changelog-pagina toegevoegd aan Tempel Settings.
 - De historische wijzigingen samengebracht in één onderhoudbaar changelogbestand.
