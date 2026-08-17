@@ -2,6 +2,9 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.7.24] - 2026-08-17
+- Nederlandse postcodes worden bij het verzenden van Gravity Forms server-side gevalideerd voordat gegevens naar externe API's gaan.
+
 ## [2.7.23] - 2026-08-13
 - De laatste instellingstab hernoemd naar Info.
 - De pluginstatus en changelog samengevoegd op de Info-pagina.

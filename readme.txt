@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 6.6
-Stable tag: 2.7.23
+Stable tag: 2.7.24
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,9 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.24 =
+* Validate Dutch postcode formatting during Gravity Forms submission before data is sent to external APIs.
 
 = 2.7.23 =
 * Renamed the final settings tab to Info and combined plugin status with the changelog.

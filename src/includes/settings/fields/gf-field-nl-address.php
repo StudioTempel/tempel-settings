@@ -230,6 +230,14 @@ class GF_Field_NL_Address extends GF_Field
             return;
         }
 
+        $normalized_postcode = strtoupper((string) preg_replace('/\s+/', '', $postcode));
+
+        if ($postcode !== '' && !preg_match('/^[1-9][0-9]{3}[A-Z]{2}$/', $normalized_postcode)) {
+            $this->failed_validation = true;
+            $this->validation_message = $this->errorMessage ?: __('Controleer je postcode.', 'tempel-settings');
+            return;
+        }
+
         if (($postcode !== '' || $huisnummer !== '') && ($straat === '' || $plaats === '')) {
             $this->failed_validation = true;
             $this->validation_message = $this->errorMessage ?: $this->get_incomplete_address_message();
