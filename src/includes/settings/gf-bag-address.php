@@ -209,8 +209,8 @@ class GF_BAG_Address
             'messages' => array(
                 'loading' => $messages['loading'] ?? __('We zoeken je adres...', 'tempel-settings'),
                 'notFound' => $messages['notFound'] ?? __('Geen adres gevonden.', 'tempel-settings'),
-                'postcodeTooShort' => __('Postcode is nog niet compleet.', 'tempel-settings'),
-                'invalidPostcode' => __('Controleer je postcode.', 'tempel-settings'),
+                'postcodeTooShort' => __('Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.', 'tempel-settings'),
+                'invalidPostcode' => __('Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.', 'tempel-settings'),
             ),
         );
     }
@@ -237,7 +237,7 @@ class GF_BAG_Address
         if (strlen($postcode) > 0 && strlen($postcode) < 6) {
             return array(
                 'success' => false,
-                'message' => __('Postcode is nog niet compleet.', 'tempel-settings'),
+                'message' => __('Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.', 'tempel-settings'),
                 'status' => 400,
             );
         }
@@ -245,7 +245,7 @@ class GF_BAG_Address
         if (!preg_match('/^[1-9][0-9]{3}[A-Z]{2}$/', $postcode)) {
             return array(
                 'success' => false,
-                'message' => __('Controleer je postcode.', 'tempel-settings'),
+                'message' => __('Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.', 'tempel-settings'),
                 'status' => 400,
             );
         }

@@ -23,11 +23,11 @@
         var normalized = normalizePostcode(postcode);
 
         if (normalized.length > 0 && normalized.length < 6) {
-            return messages.postcodeTooShort || 'Postcode is nog niet compleet.';
+            return messages.postcodeTooShort || 'Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.';
         }
 
         if (normalized.length >= 6 && !/^[1-9][0-9]{3}[A-Z]{2}$/.test(normalized)) {
-            return messages.invalidPostcode || 'Controleer je postcode.';
+            return messages.invalidPostcode || 'Vul een geldige Nederlandse postcode in, bijvoorbeeld 1234 AB.';
         }
 
         return '';
