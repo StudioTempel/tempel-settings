@@ -150,6 +150,7 @@ class Branding
     public function enqueue_admin_bar_theme()
     {
         wp_enqueue_style('admin-styles', TEMPEL_SETTINGS_ASSET_URL . 'css/toolbar-theme.css');
+        wp_add_inline_style('admin-styles', '#wpadminbar #wp-admin-bar-site-name .site-icon{display:none!important}');
     }
 
     /**
@@ -160,6 +161,7 @@ class Branding
     public function enqueue_admin_theme()
     {
         wp_enqueue_style('admin-styles', TEMPEL_SETTINGS_ASSET_URL . 'css/admin-theme.css');
+        wp_add_inline_style('admin-styles', '#wpadminbar #wp-admin-bar-site-name .site-icon{display:none!important}');
         wp_enqueue_script('admin', TEMPEL_SETTINGS_ASSET_URL . 'js/admin-theme.js', array('jquery'), null, true);
     }
 

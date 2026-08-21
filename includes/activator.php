@@ -19,6 +19,8 @@ class Activator
             'skip_bundled_themes'               => 'on',
             'svg_support'                       => 'on',
             'taxonomy_order'                    => 'on',
+            'duplicate_content'                 => 'on',
+            'user_switching'                    => 'on',
             'gf_bag_address_enabled'            => '',
             'gf_bag_address_api_key'            => '',
             'gf_bag_address_endpoint'           => 'https://api.postcodeapi.nu/v3/lookup',

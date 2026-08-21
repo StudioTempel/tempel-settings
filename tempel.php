@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.7.24
+ * Version:           2.7.25
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.24');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.25');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -100,6 +100,10 @@ class TempelSettings
 
         $this->set_locale();
         $this->apply_update_defaults();
+
+        if (is_admin() && version_compare((string) get_option('tempel_settings_plugin_replacements_version'), '2.7.25', '<')) {
+            add_action('admin_init', array($this, 'deactivate_replaced_plugins'));
+        }
         
         if (is_admin()) {
             new Admin();
@@ -130,22 +134,57 @@ class TempelSettings
     {
         $defaults_version = get_option('tempel_settings_defaults_version');
 
-        if (version_compare((string) $defaults_version, '2.7.16', '>=')) {
+        if (version_compare((string) $defaults_version, '2.7.25', '>=')) {
             return;
         }
 
         $settings = get_option('tmpl_settings', array());
 
-        if (is_array($settings)) {
-            if (version_compare((string) $defaults_version, '2.6.3', '<')) {
-                $settings['gf_bag_address_enabled'] = '';
-            }
-
-            $settings['skip_bundled_themes'] = 'on';
-            update_option('tmpl_settings', $settings);
+        if (!is_array($settings)) {
+            $settings = array();
         }
 
-        update_option('tempel_settings_defaults_version', '2.7.16');
+        if (version_compare((string) $defaults_version, '2.6.3', '<')) {
+            $settings['gf_bag_address_enabled'] = '';
+        }
+
+        $settings['skip_bundled_themes'] = 'on';
+        $settings['duplicate_content'] = 'on';
+        $settings['user_switching'] = 'on';
+        update_option('tmpl_settings', $settings);
+
+        update_option('tempel_settings_defaults_version', '2.7.25');
+    }
+
+    public function deactivate_replaced_plugins(): void
+    {
+        if (!current_user_can('activate_plugins')) {
+            return;
+        }
+
+        require_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+        $replaced_plugins = array(
+            'duplicate-post/duplicate-post.php',
+            'user-switching/user-switching.php',
+        );
+
+        foreach ($replaced_plugins as $plugin) {
+            if (is_multisite() && is_plugin_active_for_network($plugin)) {
+                if (!current_user_can('manage_network_plugins')) {
+                    return;
+                }
+
+                deactivate_plugins($plugin, false, true);
+                continue;
+            }
+
+            if (is_plugin_active($plugin)) {
+                deactivate_plugins($plugin, false, false);
+            }
+        }
+
+        update_option('tempel_settings_plugin_replacements_version', '2.7.25');
     }
 
     public static function get_instance()

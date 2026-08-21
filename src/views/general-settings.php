@@ -252,6 +252,29 @@ class General_Settings extends Page
                                         </div>
                                         <!-- Settings Field | Enable Content Duplication -->
 
+                                        <!-- Settings Field | Enable User Switching -->
+                                        <div id="user_switching_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="user_switching">
+                                                        <?php _e('Wisselen tussen gebruikers inschakelen', 'tempel-settings'); ?>
+                                                    </label>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <label for="user_switching" class="checkbox__switch">
+                                                        <input
+                                                                type="checkbox"
+                                                                name="tmpl_settings[user_switching]"
+                                                                id="user_switching"
+                                                            <?php echo $this->is_checked('user_switching'); ?>
+                                                        >
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Settings Field | Enable User Switching -->
+
                                     </div>
                                 </div>
 

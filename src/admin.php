@@ -326,6 +326,7 @@ if (!class_exists('Admin')) {
                 'svg_support',
                 'taxonomy_order',
                 'duplicate_content',
+                'user_switching',
                 'gf_bag_address_enabled',
                 'performance_enabled',
                 'performance_disable_emojis',
@@ -362,6 +363,7 @@ if (!class_exists('Admin')) {
                 'svg_support',
                 'taxonomy_order',
                 'duplicate_content',
+                'user_switching',
             ));
 
             foreach ($checkboxes as $key) {

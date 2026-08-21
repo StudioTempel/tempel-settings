@@ -2,6 +2,11 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.7.25] - 2026-08-20
+- Tempel contentduplicatie wordt eenmalig overal ingeschakeld en vervangt Yoast Duplicate Post.
+- Veilige gebruikerswisseling met terugkeeractie toegevoegd als vervanging voor de losse User Switching-plugin.
+- Het nieuwe WordPress 7.1-site-icoon verborgen in de aangepaste toolbar, met behoud van het sitemenu.
+
 ## [2.7.24] - 2026-08-17
 - Nederlandse postcodes worden bij het verzenden van Gravity Forms server-side gevalideerd voordat gegevens naar externe API's gaan.
 

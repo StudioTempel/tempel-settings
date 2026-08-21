@@ -3,8 +3,8 @@ Contributors: studiotempel
 Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
-Tested up to: 6.6
-Stable tag: 2.7.24
+Tested up to: 7.1
+Stable tag: 2.7.25
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,11 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.25 =
+* Enabled Tempel content duplication by default and deactivated Yoast Duplicate Post once the replacement is active.
+* Added secure user switching with a return action and deactivated the separate User Switching plugin once the replacement is active.
+* Hid the WordPress 7.1 site icon in the custom admin toolbar while keeping the site menu available.
 
 = 2.7.24 =
 * Validate Dutch postcode formatting during Gravity Forms submission before data is sent to external APIs.

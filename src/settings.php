@@ -12,6 +12,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-bag-address.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/duplicate-content.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/user-switching.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -49,6 +50,10 @@ if(!class_exists('Settings')) {
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'duplicate_content'))) {
                 new Duplicate_Content();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'user_switching'))) {
+                new User_Switching();
             }
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'performance_enabled'))) {
