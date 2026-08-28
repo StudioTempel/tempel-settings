@@ -12,6 +12,7 @@ class Activator
     
     static function register_options() {
         $option_defaults = [
+            'security_lock'                     => 'on',
             'enable_branding'                   => 'on',
             'disable_comments'                  => 'on',
             'disable_default_pt'                => 'on',

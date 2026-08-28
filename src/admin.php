@@ -9,6 +9,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/views/mail-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/info-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -236,6 +237,16 @@ if (!class_exists('Admin')) {
                 'tempel-settings',
                 true
             );
+
+            $this->pages['tempel-status-settings'] = new Status_Settings(
+                __('Status & logboek', 'tempel-settings'),
+                __('Status & logboek', 'tempel-settings'),
+                'tempel-status-settings',
+                $this->get_menu_icon(),
+                7,
+                'tempel-settings',
+                true
+            );
         }
         
         public function get_pages()
@@ -319,6 +330,7 @@ if (!class_exists('Admin')) {
 
             $checkboxes = array(
                 'enable_branding',
+                'security_lock',
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
@@ -356,6 +368,7 @@ if (!class_exists('Admin')) {
             ));
             $general_settings_submitted = $this->has_any_input_key($input, array(
                 'enable_branding',
+                'security_lock',
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
@@ -565,6 +578,7 @@ if (!class_exists('Admin')) {
                 'tempel-settings_page_tempel-gform-address-settings',
                 'tempel-settings_page_tempel-performance-settings',
                 'tempel-settings_page_tempel-info-settings',
+                'tempel-settings_page_tempel-status-settings',
             );
             
             if (in_array($screen->id, $screens, true)) {

@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 2.7.25
+Stable tag: 2.7.28
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,17 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.7.28 =
+* Enable the security lock by default on installation and once on upgrade. Subsequent manual changes are preserved.
+
+= 2.7.27 =
+* Added an optional security lock to block plugin installations and new administrator assignments.
+
+= 2.7.26 =
+* Added a compact website status overview for WordPress, PHP, memory, cron, mail, API, HTTPS and search visibility.
+* Added a privacy-conscious technical log for mail, PostcodeAPI and Gravity Forms results with filters and automatic 30-day cleanup.
+* Added twice-daily health checks and safe HTTPS webhook endpoint monitoring.
 
 = 2.7.25 =
 * Enabled Tempel content duplication by default and deactivated Yoast Duplicate Post once the replacement is active.

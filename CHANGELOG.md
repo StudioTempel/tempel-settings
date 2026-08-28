@@ -2,6 +2,18 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.7.28] - 2026-08-28
+- Beveiligingsblokkade standaard ingeschakeld bij installatie en eenmalig bij bijwerken. Daarna blijft handmatig uitschakelen mogelijk.
+
+## [2.7.27] - 2026-08-28
+- Optionele beveiligingscheckbox toegevoegd om plugininstallaties en het aanmaken of promoveren van beheerders te blokkeren.
+- Bestaande beheerders en pluginupdates blijven beschikbaar; de blokkade is via Tempel Settings uit te zetten.
+
+## [2.7.26] - 2026-08-21
+- Compact statusoverzicht toegevoegd voor WordPress, PHP, geheugen, cron, e-mail, API, HTTPS en zoekmachinezichtbaarheid.
+- Privacyveilig technisch logboek toegevoegd voor e-mail, PostcodeAPI en Gravity Forms, met filters, maximaal 500 regels en automatische opschoning na 30 dagen.
+- Tweemaal daagse gezondheidstests en veilige HTTPS-monitoring voor maximaal vijf webhook-endpoints toegevoegd.
+
 ## [2.7.25] - 2026-08-20
 - Tempel contentduplicatie wordt eenmalig overal ingeschakeld en vervangt Yoast Duplicate Post.
 - Veilige gebruikerswisseling met terugkeeractie toegevoegd als vervanging voor de losse User Switching-plugin.

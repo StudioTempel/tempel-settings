@@ -13,6 +13,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/duplicate-content.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/user-switching.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/security-lock.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -20,6 +21,10 @@ if(!class_exists('Settings')) {
     class Settings {
         public static function load_settings()
         {
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'security_lock'))) {
+                new Security_Lock();
+            }
+
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'enable_branding'))) {
                 new Branding();
             }

@@ -24,6 +24,37 @@ class General_Settings extends Page
                                     <div class="category__header">
                                         <div class="category__label__wrap">
                                             <div class="category__title">
+                                                <?php _e('Beveiliging', 'tempel-settings'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+                                        <div id="security_lock_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="security_lock">
+                                                        <?php _e('Plugininstallaties en nieuwe beheerders blokkeren', 'tempel-settings'); ?>
+                                                    </label>
+                                                    <p id="security_lock_description" class="description">
+                                                        <?php _e('Blokkeert het installeren en uploaden van plugins en het aanmaken of promoveren van beheerders. Bestaande beheerders en pluginupdates blijven werken. Zet deze optie uit om dit weer toe te staan.', 'tempel-settings'); ?>
+                                                    </p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[security_lock]" value="">
+                                                    <label class="checkbox__switch" for="security_lock">
+                                                        <input type="checkbox" name="tmpl_settings[security_lock]" id="security_lock" aria-describedby="security_lock_description" <?php echo $this->is_checked('security_lock'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title">
                                                 <?php _e('Opschonen', 'tempel-settings'); ?>
                                             </div>
                                         </div>

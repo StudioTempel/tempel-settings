@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.7.25
+ * Version:           2.7.28
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.25');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.28');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -100,6 +100,9 @@ class TempelSettings
 
         $this->set_locale();
         $this->apply_update_defaults();
+        $this->apply_security_lock_default();
+        Status_Log::init();
+        Status_Monitor::init();
 
         if (is_admin() && version_compare((string) get_option('tempel_settings_plugin_replacements_version'), '2.7.25', '<')) {
             add_action('admin_init', array($this, 'deactivate_replaced_plugins'));
@@ -122,6 +125,8 @@ class TempelSettings
         require_once TEMPEL_SETTINGS_DIR . 'src/admin.php';
         require_once TEMPEL_SETTINGS_DIR . 'src/settings.php';
         require_once TEMPEL_SETTINGS_DIR . 'includes/updater.php';
+        require_once TEMPEL_SETTINGS_DIR . 'src/includes/status-log.php';
+        require_once TEMPEL_SETTINGS_DIR . 'src/includes/status-monitor.php';
     }
     
     private function set_locale()
@@ -154,6 +159,19 @@ class TempelSettings
         update_option('tmpl_settings', $settings);
 
         update_option('tempel_settings_defaults_version', '2.7.25');
+    }
+
+    private function apply_security_lock_default(): void
+    {
+        if (get_option('tempel_settings_security_lock_default_applied')) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $settings['security_lock'] = 'on';
+        update_option('tmpl_settings', $settings);
+        update_option('tempel_settings_security_lock_default_applied', true);
     }
 
     public function deactivate_replaced_plugins(): void
