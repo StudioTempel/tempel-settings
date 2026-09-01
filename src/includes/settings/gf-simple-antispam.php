@@ -10,9 +10,22 @@ class GF_Simple_Antispam
 
     public function __construct()
     {
+        add_action('wp_enqueue_scripts', array($this, 'enqueue_styles'));
         add_filter('gform_form_post_get_meta', array($this, 'enable_honeypot'));
         add_filter('gform_form_tag', array($this, 'add_invisible_fields'), 10, 2);
         add_filter('gform_entry_is_spam', array($this, 'is_spam'), 10, 3);
+    }
+
+    public function enqueue_styles(): void
+    {
+        wp_register_style('tempel-gf-antispam', false, array(), TEMPEL_SETTINGS_VERSION);
+        wp_enqueue_style('tempel-gf-antispam');
+        wp_add_inline_style('tempel-gf-antispam', self::honeypot_css());
+    }
+
+    public static function honeypot_css(): string
+    {
+        return '.gform_wrapper .gform_validation_container{display:none!important;}';
     }
 
     public function enable_honeypot($form)

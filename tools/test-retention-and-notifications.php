@@ -160,6 +160,7 @@ namespace Tempel {
 
     $GLOBALS['options']['tmpl_settings']['gf_antispam_min_seconds'] = '3';
     $antispam = new GF_Simple_Antispam();
+    \check(str_contains(GF_Simple_Antispam::honeypot_css(), '.gform_validation_container') && str_contains(GF_Simple_Antispam::honeypot_css(), 'display:none!important'), 'Antispam always hides the Gravity Forms honeypot');
     $honeypot_form = $antispam->enable_honeypot(array('id' => 2));
     \check(!empty($honeypot_form['enableHoneypot']) && $honeypot_form['honeypotAction'] === 'spam', 'Global antispam enables the Gravity Forms honeypot');
     $tag = $antispam->add_invisible_fields('<form>', array('id' => 2));

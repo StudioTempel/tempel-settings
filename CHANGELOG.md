@@ -2,6 +2,11 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.8.3] - 2026-09-01
+
+- Het Gravity Forms-honeypotveld wordt altijd visueel verborgen, ook wanneer een thema de standaard Gravity Forms-CSS niet laadt.
+- Het verborgen veld blijft technisch aanwezig en onderdeel van de spamcontrole.
+
 ## [2.8.2] - 2026-09-01
 
 - Herstelt eenmalig alle algemene schakelaars wanneer deze door de Gravity Forms-opslagfout gezamenlijk zijn uitgeschakeld.
