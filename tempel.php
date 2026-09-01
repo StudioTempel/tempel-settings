@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.7.28
+ * Version:           2.8.0
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.7.28');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.8.0');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -101,6 +101,7 @@ class TempelSettings
         $this->set_locale();
         $this->apply_update_defaults();
         $this->apply_security_lock_default();
+        $this->deactivate_vulnerable_wpmudev_dashboard();
         Status_Log::init();
         Status_Monitor::init();
 
@@ -172,6 +173,41 @@ class TempelSettings
         $settings['security_lock'] = 'on';
         update_option('tmpl_settings', $settings);
         update_option('tempel_settings_security_lock_default_applied', true);
+    }
+
+    private function deactivate_vulnerable_wpmudev_dashboard(): void
+    {
+        $plugin = 'wpmudev-updates/update-notifications.php';
+        $active_plugins = (array) get_option('active_plugins', array());
+        $network_plugins = is_multisite() ? (array) get_site_option('active_sitewide_plugins', array()) : array();
+        $network_active = isset($network_plugins[$plugin]);
+
+        if (!in_array($plugin, $active_plugins, true) && !$network_active) {
+            return;
+        }
+
+        $plugin_file = WP_PLUGIN_DIR . '/' . $plugin;
+        if (!is_readable($plugin_file)) {
+            return;
+        }
+
+        $data = get_file_data($plugin_file, array('Version' => 'Version'));
+        $version = (string) ($data['Version'] ?? '');
+
+        if ($version === '' || version_compare($version, '5.0.1', '>')) {
+            return;
+        }
+
+        if (!function_exists('deactivate_plugins')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+        deactivate_plugins($plugin, false, $network_active);
+
+        if ($network_active) {
+            update_site_option('tempel_settings_wpmudev_deactivated_version', $version);
+        } else {
+            update_option('tempel_settings_wpmudev_deactivated_version', $version);
+        }
     }
 
     public function deactivate_replaced_plugins(): void

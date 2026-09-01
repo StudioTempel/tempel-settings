@@ -59,6 +59,17 @@ check($admin->sanitize_general_settings(array('security_lock' => ''))['security_
 check($admin->sanitize_general_settings(array('security_lock' => 'on'))['security_lock'] === 'on', 'Lock saved');
 check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['security_lock'] === 'on', 'Other settings page preserves lock');
 check($admin->sanitize_general_settings(array('security_lock' => 'invalid'))['security_lock'] === '', 'Invalid checkbox value rejected');
+$options['tmpl_settings'] = array('security_lock' => 'on', 'form_entry_retention_enabled' => '', 'form_entry_retention_days' => '365');
+$retention_settings = $admin->sanitize_general_settings(array('form_entry_retention_enabled' => 'on', 'form_entry_retention_days' => '14'));
+check($retention_settings['form_entry_retention_enabled'] === 'on', 'Retention can be enabled');
+check($retention_settings['form_entry_retention_days'] === '14', 'Retention days saved');
+check($admin->sanitize_general_settings(array('form_entry_retention_enabled' => '', 'form_entry_retention_days' => '0'))['form_entry_retention_days'] === '1', 'Retention days have safe minimum');
+check($admin->sanitize_general_settings(array('form_entry_retention_enabled' => 'on', 'form_entry_retention_days' => '9999'))['form_entry_retention_days'] === '3650', 'Retention days have safe maximum');
+$options['tmpl_settings'] = array('security_lock' => 'on', 'form_entry_retention_enabled' => 'on', 'form_entry_retention_days' => '14');
+check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['form_entry_retention_enabled'] === 'on', 'Other settings page preserves retention');
+$options['tmpl_settings']['email_login_verification'] = '';
+check($admin->sanitize_general_settings(array('email_login_verification' => 'on'))['email_login_verification'] === 'on', 'Email login verification can be enabled');
+check($admin->sanitize_general_settings(array('email_login_verification' => ''))['email_login_verification'] === '', 'Email login verification can be disabled');
 
 // Test activation and the one-time upgrade without booting WordPress.
 function add_option($key, $value) { if (!isset($GLOBALS['options'][$key])) { $GLOBALS['options'][$key] = $value; } }
@@ -83,3 +94,46 @@ check($options['tmpl_settings']['enable_branding'] === '', 'Upgrade preserves ot
 $options['tmpl_settings']['security_lock'] = '';
 $migration->invoke($plugin);
 check($options['tmpl_settings']['security_lock'] === '', 'Manual disabling survives subsequent requests');
+
+function is_multisite() { return (bool) ($GLOBALS['multisite'] ?? false); }
+function get_site_option($key, $default = false) { return $GLOBALS['site_options'][$key] ?? $default; }
+function update_site_option($key, $value) { $GLOBALS['site_options'][$key] = $value; }
+function get_file_data($file, $headers) {
+    preg_match('/^\s*\*?\s*Version:\s*(.+)$/mi', file_get_contents($file), $match);
+    return array('Version' => trim($match[1] ?? ''));
+}
+function deactivate_plugins($plugin, $silent = false, $network = null) {
+    $GLOBALS['deactivations'][] = array($plugin, $network);
+    if ($network) {
+        unset($GLOBALS['site_options']['active_sitewide_plugins'][$plugin]);
+    } else {
+        $GLOBALS['options']['active_plugins'] = array_values(array_diff($GLOBALS['options']['active_plugins'] ?? array(), array($plugin)));
+    }
+}
+define('WP_PLUGIN_DIR', sys_get_temp_dir() . '/tempel-security-test-plugins');
+@mkdir(WP_PLUGIN_DIR . '/wpmudev-updates', 0777, true);
+$wpmu = new ReflectionMethod($plugin, 'deactivate_vulnerable_wpmudev_dashboard');
+$wpmu->setAccessible(true);
+function write_wpmu_version($version) {
+    file_put_contents(WP_PLUGIN_DIR . '/wpmudev-updates/update-notifications.php', "<?php\n/*\nVersion: $version\n*/\n");
+}
+$options = array('active_plugins' => array('wpmudev-updates/update-notifications.php'));
+$site_options = array();
+$deactivations = array();
+write_wpmu_version('5.0.1');
+$wpmu->invoke($plugin);
+check($deactivations === array(array('wpmudev-updates/update-notifications.php', false)), 'Vulnerable active WPMU DEV Dashboard deactivated');
+check($options['tempel_settings_wpmudev_deactivated_version'] === '5.0.1', 'Handled WPMU version stored');
+$wpmu->invoke($plugin);
+check(count($deactivations) === 1, 'Same vulnerable version handled once');
+$options = array('active_plugins' => array('wpmudev-updates/update-notifications.php'));
+$deactivations = array();
+write_wpmu_version('5.0.2');
+$wpmu->invoke($plugin);
+check($deactivations === array(), 'Patched WPMU DEV Dashboard remains active');
+$options = array('active_plugins' => array());
+$deactivations = array();
+write_wpmu_version('5.0.0');
+$wpmu->invoke($plugin);
+check($deactivations === array(), 'Inactive WPMU DEV Dashboard unchanged');
+check(defined('DISALLOW_FILE_EDIT') && DISALLOW_FILE_EDIT, 'Security lock disables file editor');

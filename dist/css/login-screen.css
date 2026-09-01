@@ -206,6 +206,27 @@ body.login .header .logo svg path, body.login .header .logo svg polygon {
     opacity: 1
 }
 
+#loginform .tempel-email-code-wrap {
+    margin-top: 22px
+}
+
+body.tempel-email-code-step #loginform > p:first-of-type,
+body.tempel-email-code-step #loginform .user-pass-wrap,
+body.tempel-email-code-step #loginform .forgetmenot {
+    display: none !important
+}
+
+#loginform .tempel-email-code-reset {
+    display: block;
+    margin: 18px 0 0;
+    text-align: center
+}
+
+#loginform .tempel-email-code-reset a {
+    color: #c8c8c8;
+    text-decoration: none
+}
+
 #loginform .wp-pwd .button {
     display: none !important
 }

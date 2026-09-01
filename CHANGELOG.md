@@ -2,6 +2,90 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.8.0] - 2026-09-01
+
+- Beveiligingsblokkades toegevoegd voor plugininstallaties, nieuwe beheerders en de ingebouwde plugin- en thema-editor.
+- Kwetsbare WPMU DEV Dashboard-versies tot en met 5.0.1 worden automatisch gedeactiveerd wanneer deze actief zijn.
+- E-mailmeldingen toegevoegd voor plugininstallaties, nieuwe beheerders en promoties naar beheerder.
+- Optionele tweestapslogin via een zescijferige e-mailcode toegevoegd voor backendgebruikers zonder geconfigureerde Defender 2FA.
+- Instelbare Gravity Forms-bewaartermijn, uurlijkse en handmatige opschoning en een daarop begrensd conversiedashboard toegevoegd.
+- De bewaartermijn gebruikt een exclusieve grens: inzendingen op exact de ingestelde termijn blijven staan; alleen oudere inzendingen worden verwijderd.
+- Gravity Forms-adresinstellingen, bewaartermijn en onzichtbare antispam samengevoegd op één instellingenpagina.
+- Resultaatopbouw van het conversiedashboard hersteld voor meerdere geselecteerde formulieren.
+
+## [2.7.43] - 2026-09-01
+
+- Adresveld, bewaartermijn, handmatig opschonen en antispam samengevoegd op één pagina **Gravity Forms**.
+- Optionele globale onzichtbare antispam toegevoegd voor alle Gravity Forms-formulieren.
+- De antispam combineert de Gravity Forms-honeypot met een ondertekende invultijd en JavaScript-controle.
+- Verdachte inzendingen gaan naar spam, zodat ze controleerbaar blijven en bezoekers geen captcha zien.
+
+## [2.7.42] - 2026-09-01
+
+- Handmatige knop toegevoegd om direct maximaal 500 inzendingen ouder dan de bewaartermijn permanent te verwijderen.
+- Veilige uurlijkse beheerfallback toegevoegd voor websites waarop WP-Cron niet betrouwbaar draait.
+- Planning hersteld: de cron-taak wordt direct ingepland wanneer de retentiemodule tijdens WordPress `init` wordt geladen.
+- Na handmatig opschonen wordt het aantal verwijderde inzendingen gemeld.
+
+## [2.7.41] - 2026-08-31
+
+- Voorkomt een redirectlus wanneer de codestap leeg of automatisch wordt verstuurd.
+- De lege codestap blijft zonder fouttekst staan en kost geen poging.
+
+## [2.7.40] - 2026-08-31
+
+- De zescijferige login-code staat in HTML-mail groot, vet en op een eigen regel.
+
+## [2.7.39] - 2026-08-31
+
+- Een lege of automatisch verstuurde codestap keert zonder foutmelding terug naar het codeformulier.
+- Een lege code kost geen loginpoging meer.
+
+## [2.7.38] - 2026-08-31
+
+- Dwingt de e-mailcode ook af wanneer Defender of een andere loginprovider de gebruiker buiten de standaard WordPress-wachtwoordcontrole authenticeert.
+
+## [2.7.37] - 2026-08-31
+- Defender-detectie aangescherpt: alleen een actieve en werkelijk beschikbare Defender 2FA-methode mag de Tempel-code overslaan.
+- Achtergebleven Defender-gebruikersmetadata kan daardoor niet meer leiden tot een directe login zonder tweede stap.
+
+## [2.7.36] - 2026-08-31
+- Na een correct wachtwoord wordt nu doorgestuurd naar een losse codestap in plaats van een authenticatiefout te tonen.
+- Defender telt het aanvragen van de e-mailcode daardoor niet meer als mislukte loginpoging.
+- De losse codestap verbergt de eerdere inlogvelden consequent en behoudt de oorspronkelijke beheerredirect.
+
+## [2.7.35] - 2026-08-31
+- E-mailverificatie omgebouwd naar een echte tweestapslogin: eerst inloggegevens, daarna uitsluitend de code.
+- Een tijdelijke eenmalige login-uitdaging vervangt het opnieuw invoeren of bewaren van het wachtwoord.
+- De codestap bevat een link om opnieuw met de gewone login te beginnen.
+
+## [2.7.34] - 2026-08-31
+- Het invoerveld voor de e-mailcode zichtbaar gemaakt binnen het gebrande Tempel-loginformulier.
+- Een duidelijke placeholder en instructie toegevoegd voor de tweede loginpoging.
+
+## [2.7.33] - 2026-08-31
+- E-mailmelding naar info@studiotempel.nl toegevoegd wanneer een nieuwe beheerder wordt aangemaakt.
+- E-mailmelding toegevoegd wanneer een bestaande gebruiker naar beheerder wordt gepromoveerd.
+- Dubbele meldingen tijdens één WordPress-gebruikersactie worden voorkomen.
+
+## [2.7.32] - 2026-08-31
+- E-mailverificatie hersteld voor gemaskeerde WordPress-loginroutes, waaronder de aangepaste Defender-login-URL.
+- WooCommerce frontend-login blijft uitgesloten.
+
+## [2.7.31] - 2026-08-31
+- Optionele zescijferige e-mailverificatie toegevoegd voor directe WordPress-logins van gebruikers zonder geconfigureerde Defender 2FA-methode.
+- WooCommerce frontend-logins, REST, XML-RPC en andere niet-WordPress-loginroutes worden niet door de fallback geraakt.
+- Login-codes verlopen na tien minuten en worden na vijf onjuiste pogingen ingetrokken.
+
+## [2.7.30] - 2026-08-31
+- E-mailmelding naar info@studiotempel.nl toegevoegd na installatie van een plugin via WordPress.
+- Optionele globale bewaartermijn toegevoegd voor Gravity Forms-inzendingen, met definitieve automatische opschoning van maximaal 500 oude inzendingen per uur.
+- De periode van het conversiedashboard wordt verkort tot de ingestelde bewaartermijn wanneer deze korter is dan 30 dagen.
+
+## [2.7.29] - 2026-08-29
+- Actieve WPMU DEV Dashboard-versies tot en met 5.0.1 worden eenmalig automatisch gedeactiveerd.
+- De ingebouwde plugin- en thema-editor wordt uitgeschakeld zolang de beveiligingsblokkade actief is.
+
 ## [2.7.28] - 2026-08-28
 - Beveiligingsblokkade standaard ingeschakeld bij installatie en eenmalig bij bijwerken. Daarna blijft handmatig uitschakelen mogelijk.
 

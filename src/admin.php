@@ -199,8 +199,8 @@ if (!class_exists('Admin')) {
             );
 
             $this->pages['tempel-gform-address-settings'] = new Gform_Address_Settings(
-                __('Gform adres veld', 'tempel-settings'),
-                __('Gform adres veld', 'tempel-settings'),
+                __('Gravity Forms', 'tempel-settings'),
+                __('Gravity Forms', 'tempel-settings'),
                 'tempel-gform-address-settings',
                 $this->get_menu_icon(),
                 3,
@@ -331,6 +331,9 @@ if (!class_exists('Admin')) {
             $checkboxes = array(
                 'enable_branding',
                 'security_lock',
+                'email_login_verification',
+                'form_entry_retention_enabled',
+                'gf_antispam_enabled',
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
@@ -348,12 +351,17 @@ if (!class_exists('Admin')) {
             );
 
             $gform_address_submitted = $this->has_any_input_key($input, array(
+                'gf_bag_address_enabled',
                 'gf_bag_address_api_key',
                 'gf_bag_address_endpoint',
                 'gf_bag_address_timeout',
                 'gf_bag_address_monthly_limit',
                 'gf_bag_address_cache_days',
                 'gf_bag_address_rate_limit',
+                'form_entry_retention_enabled',
+                'form_entry_retention_days',
+                'gf_antispam_enabled',
+                'gf_antispam_min_seconds',
             ));
             $performance_settings_submitted = $this->has_any_input_key($input, array(
                 'performance_enabled',
@@ -369,6 +377,7 @@ if (!class_exists('Admin')) {
             $general_settings_submitted = $this->has_any_input_key($input, array(
                 'enable_branding',
                 'security_lock',
+                'email_login_verification',
                 'disable_comments',
                 'disable_default_pt',
                 'hide_dashboard_widgets',
@@ -377,6 +386,8 @@ if (!class_exists('Admin')) {
                 'taxonomy_order',
                 'duplicate_content',
                 'user_switching',
+                'form_entry_retention_enabled',
+                'form_entry_retention_days',
             ));
 
             foreach ($checkboxes as $key) {
@@ -385,7 +396,9 @@ if (!class_exists('Admin')) {
                     continue;
                 }
 
-                if ($key === 'gf_bag_address_enabled' && $gform_address_submitted) {
+                $gform_checkbox = in_array($key, array('gf_bag_address_enabled', 'form_entry_retention_enabled', 'gf_antispam_enabled'), true);
+
+                if ($gform_checkbox && $gform_address_submitted) {
                     $output[$key] = '';
                     continue;
                 }
@@ -395,7 +408,7 @@ if (!class_exists('Admin')) {
                     continue;
                 }
 
-                if ($key !== 'gf_bag_address_enabled' && strpos($key, 'performance_') !== 0 && $general_settings_submitted) {
+                if (!$gform_checkbox && strpos($key, 'performance_') !== 0 && $general_settings_submitted) {
                     $output[$key] = '';
                 }
             }
@@ -406,6 +419,14 @@ if (!class_exists('Admin')) {
                 if ($api_key !== '') {
                     $output['gf_bag_address_api_key'] = $api_key;
                 }
+            }
+
+            if (isset($input['form_entry_retention_days'])) {
+                $output['form_entry_retention_days'] = (string) max(1, min(3650, absint($input['form_entry_retention_days'])));
+            }
+
+            if (isset($input['gf_antispam_min_seconds'])) {
+                $output['gf_antispam_min_seconds'] = (string) max(1, min(30, absint($input['gf_antispam_min_seconds'])));
             }
 
             if (isset($input['gf_bag_address_endpoint'])) {

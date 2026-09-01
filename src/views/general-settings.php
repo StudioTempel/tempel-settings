@@ -54,6 +54,31 @@ class General_Settings extends Page
                                 <div class="settings__category">
                                     <div class="category__header">
                                         <div class="category__label__wrap">
+                                            <div class="category__title"><?php esc_html_e('Loginbeveiliging', 'tempel-settings'); ?></div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+                                        <div id="email_login_verification_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="email_login_verification"><?php esc_html_e('E-mailcode als Defender 2FA niet is ingesteld', 'tempel-settings'); ?></label>
+                                                    <p id="email_login_verification_description" class="description"><?php esc_html_e('Vraagt bij de WordPress-login een zescijferige code aan gebruikers zonder geconfigureerde Defender 2FA. WooCommerce Mijn account en andere frontend-logins worden niet geraakt. Controleer eerst of WordPress-mail betrouwbaar aankomt.', 'tempel-settings'); ?></p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[email_login_verification]" value="">
+                                                    <label class="checkbox__switch" for="email_login_verification">
+                                                        <input type="checkbox" name="tmpl_settings[email_login_verification]" id="email_login_verification" aria-describedby="email_login_verification_description" <?php echo $this->is_checked('email_login_verification'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
                                             <div class="category__title">
                                                 <?php _e('Opschonen', 'tempel-settings'); ?>
                                             </div>

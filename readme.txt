@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 2.7.28
+Stable tag: 2.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,69 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.8.0 =
+* Voeg beveiligingsblokkades toe voor plugininstallaties, nieuwe beheerders en de ingebouwde bestandseditor.
+* Deactiveer kwetsbare WPMU DEV Dashboard-versies tot en met 5.0.1 automatisch wanneer deze actief zijn.
+* Stuur meldingen bij plugininstallaties, nieuwe beheerders en promoties naar beheerder.
+* Voeg optionele tweestapslogin via een zescijferige e-mailcode toe voor backendgebruikers zonder Defender 2FA.
+* Voeg een instelbare Gravity Forms-bewaartermijn, handmatige opschoning en een begrensd conversiedashboard toe.
+* Bewaar inzendingen op exact de ingestelde grensdatum en verwijder uitsluitend oudere inzendingen.
+* Bundel adresinstellingen, bewaartermijn en onzichtbare antispam op één Gravity Forms-pagina.
+* Herstel de resultaatopbouw van het conversiedashboard voor meerdere geselecteerde formulieren.
+
+= 2.7.43 =
+* Bundel adresveld, antispam en bewaartermijn op één Gravity Forms-instellingenpagina.
+* Voeg optionele globale onzichtbare antispam toe met honeypot, JavaScript-controle en minimale invultijd.
+* Verdachte inzendingen worden als spam gemarkeerd in plaats van zichtbaar geblokkeerd.
+
+= 2.7.42 =
+* Voeg een handmatige knop toe om direct maximaal 500 oude Gravity Forms-inzendingen op te schonen.
+* Voer de uurlijkse opschoning ook veilig uit bij beheerbezoek wanneer WP-Cron niet betrouwbaar draait.
+* Herstel het inplannen van de opruimtaak wanneer Tempel Settings tijdens WordPress init wordt geladen.
+
+= 2.7.41 =
+* Fix: voorkom een redirectlus wanneer de codestap leeg of automatisch wordt verstuurd.
+
+= 2.7.40 =
+* Toon de login-code in de e-mail groot en op een eigen regel.
+
+= 2.7.39 =
+* Fix: een lege of automatisch verstuurde codestap toont geen onjuiste-codefout meer en kost geen loginpoging.
+
+= 2.7.38 =
+* Fix: dwingt de e-mailcode ook af wanneer Defender of een andere loginprovider de gebruiker buiten de standaard WordPress-wachtwoordcontrole authenticeert.
+
+= 2.7.37 =
+* Only bypass Tempel email verification when the active Defender runtime confirms an actually available 2FA provider for the user.
+
+= 2.7.36 =
+* Redirect to the dedicated code step after a valid password so Defender no longer counts requesting a code as a failed login attempt.
+
+= 2.7.35 =
+* Changed email verification to a true two-step login: credentials first, then a dedicated code screen with a reset link.
+
+= 2.7.34 =
+* Fixed the email-code input being hidden by the branded login screen and clarified the second login step.
+
+= 2.7.33 =
+* Send info@studiotempel.nl an email when an administrator is created or an existing user is promoted to administrator.
+
+= 2.7.32 =
+* Fixed email login verification for masked WordPress login URLs such as Defender's custom login route.
+
+= 2.7.31 =
+* Added optional six-digit email verification for direct WordPress logins when the user has no configured Defender 2FA provider.
+* Excluded WooCommerce frontend logins and other non-WordPress login flows from the fallback verification.
+
+= 2.7.30 =
+* Send info@studiotempel.nl an email after a plugin is installed through WordPress.
+* Added an optional global retention period and automatic permanent cleanup for Gravity Forms entries.
+* Limit the conversion dashboard period to the configured retention period when it is shorter than 30 days.
+
+= 2.7.29 =
+* Automatically deactivate WPMU DEV Dashboard 5.0.1 and older once when active.
+* Disable the built-in plugin and theme file editor while the security lock is enabled.
 
 = 2.7.28 =
 * Enable the security lock by default on installation and once on upgrade. Subsequent manual changes are preserved.

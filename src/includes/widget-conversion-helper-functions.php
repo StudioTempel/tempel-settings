@@ -4,12 +4,13 @@ namespace Tempel;
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
 /**
- * Get the form submissions made in the last 30 days
+ * Get the form submissions made in the configured conversion period.
  *
  * @return array
  */
 function get_form_submissions_by_id(): array
 {
+    $days = get_conversion_period_days();
     $form_ids = get_selected_forms();
     
     if (is_wp_error($form_ids)) {
@@ -33,9 +34,8 @@ function get_form_submissions_by_id(): array
         $form_title = $form['title'];
         $form_link = admin_url('admin.php?page=gf_entries&view=entries&id=' . $form_id);
         
-        // only get the entries from the last 30 days
-        $end_date = date('Y-m-d H:i:s');
-        $start_date = date('Y-m-d H:i:s', strtotime('-30 days'));
+        $end_date = gmdate('Y-m-d H:i:s');
+        $start_date = gmdate('Y-m-d H:i:s', time() - ($days * DAY_IN_SECONDS));
         
         $search_criteria = array(
             'status' => 'active',
@@ -54,13 +54,13 @@ function get_form_submissions_by_id(): array
             ),
         );
         
-        $form_submissions = \GFAPI::count_entries($form_id, $search_criteria);
+        $submission_count = \GFAPI::count_entries($form_id, $search_criteria);
         
         
         $forms_submissions[] = [
             'title' => $form_title,
             'link' => $form_link,
-            'submissions' => $form_submissions
+            'submissions' => $submission_count
         ];
     }
     
@@ -92,12 +92,13 @@ function get_conversion_items(): array
 }
 
 /**
- * Get the total number of submissions made in the last 30 days
+ * Get the total number of submissions in the configured conversion period.
  *
  * @return mixed
  */
 function get_total_submissions(): mixed
 {
+    $days = get_conversion_period_days();
     $form_ids = get_selected_forms();
     $form_submissions = 0;
 
@@ -114,9 +115,8 @@ function get_total_submissions(): mixed
                 continue;
             }
 
-            // Get the current date and the date 30 days ago
-            $end_date = date('Y-m-d H:i:s');
-            $start_date = date('Y-m-d H:i:s', strtotime('-30 days'));
+            $end_date = gmdate('Y-m-d H:i:s');
+            $start_date = gmdate('Y-m-d H:i:s', time() - ($days * DAY_IN_SECONDS));
 
             // Set up search criteria
             $search_criteria = array(
@@ -174,7 +174,7 @@ function get_woocommerce_order_conversions_count(): int
         'paginate' => true,
         'return' => 'ids',
         'status' => $statuses,
-        'date_created' => '>' . strtotime('-30 days', current_time('timestamp')),
+        'date_created' => '>' . strtotime('-' . get_conversion_period_days() . ' days', current_time('timestamp')),
     ));
 
     return isset($orders->total) ? (int) $orders->total : 0;
@@ -237,13 +237,21 @@ function get_post_type_conversions_count(string $post_type): int
         'fields' => 'ids',
         'date_query' => array(
             array(
-                'after' => '30 days ago',
+                'after' => get_conversion_period_days() . ' days ago',
                 'inclusive' => true,
             ),
         ),
     ));
 
     return (int) $query->found_posts;
+}
+
+function get_conversion_period_days(): int
+{
+    $retention_enabled = return_option('tmpl_settings', 'form_entry_retention_enabled') === 'on';
+    $retention_days = max(1, min(3650, absint(return_option('tmpl_settings', 'form_entry_retention_days') ?: 365)));
+
+    return $retention_enabled ? min(30, $retention_days) : 30;
 }
 
 function get_conversion_post_type_label(string $post_type): string

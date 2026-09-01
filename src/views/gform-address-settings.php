@@ -16,8 +16,13 @@ class Gform_Address_Settings extends Page
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
                         <div class="body__inner">
+                            <?php if (isset($_GET['tempel_cleanup_done'])) : ?>
+                                <?php $deleted = isset($_GET['tempel_cleanup_deleted']) ? absint($_GET['tempel_cleanup_deleted']) : 0; ?>
+                                <div class="notice notice-success inline"><p><?php echo esc_html(sprintf(_n('%d oude formulierinzending is permanent verwijderd.', '%d oude formulierinzendingen zijn permanent verwijderd.', $deleted, 'tempel-settings'), $deleted)); ?></p></div>
+                            <?php endif; ?>
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_settings'); ?>
+                                <?php wp_nonce_field(Form_Entry_Retention::MANUAL_ACTION, 'tempel_cleanup_nonce'); ?>
 
                                 <div class="settings__category">
                                     <div class="category__header">
@@ -199,6 +204,38 @@ class Gform_Address_Settings extends Page
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header"><div class="category__label__wrap"><div class="category__title"><?php esc_html_e('Antispam', 'tempel-settings'); ?></div></div></div>
+                                    <div class="category__content">
+                                        <div class="settings__field"><div class="settings__field__inner">
+                                            <div class="settings__label__wrap"><label for="gf_antispam_enabled"><?php esc_html_e('Onzichtbare antispam voor alle formulieren', 'tempel-settings'); ?></label><p class="description"><?php esc_html_e('Schakelt de Gravity Forms-honeypot globaal in en markeert inzendingen zonder JavaScript of met een onnatuurlijk korte invultijd als spam. Bezoekers zien geen captcha.', 'tempel-settings'); ?></p></div>
+                                            <div class="settings__input__wrap"><input type="hidden" name="tmpl_settings[gf_antispam_enabled]" value=""><label class="checkbox__switch" for="gf_antispam_enabled"><input type="checkbox" name="tmpl_settings[gf_antispam_enabled]" id="gf_antispam_enabled" <?php echo $this->is_checked('gf_antispam_enabled'); ?>><span class="checkbox__switch__slider"></span></label></div>
+                                        </div></div>
+                                        <div class="settings__field"><div class="settings__field__inner">
+                                            <div class="settings__label__wrap"><label for="gf_antispam_min_seconds"><?php esc_html_e('Minimale invultijd (seconden)', 'tempel-settings'); ?></label><p class="description"><?php esc_html_e('Inzendingen die sneller worden verstuurd gaan naar spam. Drie seconden is een veilige standaard.', 'tempel-settings'); ?></p></div>
+                                            <div class="settings__input__wrap"><input type="number" min="1" max="30" name="tmpl_settings[gf_antispam_min_seconds]" id="gf_antispam_min_seconds" value="<?php echo esc_attr($this->get_value('gf_antispam_min_seconds', '3')); ?>"></div>
+                                        </div></div>
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header"><div class="category__label__wrap"><div class="category__title"><?php esc_html_e('Bewaartermijn en opschonen', 'tempel-settings'); ?></div></div></div>
+                                    <div class="category__content">
+                                        <div class="settings__field"><div class="settings__field__inner">
+                                            <div class="settings__label__wrap"><label for="form_entry_retention_enabled"><?php esc_html_e('Bewaartermijn inschakelen', 'tempel-settings'); ?></label><p class="description"><?php esc_html_e('Verwijdert ieder uur maximaal 500 inzendingen ouder dan de gekozen termijn, inclusief spam en prullenbak.', 'tempel-settings'); ?></p></div>
+                                            <div class="settings__input__wrap"><input type="hidden" name="tmpl_settings[form_entry_retention_enabled]" value=""><label class="checkbox__switch" for="form_entry_retention_enabled"><input type="checkbox" name="tmpl_settings[form_entry_retention_enabled]" id="form_entry_retention_enabled" <?php echo $this->is_checked('form_entry_retention_enabled'); ?>><span class="checkbox__switch__slider"></span></label></div>
+                                        </div></div>
+                                        <div class="settings__field"><div class="settings__field__inner">
+                                            <div class="settings__label__wrap"><label for="form_entry_retention_days"><?php esc_html_e('Inzendingen bewaren (dagen)', 'tempel-settings'); ?></label><p class="description"><?php esc_html_e('Het conversiedashboard gebruikt deze termijn wanneer deze korter is dan 30 dagen.', 'tempel-settings'); ?></p></div>
+                                            <div class="settings__input__wrap"><input type="number" min="1" max="3650" name="tmpl_settings[form_entry_retention_days]" id="form_entry_retention_days" value="<?php echo esc_attr($this->get_value('form_entry_retention_days', '365')); ?>"></div>
+                                        </div></div>
+                                        <div class="settings__field"><div class="settings__field__inner">
+                                            <div class="settings__label__wrap"><label><?php esc_html_e('Oude inzendingen nu opschonen', 'tempel-settings'); ?></label><p class="description"><?php esc_html_e('Verwijdert direct maximaal 500 oude inzendingen permanent. Deze actie kan niet ongedaan worden gemaakt.', 'tempel-settings'); ?></p></div>
+                                            <div class="settings__input__wrap"><button type="submit" class="button button-secondary" name="action" value="<?php echo esc_attr(Form_Entry_Retention::MANUAL_ACTION); ?>" formaction="<?php echo esc_url(admin_url('admin-post.php')); ?>" formmethod="post" onclick="return confirm('<?php echo esc_js(__('Oude formulierinzendingen permanent verwijderen?', 'tempel-settings')); ?>');"><?php esc_html_e('Nu opschonen', 'tempel-settings'); ?></button></div>
+                                        </div></div>
                                     </div>
                                 </div>
 

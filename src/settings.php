@@ -9,11 +9,15 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widge
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/skip-bundled-themes.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/svg-support.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-bag-address.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/gf-simple-antispam.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/performance.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/duplicate-content.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/user-switching.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/security-lock.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/form-entry-retention.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/plugin-install-notifier.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/email-login-verification.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -21,6 +25,17 @@ if(!class_exists('Settings')) {
     class Settings {
         public static function load_settings()
         {
+            new Plugin_Install_Notifier();
+            new Form_Entry_Retention();
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'gf_antispam_enabled'))) {
+                new GF_Simple_Antispam();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'email_login_verification'))) {
+                new Email_Login_Verification();
+            }
+
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'security_lock'))) {
                 new Security_Lock();
             }

@@ -37,7 +37,7 @@ function widget_header($widget_id, $title, $type, $color, $total_value = null)
         <?php endif; ?>
         
     <?php if ($widget_id === 'widget-conversion'): ?>
-            <div class="widget__scope"><?php _e('Last 30 days', 'tempel-settings'); ?></div>
+            <div class="widget__scope"><?php echo esc_html(sprintf(__('Last %d days', 'tempel-settings'), get_conversion_period_days())); ?></div>
         <?php endif; ?>
     </div>
     <?php

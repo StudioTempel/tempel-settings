@@ -6,6 +6,10 @@ class Security_Lock
 {
     public function __construct()
     {
+        if (!defined('DISALLOW_FILE_EDIT')) {
+            define('DISALLOW_FILE_EDIT', true);
+        }
+
         add_filter('map_meta_cap', array($this, 'restrict_plugin_installation'), 100, 2);
         add_filter('editable_roles', array($this, 'filter_editable_roles'));
         add_action('user_profile_update_errors', array($this, 'validate_user'), 10, 3);
