@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 2.8.0
+Stable tag: 2.8.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,14 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.8.2 =
+* Herstel eenmalig algemene instellingen die door de Gravity Forms-opslagfout allemaal zijn uitgeschakeld.
+* Laat e-mailverificatie bij dit herstel uitgeschakeld, omdat werkende uitgaande e-mail eerst gecontroleerd moet worden.
+* Voeg kruistests toe zodat instellingenpagina's elkaars opties niet wijzigen.
+
+= 2.8.1 =
+* Voorkom dat opslaan op de Gravity Forms-pagina algemene instellingen uitschakelt.
 
 = 2.8.0 =
 * Voeg beveiligingsblokkades toe voor plugininstallaties, nieuwe beheerders en de ingebouwde bestandseditor.

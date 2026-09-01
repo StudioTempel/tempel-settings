@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.8.0
+ * Version:           2.8.2
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.8.0');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.8.2');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -101,6 +101,7 @@ class TempelSettings
         $this->set_locale();
         $this->apply_update_defaults();
         $this->apply_security_lock_default();
+        $this->repair_general_settings_after_gravity_forms_save();
         $this->deactivate_vulnerable_wpmudev_dashboard();
         Status_Log::init();
         Status_Monitor::init();
@@ -173,6 +174,52 @@ class TempelSettings
         $settings['security_lock'] = 'on';
         update_option('tmpl_settings', $settings);
         update_option('tempel_settings_security_lock_default_applied', true);
+    }
+
+    private function repair_general_settings_after_gravity_forms_save(): void
+    {
+        $repair_option = 'tempel_settings_general_repair_2_8_2_applied';
+        if (get_option($repair_option)) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $general_keys = array(
+            'enable_branding',
+            'security_lock',
+            'disable_comments',
+            'disable_default_pt',
+            'hide_dashboard_widgets',
+            'skip_bundled_themes',
+            'svg_support',
+            'taxonomy_order',
+            'duplicate_content',
+            'user_switching',
+        );
+        $all_general_settings_disabled = true;
+
+        foreach ($general_keys as $key) {
+            if (($settings[$key] ?? '') === 'on') {
+                $all_general_settings_disabled = false;
+                break;
+            }
+        }
+
+        $gravity_forms_settings_saved = array_key_exists('form_entry_retention_days', $settings)
+            || array_key_exists('gf_antispam_min_seconds', $settings);
+
+        if ($all_general_settings_disabled && $gravity_forms_settings_saved) {
+            foreach ($general_keys as $key) {
+                $settings[$key] = 'on';
+            }
+
+            // Email verification requires working outbound mail and must remain opt-in.
+            $settings['email_login_verification'] = '';
+            update_option('tmpl_settings', $settings);
+        }
+
+        update_option($repair_option, true);
     }
 
     private function deactivate_vulnerable_wpmudev_dashboard(): void

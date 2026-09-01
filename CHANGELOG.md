@@ -2,6 +2,17 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.8.2] - 2026-09-01
+
+- Herstelt eenmalig alle algemene schakelaars wanneer deze door de Gravity Forms-opslagfout gezamenlijk zijn uitgeschakeld.
+- E-mailverificatie blijft bij het herstel bewust uitgeschakeld totdat betrouwbare uitgaande e-mail is gecontroleerd.
+- Kruistests toegevoegd voor Algemeen, Gravity Forms en Performance, zodat de pagina's elkaars instellingen niet wijzigen.
+
+## [2.8.1] - 2026-09-01
+
+- Voorkomt dat het opslaan van de Gravity Forms-instellingen opties op de pagina Algemeen uitschakelt.
+- Regressietests toegevoegd voor het behouden van branding, security lock, e-mailverificatie en algemene functies.
+
 ## [2.8.0] - 2026-09-01
 
 - Beveiligingsblokkades toegevoegd voor plugininstallaties, nieuwe beheerders en de ingebouwde plugin- en thema-editor.

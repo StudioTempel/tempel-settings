@@ -67,6 +67,39 @@ check($admin->sanitize_general_settings(array('form_entry_retention_enabled' => 
 check($admin->sanitize_general_settings(array('form_entry_retention_enabled' => 'on', 'form_entry_retention_days' => '9999'))['form_entry_retention_days'] === '3650', 'Retention days have safe maximum');
 $options['tmpl_settings'] = array('security_lock' => 'on', 'form_entry_retention_enabled' => 'on', 'form_entry_retention_days' => '14');
 check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['form_entry_retention_enabled'] === 'on', 'Other settings page preserves retention');
+$options['tmpl_settings'] = array(
+    'enable_branding' => 'on',
+    'security_lock' => 'on',
+    'email_login_verification' => 'on',
+    'disable_comments' => 'on',
+    'duplicate_content' => 'on',
+    'form_entry_retention_enabled' => 'on',
+    'form_entry_retention_days' => '14',
+);
+$gravity_forms_save = $admin->sanitize_general_settings(array(
+    'form_entry_retention_enabled' => 'on',
+    'form_entry_retention_days' => '30',
+    'gf_antispam_enabled' => 'on',
+    'gf_antispam_min_seconds' => '3',
+));
+check($gravity_forms_save['enable_branding'] === 'on', 'Gravity Forms save preserves branding');
+check($gravity_forms_save['security_lock'] === 'on', 'Gravity Forms save preserves security lock');
+check($gravity_forms_save['email_login_verification'] === 'on', 'Gravity Forms save preserves email verification');
+check($gravity_forms_save['disable_comments'] === 'on', 'Gravity Forms save preserves general feature settings');
+check($gravity_forms_save['duplicate_content'] === 'on', 'Gravity Forms save preserves duplicate content setting');
+check($gravity_forms_save['performance_enabled'] ?? '' === '', 'Gravity Forms save does not enable unrelated performance settings');
+$options['tmpl_settings']['performance_enabled'] = 'on';
+$options['tmpl_settings']['performance_disable_emojis'] = 'on';
+$performance_save = $admin->sanitize_general_settings(array(
+    'performance_enabled' => 'on',
+    'performance_frontend_memory_limit' => '128',
+    'performance_admin_memory_limit' => '256',
+));
+check($performance_save['security_lock'] === 'on', 'Performance save preserves general settings');
+check($performance_save['form_entry_retention_enabled'] === 'on', 'Performance save preserves Gravity Forms settings');
+$general_save = $admin->sanitize_general_settings(array('security_lock' => 'on', 'enable_branding' => 'on'));
+check($general_save['form_entry_retention_enabled'] === 'on', 'General save preserves Gravity Forms settings');
+check($general_save['performance_enabled'] === 'on', 'General save preserves performance settings');
 $options['tmpl_settings']['email_login_verification'] = '';
 check($admin->sanitize_general_settings(array('email_login_verification' => 'on'))['email_login_verification'] === 'on', 'Email login verification can be enabled');
 check($admin->sanitize_general_settings(array('email_login_verification' => ''))['email_login_verification'] === '', 'Email login verification can be disabled');
@@ -94,6 +127,39 @@ check($options['tmpl_settings']['enable_branding'] === '', 'Upgrade preserves ot
 $options['tmpl_settings']['security_lock'] = '';
 $migration->invoke($plugin);
 check($options['tmpl_settings']['security_lock'] === '', 'Manual disabling survives subsequent requests');
+
+$repair = new ReflectionMethod($plugin, 'repair_general_settings_after_gravity_forms_save');
+$repair->setAccessible(true);
+$options = array('tmpl_settings' => array(
+    'enable_branding' => '',
+    'security_lock' => '',
+    'email_login_verification' => '',
+    'disable_comments' => '',
+    'disable_default_pt' => '',
+    'hide_dashboard_widgets' => '',
+    'skip_bundled_themes' => '',
+    'svg_support' => '',
+    'taxonomy_order' => '',
+    'duplicate_content' => '',
+    'user_switching' => '',
+    'form_entry_retention_days' => '14',
+));
+$repair->invoke($plugin);
+foreach (array('enable_branding', 'security_lock', 'disable_comments', 'disable_default_pt', 'hide_dashboard_widgets', 'skip_bundled_themes', 'svg_support', 'taxonomy_order', 'duplicate_content', 'user_switching') as $key) {
+    check($options['tmpl_settings'][$key] === 'on', "One-time repair restores $key");
+}
+check($options['tmpl_settings']['email_login_verification'] === '', 'One-time repair leaves email verification disabled');
+$options['tmpl_settings']['enable_branding'] = '';
+$repair->invoke($plugin);
+check($options['tmpl_settings']['enable_branding'] === '', 'One-time repair does not override later manual changes');
+
+$options = array('tmpl_settings' => array(
+    'enable_branding' => 'on',
+    'security_lock' => '',
+    'form_entry_retention_days' => '14',
+));
+$repair->invoke($plugin);
+check($options['tmpl_settings']['security_lock'] === '', 'Repair leaves intentionally mixed general settings unchanged');
 
 function is_multisite() { return (bool) ($GLOBALS['multisite'] ?? false); }
 function get_site_option($key, $default = false) { return $GLOBALS['site_options'][$key] ?? $default; }

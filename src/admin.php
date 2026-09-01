@@ -386,8 +386,6 @@ if (!class_exists('Admin')) {
                 'taxonomy_order',
                 'duplicate_content',
                 'user_switching',
-                'form_entry_retention_enabled',
-                'form_entry_retention_days',
             ));
 
             foreach ($checkboxes as $key) {
