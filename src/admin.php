@@ -41,9 +41,29 @@ if (!class_exists('Admin')) {
             
             // Hook the admin pages
             $this->load_pages();
+            add_action('admin_menu', array($this, 'move_tempel_menu_to_bottom'), PHP_INT_MAX);
             
             // Load widgets
             $this->load_widgets();
+        }
+
+        public function move_tempel_menu_to_bottom(): void
+        {
+            global $menu;
+
+            if (!is_array($menu)) {
+                return;
+            }
+
+            foreach ($menu as $position => $item) {
+                if (($item[2] ?? '') !== 'tempel-settings') {
+                    continue;
+                }
+
+                unset($menu[$position]);
+                $menu[] = $item;
+                break;
+            }
         }
         
         function load_ajax_functions()

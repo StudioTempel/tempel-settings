@@ -54,6 +54,13 @@ check($lock->prevent_administrator_assignment(null, 1, 'wp_capabilities', array(
 check($lock->prevent_administrator_assignment(null, 2, 'wp_capabilities', array('editor' => true), null) === null, 'Other roles allowed');
 check($lock->prevent_administrator_assignment(null, 2, 'other_meta', array('administrator' => true), null) === null, 'Unrelated metadata unchanged');
 $admin = (new ReflectionClass(Tempel\Admin::class))->newInstanceWithoutConstructor();
+$menu = array(
+    2 => array('Dashboard', 'read', 'index.php'),
+    99 => array('Tempel Settings', 'manage_options', 'tempel-settings'),
+    100 => array('Andere plugin', 'manage_options', 'andere-plugin'),
+);
+$admin->move_tempel_menu_to_bottom();
+check(end($menu)[2] === 'tempel-settings', 'Tempel Settings is moved to the bottom of the admin menu');
 $options['tmpl_settings'] = array('security_lock' => 'on');
 check($admin->sanitize_general_settings(array('security_lock' => ''))['security_lock'] === '', 'Last checked option can be disabled');
 check($admin->sanitize_general_settings(array('security_lock' => 'on'))['security_lock'] === 'on', 'Lock saved');

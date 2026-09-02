@@ -2,6 +2,17 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.8.5] - 2026-09-02
+
+- De volledige `vendor`-map met de GitHub updater-library wordt voortaan opgenomen in het releasepakket.
+- De updater controleert defensief of `PucFactory` beschikbaar is; bij een onvolledig pakket blijft de rest van Tempel Settings werken.
+- Een regressietest toegevoegd die de updater bewust zonder `vendor`-map laadt.
+
+## [2.8.4] - 2026-09-02
+
+- Tempel Settings wordt na registratie van alle beheermenu's naar de onderste positie verplaatst.
+- De bestaande volgorde van de Tempel Settings-submenu's blijft behouden.
+
 ## [2.8.3] - 2026-09-01
 
 - Het Gravity Forms-honeypotveld wordt altijd visueel verborgen, ook wanneer een thema de standaard Gravity Forms-CSS niet laadt.
