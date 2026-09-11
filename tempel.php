@@ -11,7 +11,7 @@
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.8.5
+ * Version:           2.8.6
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.8.5');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.8.6');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -102,6 +102,7 @@ class TempelSettings
         $this->apply_update_defaults();
         $this->apply_security_lock_default();
         $this->repair_general_settings_after_gravity_forms_save();
+        $this->apply_complianz_style_default();
         $this->deactivate_vulnerable_wpmudev_dashboard();
         Status_Log::init();
         Status_Monitor::init();
@@ -220,6 +221,20 @@ class TempelSettings
         }
 
         update_option($repair_option, true);
+    }
+
+    private function apply_complianz_style_default(): void
+    {
+        $default_option = 'tempel_settings_complianz_style_default_applied';
+        if (get_option($default_option)) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $settings['complianz_close_button_fix'] = 'on';
+        update_option('tmpl_settings', $settings);
+        update_option($default_option, true);
     }
 
     private function deactivate_vulnerable_wpmudev_dashboard(): void

@@ -2,6 +2,12 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.8.6] - 2026-09-11
+
+- Onder **Algemeen → Uiterlijk** een instelling toegevoegd om de sluitknop van de Complianz-cookiebanner tot 20 × 20 pixels te begrenzen.
+- De Complianz-correctie staat standaard aan op nieuwe en bestaande installaties.
+- Een eenmalige migratiemarkering zorgt dat een latere handmatige uitschakeling behouden blijft.
+
 ## [2.8.5] - 2026-09-02
 
 - De volledige `vendor`-map met de GitHub updater-library wordt voortaan opgenomen in het releasepakket.

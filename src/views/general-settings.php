@@ -214,6 +214,26 @@ class General_Settings extends Page
                                         </div>
                                         <!-- Settings Field | Enable Branding -->
 
+                                        <div id="complianz_close_button_fix_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="complianz_close_button_fix">
+                                                        <?php esc_html_e('Complianz sluitknop corrigeren', 'tempel-settings'); ?>
+                                                    </label>
+                                                    <p id="complianz_close_button_fix_description" class="description">
+                                                        <?php esc_html_e('Begrenst de sluitknop van de Complianz-cookiebanner tot 20 × 20 pixels en voorkomt een te groot kruis.', 'tempel-settings'); ?>
+                                                    </p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[complianz_close_button_fix]" value="">
+                                                    <label class="checkbox__switch" for="complianz_close_button_fix">
+                                                        <input type="checkbox" name="tmpl_settings[complianz_close_button_fix]" id="complianz_close_button_fix" aria-describedby="complianz_close_button_fix_description" <?php echo $this->is_checked('complianz_close_button_fix'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
 

@@ -76,6 +76,7 @@ $options['tmpl_settings'] = array('security_lock' => 'on', 'form_entry_retention
 check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['form_entry_retention_enabled'] === 'on', 'Other settings page preserves retention');
 $options['tmpl_settings'] = array(
     'enable_branding' => 'on',
+    'complianz_close_button_fix' => 'on',
     'security_lock' => 'on',
     'email_login_verification' => 'on',
     'disable_comments' => 'on',
@@ -90,6 +91,7 @@ $gravity_forms_save = $admin->sanitize_general_settings(array(
     'gf_antispam_min_seconds' => '3',
 ));
 check($gravity_forms_save['enable_branding'] === 'on', 'Gravity Forms save preserves branding');
+check($gravity_forms_save['complianz_close_button_fix'] === 'on', 'Gravity Forms save preserves Complianz styling');
 check($gravity_forms_save['security_lock'] === 'on', 'Gravity Forms save preserves security lock');
 check($gravity_forms_save['email_login_verification'] === 'on', 'Gravity Forms save preserves email verification');
 check($gravity_forms_save['disable_comments'] === 'on', 'Gravity Forms save preserves general feature settings');
@@ -110,6 +112,7 @@ check($general_save['performance_enabled'] === 'on', 'General save preserves per
 $options['tmpl_settings']['email_login_verification'] = '';
 check($admin->sanitize_general_settings(array('email_login_verification' => 'on'))['email_login_verification'] === 'on', 'Email login verification can be enabled');
 check($admin->sanitize_general_settings(array('email_login_verification' => ''))['email_login_verification'] === '', 'Email login verification can be disabled');
+check($admin->sanitize_general_settings(array('complianz_close_button_fix' => ''))['complianz_close_button_fix'] === '', 'Complianz styling can be disabled');
 
 // Test activation and the one-time upgrade without booting WordPress.
 function add_option($key, $value) { if (!isset($GLOBALS['options'][$key])) { $GLOBALS['options'][$key] = $value; } }
@@ -124,6 +127,7 @@ require TEMPEL_SETTINGS_DIR . 'tempel.php';
 $options = array();
 Tempel\Activator::register_options();
 check($options['tmpl_settings']['security_lock'] === 'on', 'New installation defaults to locked');
+check($options['tmpl_settings']['complianz_close_button_fix'] === 'on', 'New installation enables Complianz styling by default');
 $plugin = (new ReflectionClass(Tempel\TempelSettings::class))->newInstanceWithoutConstructor();
 $migration = new ReflectionMethod($plugin, 'apply_security_lock_default');
 $migration->setAccessible(true);
@@ -134,6 +138,15 @@ check($options['tmpl_settings']['enable_branding'] === '', 'Upgrade preserves ot
 $options['tmpl_settings']['security_lock'] = '';
 $migration->invoke($plugin);
 check($options['tmpl_settings']['security_lock'] === '', 'Manual disabling survives subsequent requests');
+
+$complianz_default = new ReflectionMethod($plugin, 'apply_complianz_style_default');
+$complianz_default->setAccessible(true);
+$options = array('tmpl_settings' => array('complianz_close_button_fix' => ''));
+$complianz_default->invoke($plugin);
+check($options['tmpl_settings']['complianz_close_button_fix'] === 'on', 'Upgrade enables Complianz styling once');
+$options['tmpl_settings']['complianz_close_button_fix'] = '';
+$complianz_default->invoke($plugin);
+check($options['tmpl_settings']['complianz_close_button_fix'] === '', 'Manual Complianz styling choice survives subsequent requests');
 
 $repair = new ReflectionMethod($plugin, 'repair_general_settings_after_gravity_forms_save');
 $repair->setAccessible(true);

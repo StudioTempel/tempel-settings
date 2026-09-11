@@ -7,6 +7,7 @@ namespace {
     define('HOUR_IN_SECONDS', 3600);
     define('MINUTE_IN_SECONDS', 60);
     define('TEMPEL_SETTINGS_DIR', dirname(__DIR__) . '/');
+    define('TEMPEL_SETTINGS_VERSION', 'test');
     define('TEMPEL_SETTINGS_TESTING', true);
     $GLOBALS['options'] = array();
     $GLOBALS['scheduled'] = array();
@@ -14,9 +15,13 @@ namespace {
     $GLOBALS['transients'] = array();
     $GLOBALS['user_meta'] = array();
     $GLOBALS['users'] = array();
+    $GLOBALS['inline_styles'] = array();
 
     function add_action(...$args) {}
     function add_filter(...$args) {}
+    function wp_register_style(...$args) {}
+    function wp_enqueue_style(...$args) {}
+    function wp_add_inline_style($handle, $css) { $GLOBALS['inline_styles'][$handle] = $css; return true; }
     function apply_filters($tag, $value, ...$args) { return $tag === 'tempel_defender_2fa_configured' && array_key_exists('defender_2fa_configured', $GLOBALS) ? (bool) $GLOBALS['defender_2fa_configured'] : $value; }
     function __($text, $domain = null) { return $text; }
     function esc_html($text) { return htmlspecialchars((string) $text, ENT_QUOTES); }
@@ -91,10 +96,16 @@ namespace {
 namespace Tempel {
     require dirname(__DIR__) . '/src/includes/helper-functions.php';
     require dirname(__DIR__) . '/src/includes/settings/plugin-install-notifier.php';
+    require dirname(__DIR__) . '/src/includes/settings/complianz-style-fix.php';
     require dirname(__DIR__) . '/src/includes/settings/form-entry-retention.php';
     require dirname(__DIR__) . '/src/includes/settings/gf-simple-antispam.php';
     require dirname(__DIR__) . '/src/includes/settings/email-login-verification.php';
     require dirname(__DIR__) . '/src/includes/widget-conversion-helper-functions.php';
+
+    $complianz_fix = new Complianz_Style_Fix();
+    $complianz_fix->enqueue_styles();
+    \check(str_contains($GLOBALS['inline_styles']['tempel-complianz-fix'], '.cmplz-cookiebanner .cmplz-close'), 'Complianz CSS targets only the cookie banner close button');
+    \check(substr_count($GLOBALS['inline_styles']['tempel-complianz-fix'], '20px') === 4, 'Complianz close button dimensions are limited to 20 pixels');
 
     $notifier = new Plugin_Install_Notifier();
     $upgrader = new class { public function plugin_info() { return 'voorbeeld/voorbeeld.php'; } };

@@ -17,6 +17,7 @@ class Activator
             'form_entry_retention_enabled'      => '',
             'form_entry_retention_days'         => '365',
             'enable_branding'                   => 'on',
+            'complianz_close_button_fix'        => 'on',
             'disable_comments'                  => 'on',
             'disable_default_pt'                => 'on',
             'hide_dashboard_widgets'            => 'on',

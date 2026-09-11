@@ -350,6 +350,7 @@ if (!class_exists('Admin')) {
 
             $checkboxes = array(
                 'enable_branding',
+                'complianz_close_button_fix',
                 'security_lock',
                 'email_login_verification',
                 'form_entry_retention_enabled',
@@ -396,6 +397,7 @@ if (!class_exists('Admin')) {
             ));
             $general_settings_submitted = $this->has_any_input_key($input, array(
                 'enable_branding',
+                'complianz_close_button_fix',
                 'security_lock',
                 'email_login_verification',
                 'disable_comments',

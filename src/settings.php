@@ -3,6 +3,7 @@
 namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/branding.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/complianz-style-fix.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-comments.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-post.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widgets.php';
@@ -42,6 +43,10 @@ if(!class_exists('Settings')) {
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'enable_branding'))) {
                 new Branding();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'complianz_close_button_fix'))) {
+                new Complianz_Style_Fix();
             }
             
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'disable_comments'))) {
