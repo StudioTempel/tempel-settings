@@ -83,6 +83,7 @@ class Status_Settings extends Page
                                                 <option value="mail" <?php selected($source, 'mail'); ?>><?php esc_html_e('E-mail', 'tempel-settings'); ?></option>
                                                 <option value="api" <?php selected($source, 'api'); ?>><?php esc_html_e('API', 'tempel-settings'); ?></option>
                                                 <option value="gravity_forms" <?php selected($source, 'gravity_forms'); ?>>Gravity Forms</option>
+                                                <option value="backup" <?php selected($source, 'backup'); ?>><?php esc_html_e('Back-up', 'tempel-settings'); ?></option>
                                                 <option value="webhook" <?php selected($source, 'webhook'); ?>><?php esc_html_e('Webhook', 'tempel-settings'); ?></option>
                                                 <option value="system" <?php selected($source, 'system'); ?>><?php esc_html_e('Systeem', 'tempel-settings'); ?></option>
                                             </select>
@@ -229,6 +230,7 @@ class Status_Settings extends Page
             'mail' => __('E-mail', 'tempel-settings'),
             'api' => __('API', 'tempel-settings'),
             'gravity_forms' => 'Gravity Forms',
+            'backup' => __('Back-up', 'tempel-settings'),
             'webhook' => __('Webhook', 'tempel-settings'),
             'system' => __('Systeem', 'tempel-settings'),
         )[$source] ?? ucfirst($source);

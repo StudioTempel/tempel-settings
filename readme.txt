@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 2.8.6
+Stable tag: 2.17.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Studio Tempel helper plugin voor custom-built WordPress websites.
 
 == Description ==
 
-Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, SVG-ondersteuning, content dupliceren, taxonomy ordering en performance-instellingen.
+Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, Dropbox-back-ups, SVG-ondersteuning, content dupliceren, taxonomy ordering en performance-instellingen.
 
 == Installation ==
 
@@ -21,6 +21,126 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 2.17.5 =
+* Corrigeer de donkere achtergrond, veldbreedtes en planning-layout van de Back-ups-pagina.
+
+= 2.17.4 =
+* Herstel het laden en verversen van de Tempel-vormgeving op de Back-ups-pagina.
+
+= 2.17.3 =
+* Voeg een visuele Dropbox-mapbrowser toe aan de Back-ups-pagina.
+
+= 2.17.2 =
+* Vernieuw de Back-ups-pagina met een statusoverzicht, rustigere indeling en ingeklapte technische instellingen.
+
+= 2.17.1 =
+* Voeg een instelbaar back-uptijdstip, verplichte foutmail en optionele succesmail toe.
+
+= 2.17.0 =
+* Voeg optionele volledige Dropbox-back-ups toe met OAuth, planning, retentie en handmatige uitvoering.
+
+= 2.16.0 =
+* Voeg optionele .htaccess-beveiliging toe met eigen markers, databaseback-up, loopbackcontrole en verwijderknop.
+
+= 2.15.2 =
+* Sluit een melding direct wanneer de actieknop wordt aangeklikt.
+* Start na een actieklik niet meteen de volgende melding op dezelfde positie.
+
+= 2.15.1 =
+* Registreer de Polylang-koppeling vroeg genoeg om de taalkeuze bij Meldingen zichtbaar te maken.
+
+= 2.15.0 =
+* Geef actieknoppen ook de algemene themaklasse .button.
+* Centreer de knop automatisch wanneer het laatste WYSIWYG-element gecentreerd is.
+* Lever een eenvoudige voorbeeldstylesheet met CSS-variabelen voor themastyling.
+
+= 2.14.1 =
+* Vereenvoudig het meldingsformulier tot de tabs Inhoud en Instellingen.
+
+= 2.14.0 =
+* Maak Meldingen automatisch vertaalbaar wanneer Polylang actief is.
+
+= 2.13.5 =
+* Verwijder de toelichting onder de knop Frequentie resetten.
+
+= 2.13.4 =
+* Gebruik bij start- en einddatum alleen uren en minuten, zonder seconden.
+
+= 2.13.3 =
+* Verwijder de teksten Yes en No uit alle ACF-schakelaars van Meldingen.
+
+= 2.13.2 =
+* Toon Donkere achtergrond tonen alleen wanneer de positie Midden als popup is gekozen.
+
+= 2.13.1 =
+* Toon de frequentie van iedere melding als aparte kolom in het overzicht.
+
+= 2.13.0 =
+* Voeg in het Meldingen-overzicht een directe schakelaar voor activeren en deactiveren toe.
+* Toon de ingestelde positie als aparte kolom.
+
+= 2.12.1 =
+* Geef per positie paginaspecifieke meldingen voorrang op algemene meldingen.
+* Toon meldingen zonder sluitknop als laatste in hun wachtrij.
+
+= 2.12.0 =
+* Sta tegelijk één middenpopup, één bovenbalk en één onderbalk toe.
+* Toon meldingen met dezelfde positie na elkaar volgens de volgorde in het overzicht.
+
+= 2.11.1 =
+* Probeer de volgende melding wanneer een hoger geplaatste melding in deze browser al is afgehandeld.
+* Onthoud de frequentie ook wanneer de actieknop wordt gebruikt en verbeter de foutafhandeling bij sorteren.
+
+= 2.11.0 =
+* Voeg voor meldingen boven en onder een compacte balkweergave toe.
+* Plaats tekst, knop en sluitknop met minder padding zoveel mogelijk naast elkaar.
+
+= 2.10.2 =
+* Begrens afbeeldingen in meldingen standaard tot de beschikbare breedte.
+* Geef te hoge meldingen een interne scrollbar en vrije ruimte langs de schermranden.
+
+= 2.10.1 =
+* Houd de schakelaar Donkere achtergrond tonen altijd zichtbaar onder Weergave.
+
+= 2.10.0 =
+* Voeg onder Herhaling een knop toe om de frequentiecookie van een melding voor alle bezoekers te resetten.
+
+= 2.9.9 =
+* Gebruik een los HTML-element voor de donkere achtergrond, zodat themastijlen deze niet kunnen verbergen.
+
+= 2.9.8 =
+* Toon de ACF-instellingen van Meldingen zonder standaard metabox.
+* Deel de velden op in tabs en plaats start- en einddatum naast elkaar.
+* Plaats Sluitknop tonen direct onder Donkere achtergrond tonen.
+
+= 2.9.7 =
+* Herstel de donkere popupachtergrond zodat deze het volledige browservenster bedekt.
+
+= 2.9.6 =
+* Vervang het prioriteitsveld door een sleepbare volgorde in het overzicht Meldingen.
+* Geef de bovenste toepasselijke melding voorrang op de website.
+
+= 2.9.5 =
+* Verwijder de bezoekersselectie uit Meldingen; publicatie geldt voortaan voor alle bezoekers.
+
+= 2.9.4 =
+* Verwijder het veld Eigen CSS-klasse uit de instellingen van Meldingen.
+
+= 2.9.3 =
+* Zorg dat een melding in het midden altijd door de bezoeker kan worden gesloten.
+* Toon de instelling voor de sluitknop alleen bij een boven- of onderbalk.
+
+= 2.9.2 =
+* Verwijder de overbodige instructietekst onder het linkveld van een melding.
+
+= 2.9.1 =
+* Registreer het beheermenu Meldingen en de ACF-velden direct wanneer WordPress en ACF hun initialisatie al hebben uitgevoerd.
+
+= 2.9.0 =
+* Voeg de optionele ACF-module Meldingen toe voor middenpopups en balken boven of onder.
+* Ondersteun WYSIWYG-inhoud, één ACF-linkveld, planning, URL-regels, doelgroepen, vertraging, mobiel, prioriteit en herhaalfrequentie.
+* Lever eenvoudige toegankelijke basisopmaak die vanuit het thema kan worden overschreven.
 
 = 2.8.6 =
 * Voeg onder Algemeen → Uiterlijk een standaard ingeschakelde correctie toe voor een te grote Complianz-sluitknop.

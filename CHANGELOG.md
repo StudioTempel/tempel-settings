@@ -2,6 +2,186 @@
 
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
 
+## [2.17.5] - 2026-10-16
+
+- Back-ups-pagina een zelfstandig donker canvas gegeven zodat witte labels altijd voldoende contrast hebben.
+- Planningvelden responsief gemaakt en overlopende minimumveldwidthtes gecorrigeerd.
+- Tekst-, e-mail-, wachtwoord-, nummer-, tijd- en keuzevelden op deze pagina uniform vormgegeven.
+
+## [2.17.4] - 2026-10-16
+
+- Back-ups-tab toegevoegd aan de lijst met Tempel Settings-adminschermen waarvoor de volledige vormgeving wordt geladen.
+- Versienummers van de instellingenstyles op bestandstijd gebaseerd, zodat browsers aangepaste CSS direct verversen.
+
+## [2.17.3] - 2026-10-16
+
+- Visuele Dropbox-mapbrowser toegevoegd met mapnavigatie en een knop om de huidige map te kiezen.
+- Handmatige invoer van het Dropbox-pad als reserve behouden.
+- Tijdelijk toegangstoken hergebruikt om bladeren door mappen sneller te maken.
+
+## [2.17.2] - 2026-10-16
+
+- Back-ups-pagina opnieuw vormgegeven met een compact statusoverzicht en duidelijke hoofdactie.
+- Planning, e-mailmeldingen en Dropbox-koppeling in afzonderlijke onderdelen geplaatst.
+- Technische Dropbox-instellingen na het koppelen standaard ingeklapt.
+
+## [2.17.1] - 2026-10-16
+
+- Instelbaar lokaal tijdstip voor geplande Dropbox-back-ups toegevoegd.
+- Foutmeldingen per e-mail toegevoegd voor iedere mislukte back-up.
+- Optionele succesmail met bestandsnaam en grootte toegevoegd.
+
+## [2.17.0] - 2026-10-16
+
+- Optionele volledige WordPress-back-ups naar Dropbox toegevoegd.
+- Wekelijkse of maandelijkse planning, handmatige uitvoering en instelbare retentie toegevoegd.
+- Dropbox OAuth met refresh-token en upload in delen voor grote back-upbestanden toegevoegd.
+- Back-upstatus en eerstvolgende uitvoering zichtbaar gemaakt in een eigen Back-ups-tab.
+
+## [2.16.0] - 2026-09-17
+
+- Optionele bescherming voor concrete gevoelige bestandsnamen in een eigen .htaccess-blok, standaard uit.
+- Databaseback-up, bestandsvergrendeling, homepage/login-loopbackcontrole en herstelknop toegevoegd.
+- Geen algemene YAML-blokkade; multisite en ontbrekende .htaccess worden veilig overgeslagen.
+- Nginx-blokkades en functionele WooCommerce/formuliertests blijven op de doelhosting nodig.
+
+## [2.15.2] - 2026-09-15
+
+- Sluit de zichtbare melding en achtergrond direct wanneer de actieknop wordt aangeklikt, zodat een geopende widget niet achter de popup terechtkomt.
+- Toont na een actieklik niet direct de volgende melding uit dezelfde positiewachtrij.
+
+## [2.15.1] - 2026-09-15
+
+- Registreert de Polylang-filter direct bij het laden van Tempel Settings, voordat Polylang zijn lijst met vertaalbare berichttypen opbouwt.
+- Hierdoor wordt de taalkeuze daadwerkelijk zichtbaar bij Meldingen wanneer de module actief is.
+
+## [2.15.0] - 2026-09-15
+
+- Geeft de actieknop ook de generieke klasse `.button`, zodat bestaande themastijlen kunnen worden hergebruikt.
+- Centreert de actieknop automatisch wanneer het laatste element van de WYSIWYG-inhoud gecentreerd is.
+- Voegt een eenvoudige voorbeeldstylesheet met CSS-variabelen toe voor aanpassingen per website.
+
+## [2.14.1] - 2026-09-15
+
+- Vereenvoudigt het meldingsformulier tot twee tabs: **Inhoud** en **Instellingen**.
+- Weergave, planning, locatie en herhaling staan voortaan samen onder Instellingen.
+
+## [2.14.0] - 2026-09-15
+
+- Maakt het berichttype **Meldingen** automatisch vertaalbaar wanneer Polylang actief is.
+- De bestaande frontendquery respecteert daardoor de huidige Polylang-taal.
+
+## [2.13.5] - 2026-09-15
+
+- Verwijdert de overbodige toelichting onder de knop **Frequentie resetten**.
+
+## [2.13.4] - 2026-09-15
+
+- Gebruikt bij start- en einddatum alleen uren en minuten; seconden worden niet meer weergegeven of teruggegeven.
+
+## [2.13.3] - 2026-09-15
+
+- Verwijdert de zichtbare teksten **Yes** en **No** uit alle ACF-schakelaars van Meldingen.
+
+## [2.13.2] - 2026-09-15
+
+- Toont **Donkere achtergrond tonen** alleen wanneer **Midden als popup** als positie is gekozen.
+
+## [2.13.1] - 2026-09-15
+
+- Toont de frequentie als aparte kolom in het Meldingen-overzicht: Iedere keer, Eenmalig of Iedere X dagen.
+
+## [2.13.0] - 2026-09-15
+
+- Voegt in het Meldingen-overzicht een directe aan/uit-schakelaar toe, vergelijkbaar met het formulieroverzicht van Gravity Forms.
+- Toont de ingestelde positie als aparte kolom: Popup, Boven of Onder.
+
+## [2.12.1] - 2026-09-15
+
+- Geeft per positie paginaspecifieke meldingen voorrang op algemene meldingen; binnen gelijke groepen blijft de sleepvolgorde gelden.
+- Plaatst meldingen zonder sluitknop als laatste in hun positiewachtrij, zodat zij eerdere meldingen niet blokkeren.
+
+## [2.12.0] - 2026-09-15
+
+- Staat tegelijk maximaal één middenpopup, één bovenbalk en één onderbalk toe.
+- Meldingen op dezelfde positie worden na sluiten als wachtrij afgehandeld volgens de volgorde in het beheeroverzicht.
+- Een balk steelt niet langer automatisch de toetsenbordfocus; een middenpopup focust wel zijn sluitknop.
+
+## [2.11.1] - 2026-09-15
+
+- Rendert alle servermatig toepasselijke meldingen, zodat de browser de volgende kan tonen wanneer een hoger geplaatste melding al via cookie is afgehandeld.
+- Slaat de frequentiecookie ook op wanneer een bezoeker de actieknop gebruikt.
+- Maakt de donkere achtergrond klikbaar wanneer een sluitknop aanwezig is en verbetert de foutafhandeling van sleepbaar sorteren.
+
+## [2.11.0] - 2026-09-15
+
+- Voegt voor boven- en onderbalken de optie **Compacte balk** toe.
+- De compacte weergave zet tekst, actieknop en sluitknop met minder padding naast elkaar en laat ze op kleine schermen omslaan.
+
+## [2.10.2] - 2026-09-15
+
+- Begrens afbeeldingen in meldingen standaard tot 100% van de beschikbare inhoudsbreedte.
+- Geeft een melding die hoger is dan het scherm een interne verticale scrollbar, met 20 pixels ruimte boven en onder en 12 pixels op mobiel.
+
+## [2.10.1] - 2026-09-15
+
+- Houdt de schakelaar **Donkere achtergrond tonen** altijd zichtbaar onder **Weergave**; de achtergrond wordt alleen bij een middenpopup toegepast.
+
+## [2.10.0] - 2026-09-15
+
+- Voegt onder **Herhaling** een knop toe waarmee de cookieversie van een melding wordt gereset.
+- Een eenmalige melding kan daarna opnieuw verschijnen; bij een dagentermijn begint de termijn opnieuw nadat de melding opnieuw is getoond of gesloten.
+
+## [2.9.9] - 2026-09-15
+
+- Vervangt de pseudo-elementachtergrond door een zelfstandig HTML-element direct onder `body`, zodat thema-CSS en stacking contexts de donkere laag niet meer achter de pagina plaatsen.
+
+## [2.9.8] - 2026-09-15
+
+- Maakt de lokale ACF-veldgroep voor Meldingen `seamless`, zonder standaard metabox.
+- Deelt de instellingen op in de tabs **Inhoud**, **Weergave**, **Planning**, **Locatie** en **Herhaling**.
+- Plaatst de sluitknopoptie onder de donkere achtergrond en zet start- en einddatum naast elkaar.
+
+## [2.9.7] - 2026-09-15
+
+- Herstelt de donkere popupachtergrond: de laag wordt nu op het volledige browservenster geplaatst, direct onder de melding.
+
+## [2.9.6] - 2026-09-15
+
+- Vervangt het losse prioriteitsveld door een sleepbare volgorde in het overzicht **Meldingen**.
+- De bovenste toepasselijke melding in het overzicht krijgt voorrang op de website.
+
+## [2.9.5] - 2026-09-15
+
+- Verwijdert de bezoekersselectie uit Meldingen; actieve meldingen gelden voor zowel ingelogde als uitgelogde bezoekers.
+
+## [2.9.4] - 2026-09-15
+
+- Verwijdert het veld **Eigen CSS-klasse** en de bijbehorende frontendverwerking uit Meldingen.
+
+## [2.9.3] - 2026-09-15
+
+- Middenpopups krijgen altijd een sluitknop, zodat bezoekers nooit in een niet-sluitbare popup vastzitten.
+- De instelling voor de sluitknop wordt alleen bij boven- en onderbalken getoond.
+
+## [2.9.2] - 2026-09-15
+
+- Verwijdert de overbodige instructietekst onder het ACF-linkveld van een melding.
+
+## [2.9.1] - 2026-09-15
+
+- Herstelt het ontbrekende beheermenu **Meldingen** wanneer Tempel Settings zelf tijdens de WordPress `init`-actie wordt geladen.
+- Registreert de lokale ACF-velden ook direct wanneer ACF zijn eigen initialisatie al heeft voltooid.
+
+## [2.9.0] - 2026-09-15
+
+- Optionele module **Meldingen** toegevoegd, standaard uitgeschakeld via Tempel Settings → Algemeen.
+- Meldingen worden beheerd als eigen berichttype met lokaal geregistreerde ACF-velden.
+- Ondersteuning toegevoegd voor WYSIWYG-inhoud en één ACF-linkveld met knoptekst, URL en doelvenster.
+- Posities toegevoegd voor middenpopup, bovenbalk en onderbalk, met eenvoudige overschrijfbare basis-CSS.
+- Planning, URL-opname en -uitsluiting, doelgroepen, vertraging, mobiele zichtbaarheid, prioriteit en cookiegestuurde frequentie toegevoegd.
+- Maximaal één toepasselijke melding wordt per pagina getoond.
+
 ## [2.8.6] - 2026-09-11
 
 - Onder **Algemeen → Uiterlijk** een instelling toegevoegd om de sluitknop van de Complianz-cookiebanner tot 20 × 20 pixels te begrenzen.
@@ -326,3 +506,4 @@ Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met
 
 ## [1.5] - 2023-10-03
 - De eerste gedocumenteerde pluginversie met classes, snelle pagina-aanmaak en mappenstructuur uitgebracht.
+

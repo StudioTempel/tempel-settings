@@ -1,0 +1,26 @@
+/*
+ * Voorbeeld voor style.css van een thema.
+ * Pas alleen de waarden aan die voor de website afwijken.
+ */
+:root {
+    --tempel-notification-background: #fff;
+    --tempel-notification-color: #111;
+    --tempel-notification-backdrop: rgba(0, 0, 0, .55);
+    --tempel-notification-radius: 8px;
+    --tempel-notification-padding: 28px;
+    --tempel-notification-shadow: 0 12px 45px rgba(0, 0, 0, .22);
+    --tempel-notification-button-background: #111;
+    --tempel-notification-button-color: #fff;
+    --tempel-notification-button-radius: 4px;
+    --tempel-notification-button-padding: 11px 18px;
+}
+
+/* Voorbeeld: maximale breedte van de middenpopup. */
+.tempel-notification--center {
+    width: min(90vw, 640px);
+}
+
+/* De knop heeft ook class .button en neemt daardoor bestaande themastijlen over. */
+.tempel-notification .button {
+    /* Voeg hier alleen website-specifieke correcties toe. */
+}

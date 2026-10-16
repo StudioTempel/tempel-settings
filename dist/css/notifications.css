@@ -1,0 +1,147 @@
+.tempel-notification[hidden] {
+    display: none !important;
+}
+
+.tempel-notification {
+    position: fixed;
+    z-index: 999999;
+    box-sizing: border-box;
+    color: var(--tempel-notification-color, #111);
+    font: inherit;
+}
+
+.tempel-notification-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999998;
+    background: var(--tempel-notification-backdrop, rgba(0, 0, 0, .55));
+    pointer-events: auto;
+}
+
+.tempel-notification-backdrop[hidden] {
+    display: none !important;
+}
+
+.tempel-notification--center {
+    inset: 50% auto auto 50%;
+    width: min(90vw, 640px);
+    transform: translate(-50%, -50%);
+}
+
+.tempel-notification--top,
+.tempel-notification--bottom {
+    right: 0;
+    left: 0;
+    width: 100%;
+}
+
+.tempel-notification--top { top: 0; }
+.tempel-notification--bottom { bottom: 0; }
+
+.tempel-notification__inner {
+    position: relative;
+    box-sizing: border-box;
+    max-height: calc(100vh - 40px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: var(--tempel-notification-padding, 28px);
+    border-radius: var(--tempel-notification-radius, 8px);
+    background: var(--tempel-notification-background, #fff);
+    box-shadow: var(--tempel-notification-shadow, 0 12px 45px rgba(0, 0, 0, .22));
+}
+
+.tempel-notification--top .tempel-notification__inner,
+.tempel-notification--bottom .tempel-notification__inner {
+    border-radius: 0;
+    text-align: center;
+}
+
+.tempel-notification--compact .tempel-notification__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 18px;
+    text-align: left;
+}
+
+.tempel-notification--compact .tempel-notification__content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.tempel-notification--compact .tempel-notification__content > * {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.tempel-notification--compact .tempel-notification__button {
+    flex: 0 0 auto;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.tempel-notification--compact .tempel-notification__close {
+    position: static;
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    font-size: 22px;
+}
+
+.tempel-notification__content > :first-child { margin-top: 0; }
+.tempel-notification__content > :last-child { margin-bottom: 0; }
+
+.tempel-notification__content img {
+    max-width: 100%;
+    height: auto;
+}
+
+.tempel-notification__close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.tempel-notification__button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: var(--tempel-notification-button-padding, 11px 18px);
+    border-radius: var(--tempel-notification-button-radius, 4px);
+    background: var(--tempel-notification-button-background, #111);
+    color: var(--tempel-notification-button-color, #fff);
+    text-decoration: none;
+}
+
+.tempel-notification--center .tempel-notification__content:has(> :last-child.has-text-align-center) + .tempel-notification__button,
+.tempel-notification--center .tempel-notification__content:has(> :last-child[style*="text-align: center"]) + .tempel-notification__button,
+.tempel-notification--center .tempel-notification__content:has(> :last-child[style*="text-align:center"]) + .tempel-notification__button {
+    display: table;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body.tempel-notification-open {
+    overflow: hidden;
+}
+
+@media (max-width: 767px) {
+    .tempel-notification__inner {
+        max-height: calc(100vh - 24px);
+        padding: 22px;
+    }
+
+    .tempel-notification--compact .tempel-notification__inner {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 14px;
+    }
+}

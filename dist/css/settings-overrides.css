@@ -329,3 +329,433 @@ body.wp-admin.tempel-settings_page_tempel-mail-settings #wpfooter {
         grid-template-columns: 1fr;
     }
 }
+
+/* Dropbox backups */
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpcontent #wpbody #wpbody-content {
+    padding: 0;
+}
+
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpfooter {
+    display: none;
+}
+
+.tempel-backup-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 28px;
+    padding: 30px;
+    color: #fff;
+    background: linear-gradient(135deg, #202020 0%, #121212 100%);
+    border: 1px solid #333;
+    border-radius: 24px;
+}
+
+.tempel-backup-eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: #f3f438;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+.tempel-backup-hero h1 {
+    margin: 0 0 8px;
+    color: #fff;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.05;
+}
+
+.tempel-backup-hero p,
+.tempel-backup-hero__hint {
+    margin: 0;
+    color: #aaa;
+    font-size: 16px;
+}
+
+.tempel-backup-hero__action form {
+    margin: 0;
+}
+
+.tempel-backup-hero__action .button {
+    min-height: 48px;
+    padding: 0 24px;
+    font-weight: 800;
+}
+
+.tempel-backup-overview {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.tempel-backup-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 112px;
+    padding: 22px;
+    overflow: hidden;
+    color: #fff;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 18px;
+}
+
+.tempel-backup-card::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3px;
+    background: #777;
+    content: "";
+}
+
+.tempel-backup-card--success::before { background: #28d17c; }
+.tempel-backup-card--error::before { background: #ff5a3d; }
+.tempel-backup-card__label { color: #999; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+.tempel-backup-card strong { color: #fff; font-size: 21px; }
+.tempel-backup-card > span:last-child { color: #aaa; }
+
+.tempel-backup-last-message {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 32px;
+    padding: 14px 18px;
+    color: #ddd;
+    background: #171717;
+    border: 1px solid #303030;
+    border-radius: 14px;
+}
+
+.tempel-backup-last-message__dot {
+    flex: 0 0 9px;
+    width: 9px;
+    height: 9px;
+    background: #888;
+    border-radius: 50%;
+}
+
+.tempel-backup-last-message--success .tempel-backup-last-message__dot { background: #28d17c; }
+.tempel-backup-last-message--error .tempel-backup-last-message__dot { background: #ff5a3d; }
+.tempel-backup-last-message code { margin-left: auto; color: #bbb; background: transparent; }
+
+.tempel-backup-field-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tempel-backup-field-grid .settings__field__inner {
+    display: block;
+    padding: 22px;
+}
+
+.tempel-backup-field-grid .settings__label__wrap,
+.tempel-backup-field-grid .settings__input__wrap {
+    width: 100%;
+    max-width: none;
+}
+
+.tempel-backup-field-grid .settings__input__wrap {
+    margin-top: 12px;
+}
+
+.tempel-backup-field-grid input,
+.tempel-backup-field-grid select {
+    width: 100%;
+}
+
+.tempel-backup-technical {
+    width: 100%;
+}
+
+.tempel-backup-technical summary {
+    padding: 20px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 800;
+    list-style-position: inside;
+}
+
+.tempel-backup-technical[open] summary {
+    border-bottom: 1px solid #333;
+}
+
+.tempel-backup-help {
+    margin: 0;
+    padding: 20px;
+    color: #aaa;
+    border-bottom: 1px solid #333;
+}
+
+.tempel-backup-connection-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 20px;
+    padding: 22px 24px;
+    color: #fff;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 18px;
+}
+
+.tempel-backup-connection-actions > div {
+    display: grid;
+    gap: 4px;
+}
+
+.tempel-backup-connection-actions span { color: #999; }
+.tempel-backup-connection-actions form { margin: 0; }
+
+@media (max-width: 960px) {
+    .tempel-backup-overview,
+    .tempel-backup-field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tempel-backup-hero,
+    .tempel-backup-connection-actions {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .tempel-backup-last-message {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .tempel-backup-last-message code {
+        width: 100%;
+        margin-left: 19px;
+        word-break: break-all;
+    }
+}
+
+.tempel-dropbox-folder-field {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.tempel-dropbox-folder-field input {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.tempel-dropbox-folder-field .button {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding: 0 18px;
+}
+
+.tempel-dropbox-folder-note {
+    display: block;
+    margin-top: 8px;
+    color: #888;
+    font-size: 13px;
+}
+
+.tempel-dropbox-browser {
+    width: 100%;
+    margin-top: 12px;
+    overflow: hidden;
+    background: #171717;
+    border: 1px solid #3a3a3a;
+    border-radius: 16px;
+}
+
+.tempel-dropbox-browser[hidden] {
+    display: none;
+}
+
+.tempel-dropbox-browser__header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-bottom: 1px solid #333;
+}
+
+.tempel-dropbox-browser__header strong {
+    overflow: hidden;
+    color: #fff;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tempel-dropbox-browser__message {
+    padding: 16px;
+    color: #999;
+}
+
+.tempel-dropbox-browser__message:empty {
+    display: none;
+}
+
+.tempel-dropbox-browser__message.is-error {
+    color: #ff9d89;
+}
+
+.tempel-dropbox-browser__folders {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+    max-height: 320px;
+    padding: 12px;
+    overflow-y: auto;
+}
+
+.tempel-dropbox-folder {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 10px 12px;
+    color: #fff;
+    text-align: left;
+    background: #242424;
+    border: 1px solid #383838;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.tempel-dropbox-folder:hover,
+.tempel-dropbox-folder:focus {
+    color: #f3f438;
+    background: #2d2d2d;
+    border-color: #f3f438;
+    outline: none;
+}
+
+.tempel-dropbox-folder__icon {
+    position: relative;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 16px;
+    margin-top: 3px;
+    background: #f3f438;
+    border-radius: 3px;
+}
+
+.tempel-dropbox-folder__icon::before {
+    position: absolute;
+    top: -4px;
+    left: 2px;
+    width: 9px;
+    height: 5px;
+    background: #f3f438;
+    border-radius: 3px 3px 0 0;
+    content: "";
+}
+
+@media (max-width: 782px) {
+    .tempel-dropbox-folder-field,
+    .tempel-dropbox-browser__header {
+        align-items: stretch;
+        grid-template-columns: 1fr;
+        flex-direction: column;
+    }
+
+    .tempel-dropbox-folder-field .button {
+        width: 100%;
+    }
+}
+
+/* Backup page owns its dark canvas and form sizing. */
+body.wp-admin.tempel-settings_page_tempel-backup-settings,
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpwrap,
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpcontent,
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpbody,
+body.wp-admin.tempel-settings_page_tempel-backup-settings #wpbody-content,
+body.wp-admin.tempel-settings_page_tempel-backup-settings .tmpl_settings__wrap,
+body.wp-admin.tempel-settings_page_tempel-backup-settings .tmpl_settings__page,
+body.wp-admin.tempel-settings_page_tempel-backup-settings .tmpl_settings__inner,
+body.wp-admin.tempel-settings_page_tempel-backup-settings .settings__sidebar,
+body.wp-admin.tempel-settings_page_tempel-backup-settings .settings__body {
+    background: #000 !important;
+}
+
+#tmpl_backup_settings .settings__body .body__inner {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 1100px;
+}
+
+#tmpl_backup_settings .category__header p {
+    margin: 0;
+    color: #9b9b9b;
+}
+
+#tmpl_backup_settings .tempel-backup-field-grid .settings__field {
+    min-width: 0;
+    border-top: 1px solid #2b2b2b;
+}
+
+#tmpl_backup_settings .tempel-backup-field-grid .settings__field + .settings__field {
+    border-left: 1px solid #2b2b2b;
+}
+
+#tmpl_backup_settings .tempel-backup-field-grid .settings__input__wrap {
+    display: block;
+}
+
+#tmpl_backup_settings .settings__input__wrap input[type="text"],
+#tmpl_backup_settings .settings__input__wrap input[type="email"],
+#tmpl_backup_settings .settings__input__wrap input[type="password"],
+#tmpl_backup_settings .settings__input__wrap input[type="number"],
+#tmpl_backup_settings .settings__input__wrap input[type="time"],
+#tmpl_backup_settings .settings__input__wrap select {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding: 8px 14px;
+    color: #fff;
+    background: #171717;
+    border: 1px solid #353535;
+    border-radius: 12px !important;
+}
+
+#tmpl_backup_settings .settings__input__wrap input:focus,
+#tmpl_backup_settings .settings__input__wrap select:focus {
+    border-color: #f3f438;
+    box-shadow: 0 0 0 1px #f3f438;
+    outline: none;
+}
+
+#tmpl_backup_settings .tempel-dropbox-folder-field {
+    max-width: 620px;
+}
+
+#tmpl_backup_settings .tempel-backup-technical__content .settings__input__wrap {
+    width: 50%;
+    max-width: 620px;
+}
+
+#tmpl_backup_settings .tempel-backup-connection-actions .button {
+    min-height: 44px;
+    padding: 0 20px;
+}
+
+@media (max-width: 960px) {
+    #tmpl_backup_settings .tempel-backup-field-grid .settings__field + .settings__field {
+        border-left: 0;
+    }
+
+    #tmpl_backup_settings .tempel-backup-technical__content .settings__input__wrap {
+        width: 100%;
+    }
+}

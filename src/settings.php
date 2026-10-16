@@ -4,6 +4,7 @@ namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/branding.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/complianz-style-fix.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/notifications.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-comments.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/disable-post.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/remove-dashboard-widgets.php';
@@ -16,9 +17,11 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/taxonomy-order.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/duplicate-content.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/user-switching.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/security-lock.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/sensitive-files.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/form-entry-retention.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/plugin-install-notifier.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/email-login-verification.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/dropbox-backup.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -27,7 +30,9 @@ if(!class_exists('Settings')) {
         public static function load_settings()
         {
             new Plugin_Install_Notifier();
+            new Sensitive_Files();
             new Form_Entry_Retention();
+            new Dropbox_Backup();
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'gf_antispam_enabled'))) {
                 new GF_Simple_Antispam();
@@ -47,6 +52,10 @@ if(!class_exists('Settings')) {
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'complianz_close_button_fix'))) {
                 new Complianz_Style_Fix();
+            }
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'notifications_enabled'))) {
+                new Notifications();
             }
             
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'disable_comments'))) {

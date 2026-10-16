@@ -8,16 +8,19 @@ class Activator
     {
         self::register_options();
         self::register_widget_options();
+        self::register_backup_options();
     }
     
     static function register_options() {
         $option_defaults = [
             'security_lock'                     => 'on',
+            'sensitive_files_enabled'           => '',
             'email_login_verification'          => '',
             'form_entry_retention_enabled'      => '',
             'form_entry_retention_days'         => '365',
             'enable_branding'                   => 'on',
             'complianz_close_button_fix'        => 'on',
+            'notifications_enabled'              => '',
             'disable_comments'                  => 'on',
             'disable_default_pt'                => 'on',
             'hide_dashboard_widgets'            => 'on',
@@ -65,5 +68,20 @@ class Activator
             'support_ticket_link'                       => 'https://studiotempel.nl/contact',
         ];
         add_option('tmpl_widget_settings', $widget_defaults);
+    }
+
+    static function register_backup_options()
+    {
+        add_option('tempel_dropbox_backup_settings', [
+            'enabled'    => '',
+            'frequency'  => 'weekly',
+            'time'       => '03:30',
+            'retention'  => 4,
+            'folder'     => '/Tempel Backups',
+            'app_key'    => '',
+            'app_secret' => '',
+            'notification_email' => 'info@studiotempel.nl',
+            'notify_success'     => '',
+        ], '', false);
     }
 }

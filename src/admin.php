@@ -10,6 +10,7 @@ require_once TEMPEL_SETTINGS_DIR . 'src/views/gform-address-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/performance-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/info-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/backup-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -267,6 +268,16 @@ if (!class_exists('Admin')) {
                 'tempel-settings',
                 true
             );
+
+            $this->pages['tempel-backup-settings'] = new Backup_Settings(
+                __('Back-ups', 'tempel-settings'),
+                __('Back-ups', 'tempel-settings'),
+                'tempel-backup-settings',
+                $this->get_menu_icon(),
+                8,
+                'tempel-settings',
+                true
+            );
         }
         
         public function get_pages()
@@ -295,6 +306,35 @@ if (!class_exists('Admin')) {
                 array(
                     'sanitize_callback' => array($this, 'sanitize_widget_settings'),
                 )
+            );
+
+            register_setting(
+                'tempel_backup_settings',
+                Dropbox_Backup::SETTINGS_OPTION,
+                array(
+                    'sanitize_callback' => array($this, 'sanitize_backup_settings'),
+                )
+            );
+        }
+
+        public function sanitize_backup_settings($input): array
+        {
+            $input = is_array($input) ? $input : array();
+            $current = Dropbox_Backup::settings();
+            $frequency = isset($input['frequency']) ? sanitize_key($input['frequency']) : 'weekly';
+            $folder = isset($input['folder']) ? sanitize_text_field(wp_unslash($input['folder'])) : '/Tempel Backups';
+            $folder = '/' . trim($folder, "/ \\t\\n\\r\\0\\x0B");
+
+            return array(
+                'enabled' => isset($input['enabled']) && $input['enabled'] === 'on' ? 'on' : '',
+                'frequency' => in_array($frequency, array('weekly', 'monthly'), true) ? $frequency : 'weekly',
+                'time' => isset($input['time']) && preg_match('/^(?:[01]\\d|2[0-3]):[0-5]\\d$/', (string) $input['time']) ? sanitize_text_field($input['time']) : '03:30',
+                'retention' => max(1, min(24, absint($input['retention'] ?? 4))),
+                'folder' => $folder,
+                'app_key' => isset($input['app_key']) ? sanitize_text_field(wp_unslash($input['app_key'])) : '',
+                'app_secret' => !empty($input['app_secret']) ? sanitize_text_field(wp_unslash($input['app_secret'])) : (string) ($current['app_secret'] ?? ''),
+                'notification_email' => isset($input['notification_email']) ? sanitize_email(wp_unslash($input['notification_email'])) : 'info@studiotempel.nl',
+                'notify_success' => isset($input['notify_success']) && $input['notify_success'] === 'on' ? 'on' : '',
             );
         }
 
@@ -351,7 +391,9 @@ if (!class_exists('Admin')) {
             $checkboxes = array(
                 'enable_branding',
                 'complianz_close_button_fix',
+                'notifications_enabled',
                 'security_lock',
+                'sensitive_files_enabled',
                 'email_login_verification',
                 'form_entry_retention_enabled',
                 'gf_antispam_enabled',
@@ -398,7 +440,9 @@ if (!class_exists('Admin')) {
             $general_settings_submitted = $this->has_any_input_key($input, array(
                 'enable_branding',
                 'complianz_close_button_fix',
+                'notifications_enabled',
                 'security_lock',
+                'sensitive_files_enabled',
                 'email_login_verification',
                 'disable_comments',
                 'disable_default_pt',
@@ -620,11 +664,12 @@ if (!class_exists('Admin')) {
                 'tempel-settings_page_tempel-performance-settings',
                 'tempel-settings_page_tempel-info-settings',
                 'tempel-settings_page_tempel-status-settings',
+                'tempel-settings_page_tempel-backup-settings',
             );
             
             if (in_array($screen->id, $screens, true)) {
-                wp_enqueue_style('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'css/widget-settings.css');
-                wp_enqueue_style('tmpl-settings-overrides', TEMPEL_SETTINGS_ASSET_URL . 'css/settings-overrides.css', array('tmpl-settings-page'));
+                wp_enqueue_style('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'css/widget-settings.css', array(), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/widget-settings.css'));
+                wp_enqueue_style('tmpl-settings-overrides', TEMPEL_SETTINGS_ASSET_URL . 'css/settings-overrides.css', array('tmpl-settings-page'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/settings-overrides.css'));
                 wp_enqueue_script('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'js/settings.js', array('jquery'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/settings.js'), true);
                 wp_localize_script('tmpl-settings-page', 'tmplWidgetSettings', array(
                     'nonce' => wp_create_nonce('tmpl_widget_settings_action'),

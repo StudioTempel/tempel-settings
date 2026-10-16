@@ -77,6 +77,7 @@ check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['f
 $options['tmpl_settings'] = array(
     'enable_branding' => 'on',
     'complianz_close_button_fix' => 'on',
+    'notifications_enabled' => 'on',
     'security_lock' => 'on',
     'email_login_verification' => 'on',
     'disable_comments' => 'on',
@@ -92,6 +93,7 @@ $gravity_forms_save = $admin->sanitize_general_settings(array(
 ));
 check($gravity_forms_save['enable_branding'] === 'on', 'Gravity Forms save preserves branding');
 check($gravity_forms_save['complianz_close_button_fix'] === 'on', 'Gravity Forms save preserves Complianz styling');
+check($gravity_forms_save['notifications_enabled'] === 'on', 'Gravity Forms save preserves notifications');
 check($gravity_forms_save['security_lock'] === 'on', 'Gravity Forms save preserves security lock');
 check($gravity_forms_save['email_login_verification'] === 'on', 'Gravity Forms save preserves email verification');
 check($gravity_forms_save['disable_comments'] === 'on', 'Gravity Forms save preserves general feature settings');
@@ -113,6 +115,8 @@ $options['tmpl_settings']['email_login_verification'] = '';
 check($admin->sanitize_general_settings(array('email_login_verification' => 'on'))['email_login_verification'] === 'on', 'Email login verification can be enabled');
 check($admin->sanitize_general_settings(array('email_login_verification' => ''))['email_login_verification'] === '', 'Email login verification can be disabled');
 check($admin->sanitize_general_settings(array('complianz_close_button_fix' => ''))['complianz_close_button_fix'] === '', 'Complianz styling can be disabled');
+check($admin->sanitize_general_settings(array('notifications_enabled' => 'on'))['notifications_enabled'] === 'on', 'Notifications can be enabled');
+check($admin->sanitize_general_settings(array('notifications_enabled' => ''))['notifications_enabled'] === '', 'Notifications can be disabled');
 
 // Test activation and the one-time upgrade without booting WordPress.
 function add_option($key, $value) { if (!isset($GLOBALS['options'][$key])) { $GLOBALS['options'][$key] = $value; } }
@@ -124,10 +128,15 @@ function register_activation_hook(...$args) {}
 define('ABSPATH', TEMPEL_SETTINGS_DIR);
 require TEMPEL_SETTINGS_DIR . 'includes/activator.php';
 require TEMPEL_SETTINGS_DIR . 'tempel.php';
+$options['tmpl_settings'] = array('notifications_enabled' => 'on');
+check(isset(Tempel\enable_polylang_notification_translations(array('post' => 'post'), false)['tempel_notification']), 'Polylang translations are enabled early for notifications');
+$options['tmpl_settings']['notifications_enabled'] = '';
+check(!isset(Tempel\enable_polylang_notification_translations(array('post' => 'post'), false)['tempel_notification']), 'Polylang notification translations follow the module setting');
 $options = array();
 Tempel\Activator::register_options();
 check($options['tmpl_settings']['security_lock'] === 'on', 'New installation defaults to locked');
 check($options['tmpl_settings']['complianz_close_button_fix'] === 'on', 'New installation enables Complianz styling by default');
+check($options['tmpl_settings']['notifications_enabled'] === '', 'New installation keeps notifications opt-in');
 $plugin = (new ReflectionClass(Tempel\TempelSettings::class))->newInstanceWithoutConstructor();
 $migration = new ReflectionMethod($plugin, 'apply_security_lock_default');
 $migration->setAccessible(true);

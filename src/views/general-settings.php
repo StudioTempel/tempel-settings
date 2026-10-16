@@ -29,6 +29,23 @@ class General_Settings extends Page
                                         </div>
                                     </div>
                                     <div class="category__content">
+                                        <div class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="sensitive_files_enabled">Gevoelige bestanden afschermen</label>
+                                                    <p class="description">Beheert een eigen blok in de bestaande .htaccess. Back-up wordt in de database bewaard. Vereist Apache 2.4; Nginx kan deze regels omzeilen. Niet beschikbaar op multisite.</p>
+                                                    <p class="description"><?php echo esc_html(get_option('tempel_security_rules_status', 'Nog niet toegepast.')); ?></p>
+                                                    <a class="button" href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=tempel_remove_security_rules'), 'tempel_remove_security_rules')); ?>">Tempel-regels verwijderen / herstellen</a>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[sensitive_files_enabled]" value="">
+                                                    <label class="checkbox__switch" for="sensitive_files_enabled">
+                                                        <input type="checkbox" name="tmpl_settings[sensitive_files_enabled]" id="sensitive_files_enabled" <?php echo $this->is_checked('sensitive_files_enabled'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div id="security_lock_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
@@ -43,6 +60,31 @@ class General_Settings extends Page
                                                     <input type="hidden" name="tmpl_settings[security_lock]" value="">
                                                     <label class="checkbox__switch" for="security_lock">
                                                         <input type="checkbox" name="tmpl_settings[security_lock]" id="security_lock" aria-describedby="security_lock_description" <?php echo $this->is_checked('security_lock'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="settings__category">
+                                    <div class="category__header">
+                                        <div class="category__label__wrap">
+                                            <div class="category__title"><?php esc_html_e('Meldingen', 'tempel-settings'); ?></div>
+                                        </div>
+                                    </div>
+                                    <div class="category__content">
+                                        <div id="notifications_enabled_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="notifications_enabled"><?php esc_html_e('Meldingen inschakelen', 'tempel-settings'); ?></label>
+                                                    <p id="notifications_enabled_description" class="description"><?php esc_html_e('Voegt het beheermenu Meldingen toe voor popups en balken. Bestaande meldingen blijven bewaard wanneer deze functie wordt uitgeschakeld.', 'tempel-settings'); ?></p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[notifications_enabled]" value="">
+                                                    <label class="checkbox__switch" for="notifications_enabled">
+                                                        <input type="checkbox" name="tmpl_settings[notifications_enabled]" id="notifications_enabled" aria-describedby="notifications_enabled_description" <?php echo $this->is_checked('notifications_enabled'); ?>>
                                                         <span class="checkbox__switch__slider"></span>
                                                     </label>
                                                 </div>
