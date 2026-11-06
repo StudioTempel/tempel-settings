@@ -14,13 +14,14 @@ namespace Tempel;
  */
 function return_option(string $option_group, string $option_name)
 {
-    $option = get_option($option_group);
-
-    if (!is_array($option)) {
-        return false;
+    if (!class_exists('Tempel\\Core\\SettingsRepository')) {
+        $settings = get_option($option_group, array());
+        return is_array($settings) ? ($settings[$option_name] ?? false) : false;
     }
-    
-    return $option[$option_name] ?? false;
+
+    static $repository;
+    $repository = $repository ?: new \Tempel\Core\SettingsRepository();
+    return $repository->get($option_group, $option_name);
 }
 
 /**
@@ -34,11 +35,7 @@ function return_option(string $option_group, string $option_name)
  */
 function sanitize_checkbox_value(string $val) : bool
 {
-    if ($val == 'on') {
-        return true;
-    } else {
-        return false;
-    }
+    return $val === 'on';
 }
 
 /**

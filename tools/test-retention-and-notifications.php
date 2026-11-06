@@ -22,7 +22,15 @@ namespace {
     function wp_register_style(...$args) {}
     function wp_enqueue_style(...$args) {}
     function wp_add_inline_style($handle, $css) { $GLOBALS['inline_styles'][$handle] = $css; return true; }
-    function apply_filters($tag, $value, ...$args) { return $tag === 'tempel_defender_2fa_configured' && array_key_exists('defender_2fa_configured', $GLOBALS) ? (bool) $GLOBALS['defender_2fa_configured'] : $value; }
+    function apply_filters($tag, $value, ...$args) {
+        if ($tag === 'tempel_defender_2fa_configured' && array_key_exists('defender_2fa_configured', $GLOBALS)) {
+            return (bool) $GLOBALS['defender_2fa_configured'];
+        }
+        if ($tag === 'tempel_email_login_verification_disabled' && array_key_exists('email_login_verification_disabled', $GLOBALS)) {
+            return (bool) $GLOBALS['email_login_verification_disabled'];
+        }
+        return $value;
+    }
     function __($text, $domain = null) { return $text; }
     function esc_html($text) { return htmlspecialchars((string) $text, ENT_QUOTES); }
     function esc_html__($text, $domain = null) { return esc_html($text); }
@@ -30,6 +38,7 @@ namespace {
     function esc_attr__($text, $domain = null) { return esc_attr($text); }
     function esc_url($text) { return esc_attr($text); }
     function esc_url_raw($text) { return (string) $text; }
+    function wp_parse_url($url, $component = -1) { return parse_url($url, $component); }
     function esc_html_e($text, $domain = null) { echo htmlspecialchars((string) $text, ENT_QUOTES); }
     function get_option($key, $default = false) { return $GLOBALS['options'][$key] ?? $default; }
     function update_option($key, $value, $autoload = null) { $GLOBALS['options'][$key] = $value; return true; }
@@ -189,6 +198,9 @@ namespace Tempel {
     $login_verification = new Email_Login_Verification();
     $login_user = new \WP_User(12, 'user@example.test');
     $GLOBALS['users'][12] = $login_user;
+    $GLOBALS['email_login_verification_disabled'] = true;
+    \check($login_verification->verify($login_user, 'correct-password') === $login_user, 'Emergency bypass prevents email verification lockout');
+    unset($GLOBALS['email_login_verification_disabled']);
     ob_start();
     $login_verification->render_code_field();
     \check(ob_get_clean() === '', 'Initial login screen does not show a code field');
@@ -238,11 +250,32 @@ namespace Tempel {
     $_REQUEST['woocommerce-login-nonce'] = 'shop-login';
     \check($login_verification->verify($login_user, 'correct-password') === $login_user, 'WooCommerce frontend login is excluded');
 
+    $_REQUEST = array('_wpmem_login_nonce' => 'members-login');
+    $wp_members_login = new Email_Login_Verification();
+    $wp_members_login->mark_login_request();
+    \check($wp_members_login->verify($login_user, 'correct-password') === $login_user, 'WP-Members frontend login is excluded');
+
+    $_REQUEST = array('redirect_to' => 'https://example.test/mijn-account/');
+    $_SERVER['SCRIPT_NAME'] = '/wp-login.php';
+    $_SERVER['REQUEST_URI'] = '/wp-login.php';
+    $frontend_redirect_login = new Email_Login_Verification();
+    $frontend_redirect_login->mark_login_request();
+    \check($frontend_redirect_login->verify($login_user, 'correct-password') === $login_user, 'A WordPress login returning to a frontend account page is excluded');
+
+    $_REQUEST = array('redirect_to' => 'https://example.test/wp-admin/');
+    $backend_redirect_login = new Email_Login_Verification();
+    $backend_redirect_login->mark_login_request();
+    $GLOBALS['mail'] = array();
+    $GLOBALS['transients'] = array();
+    $backend_redirect_result = $backend_redirect_login->verify($login_user, 'correct-password');
+    \check($backend_redirect_result instanceof \WP_Error && $backend_redirect_result->code === 'tempel_email_code_redirect', 'A login returning to wp-admin requires an email code');
+
     $GLOBALS['mail'] = array();
     $GLOBALS['transients'] = array();
     $GLOBALS['user_meta'] = array();
     $_REQUEST = $_POST = array();
     $_SERVER['SCRIPT_NAME'] = '/index.php';
+    $_SERVER['REQUEST_URI'] = '/st-beheer/';
     $masked_login_verification = new Email_Login_Verification();
     $masked_login_verification->mark_login_request();
     $masked_result = $masked_login_verification->verify($login_user, 'correct-password');

@@ -7,20 +7,39 @@ require_once TEMPEL_SETTINGS_DIR . 'src/views/partials/settings-navigation.php';
 
 class Info_Settings extends Page
 {
+    public function __construct(...$args)
+    {
+        parent::__construct(...$args);
+        add_action('admin_init', array($this, 'redirect_legacy_page'));
+    }
+
+    public function redirect_legacy_page(): void
+    {
+        $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+        if ($page !== 'tempel-info-settings') {
+            return;
+        }
+
+        wp_safe_redirect(admin_url('admin.php?page=tempel-status-settings'));
+        exit;
+    }
+
     public function render(): void
+    {
+        $status_page = Admin::registered_pages()['tempel-status-settings'] ?? null;
+        if ($status_page instanceof Status_Settings) {
+            $status_page->render();
+        }
+    }
+
+    public function render_sections(): void
     {
         $releases = $this->get_releases();
         ?>
-        <div class="tmpl_settings__wrap">
-            <div class="tmpl_settings__page" id="tmpl_info_settings">
-                <div class="tmpl_settings__inner">
-                    <?php settings_navigation(); ?>
-                    <div class="settings__body">
-                        <div class="body__inner">
                             <div class="settings__category">
                                 <div class="category__header">
                                     <div class="category__label__wrap">
-                                        <div class="category__title"><?php esc_html_e('Status', 'tempel-settings'); ?></div>
+                                        <div class="category__title"><?php esc_html_e('Pluginstatus', 'tempel-settings'); ?></div>
                                     </div>
                                 </div>
                                 <div class="category__content">
@@ -85,12 +104,6 @@ class Info_Settings extends Page
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="settings__footer"></div>
-                </div>
-            </div>
-        </div>
         <style>
             .tempel-changelog-release .settings__field__inner { align-items: flex-start; }
             .tempel-changelog-release h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0 0 6px; }

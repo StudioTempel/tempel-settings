@@ -12,17 +12,19 @@ class Backup_Settings extends Page
         $settings = Dropbox_Backup::settings();
         $status = Dropbox_Backup::status();
         $connected = Dropbox_Backup::is_connected();
+        $app_configured = Dropbox_Backup::app_is_configured();
         $next = wp_next_scheduled(Dropbox_Backup::CRON_HOOK);
         $state = sanitize_key((string) ($status['state'] ?? 'idle'));
         $state_class = in_array($state, array('success', 'connected'), true) ? 'success' : (in_array($state, array('error', 'disconnected'), true) ? 'error' : 'neutral');
         $state_label = $this->status_label($state);
+        $backup_active = in_array($state, array('queued', 'running', 'uploading'), true);
         ?>
         <div class="tmpl_settings__wrap">
             <div class="tmpl_settings__page" id="tmpl_backup_settings">
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page" data-tempel-backup-page>
                             <?php $this->render_notice(); ?>
 
                             <div class="tempel-backup-hero">
@@ -36,7 +38,7 @@ class Backup_Settings extends Page
                                         <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
                                             <input type="hidden" name="action" value="tempel_dropbox_backup_now">
                                             <?php wp_nonce_field('tempel_dropbox_backup_now'); ?>
-                                            <button class="button button-primary"><?php esc_html_e('Nu back-up maken', 'tempel-settings'); ?></button>
+                                            <button class="button button-primary"<?php disabled($backup_active); ?>><?php echo esc_html($backup_active ? __('Back-up is bezig', 'tempel-settings') : __('Nu back-up maken', 'tempel-settings')); ?></button>
                                         </form>
                                     <?php else : ?>
                                         <span class="tempel-backup-hero__hint"><?php esc_html_e('Koppel eerst Dropbox om te beginnen.', 'tempel-settings'); ?></span>
@@ -50,10 +52,10 @@ class Backup_Settings extends Page
                                     <strong><?php echo esc_html($connected ? __('Gekoppeld', 'tempel-settings') : __('Niet gekoppeld', 'tempel-settings')); ?></strong>
                                     <span><?php echo esc_html($connected ? __('Klaar om back-ups te ontvangen', 'tempel-settings') : __('Koppeling vereist', 'tempel-settings')); ?></span>
                                 </div>
-                                <div class="tempel-backup-card tempel-backup-card--<?php echo esc_attr($state_class); ?>">
+                                <div class="tempel-backup-card tempel-backup-card--<?php echo esc_attr($state_class); ?>" data-tempel-backup-result-card>
                                     <span class="tempel-backup-card__label"><?php esc_html_e('Laatste resultaat', 'tempel-settings'); ?></span>
-                                    <strong><?php echo esc_html($state_label); ?></strong>
-                                    <span><?php echo esc_html(!empty($status['timestamp']) ? wp_date('d-m-Y H:i', (int) $status['timestamp']) : __('Nog niet uitgevoerd', 'tempel-settings')); ?></span>
+                                    <strong data-tempel-backup-state><?php echo esc_html($state_label); ?></strong>
+                                    <span data-tempel-backup-time><?php echo esc_html(!empty($status['timestamp']) ? wp_date('d-m-Y H:i', (int) $status['timestamp']) : __('Nog niet uitgevoerd', 'tempel-settings')); ?></span>
                                 </div>
                                 <div class="tempel-backup-card tempel-backup-card--neutral">
                                     <span class="tempel-backup-card__label"><?php esc_html_e('Volgende back-up', 'tempel-settings'); ?></span>
@@ -62,13 +64,20 @@ class Backup_Settings extends Page
                                 </div>
                             </div>
 
-                            <?php if (!empty($status['message'])) : ?>
-                                <div class="tempel-backup-last-message tempel-backup-last-message--<?php echo esc_attr($state_class); ?>">
+                            <div class="tempel-backup-last-message tempel-backup-last-message--<?php echo esc_attr($state_class); ?>" data-tempel-backup-message-wrap <?php echo empty($status['message']) ? 'hidden' : ''; ?>>
                                     <span class="tempel-backup-last-message__dot"></span>
-                                    <span><?php echo esc_html((string) $status['message']); ?></span>
-                                    <?php if (!empty($status['file'])) : ?><code><?php echo esc_html((string) $status['file']); ?></code><?php endif; ?>
+                                    <span data-tempel-backup-message><?php echo esc_html((string) ($status['message'] ?? '')); ?></span>
+                                    <code data-tempel-backup-file <?php echo empty($status['file']) ? 'hidden' : ''; ?>><?php echo esc_html((string) ($status['file'] ?? '')); ?></code>
+                            </div>
+
+                            <div class="tempel-ui-progress" data-tempel-backup-progress <?php echo !$backup_active ? 'hidden' : ''; ?> aria-live="polite">
+                                <div class="tempel-ui-progress__header">
+                                    <strong class="tempel-ui-progress__phase" data-tempel-backup-phase><?php echo esc_html($state_label); ?></strong>
+                                    <span class="tempel-ui-progress__percent" data-tempel-backup-percent><?php echo esc_html((int) ($status['progress'] ?? 0) . '%'); ?></span>
                                 </div>
-                            <?php endif; ?>
+                                <progress max="100" value="<?php echo esc_attr((string) max(0, min(100, (int) ($status['progress'] ?? 0)))); ?>"></progress>
+                                <p class="tempel-ui-progress__message" data-tempel-backup-progress-message><?php echo esc_html((string) ($status['message'] ?? '')); ?></p>
+                            </div>
 
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_backup_settings'); ?>
@@ -112,7 +121,7 @@ class Backup_Settings extends Page
                                                 <p class="tempel-backup-help"><?php esc_html_e('Geef de Dropbox-app de rechten files.content.write en files.metadata.read. Voeg daarna onderstaande URL toe bij OAuth 2 → Redirect URIs.', 'tempel-settings'); ?></p>
                                                 <?php $this->readonly('redirect_url', __('Redirect-URL', 'tempel-settings'), Dropbox_Backup::callback_url()); ?>
                                                 <?php $this->text('app_key', __('App key', 'tempel-settings'), $settings); ?>
-                                                <?php $this->password('app_secret', __('App secret', 'tempel-settings'), __('Laat leeg om de opgeslagen sleutel te behouden.', 'tempel-settings')); ?>
+                                                <?php $this->password('app_secret', __('App secret', 'tempel-settings'), $app_configured); ?>
                                             </div>
                                         </details>
                                     </div>
@@ -126,7 +135,11 @@ class Backup_Settings extends Page
                             <div class="tempel-backup-connection-actions">
                                 <div>
                                     <strong><?php echo esc_html($connected ? __('Dropbox is gekoppeld', 'tempel-settings') : __('Dropbox is nog niet gekoppeld', 'tempel-settings')); ?></strong>
-                                    <span><?php echo esc_html($connected ? __('Back-ups worden per domein in een eigen map geplaatst.', 'tempel-settings') : __('Sla eerst de App key en App secret hierboven op.', 'tempel-settings')); ?></span>
+                                    <span><?php echo esc_html($connected
+                                        ? __('Back-ups worden per domein in een eigen map geplaatst.', 'tempel-settings')
+                                        : ($app_configured
+                                            ? __('De appgegevens zijn opgeslagen. Verbind nu het Dropbox-account.', 'tempel-settings')
+                                            : __('Sla eerst de App key en App secret hierboven op.', 'tempel-settings'))); ?></span>
                                 </div>
                                 <?php if ($connected) : ?>
                                     <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
@@ -170,12 +183,15 @@ class Backup_Settings extends Page
         $messages = array(
             'connected' => __('Dropbox is gekoppeld.', 'tempel-settings'),
             'disconnected' => __('Dropbox is ontkoppeld.', 'tempel-settings'),
-            'queued' => __('De back-up is gestart. Vernieuw deze pagina later om de status te bekijken.', 'tempel-settings'),
+            'queued' => __('De back-up is gestart. De voortgang verschijnt automatisch.', 'tempel-settings'),
             'missing_app' => __('Sla eerst de App key en App secret op.', 'tempel-settings'),
             'oauth_failed' => __('Dropbox koppelen is mislukt. Bekijk de laatste status.', 'tempel-settings'),
             'oauth_state' => __('De Dropbox-koppeling is verlopen. Probeer opnieuw.', 'tempel-settings'),
             'not_connected' => __('Koppel Dropbox voordat je een back-up start.', 'tempel-settings'),
         );
+        if ($notice === 'missing_app' && Dropbox_Backup::app_is_configured()) {
+            $notice = '';
+        }
         if (isset($messages[$notice])) {
             $class = in_array($notice, array('connected', 'disconnected', 'queued'), true) ? 'success' : 'error';
             echo '<div class="tempel-settings-notice tempel-settings-notice--' . esc_attr($class) . '">' . esc_html($messages[$notice]) . '</div>';
@@ -213,10 +229,13 @@ class Backup_Settings extends Page
         <?php $this->field_end();
     }
 
-    private function password(string $key, string $label, string $description): void
+    private function password(string $key, string $label, bool $stored): void
     {
+        $description = $stored
+            ? __('App secret is opgeslagen. Vul alleen iets in om de sleutel te vervangen.', 'tempel-settings')
+            : __('Vul de App secret eenmalig in.', 'tempel-settings');
         $this->field_start($key, $label, $description); ?>
-        <input type="password" autocomplete="new-password" name="tempel_dropbox_backup_settings[<?php echo esc_attr($key); ?>]" id="<?php echo esc_attr($key); ?>" value="">
+        <input type="password" autocomplete="new-password" name="tempel_dropbox_backup_settings[<?php echo esc_attr($key); ?>]" id="<?php echo esc_attr($key); ?>" value="" placeholder="<?php echo esc_attr($stored ? __('Opgeslagen', 'tempel-settings') : ''); ?>">
         <?php $this->field_end();
     }
 

@@ -16,7 +16,7 @@ class General_Settings extends Page
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_settings'); ?>
 
@@ -65,6 +65,25 @@ class General_Settings extends Page
                                                 </div>
                                             </div>
                                         </div>
+                                        <div id="security_lock_auto_reenable_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="security_lock_auto_reenable">
+                                                        <?php _e('Na één uur automatisch opnieuw blokkeren', 'tempel-settings'); ?>
+                                                    </label>
+                                                    <p id="security_lock_auto_reenable_description" class="description">
+                                                        <?php _e('Zet de blokkade automatisch weer aan, één uur nadat deze is uitgezet.', 'tempel-settings'); ?>
+                                                    </p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[security_lock_auto_reenable]" value="">
+                                                    <label class="checkbox__switch" for="security_lock_auto_reenable">
+                                                        <input type="checkbox" name="tmpl_settings[security_lock_auto_reenable]" id="security_lock_auto_reenable" aria-describedby="security_lock_auto_reenable_description" <?php echo $this->is_checked('security_lock_auto_reenable'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -104,7 +123,7 @@ class General_Settings extends Page
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="email_login_verification"><?php esc_html_e('E-mailcode als Defender 2FA niet is ingesteld', 'tempel-settings'); ?></label>
-                                                    <p id="email_login_verification_description" class="description"><?php esc_html_e('Vraagt bij de WordPress-login een zescijferige code aan gebruikers zonder geconfigureerde Defender 2FA. WooCommerce Mijn account en andere frontend-logins worden niet geraakt. Controleer eerst of WordPress-mail betrouwbaar aankomt.', 'tempel-settings'); ?></p>
+                                                    <p id="email_login_verification_description" class="description"><?php esc_html_e('Vraagt bij de WordPress-login een zescijferige code aan gebruikers zonder geconfigureerde Defender 2FA. WooCommerce Mijn account en andere frontend-logins worden niet geraakt. Bij mailproblemen kan dit tijdelijk worden overgeslagen met TEMPEL_SETTINGS_DISABLE_EMAIL_2FA in wp-config.php.', 'tempel-settings'); ?></p>
                                                 </div>
                                                 <div class="settings__input__wrap">
                                                     <input type="hidden" name="tmpl_settings[email_login_verification]" value="">

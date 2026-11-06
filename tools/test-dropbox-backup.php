@@ -49,15 +49,33 @@ check($defaults['notification_email'] === 'info@studiotempel.nl', 'Failure email
 check($defaults['notify_success'] === '', 'Success emails are opt-in');
 check(isset($GLOBALS['tempel_hooks']['action']['wp_loaded']), 'Schedule synchronization runs after init');
 check(isset($GLOBALS['tempel_hooks']['action'][Tempel\Dropbox_Backup::CRON_HOOK]), 'Recurring backup hook is registered');
+check(isset($GLOBALS['tempel_hooks']['action'][Tempel\Dropbox_Backup::UPLOAD_HOOK]), 'Resumable upload worker hook is registered');
+check(isset($GLOBALS['tempel_hooks']['action']['wp_ajax_tempel_dropbox_upload_worker']), 'Authenticated upload worker endpoint is registered');
+check(isset($GLOBALS['tempel_hooks']['action']['wp_ajax_nopriv_tempel_dropbox_upload_worker']), 'Token-protected background upload endpoint is registered');
 check(isset($GLOBALS['tempel_hooks']['action']['admin_post_tempel_dropbox_callback']), 'OAuth callback is registered');
 check(isset($GLOBALS['tempel_hooks']['action']['wp_ajax_tempel_dropbox_list_folders']), 'Secure folder browser endpoint is registered');
 $admin_source = file_get_contents(dirname(__DIR__) . '/src/admin.php');
 check(strpos($admin_source, "'tempel-settings_page_tempel-backup-settings'") !== false, 'Backup page loads the shared Tempel settings styles');
 check(strpos($admin_source, "filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/settings-overrides.css')") !== false, 'Settings CSS uses cache-busting version');
 check(!Tempel\Dropbox_Backup::is_connected(), 'Missing refresh token is not connected');
+check(!Tempel\Dropbox_Backup::app_is_configured(), 'Missing app credentials are reported clearly');
+
+$backup_source = file_get_contents(dirname(__DIR__) . '/src/includes/settings/dropbox-backup.php');
+check(strpos($backup_source, 'UPLOAD_STATE_OPTION') !== false, 'Upload progress is persisted between requests');
+check(strpos($backup_source, 'recover_interrupted_upload') !== false, 'Interrupted uploads are recovered');
+check(strpos($backup_source, 'private function upload(') === false, 'Legacy single-request uploader is removed');
+check(strpos($backup_source, 'MAX_UPLOAD_RETRIES') !== false, 'Temporary Dropbox errors are retried');
+check(strpos($backup_source, 'assert_disk_space') !== false, 'Free disk space is checked before building a backup');
+check(strpos($backup_source, 'cleanup_orphaned_work_directories') !== false, 'Orphaned temporary backups are cleaned');
+check(strpos($backup_source, 'verify_archive') !== false, 'Local backup archive is verified');
+check(strpos($backup_source, 'remote_file_matches') !== false, 'Uploaded file size is verified with Dropbox');
+check(strpos($backup_source, 'new \\Tempel_Stager_Migration()') !== false, 'Dropbox backups use the shared portable site-package builder');
 
 $GLOBALS['tempel_options'][Tempel\Dropbox_Backup::CREDENTIALS_OPTION] = array('refresh_token' => 'test');
 check(Tempel\Dropbox_Backup::is_connected(), 'Refresh token marks Dropbox as connected');
+$GLOBALS['tempel_options'][Tempel\Dropbox_Backup::SETTINGS_OPTION]['app_key'] = 'key';
+$GLOBALS['tempel_options'][Tempel\Dropbox_Backup::SETTINGS_OPTION]['app_secret'] = 'secret';
+check(Tempel\Dropbox_Backup::app_is_configured(), 'Stored app key and secret are recognized');
 
 $schedules = $module->cron_schedules(array());
 check(($schedules['tempel_monthly']['interval'] ?? 0) === 30 * 86400, 'Monthly interval is thirty days');

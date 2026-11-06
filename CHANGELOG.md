@@ -1,6 +1,94 @@
 # Changelog
 
+## 3.0.0 — handmatige pakketdownload
+
+- E-mailverificatie bij backendlogin blijft voor nieuwe installaties en upgrades voorlopig opt-in; bestaande handmatige keuzes worden niet gewijzigd.
+- De SVG-sanitizer is bijgewerkt van de kwetsbare 0.16.0 naar beveiligingsrelease 1.1.1 en weigert voortaan bestanden wanneer sanitisatie niet aantoonbaar slaagt.
+- De releasebouwer controleert voortaan expliciet of Composer-autoload, SVG-sanitizer, updater en SFTP-runtime werkelijk in de uiteindelijke zip zitten.
+- De handmatige export blijft op de verhuispagina en toont live de fasen database, bestanden, afronden en controleren.
+- Een downloadknop verschijnt pas nadat het sitepakket succesvol als ZIP is geopend en gecontroleerd.
+- Voorbereide pakketten krijgen een persoonlijke, eenmalige downloadlink en worden uiterlijk na één uur automatisch verwijderd.
+- ZIP-controlefouten vermelden nu de technische foutcode en controleren eerst of het archief werkelijk is opgeslagen.
+- Het overbodige blok ‘Veelgebruikte acties’ is van het overzicht verwijderd.
+- Achtergebleven, exact herkenbare Tempel-verhuisbestanden kunnen vanuit ‘Grote bestanden’ veilig worden geselecteerd en verwijderd; overige bestanden in de WordPress-hoofdmap blijven beschermd.
+- Widgettoggles staan op één vaste rechterrand, formulierselectie gebruikt de volledige breedte en posttypevelden verschijnen alleen wanneer posttypeconversies zijn ingeschakeld.
+
 Alle noemenswaardige wijzigingen aan Tempel Settings. De geschiedenis tot en met 2.7.21 is gereconstrueerd uit releasebestanden, de bestaande WordPress-changelog en Git-commits.
+
+## [3.0.0] - 2026-10-30
+
+- De beheerinterface teruggebracht tot de hoofdbestemmingen Overzicht, Instellingen, Gereedschap en Logboek.
+- Een rustig Overzicht toegevoegd met beveiligings-, back-up- en monitorstatus en veelgebruikte acties.
+- Een centrale stijlgids, vaste design tokens en herbruikbare componenten voor kaarten, statussen, velden, knoppen en voortgang toegevoegd.
+- Alle Tempel Settings-schermen aangesloten op dezelfde typografie, ruimte- en kleurvariabelen.
+- Live back-upstatus toegevoegd; fase, melding en uploadpercentage worden automatisch bijgewerkt zonder paginaverversing.
+- De bestaande live voortgang van Website verhuizen visueel aangesloten op hetzelfde componentsysteem.
+- De adminpaginaregistratie centraal hergebruikt, zodat navigatieweergave niet opnieuw adminhooks registreert.
+- Toegang tot bestaande instellingen gecentraliseerd in `SettingsRepository`, met volledige compatibiliteit voor de bestaande option-namen.
+- Een EditorConfig, PHPCS-configuratie en admin-UI-stijlgids toegevoegd voor consistente verdere ontwikkeling.
+- E-mailverificatie voor backend-logins blijft optioneel en wordt niet automatisch ingeschakeld.
+- Een noodschakelaar via `TEMPEL_SETTINGS_DISABLE_EMAIL_2FA` toegevoegd voor herstel wanneer WordPress-mail niet aankomt.
+- WP-Members-logins op de website expliciet uitgesloten van de backend-e-mailverificatie.
+- E-mailverificatie beperkt tot beheerlogins via `wp-admin`, de beheerbestemming van `wp-login.php` en `st-beheer`; frontendbestemmingen worden overgeslagen.
+- Alle Tempel-beheerpagina's automatisch aan één donker canvas gekoppeld, zodat nieuwe gereedschappen niet meer naar een lichte WordPress-achtergrond kunnen terugvallen.
+- Instellingsrijen gestandaardiseerd met labels links en schakelaars en overige bediening rechts.
+- De Mail-WYSIWYG over de volledige veldbreedte geplaatst met label en toelichting erboven; de vertrouwde witte editorstijl blijft behouden.
+- Verborgen detailpagina's blijven voortaan bij WordPress geregistreerd; directe links zoals Widgets geven daardoor geen onterechte toestemmingsfout meer.
+- Info samengevoegd met Status & logboek; de oude Info-URL stuurt voortaan door naar de gecombineerde pagina.
+- Handmatige verhuispakketten ondersteunen voortaan databases met foreign keys; tijdens de atomaire import worden relaties veilig naar tijdelijke tabellen omgezet en daarna hersteld.
+- Het SFTP-formulier compacter ingedeeld met host en poort, gebruikersnaam en wachtwoord naast elkaar en de servermap als laatste veld.
+- De servermapbrowser opent voortaan als popup en vult de gekozen WordPress-map direct in; de extra getypte bevestiging `VERHUIZEN` is vervallen.
+- De verhuispagina vereenvoudigd door de grote introductie en dubbele back-upstatus te verwijderen en de handmatige stappen onder elkaar te plaatsen.
+- De overbodige bron- en doelstaplabels verwijderd en het verschil verduidelijkt tussen de PHP-browseruploadlimiet en de pakketlimiet van 2 GiB uitgepakt.
+- Dropbox-back-ups en handmatige exports gebruiken voortaan hetzelfde volledige Tempel-sitepakket met volledige WordPress-root, leesbare SQL-dump en veilige migratiedata.
+- Nieuwe Tempel-sitepakketten kunnen rechtstreeks vanuit Dropbox op de verhuispagina worden gekozen, zonder de browseruploadlimiet.
+- De pakketlimiet verhoogd naar 20 GiB uitgepakt voor grotere websites.
+- Vóór pakketimport wordt vrije privéschijfruimte gecontroleerd en tijdelijke Dropbox-downloads krijgen expliciet alleen eigenaarstoegang.
+- Beheerders krijgen een niet te negeren waarschuwing wanneer PHP de kritieke RCE-fixes van oktober 2026 nog mist.
+
+## [2.20.1] - 2026-10-30
+
+- De Dropbox-pagina laat nu duidelijk zien wanneer de App secret is opgeslagen, zonder de geheime waarde terug in het formulier te plaatsen.
+- Een oude melding over ontbrekende appgegevens verdwijnt zodra App key en App secret wel aanwezig zijn.
+- De verbindingsstatus maakt onderscheid tussen ontbrekende appgegevens en een account dat alleen nog gekoppeld moet worden.
+
+## [2.20.0] - 2026-10-30
+
+- De losse Stager-functionaliteit geïntegreerd als de pagina Website verhuizen in Tempel Settings.
+- Rechtstreeks publiceren via SFTP, een servermapbrowser en handmatige verhuispakketten behouden.
+- De recente Dropbox-back-upstatus zichtbaar gemaakt vóór een verhuizing.
+- Expliciete back-upbevestiging en het woord VERHUIZEN blijven verplicht voor destructieve acties.
+- De losse Stager-plugin wordt bij overlap veilig gedeactiveerd.
+- Tijdelijke Dropbox-storingen krijgen maximaal vijf automatische herstelpogingen met oplopende wachttijd.
+- Vrije tijdelijke schijfruimte wordt vóór het samenstellen van een back-up gecontroleerd.
+- Lokale ZIP-bestanden en de uiteindelijke bestandsgrootte in Dropbox worden gecontroleerd.
+- Achtergebleven tijdelijke back-upmappen worden automatisch opgeruimd.
+- Een fout bij het verwijderen van oude Dropbox-bestanden verandert een geslaagde upload niet meer in een mislukte back-up.
+
+## [2.19.0] - 2026-10-16
+
+- Grote Dropbox-back-ups worden in korte, hervatbare achtergrondstappen verstuurd.
+- Uploadpositie en voortgang worden bewaard, zodat een volgende taak verdergaat waar de vorige stopte.
+- Vastgelopen oude back-uptaken worden herkend en met een duidelijke foutstatus vrijgegeven.
+- Tijdens een actieve back-up kan niet per ongeluk een tweede back-up worden gestart.
+
+## [2.18.1] - 2026-10-16
+
+- Veilige voorbeelden en downloads toegevoegd aan het overzicht met grote bestanden.
+- Meervoudige selectie en definitief verwijderen toegevoegd voor bestanden in uploads- en cachemappen.
+- WordPress-, thema- en pluginbestanden blijven vergrendeld tegen verwijdering vanuit dit overzicht.
+
+## [2.18.0] - 2026-10-16
+
+- Handmatige scan van de volledige WordPress-installatie toegevoegd aan Status & logboek.
+- Toont de 50 grootste bestanden met grootte, relatief pad en wijzigingsdatum.
+- De scan bewaart alleen het laatste resultaat, volgt geen symlinks en stopt veilig na twintig seconden.
+
+## [2.17.6] - 2026-10-16
+
+- Automatische heractivering toegevoegd voor de blokkade van plugininstallaties en nieuwe beheerders.
+- De blokkade wordt één uur na handmatig uitschakelen opnieuw actief; deze beveiliging staat standaard aan.
+- Een WordPress-crontaak en controle bij paginalaad zorgen samen dat de blokkade ook na gemiste cronuitvoering wordt hersteld.
 
 ## [2.17.5] - 2026-10-16
 

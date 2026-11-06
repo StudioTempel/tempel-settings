@@ -1,0 +1,37 @@
+:root {
+    --tempel-ui-color-canvas: #000;
+    --tempel-ui-color-surface: #171717;
+    --tempel-ui-color-surface-raised: #222;
+    --tempel-ui-color-border: #383838;
+    --tempel-ui-color-text: #fff;
+    --tempel-ui-color-text-muted: #a3a3a3;
+    --tempel-ui-color-accent: #f3f438;
+    --tempel-ui-color-accent-text: #000;
+    --tempel-ui-color-success: #28d17c;
+    --tempel-ui-color-warning: #f0b429;
+    --tempel-ui-color-danger: #ff5a3d;
+    --tempel-ui-color-info: #3498db;
+    --tempel-ui-text-xs: 12px;
+    --tempel-ui-text-sm: 14px;
+    --tempel-ui-text-md: 16px;
+    --tempel-ui-text-lg: 20px;
+    --tempel-ui-text-xl: 28px;
+    --tempel-ui-text-2xl: 36px;
+    --tempel-ui-space-1: 4px;
+    --tempel-ui-space-2: 8px;
+    --tempel-ui-space-3: 12px;
+    --tempel-ui-space-4: 16px;
+    --tempel-ui-space-5: 24px;
+    --tempel-ui-space-6: 32px;
+    --tempel-ui-space-7: 48px;
+    --tempel-ui-space-8: 64px;
+    --tempel-ui-radius-sm: 8px;
+    --tempel-ui-radius-md: 12px;
+    --tempel-ui-radius-lg: 16px;
+    --tempel-ui-radius-pill: 999px;
+    --tempel-ui-focus: 0 0 0 3px rgba(243, 244, 56, .35);
+    --tempel-ui-transition-fast: 150ms ease;
+    --tempel-ui-transition: 220ms ease;
+    --tempel-ui-content-width: 1120px;
+}
+

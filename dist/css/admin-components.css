@@ -1,0 +1,253 @@
+.tempel-ui-page {
+    box-sizing: border-box;
+    width: min(100%, var(--tempel-ui-content-width));
+    margin: 0 auto;
+    padding: var(--tempel-ui-space-6);
+    color: var(--tempel-ui-color-text);
+}
+
+.tempel-ui-page *, .tempel-ui-page *::before, .tempel-ui-page *::after { box-sizing: border-box; }
+
+.tempel-ui-page-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--tempel-ui-space-5);
+    margin-bottom: var(--tempel-ui-space-7);
+}
+
+.tempel-ui-page-header h1 {
+    margin: 0;
+    color: var(--tempel-ui-color-text);
+    font-size: var(--tempel-ui-text-2xl);
+    line-height: 1.1;
+}
+
+.tempel-ui-page-header p {
+    max-width: 720px;
+    margin: var(--tempel-ui-space-2) 0 0;
+    color: var(--tempel-ui-color-text-muted);
+    font-size: var(--tempel-ui-text-md);
+    line-height: 1.5;
+}
+
+.tempel-ui-stack { display: grid; gap: var(--tempel-ui-space-5); }
+.tempel-ui-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--tempel-ui-space-4); }
+
+.tempel-ui-card {
+    padding: var(--tempel-ui-space-5);
+    color: var(--tempel-ui-color-text);
+    background: var(--tempel-ui-color-surface);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-radius: var(--tempel-ui-radius-lg);
+}
+
+.tempel-ui-card h2, .tempel-ui-card h3 { margin: 0 0 var(--tempel-ui-space-2); color: inherit; }
+.tempel-ui-card p:last-child { margin-bottom: 0; }
+
+.tempel-ui-status {
+    --tempel-ui-status-color: var(--tempel-ui-color-text-muted);
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: var(--tempel-ui-space-3);
+    align-items: start;
+}
+
+.tempel-ui-status::before {
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    content: '';
+    background: var(--tempel-ui-status-color);
+    border-radius: 50%;
+}
+
+.tempel-ui-status--running, .tempel-ui-status--info { --tempel-ui-status-color: var(--tempel-ui-color-info); }
+.tempel-ui-status--success { --tempel-ui-status-color: var(--tempel-ui-color-success); }
+.tempel-ui-status--warning { --tempel-ui-status-color: var(--tempel-ui-color-warning); }
+.tempel-ui-status--error { --tempel-ui-status-color: var(--tempel-ui-color-danger); }
+.tempel-ui-status__label { display: block; font-size: var(--tempel-ui-text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--tempel-ui-color-text-muted); }
+.tempel-ui-status__value { display: block; margin-top: var(--tempel-ui-space-1); font-size: var(--tempel-ui-text-lg); font-weight: 700; }
+.tempel-ui-status__meta { display: block; margin-top: var(--tempel-ui-space-1); color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+
+.tempel-ui-progress { display: grid; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-5); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-lg); }
+.tempel-ui-progress[hidden] { display: none; }
+.tempel-ui-progress__header { display: flex; justify-content: space-between; gap: var(--tempel-ui-space-4); }
+.tempel-ui-progress__phase { font-weight: 700; }
+.tempel-ui-progress__percent { color: var(--tempel-ui-color-text-muted); font-variant-numeric: tabular-nums; }
+.tempel-ui-progress progress { width: 100%; height: 12px; overflow: hidden; accent-color: var(--tempel-ui-color-accent); border: 0; border-radius: var(--tempel-ui-radius-pill); }
+.tempel-ui-progress__message { margin: 0; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+
+.tempel-ui-field { display: grid; gap: var(--tempel-ui-space-2); }
+.tempel-ui-field label { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-md); font-weight: 600; }
+.tempel-ui-field__help { margin: 0; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); line-height: 1.5; }
+
+.tempel-ui-page input[type='text'], .tempel-ui-page input[type='url'], .tempel-ui-page input[type='email'],
+.tempel-ui-page input[type='password'], .tempel-ui-page input[type='number'], .tempel-ui-page input[type='time'],
+.tempel-ui-page select {
+    min-height: 44px;
+    padding: 0 var(--tempel-ui-space-4);
+    color: var(--tempel-ui-color-text);
+    background: var(--tempel-ui-color-surface-raised);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-radius: var(--tempel-ui-radius-md);
+}
+
+.tempel-ui-page :is(input, select, button, a):focus-visible { outline: none; box-shadow: var(--tempel-ui-focus); }
+.tempel-ui-page .button { min-height: 40px; padding: 0 var(--tempel-ui-space-4); border-radius: var(--tempel-ui-radius-md) !important; transition: background var(--tempel-ui-transition-fast), color var(--tempel-ui-transition-fast), border-color var(--tempel-ui-transition-fast); }
+.tempel-ui-page .button-primary { color: var(--tempel-ui-color-accent-text) !important; background: var(--tempel-ui-color-accent) !important; border-color: var(--tempel-ui-color-accent) !important; }
+.tempel-ui-page .button-link-delete { color: var(--tempel-ui-color-danger); }
+
+.settings__sidebar .sidebar__nav > .nav__inner > ul { gap: var(--tempel-ui-space-5) !important; }
+.tempel-nav-group { display: grid; gap: var(--tempel-ui-space-2); }
+.tempel-nav-group > ul { gap: var(--tempel-ui-space-2) !important; }
+.tempel-nav-group__label { padding: 0 var(--tempel-ui-space-3); color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+
+@media (max-width: 900px) {
+    .tempel-ui-page { padding: var(--tempel-ui-space-5); }
+    .tempel-ui-page-header { display: grid; }
+    .tempel-ui-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .tempel-ui-page *, .tempel-ui-page *::before, .tempel-ui-page *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+}
+
+body.wp-admin.tempel-settings-admin,
+body.wp-admin.tempel-settings-admin #wpwrap,
+body.wp-admin.tempel-settings-admin #wpcontent,
+body.wp-admin.tempel-settings-admin #wpbody,
+body.wp-admin.tempel-settings-admin #wpbody-content,
+body.wp-admin.tempel-settings-admin .tmpl_settings__wrap,
+body.wp-admin.tempel-settings-admin .tmpl_settings__page,
+body.wp-admin.tempel-settings-admin .tmpl_settings__inner,
+body.wp-admin.tempel-settings-admin .settings__sidebar,
+body.wp-admin.tempel-settings-admin .settings__body,
+body.wp-admin.tempel-settings-admin .settings__footer {
+    background: var(--tempel-ui-color-canvas) !important;
+}
+
+body.wp-admin.tempel-settings-admin #wpcontent,
+body.wp-admin.tempel-settings-admin #wpbody-content { padding: 0; }
+body.wp-admin.tempel-settings-admin #wpfooter { display: none; }
+
+/* Every standard settings row uses the same label-left/control-right rhythm. */
+body.wp-admin.tempel-settings-admin .settings__category .settings__field__inner {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 50%);
+    align-items: center;
+    gap: var(--tempel-ui-space-6);
+}
+
+body.wp-admin.tempel-settings-admin .settings__category .settings__label__wrap,
+body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap {
+    width: 100% !important;
+    max-width: none !important;
+    padding-right: 0 !important;
+}
+
+body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap {
+    justify-self: end;
+}
+
+body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap > :is(input, select, .select2-container) {
+    margin-left: auto;
+}
+
+body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap > .checkbox__switch {
+    display: block !important;
+    margin-left: auto;
+}
+
+/* Category switches follow the same right edge as controls inside a category. */
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .category__header {
+    width: 100%;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .category__header .category__label__wrap {
+    width: auto;
+    flex: 1 1 auto;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .category__header .category__input__wrap {
+    flex: 0 0 auto;
+    margin-left: auto;
+}
+
+/* Form selection needs the full row; its label sits above the control. */
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .tempel-widget-field--full .settings__field__inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-items: start;
+    gap: var(--tempel-ui-space-3);
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .tempel-widget-field--full .settings__label__wrap,
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .tempel-widget-field--full .settings__input__wrap,
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .tempel-widget-field--full .select2-container {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings select,
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .select2-selection__rendered,
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .select2-results__option {
+    text-align: left !important;
+    text-align-last: left !important;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_widget_settings .tempel-post-type-dependent[hidden] {
+    display: none !important;
+}
+
+body.wp-admin.tempel-settings-admin .tempel-backup-field-grid {
+    grid-template-columns: 1fr !important;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_backup_settings .tempel-backup-field-grid .settings__field + .settings__field {
+    border-left: 0;
+}
+
+body.wp-admin.tempel-settings-admin #tmpl_backup_settings .tempel-backup-technical__content .settings__input__wrap {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+/* Mail content is a document: label above, familiar white editor below. */
+body.wp-admin.tempel-settings-admin .settings__category .tempel-mail-editor-field .settings__field__inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: var(--tempel-ui-space-3);
+}
+
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .settings__label__wrap,
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .settings__input__wrap,
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .wp-editor-wrap,
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .wp-editor-container,
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field textarea.wp-editor-area {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .wp-editor-container,
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field textarea.wp-editor-area {
+    color: #1d2327 !important;
+    background: #fff !important;
+}
+
+body.wp-admin.tempel-settings-admin .tempel-mail-editor-field textarea.wp-editor-area {
+    min-height: 360px;
+    padding: var(--tempel-ui-space-5) !important;
+    font-size: var(--tempel-ui-text-md);
+    line-height: 1.6;
+}
+
+@media (max-width: 782px) {
+    body.wp-admin.tempel-settings-admin .settings__category .settings__field__inner {
+        grid-template-columns: 1fr;
+        gap: var(--tempel-ui-space-3);
+    }
+
+    body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap > .checkbox__switch {
+        margin-left: 0;
+    }
+}

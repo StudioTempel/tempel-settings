@@ -53,7 +53,5 @@ function page_title() {
 }
 
 function get_admin_pages() {
-    $admin = new Admin();
-    $pages = $admin->get_pages();
-    return $pages;
+    return Admin::registered_pages();
 }

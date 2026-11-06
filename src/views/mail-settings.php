@@ -16,7 +16,7 @@ class Mail_Settings extends Page
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <?php $this->render_notice(); ?>
 
                             <form action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">

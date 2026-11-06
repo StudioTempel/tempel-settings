@@ -30,7 +30,7 @@ class Email_Login_Verification
 
     public function authenticate_challenge($user, $username, $password)
     {
-        if ($user instanceof \WP_User || !$this->is_wordpress_backend_login()) {
+        if ($this->is_disabled() || $user instanceof \WP_User || !$this->is_wordpress_backend_login()) {
             return $user;
         }
 
@@ -51,6 +51,10 @@ class Email_Login_Verification
 
     public function render_code_field(): void
     {
+        if ($this->is_disabled()) {
+            return;
+        }
+
         $token = $this->current_challenge();
         if ($token === '') {
             return;
@@ -68,7 +72,7 @@ class Email_Login_Verification
 
     public function login_body_class(array $classes): array
     {
-        if ($this->current_challenge() !== '') {
+        if (!$this->is_disabled() && $this->current_challenge() !== '') {
             $classes[] = 'tempel-email-code-step';
         }
         return $classes;
@@ -76,7 +80,7 @@ class Email_Login_Verification
 
     public function verify($user, $password)
     {
-        if (!($user instanceof \WP_User) || !$this->is_wordpress_backend_login() || $this->has_defender_2fa($user)) {
+        if ($this->is_disabled() || !($user instanceof \WP_User) || !$this->is_wordpress_backend_login() || $this->has_defender_2fa($user)) {
             return $user;
         }
 
@@ -224,7 +228,52 @@ class Email_Login_Verification
     private function is_wordpress_backend_login(): bool
     {
         $script = isset($_SERVER['SCRIPT_NAME']) ? basename(sanitize_text_field(wp_unslash($_SERVER['SCRIPT_NAME']))) : '';
-        return ($this->is_login_request || $script === 'wp-login.php') && empty($_REQUEST['woocommerce-login-nonce']);
+        $is_frontend_login = !empty($_REQUEST['woocommerce-login-nonce'])
+            || !empty($_REQUEST['_wpmem_login_nonce']);
+
+        if ($is_frontend_login) {
+            return false;
+        }
+
+        $redirect_to = isset($_REQUEST['redirect_to'])
+            ? esc_url_raw(wp_unslash($_REQUEST['redirect_to']))
+            : '';
+
+        if ($redirect_to !== '') {
+            return $this->is_backend_path($redirect_to);
+        }
+
+        $request_uri = isset($_SERVER['REQUEST_URI'])
+            ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_URI']))
+            : '';
+
+        if ($this->is_backend_path($request_uri)) {
+            return true;
+        }
+
+        // A direct wp-login.php request without an explicit destination opens
+        // the WordPress dashboard after login and is therefore a backend login.
+        return $script === 'wp-login.php' && $request_uri === '';
+    }
+
+    private function is_backend_path(string $url_or_path): bool
+    {
+        $path = (string) wp_parse_url($url_or_path, PHP_URL_PATH);
+        $path = '/' . ltrim($path, '/');
+
+        return $path === '/wp-login.php'
+            || $path === '/wp-admin'
+            || str_starts_with($path, '/wp-admin/')
+            || $path === '/st-beheer'
+            || str_starts_with($path, '/st-beheer/');
+    }
+
+    private function is_disabled(): bool
+    {
+        $disabled_by_constant = defined('TEMPEL_SETTINGS_DISABLE_EMAIL_2FA')
+            && TEMPEL_SETTINGS_DISABLE_EMAIL_2FA;
+
+        return (bool) apply_filters('tempel_email_login_verification_disabled', $disabled_by_constant);
     }
 
     private function transient_key(string $token): string

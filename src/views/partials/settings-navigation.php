@@ -17,8 +17,7 @@ function settings_navigation()
             <div class="sidebar__nav">
                 <div class="nav__inner">
                     <?php
-                    $pages = get_admin_pages();
-                    menu_loop($pages);
+                    menu_loop(get_admin_pages());
                     ?>
                 </div>
             </div>
@@ -30,27 +29,31 @@ function settings_navigation()
 
 function menu_loop($pages)
 {
+    $groups = array(
+        __('Overzicht', 'tempel-settings') => array('tempel-settings'),
+        __('Instellingen', 'tempel-settings') => array('tempel-general-settings', 'tempel-widget-settings', 'tempel-gform-address-settings', 'tempel-performance-settings', 'tempel-mail-settings'),
+        __('Gereedschap', 'tempel-settings') => array('tempel-backup-settings', 'tempel-stager-settings'),
+        __('Logboek', 'tempel-settings') => array('tempel-status-settings'),
+    );
+
     echo '<ul>';
-    foreach ($pages as $page) {
-        ?>
-        <li>
-            <?php
-            $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+    $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+    foreach ($groups as $label => $slugs) {
+        $available = array_intersect_key($pages, array_flip($slugs));
+        if (!$available) continue;
+        echo '<li class="tempel-nav-group">';
+        echo '<span class="tempel-nav-group__label">' . esc_html($label) . '</span>';
+        echo '<ul>';
+        foreach ($available as $page) {
             $menu_slug = sanitize_key($page->menu_slug);
-            ?>
-            <a href="<?php echo esc_url(admin_url('admin.php?page=' . $menu_slug)); ?>"
-               class="nav__item <?php echo esc_attr($menu_slug === $current_page ? 'active' : ''); ?>">
-                <?php echo esc_html($page->page_title); ?>
-            </a>
-        </li>
-        <?php
+            echo '<li><a href="' . esc_url(admin_url('admin.php?page=' . $menu_slug)) . '" class="nav__item ' . esc_attr($menu_slug === $current_page ? 'active' : '') . '">' . esc_html($page->page_title) . '</a></li>';
+        }
+        echo '</ul></li>';
     }
     echo '</ul>';
 }
 
 function get_admin_pages()
 {
-    $admin = new Admin();
-    $pages = $admin->get_pages();
-    return $pages;
+    return Admin::registered_pages();
 }

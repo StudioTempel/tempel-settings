@@ -64,6 +64,9 @@ check(end($menu)[2] === 'tempel-settings', 'Tempel Settings is moved to the bott
 $options['tmpl_settings'] = array('security_lock' => 'on');
 check($admin->sanitize_general_settings(array('security_lock' => ''))['security_lock'] === '', 'Last checked option can be disabled');
 check($admin->sanitize_general_settings(array('security_lock' => 'on'))['security_lock'] === 'on', 'Lock saved');
+$options['tmpl_settings']['security_lock_auto_reenable'] = 'on';
+check($admin->sanitize_general_settings(array('security_lock' => 'on', 'security_lock_auto_reenable' => 'on'))['security_lock_auto_reenable'] === 'on', 'Automatic re-enable saved');
+check($admin->sanitize_general_settings(array('security_lock' => 'on', 'security_lock_auto_reenable' => ''))['security_lock_auto_reenable'] === '', 'Automatic re-enable can be disabled');
 check($admin->sanitize_general_settings(array('performance_enabled' => 'on'))['security_lock'] === 'on', 'Other settings page preserves lock');
 check($admin->sanitize_general_settings(array('security_lock' => 'invalid'))['security_lock'] === '', 'Invalid checkbox value rejected');
 $options['tmpl_settings'] = array('security_lock' => 'on', 'form_entry_retention_enabled' => '', 'form_entry_retention_days' => '365');
@@ -121,6 +124,10 @@ check($admin->sanitize_general_settings(array('notifications_enabled' => ''))['n
 // Test activation and the one-time upgrade without booting WordPress.
 function add_option($key, $value) { if (!isset($GLOBALS['options'][$key])) { $GLOBALS['options'][$key] = $value; } }
 function update_option($key, $value) { $GLOBALS['options'][$key] = $value; }
+function delete_option($key) { unset($GLOBALS['options'][$key]); }
+function wp_next_scheduled($hook) { return $GLOBALS['scheduled_events'][$hook] ?? false; }
+function wp_schedule_single_event($timestamp, $hook) { $GLOBALS['scheduled_events'][$hook] = $timestamp; return true; }
+function wp_unschedule_event($timestamp, $hook) { unset($GLOBALS['scheduled_events'][$hook]); return true; }
 function plugin_basename($file) { return basename($file); }
 function plugin_dir_path($file) { return dirname($file) . '/'; }
 function plugin_dir_url($file) { return 'https://example.test/plugins/tempel-settings/'; }
@@ -135,6 +142,8 @@ check(!isset(Tempel\enable_polylang_notification_translations(array('post' => 'p
 $options = array();
 Tempel\Activator::register_options();
 check($options['tmpl_settings']['security_lock'] === 'on', 'New installation defaults to locked');
+check($options['tmpl_settings']['security_lock_auto_reenable'] === 'on', 'New installation automatically restores the lock');
+check($options['tmpl_settings']['email_login_verification'] === '', 'New installation keeps backend email verification opt-in');
 check($options['tmpl_settings']['complianz_close_button_fix'] === 'on', 'New installation enables Complianz styling by default');
 check($options['tmpl_settings']['notifications_enabled'] === '', 'New installation keeps notifications opt-in');
 $plugin = (new ReflectionClass(Tempel\TempelSettings::class))->newInstanceWithoutConstructor();
@@ -147,6 +156,39 @@ check($options['tmpl_settings']['enable_branding'] === '', 'Upgrade preserves ot
 $options['tmpl_settings']['security_lock'] = '';
 $migration->invoke($plugin);
 check($options['tmpl_settings']['security_lock'] === '', 'Manual disabling survives subsequent requests');
+
+$auto_reenable_default = new ReflectionMethod($plugin, 'apply_security_lock_auto_reenable_default');
+$auto_reenable_default->setAccessible(true);
+$options = array('tmpl_settings' => array('security_lock' => '', 'security_lock_auto_reenable' => ''));
+$auto_reenable_default->invoke($plugin);
+check($options['tmpl_settings']['security_lock_auto_reenable'] === 'on', 'Upgrade enables automatic lock restoration once');
+$options['tmpl_settings']['security_lock_auto_reenable'] = '';
+$auto_reenable_default->invoke($plugin);
+check($options['tmpl_settings']['security_lock_auto_reenable'] === '', 'Manual automatic-restoration choice survives subsequent requests');
+
+check(strpos(file_get_contents(TEMPEL_SETTINGS_DIR . 'tempel.php'), 'apply_email_login_verification_default') === false, 'Upgrade does not automatically enable backend email verification');
+
+if (!defined('HOUR_IN_SECONDS')) {
+    define('HOUR_IN_SECONDS', 3600);
+}
+$scheduled_events = array();
+$options = array('tmpl_settings' => array('security_lock' => 'on', 'security_lock_auto_reenable' => 'on'));
+$auto_reenable = new Tempel\Security_Lock_Auto_Reenable();
+$old_settings = $options['tmpl_settings'];
+$options['tmpl_settings']['security_lock'] = '';
+$auto_reenable->settings_updated($old_settings, $options['tmpl_settings'], 'tmpl_settings');
+$expiry = (int) ($options[Tempel\Security_Lock_Auto_Reenable::DISABLED_UNTIL_OPTION] ?? 0);
+check($expiry >= time() + 3599, 'Disabling the lock starts a one-hour timer');
+check(($scheduled_events[Tempel\Security_Lock_Auto_Reenable::EVENT] ?? 0) === $expiry, 'A single re-enable event is scheduled');
+$options[Tempel\Security_Lock_Auto_Reenable::DISABLED_UNTIL_OPTION] = time() - 1;
+$auto_reenable->check_expiry();
+check($options['tmpl_settings']['security_lock'] === 'on', 'Expired timer restores the security lock');
+check(!isset($options[Tempel\Security_Lock_Auto_Reenable::DISABLED_UNTIL_OPTION]), 'Expired timer is cleared after restoration');
+
+$scheduled_events = array();
+$options = array('tmpl_settings' => array('security_lock' => '', 'security_lock_auto_reenable' => ''));
+$auto_reenable->check_expiry();
+check($scheduled_events === array(), 'Disabled automatic restoration does not schedule an event');
 
 $complianz_default = new ReflectionMethod($plugin, 'apply_complianz_style_default');
 $complianz_default->setAccessible(true);

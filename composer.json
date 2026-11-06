@@ -1,0 +1,16 @@
+{
+    "name": "studiotempel/tempel-settings",
+    "description": "Runtime dependencies for the Tempel Settings WordPress plugin.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "php": ">=8.0",
+        "enshrined/svg-sanitize": "^1.1.1",
+        "yahnis-elsts/plugin-update-checker": "^5.7"
+    },
+    "config": {
+        "allow-plugins": {},
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}

@@ -15,7 +15,7 @@ class Gform_Address_Settings extends Page
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <?php if (isset($_GET['tempel_cleanup_done'])) : ?>
                                 <?php $deleted = isset($_GET['tempel_cleanup_deleted']) ? absint($_GET['tempel_cleanup_deleted']) : 0; ?>
                                 <div class="notice notice-success inline"><p><?php echo esc_html(sprintf(_n('%d oude formulierinzending is permanent verwijderd.', '%d oude formulierinzendingen zijn permanent verwijderd.', $deleted, 'tempel-settings'), $deleted)); ?></p></div>

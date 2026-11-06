@@ -15,7 +15,7 @@ class Performance_Settings extends Page
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_settings'); ?>
 

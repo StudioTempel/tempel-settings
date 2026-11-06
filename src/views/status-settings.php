@@ -4,6 +4,7 @@ namespace Tempel;
 
 require_once TEMPEL_SETTINGS_DIR . 'src/abstract/page.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/partials/settings-navigation.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/large-file-scanner.php';
 
 class Status_Settings extends Page
 {
@@ -13,6 +14,9 @@ class Status_Settings extends Page
         add_action('admin_post_tempel_clear_status_log', array($this, 'clear_log'));
         add_action('admin_post_tempel_save_status_monitor', array($this, 'save_monitor'));
         add_action('admin_post_tempel_run_status_monitor', array($this, 'run_monitor'));
+        add_action('admin_post_tempel_scan_large_files', array($this, 'scan_large_files'));
+        add_action('admin_post_tempel_view_large_file', array($this, 'view_large_file'));
+        add_action('admin_post_tempel_delete_large_files', array($this, 'delete_large_files'));
     }
 
     public function render(): void
@@ -20,13 +24,14 @@ class Status_Settings extends Page
         $level = isset($_GET['log_level']) ? sanitize_key(wp_unslash($_GET['log_level'])) : '';
         $source = isset($_GET['log_source']) ? sanitize_key(wp_unslash($_GET['log_source'])) : '';
         $logs = Status_Log::get_entries(array('level' => $level, 'source' => $source));
+        $large_file_scan = Large_File_Scanner::get_result();
         ?>
         <div class="tmpl_settings__wrap">
             <div class="tmpl_settings__page" id="tmpl_status_settings">
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <div class="settings__category">
                                 <div class="category__header"><div class="category__label__wrap"><div class="category__title"><?php esc_html_e('Website-status', 'tempel-settings'); ?></div></div></div>
                                 <div class="category__content tempel-status-grid">
@@ -36,6 +41,87 @@ class Status_Settings extends Page
                                             <p><?php echo esc_html($card['message']); ?></p>
                                         </article>
                                     <?php endforeach; ?>
+                                </div>
+                            </div>
+
+                            <div class="settings__category">
+                                <div class="category__header">
+                                    <div class="category__label__wrap">
+                                        <div class="category__title"><?php esc_html_e('Grote bestanden', 'tempel-settings'); ?></div>
+                                        <p><?php esc_html_e('Toont de 50 grootste bestanden binnen deze WordPress-installatie. De scan wordt alleen handmatig uitgevoerd.', 'tempel-settings'); ?></p>
+                                    </div>
+                                </div>
+                                <div class="category__content">
+                                    <?php if (isset($_GET['large_files_scanned'])) : ?><div class="notice notice-success inline"><p><?php esc_html_e('De bestandsscan is afgerond.', 'tempel-settings'); ?></p></div><?php endif; ?>
+                                    <?php if (isset($_GET['large_files_deleted'])) : ?><div class="notice notice-success inline"><p><?php echo esc_html(sprintf(_n('%d bestand is verwijderd.', '%d bestanden zijn verwijderd.', absint($_GET['large_files_deleted']), 'tempel-settings'), absint($_GET['large_files_deleted']))); ?></p></div><?php endif; ?>
+                                    <?php if (isset($_GET['large_files_delete_failed'])) : ?><div class="notice notice-warning inline"><p><?php echo esc_html(sprintf(_n('%d bestand kon niet worden verwijderd.', '%d bestanden konden niet worden verwijderd.', absint($_GET['large_files_delete_failed']), 'tempel-settings'), absint($_GET['large_files_delete_failed']))); ?></p></div><?php endif; ?>
+                                    <div class="tempel-large-files-actions">
+                                        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
+                                            <input type="hidden" name="action" value="tempel_scan_large_files">
+                                            <?php wp_nonce_field('tempel_scan_large_files'); ?>
+                                            <button class="button button-primary"><?php echo empty($large_file_scan) ? esc_html__('Bestanden scannen', 'tempel-settings') : esc_html__('Opnieuw scannen', 'tempel-settings'); ?></button>
+                                        </form>
+                                        <?php if (!empty($large_file_scan['timestamp'])) : ?>
+                                            <p>
+                                                <?php
+                                                echo esc_html(sprintf(
+                                                    __('Laatst gescand op %1$s · %2$s bestanden bekeken · %3$s seconden', 'tempel-settings'),
+                                                    wp_date('d-m-Y H:i', (int) $large_file_scan['timestamp']),
+                                                    number_format_i18n((int) ($large_file_scan['scanned'] ?? 0)),
+                                                    number_format_i18n((float) ($large_file_scan['duration'] ?? 0), 2)
+                                                ));
+                                                ?>
+                                            </p>
+                                        <?php endif; ?>
+                                    </div>
+
+                                    <?php if (!empty($large_file_scan['incomplete'])) : ?>
+                                        <div class="notice notice-warning inline"><p><?php esc_html_e('De scan bereikte de tijdslimiet. De getoonde lijst is daarom mogelijk niet volledig.', 'tempel-settings'); ?></p></div>
+                                    <?php endif; ?>
+
+                                    <?php if (!empty($large_file_scan['files'])) : ?>
+                                        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" class="tempel-large-files-delete" onsubmit="return confirm('<?php echo esc_js(__('De geselecteerde bestanden worden definitief verwijderd. Weet je het zeker?', 'tempel-settings')); ?>');">
+                                            <input type="hidden" name="action" value="tempel_delete_large_files">
+                                            <?php wp_nonce_field('tempel_delete_large_files'); ?>
+                                            <div class="tempel-large-files-table-wrap">
+                                            <table class="widefat striped tempel-large-files-table">
+                                                <thead><tr><th class="check-column"><input type="checkbox" class="tempel-large-files-select-all" aria-label="<?php esc_attr_e('Alle verwijderbare bestanden selecteren', 'tempel-settings'); ?>"></th><th><?php esc_html_e('Grootte', 'tempel-settings'); ?></th><th><?php esc_html_e('Bestand', 'tempel-settings'); ?></th><th><?php esc_html_e('Gewijzigd', 'tempel-settings'); ?></th><th><?php esc_html_e('Actie', 'tempel-settings'); ?></th></tr></thead>
+                                                <tbody>
+                                                <?php foreach ($large_file_scan['files'] as $file) : ?>
+                                                    <?php $relative_path = (string) ($file['path'] ?? ''); ?>
+                                                    <tr>
+                                                        <th class="check-column">
+                                                            <?php if (Large_File_Scanner::can_delete($relative_path)) : ?>
+                                                                <input type="checkbox" name="large_files[]" value="<?php echo esc_attr($relative_path); ?>" class="tempel-large-file-checkbox" aria-label="<?php echo esc_attr(sprintf(__('Selecteer %s', 'tempel-settings'), $relative_path)); ?>">
+                                                            <?php else : ?>
+                                                                <span class="dashicons dashicons-lock" title="<?php esc_attr_e('Beschermd bestand: verwijderen is buiten veilige mappen geblokkeerd.', 'tempel-settings'); ?>"></span>
+                                                            <?php endif; ?>
+                                                        </th>
+                                                        <td><strong><?php echo esc_html(size_format((int) ($file['size'] ?? 0), 1)); ?></strong></td>
+                                                        <td><code><?php echo esc_html($relative_path); ?></code></td>
+                                                        <td><?php echo !empty($file['modified']) ? esc_html(wp_date('d-m-Y H:i', (int) $file['modified'])) : '—'; ?></td>
+                                                        <td>
+                                                            <?php if (Large_File_Scanner::can_view($relative_path)) : ?>
+                                                                <a class="button button-small" target="_blank" rel="noopener" href="<?php echo esc_url(wp_nonce_url(admin_url('admin-post.php?action=tempel_view_large_file&file=' . rawurlencode($relative_path)), 'tempel_view_large_file')); ?>"><?php esc_html_e('Bekijken', 'tempel-settings'); ?></a>
+                                                            <?php else : ?>
+                                                                <span aria-hidden="true">—</span>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                            <div class="tempel-large-files-delete-actions">
+                                                <button class="button button-secondary" disabled><?php esc_html_e('Selectie verwijderen', 'tempel-settings'); ?></button>
+                                                <span><?php esc_html_e('Verwijderen is alleen toegestaan in uploads- en cachemappen en kan mediakoppelingen verbreken.', 'tempel-settings'); ?></span>
+                                            </div>
+                                        </form>
+                                    <?php elseif (!empty($large_file_scan)) : ?>
+                                        <p class="tempel-large-files-empty"><?php esc_html_e('Er zijn geen bestanden gevonden.', 'tempel-settings'); ?></p>
+                                    <?php else : ?>
+                                        <p class="tempel-large-files-empty"><?php esc_html_e('Voer de eerste scan uit om de grootste bestanden te bekijken.', 'tempel-settings'); ?></p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
 
@@ -122,6 +208,13 @@ class Status_Settings extends Page
                                     </form>
                                 </div>
                             </div>
+
+                            <?php
+                            $info_page = Admin::registered_pages()['tempel-info-settings'] ?? null;
+                            if ($info_page instanceof Info_Settings) {
+                                $info_page->render_sections();
+                            }
+                            ?>
                         </div>
                     </div>
                     <div class="settings__footer"></div>
@@ -129,8 +222,29 @@ class Status_Settings extends Page
             </div>
         </div>
         <style>
-            .tempel-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:20px;background:#171717}.tempel-status-card{background:#242424;color:#fff;border:1px solid #3d3d3d;border-left:4px solid #72aee6;border-radius:4px;padding:16px}.tempel-status-card--success{border-left-color:#46b450}.tempel-status-card--warning{border-left-color:#f0b849}.tempel-status-card--error{border-left-color:#e65054}.tempel-status-card__heading{display:flex;align-items:center;gap:8px}.tempel-status-card__dot{width:9px;height:9px;border-radius:50%;background:#72aee6}.tempel-status-card--success .tempel-status-card__dot{background:#46b450}.tempel-status-card--warning .tempel-status-card__dot{background:#f0b849}.tempel-status-card--error .tempel-status-card__dot{background:#e65054}.tempel-status-card p{margin:10px 0 0;color:#c3c4c7}.tempel-monitor-form{display:grid;gap:10px;padding:20px 20px 8px}.tempel-monitor-form label{display:grid;gap:4px}.tempel-monitor-form label span{color:#646970}.tempel-monitor-form textarea{width:100%;max-width:800px;font-family:monospace}.tempel-monitor-form .button{width:max-content}.tempel-monitor-run{padding:0 20px 20px}.tempel-log-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:20px 20px 12px}.tempel-log-table-wrap{overflow-x:auto;padding:0 20px}.tempel-log-level{display:inline-block;border-radius:999px;padding:3px 8px;background:#f0f0f1}.tempel-log-level--success{color:#006b1b;background:#edfaef}.tempel-log-level--warning{color:#6e4b00;background:#fcf3cf}.tempel-log-level--error{color:#8a2424;background:#fbeaea}.tempel-log-table details{margin-top:5px}.tempel-log-table code{display:inline-block;margin-top:5px;white-space:normal}.tempel-log-clear{padding:16px 20px 20px;text-align:right}
+            .tempel-status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;padding:20px;background:#171717}.tempel-status-card{background:#242424;color:#fff;border:1px solid #3d3d3d;border-left:4px solid #72aee6;border-radius:4px;padding:16px}.tempel-status-card--success{border-left-color:#46b450}.tempel-status-card--warning{border-left-color:#f0b849}.tempel-status-card--error{border-left-color:#e65054}.tempel-status-card__heading{display:flex;align-items:center;gap:8px}.tempel-status-card__dot{width:9px;height:9px;border-radius:50%;background:#72aee6}.tempel-status-card--success .tempel-status-card__dot{background:#46b450}.tempel-status-card--warning .tempel-status-card__dot{background:#f0b849}.tempel-status-card--error .tempel-status-card__dot{background:#e65054}.tempel-status-card p{margin:10px 0 0;color:#c3c4c7}.tempel-monitor-form{display:grid;gap:10px;padding:20px 20px 8px}.tempel-monitor-form label{display:grid;gap:4px}.tempel-monitor-form label span{color:#646970}.tempel-monitor-form textarea{width:100%;max-width:800px;font-family:monospace}.tempel-monitor-form .button{width:max-content}.tempel-monitor-run{padding:0 20px 20px}.tempel-large-files-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:20px 20px 12px}.tempel-large-files-actions p{margin:0;color:#646970}.tempel-large-files-table-wrap{overflow-x:auto;padding:0 20px 12px}.tempel-large-files-table .check-column{width:32px}.tempel-large-files-table th:nth-child(2),.tempel-large-files-table td:nth-child(2){width:120px;white-space:nowrap}.tempel-large-files-table th:nth-child(4),.tempel-large-files-table td:nth-child(4){width:150px;white-space:nowrap}.tempel-large-files-table th:last-child,.tempel-large-files-table td:last-child{width:100px;white-space:nowrap}.tempel-large-files-table code{overflow-wrap:anywhere}.tempel-large-files-delete-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:0 20px 20px}.tempel-large-files-delete-actions span{color:#646970}.tempel-large-files-empty{padding:0 20px 20px}.tempel-log-filters{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:20px 20px 12px}.tempel-log-table-wrap{overflow-x:auto;padding:0 20px}.tempel-log-level{display:inline-block;border-radius:999px;padding:3px 8px;background:#f0f0f1}.tempel-log-level--success{color:#006b1b;background:#edfaef}.tempel-log-level--warning{color:#6e4b00;background:#fcf3cf}.tempel-log-level--error{color:#8a2424;background:#fbeaea}.tempel-log-table details{margin-top:5px}.tempel-log-table code{display:inline-block;margin-top:5px;white-space:normal}.tempel-log-clear{padding:16px 20px 20px;text-align:right}
         </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const form = document.querySelector('.tempel-large-files-delete');
+                if (!form) return;
+                const all = form.querySelector('.tempel-large-files-select-all');
+                const boxes = Array.from(form.querySelectorAll('.tempel-large-file-checkbox'));
+                const button = form.querySelector('.tempel-large-files-delete-actions button');
+                const update = function () {
+                    const selected = boxes.filter(function (box) { return box.checked; }).length;
+                    button.disabled = selected === 0;
+                    all.checked = boxes.length > 0 && selected === boxes.length;
+                    all.indeterminate = selected > 0 && selected < boxes.length;
+                };
+                all.addEventListener('change', function () {
+                    boxes.forEach(function (box) { box.checked = all.checked; });
+                    update();
+                });
+                boxes.forEach(function (box) { box.addEventListener('change', update); });
+                update();
+            });
+        </script>
         <?php
     }
 
@@ -160,6 +274,89 @@ class Status_Settings extends Page
         $this->guard_monitor_action('tempel_run_status_monitor');
         Status_Monitor::run();
         wp_safe_redirect(admin_url('admin.php?page=tempel-status-settings&monitor_ran=1'));
+        exit;
+    }
+
+    public function scan_large_files(): void
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('Je hebt geen rechten om bestanden te scannen.', 'tempel-settings'));
+        }
+
+        check_admin_referer('tempel_scan_large_files');
+        Large_File_Scanner::run_and_store();
+        wp_safe_redirect(admin_url('admin.php?page=tempel-status-settings&large_files_scanned=1'));
+        exit;
+    }
+
+    public function view_large_file(): void
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('Je hebt geen rechten om bestanden te bekijken.', 'tempel-settings'));
+        }
+
+        check_admin_referer('tempel_view_large_file');
+        $relative_path = isset($_GET['file']) ? sanitize_text_field(wp_unslash($_GET['file'])) : '';
+        if (!Large_File_Scanner::can_view($relative_path)) {
+            wp_die(esc_html__('Dit bestand kan niet veilig vanuit WordPress worden bekeken.', 'tempel-settings'));
+        }
+
+        $path = Large_File_Scanner::resolve_path($relative_path);
+        $extension = strtolower((string) pathinfo($path, PATHINFO_EXTENSION));
+        $mime_types = array(
+            'jpg' => 'image/jpeg', 'jpeg' => 'image/jpeg', 'png' => 'image/png', 'gif' => 'image/gif',
+            'webp' => 'image/webp', 'avif' => 'image/avif', 'pdf' => 'application/pdf',
+            'txt' => 'text/plain; charset=UTF-8', 'log' => 'text/plain; charset=UTF-8',
+            'csv' => 'text/plain; charset=UTF-8', 'json' => 'text/plain; charset=UTF-8',
+            'zip' => 'application/zip',
+        );
+        $mime = $mime_types[$extension] ?? 'application/octet-stream';
+        $disposition = $extension === 'zip' ? 'attachment' : 'inline';
+        nocache_headers();
+        header('X-Content-Type-Options: nosniff');
+        header('Content-Type: ' . $mime);
+        header('Content-Length: ' . (string) filesize($path));
+        header('Content-Disposition: ' . $disposition . '; filename="' . rawurlencode(basename($path)) . '"');
+        readfile($path);
+        exit;
+    }
+
+    public function delete_large_files(): void
+    {
+        if (!current_user_can('manage_options')) {
+            wp_die(esc_html__('Je hebt geen rechten om bestanden te verwijderen.', 'tempel-settings'));
+        }
+
+        check_admin_referer('tempel_delete_large_files');
+        $files = isset($_POST['large_files']) ? (array) wp_unslash($_POST['large_files']) : array();
+        $deleted = 0;
+        $failed = 0;
+
+        foreach (array_slice(array_unique($files), 0, 50) as $relative_path) {
+            $relative_path = sanitize_text_field((string) $relative_path);
+            if (!Large_File_Scanner::can_delete($relative_path)) {
+                $failed++;
+                continue;
+            }
+
+            $path = Large_File_Scanner::resolve_path($relative_path);
+            if ($path !== '') {
+                wp_delete_file($path);
+            }
+
+            if ($path !== '' && !file_exists($path)) {
+                $deleted++;
+            } else {
+                $failed++;
+            }
+        }
+
+        Large_File_Scanner::run_and_store();
+        wp_safe_redirect(add_query_arg(array(
+            'page' => 'tempel-status-settings',
+            'large_files_deleted' => $deleted,
+            'large_files_delete_failed' => $failed,
+        ), admin_url('admin.php')));
         exit;
     }
 

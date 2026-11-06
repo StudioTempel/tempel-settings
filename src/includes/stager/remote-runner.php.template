@@ -1,0 +1,58 @@
+<?php
+// Short-lived deployment endpoint. Generated uniquely for each transfer.
+ini_set('display_errors', '0');
+header('Content-Type: application/json');
+header('Cache-Control: no-store');
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || time() > __EXPIRES__ || !hash_equals(__TOKEN_HASH__, hash('sha256', $_SERVER['HTTP_X_STAGER_TOKEN'] ?? ''))) {
+    http_response_code(404); exit;
+}
+if (function_exists('set_time_limit')) { @set_time_limit(900); }
+$id = __ID__;
+$guard = __GUARD__;
+$status = __DIR__ . '/' . $id . '-status.php';
+$package = __DIR__ . '/' . $id . '-package.php';
+$operation = $_POST['operation'] ?? '';
+if (!in_array($operation, ['check', 'import'], true)) { http_response_code(400); exit; }
+/*__CLASSES__*/
+$migration = null;
+$temp = null;
+$claimed = false;
+try {
+    // Bootstrap the destination's own config and database credentials.
+    define('WP_USE_THEMES', false);
+    ob_start();
+    require __DIR__ . '/wp-load.php';
+    ob_end_clean();
+    $migration = new Stager_Remote_Migration(false);
+    if ($operation === 'check') {
+        $migration->check(false);
+        echo json_encode(['ok' => true, 'siteurl' => site_url(), 'wordpress' => $wp_version]); exit;
+    }
+    $claim = @fopen($status, 'x');
+    if (!$claim) { throw new RuntimeException('Deze import is al gestart. Controleer de bestaande status.'); }
+    fwrite($claim, $guard . json_encode(['state' => 'running'])); fclose($claim);
+    $claimed = true;
+    register_shutdown_function(function () use ($status, $guard) {
+        $error = error_get_last();
+        if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR], true)) {
+            file_put_contents($status, $guard . json_encode(['state' => 'error', 'message' => 'PHP is onverwacht gestopt. De import kan gedeeltelijk zijn uitgevoerd. Controleer de site en herstel zo nodig je hostingbackup.']), LOCK_EX);
+        }
+    });
+    $migration->check();
+    $temp = tempnam(sys_get_temp_dir(), 'stager-remote-');
+    if (!$temp) { throw new RuntimeException('Kan tijdelijk pakket niet aanmaken.'); }
+    chmod($temp, 0600);
+    $in = fopen($package, 'rb'); $out = fopen($temp, 'wb');
+    if (!$in || !$out || fread($in, strlen($guard)) !== $guard) { throw new RuntimeException('Ongeldig uploadbestand.'); }
+    stream_copy_to_stream($in, $out); fclose($in); fclose($out);
+    if (!hash_equals($_POST['sha256'] ?? '', hash_file('sha256', $temp))) { throw new RuntimeException('De upload is beschadigd.'); }
+    $migration->import($temp);
+    file_put_contents($status, $guard . json_encode(['state' => 'done']), LOCK_EX);
+    echo json_encode(['ok' => true]);
+} catch (Throwable $e) {
+    if ($claimed) { file_put_contents($status, $guard . json_encode(['state' => 'error', 'message' => $e->getMessage()]), LOCK_EX); }
+    echo json_encode(['ok' => false, 'message' => $e->getMessage()]);
+} finally {
+    if ($temp && is_file($temp)) { unlink($temp); }
+    if ($migration) { $migration->cleanup(); }
+}

@@ -1,7 +1,7 @@
 .tmpl_settings__wrap .settings__input__wrap input.settings-input-light {
-    color: #111;
-    background-color: #fff;
-    border: 1px solid #d0d5dd;
+    color: #fff;
+    background-color: #222;
+    border: 1px solid #383838;
 }
 
 .tmpl_settings__wrap .settings__input__wrap input.settings-input-code {
@@ -758,4 +758,103 @@ body.wp-admin.tempel-settings_page_tempel-backup-settings .settings__body {
     #tmpl_backup_settings .tempel-backup-technical__content .settings__input__wrap {
         width: 100%;
     }
+}
+
+.tempel-backup-progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: -8px 0 24px;
+}
+
+.tempel-backup-progress progress {
+    width: min(520px, 100%);
+    height: 10px;
+    accent-color: #f5f51f;
+}
+
+.tempel-backup-progress strong {
+    min-width: 3.25em;
+    color: #fff;
+    font-size: 13px;
+}
+
+/* Tempel Verhuizen */
+#tmpl_stager_settings .settings__body .body__inner {
+    min-height: 100vh;
+    color: #f5f5f5;
+    background: #050505;
+}
+
+.tempel-stager { display: grid; gap: 24px; }
+.tempel-stager-step {
+    color: #f3f438;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.tempel-stager-card {
+    padding: 28px;
+    background: #171717;
+    border: 1px solid #333;
+    border-radius: 20px;
+}
+.tempel-stager-card h2 { margin: 8px 0; color: #fff; font-size: 25px; }
+.tempel-stager-card p { color: #aaa; line-height: 1.6; }
+.tempel-stager-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 22px; }
+.tempel-stager-grid--manual { grid-template-columns: 1fr; }
+.tempel-stager-fields { display: grid; gap: 18px; margin-top: 22px; }
+.tempel-stager-field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.tempel-stager-field-row--host { grid-template-columns: minmax(0, 1fr) 120px; }
+.tempel-stager label { display: block; margin: 18px 0 7px; color: #fff; font-weight: 700; }
+.tempel-stager-fields label { margin-top: 0; }
+.tempel-stager input[type="text"],
+.tempel-stager input[type="password"],
+.tempel-stager input[type="number"],
+.tempel-stager input[type="url"] {
+    width: 100%; max-width: none; min-height: 48px; padding: 10px 14px;
+    color: #fff; background: #262626; border: 1px solid #444; border-radius: 12px;
+}
+.tempel-stager input:focus { border-color: #f3f438; box-shadow: 0 0 0 1px #f3f438; }
+.tempel-stager .button { margin-top: 16px; }
+.tempel-stager-folder-field { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: stretch; }
+.tempel-stager-folder-field .button { min-width: 130px; margin: 0; }
+.tempel-stager-warning { margin-top: 26px; padding: 18px; color: #ffe8ad; background: #302710; border: 1px solid #66521c; border-radius: 14px; }
+.tempel-stager-warning strong { color: #fff; }
+.tempel-stager-warning p { margin: 5px 0 0; color: #d8c896; }
+.tempel-stager-confirm { padding: 14px 0; font-weight: 500 !important; }
+.tempel-stager-folder-dialog {
+    width: min(680px, calc(100vw - 32px));
+    max-height: min(760px, calc(100vh - 48px));
+    padding: 24px;
+    color: #f5f5f5;
+    background: #171717;
+    border: 1px solid #444;
+    border-radius: 20px;
+    box-shadow: 0 24px 80px rgb(0 0 0 / 65%);
+}
+.tempel-stager-folder-dialog::backdrop { background: rgb(0 0 0 / 72%); backdrop-filter: blur(2px); }
+.tempel-stager-folder-dialog__header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.tempel-stager-folder-dialog__header h2 { margin: 6px 0 0; color: #fff; font-size: 25px; }
+.tempel-stager-folder-close { padding: 0; color: #fff; font: 400 34px/1 sans-serif; background: transparent; border: 0; cursor: pointer; }
+.tempel-stager-folder-actions { display: flex; gap: 10px; }
+.tempel-stager-folder-dialog__footer { display: flex; justify-content: flex-end; }
+#stager-folder-path { overflow-wrap: anywhere; color: #fff; font-weight: 700; }
+#stager-folder-list { display: grid; gap: 6px; max-height: 280px; margin: 14px 0; overflow-y: auto; }
+#stager-folder-list .button { width: 100%; margin: 0; text-align: left; }
+.tempel-stager-folder-dialog .button { margin-top: 0; }
+.tempel-stager-package-list { display: grid; gap: 8px; max-height: 420px; margin: 18px 0 0; overflow-y: auto; }
+.tempel-stager-package-list .button { width: 100%; text-align: left; }
+.tempel-stager-manual { padding: 22px; background: #111; border: 1px solid #333; border-radius: 18px; }
+.tempel-stager-manual > summary { color: #fff; cursor: pointer; font-size: 18px; font-weight: 800; }
+.tempel-stager progress { width: 100%; height: 16px; accent-color: #f3f438; }
+.tempel-stager-export-progress { display: grid; gap: 10px; margin-top: 20px; }
+.tempel-stager-export-progress[hidden] { display: none; }
+.tempel-stager-export-progress p { margin: 0; color: #fff; }
+.tempel-stager-export-progress .button { justify-self: start; }
+@media (max-width: 900px) {
+    .tempel-stager-grid { grid-template-columns: 1fr; }
+    .tempel-stager-field-row, .tempel-stager-field-row--host { grid-template-columns: 1fr; }
+    .tempel-stager-folder-field { grid-template-columns: 1fr; }
 }

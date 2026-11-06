@@ -1,4 +1,14 @@
 jQuery(document).ready(function($) {
+    function syncPostTypeConversionFields() {
+        const enabled = $('#conversion_include_post_type').is(':checked');
+        $('.tempel-post-type-dependent').prop('hidden', !enabled).attr('aria-hidden', enabled ? 'false' : 'true');
+    }
+
+    if ($('#conversion_include_post_type').length) {
+        $('#conversion_include_post_type').on('change', syncPostTypeConversionFields);
+        syncPostTypeConversionFields();
+    }
+
     if ($('#conversion_selected_forms').length) {
         $('#conversion_selected_forms').select2({
             placeholder: 'Selecteer formulieren',

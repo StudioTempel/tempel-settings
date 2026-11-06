@@ -33,8 +33,11 @@ class SVG_Support
      */
     function sanitize_svg_on_upload($file)
     {
-        if ($file['type'] == 'image/svg+xml') {
-            $this->sanitize_svg($file['tmp_name']);
+        $extension = strtolower((string) pathinfo((string) ($file['name'] ?? ''), PATHINFO_EXTENSION));
+        if (($file['type'] ?? '') === 'image/svg+xml' || $extension === 'svg') {
+            if (!$this->sanitize_svg((string) ($file['tmp_name'] ?? ''))) {
+                $file['error'] = __('Dit SVG-bestand kon niet veilig worden verwerkt en is geweigerd.', 'tempel-settings');
+            }
         }
         
         return $file;
@@ -46,24 +49,25 @@ class SVG_Support
      * @since 1.0.0
      * @param string $file
      */
-    function sanitize_svg($file)
+    function sanitize_svg($file): bool
     {
-        
-        // new Sanitizer instance
+        if ($file === '' || !is_file($file) || !is_readable($file) || !is_writable($file)) {
+            return false;
+        }
+
         $sanitizer = new Sanitizer();
-        
-        // get the SVG file contents
         $dirty = file_get_contents($file);
-        
+        if (!is_string($dirty) || $dirty === '') {
+            return false;
+        }
+
         $sanitizer->removeRemoteReferences(true);
-        
-        // sanitize the SVG file contents
         $cleanSVG = $sanitizer->sanitize($dirty);
-        
-        // save the cleaned SVG file contents
-        file_put_contents($file, $cleanSVG);
-        
-        return $file;
+        if (!is_string($cleanSVG) || $cleanSVG === '') {
+            return false;
+        }
+
+        return file_put_contents($file, $cleanSVG, LOCK_EX) === strlen($cleanSVG);
     }
     
     /**

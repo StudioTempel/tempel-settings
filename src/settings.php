@@ -22,6 +22,8 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/form-entry-retention.p
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/plugin-install-notifier.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/email-login-verification.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/dropbox-backup.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/stager.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/php-security.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -33,6 +35,9 @@ if(!class_exists('Settings')) {
             new Sensitive_Files();
             new Form_Entry_Retention();
             new Dropbox_Backup();
+            new Stager();
+            new PHP_Security();
+            new Security_Lock_Auto_Reenable();
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'gf_antispam_enabled'))) {
                 new GF_Simple_Antispam();

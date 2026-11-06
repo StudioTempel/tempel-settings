@@ -14,6 +14,7 @@ class Activator
     static function register_options() {
         $option_defaults = [
             'security_lock'                     => 'on',
+            'security_lock_auto_reenable'       => 'on',
             'sensitive_files_enabled'           => '',
             'email_login_verification'          => '',
             'form_entry_retention_enabled'      => '',

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<ruleset name="Tempel Settings">
+    <description>Code style for Tempel Settings.</description>
+    <file>tempel.php</file>
+    <file>includes</file>
+    <file>src</file>
+    <exclude-pattern>src/includes/stager/vendor/*</exclude-pattern>
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Extra"/>
+    <rule ref="WordPress-Docs"/>
+    <rule ref="PHPCompatibilityWP">
+        <properties>
+            <property name="testVersion" value="8.0-"/>
+        </properties>
+    </rule>
+</ruleset>

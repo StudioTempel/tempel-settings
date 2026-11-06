@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 2.17.5
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,41 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 3. Configureer de gewenste onderdelen via `Tempel Settings`.
 
 == Changelog ==
+
+= 3.0.0 =
+* Vereenvoudig het beheer tot Overzicht, Instellingen, Gereedschap en Logboek.
+* Voeg een centrale UI-stijlgids, design tokens en herbruikbare componenten toe.
+* Voeg live back-upstatus toe zonder de pagina te vernieuwen.
+* Gebruik dezelfde voortgangstaal voor back-ups en websiteverhuizingen.
+* Centraliseer toegang tot bestaande instellingen zonder opgeslagen waarden te wijzigen.
+* Voorkom dat de adminnavigatie tijdens het renderen opnieuw hooks registreert.
+* Voeg vaste editor- en PHP-codestandaarden toe voor verdere ontwikkeling.
+* Schakel e-mailverificatie voor backend-logins standaard in en voeg een noodschakelaar voor mailproblemen toe.
+* Sluit WP-Members-logins op de website expliciet uit van backend-e-mailverificatie.
+* Beperk e-mailverificatie tot beheerlogins via wp-admin, wp-login.php en st-beheer.
+* Dwing op alle huidige en toekomstige Tempel-schermen het donkere canvas en de vaste veldindeling af.
+* Plaats de witte Mail-WYSIWYG over de volledige veldbreedte met label en toelichting erboven.
+* Houd visueel verborgen detailpagina's bereikbaar via directe links en de interne navigatie.
+* Voeg Info, pluginstatus en changelog samen met Status & logboek.
+
+= 2.20.1 =
+* Toon duidelijk wanneer de Dropbox App secret veilig is opgeslagen en verberg een verouderde configuratiefout.
+
+= 2.20.0 =
+* Integreer Website verhuizen met SFTP, verhuispakketten, voortgang en zichtbare back-upcontrole.
+* Voeg retries, schijfruimtecontrole, ZIP- en Dropbox-verificatie en opruiming van tijdelijke back-upbestanden toe.
+
+= 2.19.0 =
+* Verstuur grote Dropbox-back-ups hervatbaar in korte achtergrondstappen en toon de uploadvoortgang.
+
+= 2.18.1 =
+* Maak veilige grote bestanden direct bekijkbaar en meerdere uploads- of cachebestanden selecteerbaar en verwijderbaar.
+
+= 2.18.0 =
+* Voeg op Status & logboek een handmatige scan toe met de 50 grootste bestanden van de WordPress-installatie.
+
+= 2.17.6 =
+* Zet de blokkade voor plugininstallaties en nieuwe beheerders optioneel na één uur automatisch weer aan; standaard ingeschakeld.
 
 = 2.17.5 =
 * Corrigeer de donkere achtergrond, veldbreedtes en planning-layout van de Back-ups-pagina.

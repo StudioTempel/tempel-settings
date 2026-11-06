@@ -21,7 +21,7 @@ class Widget_Settings extends Page
                 <div class="tmpl_settings__inner">
                     <?php settings_navigation(); ?>
                     <div class="settings__body">
-                        <div class="body__inner">
+                        <div class="body__inner tempel-ui-page">
                             <form action="options.php" method="post">
                                 <?php settings_fields('tempel_widget_settings'); ?>
 
@@ -84,7 +84,7 @@ class Widget_Settings extends Page
 
                                         <!-- Settings Field | Selectable Forms -->
 
-                                        <div class="settings__field" id="conversion_selected_forms_settings">
+                                        <div class="settings__field tempel-widget-field--full" id="conversion_selected_forms_settings">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="conversion_selected_forms">
@@ -175,7 +175,8 @@ class Widget_Settings extends Page
                                             </div>
                                         </div>
 
-                                        <div class="settings__field" id="post_type_count_post_type_setting">
+                                        <?php $post_type_fields_hidden = !$this->is_checked('conversion_include_post_type'); ?>
+                                        <div class="settings__field tempel-post-type-dependent" id="post_type_count_post_type_setting" <?php echo $post_type_fields_hidden ? 'hidden' : ''; ?>>
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="post_type_count_post_type">
@@ -202,7 +203,7 @@ class Widget_Settings extends Page
                                             </div>
                                         </div>
 
-                                        <div class="settings__field" id="post_type_count_statuses_setting">
+                                        <div class="settings__field tempel-post-type-dependent" id="post_type_count_statuses_setting" <?php echo $post_type_fields_hidden ? 'hidden' : ''; ?>>
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">
                                                     <label for="post_type_count_statuses">

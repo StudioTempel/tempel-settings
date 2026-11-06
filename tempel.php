@@ -6,12 +6,12 @@
  * @package           tempel-settings
  * @link              https://github.com/StudioTempel/tempel-settings
  * @author            Studio Tempel & Job Ligthart
- * @copyright         20245 Studio Tempel
+ * @copyright         2026 Studio Tempel
  * @license           GPL v2 or later
  *
  * Plugin Name:       Tempel settings
  * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           2.17.5
+ * Version:           3.0.0
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '2.17.5');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '3.0.0');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -114,6 +114,7 @@ class TempelSettings
         $this->set_locale();
         $this->apply_update_defaults();
         $this->apply_security_lock_default();
+        $this->apply_security_lock_auto_reenable_default();
         $this->repair_general_settings_after_gravity_forms_save();
         $this->apply_complianz_style_default();
         $this->deactivate_vulnerable_wpmudev_dashboard();
@@ -137,6 +138,8 @@ class TempelSettings
     
     private function load_dependencies()
     {
+        require_once TEMPEL_SETTINGS_DIR . 'src/Core/SettingsRepository.php';
+        require_once TEMPEL_SETTINGS_DIR . 'src/Core/SecretStore.php';
         require_once TEMPEL_SETTINGS_DIR . 'includes/localization.php';
         require_once TEMPEL_SETTINGS_DIR . 'src/admin.php';
         require_once TEMPEL_SETTINGS_DIR . 'src/settings.php';
@@ -188,6 +191,20 @@ class TempelSettings
         $settings['security_lock'] = 'on';
         update_option('tmpl_settings', $settings);
         update_option('tempel_settings_security_lock_default_applied', true);
+    }
+
+    private function apply_security_lock_auto_reenable_default(): void
+    {
+        $default_option = 'tempel_settings_security_lock_auto_reenable_default_applied';
+        if (get_option($default_option)) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $settings['security_lock_auto_reenable'] = 'on';
+        update_option('tmpl_settings', $settings);
+        update_option($default_option, true);
     }
 
     private function repair_general_settings_after_gravity_forms_save(): void
