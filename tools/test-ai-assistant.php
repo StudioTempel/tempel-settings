@@ -102,6 +102,7 @@ ai_check(strpos($hub, "hash_hmac('sha256'") !== false && strpos($hub, 'X-Tempel-
 ai_check(strpos($hub, 'strtoupper($method)') !== false, 'Hub signatures include the actual HTTP method');
 ai_check(strpos($hub, 'SecretStore::encrypt') !== false && strpos($hub, "'site_url' => home_url('/')") !== false, 'Hub credentials are encrypted and pairing is domain-bound');
 ai_check(strpos($class, 'Hub_Client::responses') !== false && strpos($class, 'Hub_Client::is_connected()') !== false, 'All AI operations can use the central Hub proxy');
+ai_check(strpos($class, "\$body['message']") !== false && strpos($class, "\$body['errors']") !== false, 'Hub validation errors are shown instead of a generic OpenAI error');
 ai_check(strpos($ai_view, 'Verbinden met Tempel Hub') !== false && strpos($ai_view, "\$this->roles(\$settings)") !== false, 'AI settings expose Hub pairing and retain local role access');
 ai_check(strpos($ai_view, 'Lokale OpenAI API-sleutel') === false && strpos($ai_view, "\$this->number('monthly_site_limit'") === false, 'Model, key and technical limits are no longer configured locally');
 ai_check(strpos($hub, 'tempel_hub_auto_pair') !== false && strpos($hub, 'hub-challenge') !== false && strpos($hub, 'random_bytes(32)') !== false, 'Registered sites support challenge-based automatic pairing after update');

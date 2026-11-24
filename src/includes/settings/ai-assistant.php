@@ -576,11 +576,21 @@ final class AI_Assistant
 
     private function api_error(int $status, array $body): WP_Error
     {
-        $message = (string) ($body['error']['message'] ?? '');
+        $message = (string) ($body['error']['message'] ?? $body['message'] ?? '');
+
+        if ($message === '' && isset($body['errors']) && is_array($body['errors'])) {
+            foreach ($body['errors'] as $messages) {
+                if (is_array($messages) && isset($messages[0]) && is_scalar($messages[0])) {
+                    $message = (string) $messages[0];
+                    break;
+                }
+            }
+        }
+
         if ($status === 401) {
-            $message = __('De OpenAI API-sleutel is ongeldig.', 'tempel-settings');
+            $message = $message !== '' ? $message : __('De centrale OpenAI-koppeling is niet geldig.', 'tempel-settings');
         } elseif ($status === 429) {
-            $message = __('De OpenAI-limiet of het beschikbare API-tegoed is bereikt.', 'tempel-settings');
+            $message = $message !== '' ? $message : __('De OpenAI-limiet of het beschikbare API-tegoed is bereikt.', 'tempel-settings');
         } elseif ($message === '') {
             $message = __('OpenAI kon de opdracht niet uitvoeren.', 'tempel-settings');
         }

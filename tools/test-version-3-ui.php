@@ -14,7 +14,7 @@ $backup = file_get_contents($root . '/src/includes/settings/dropbox-backup.php')
 $navigation = file_get_contents($root . '/src/views/partials/settings-navigation.php');
 $components = file_get_contents($root . '/dist/css/admin-components.css');
 
-check(strpos($plugin, "TEMPEL_SETTINGS_VERSION', '4.9.2") !== false, 'Plugin runtime version is 4.9.2');
+check(strpos($plugin, "TEMPEL_SETTINGS_VERSION', '4.9.3") !== false, 'Plugin runtime version is 4.9.3');
 check(file_exists($root . '/src/views/overview-settings.php'), 'Overview page exists');
 check(strpos(file_get_contents($root . '/src/views/overview-settings.php'), 'Veelgebruikte acties') === false, 'Overview omits the redundant quick actions card');
 $widget_view = file_get_contents($root . '/src/views/widget-settings.php');

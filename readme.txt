@@ -4,7 +4,7 @@ Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 4.9.2
+Stable tag: 4.9.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,11 @@ Tempel combineert een bedrijfsgebonden AI-schrijfassistent met beheer, beveiligi
 3. Configureer de gewenste onderdelen via `Tempel`.
 
 == Changelog ==
+
+= 4.9.3 =
+
+* Toont concrete fouten uit Tempel Hub en OpenAI in plaats van de algemene melding dat de opdracht niet kon worden uitgevoerd.
+* Behoudt duidelijke meldingen voor een ongeldige centrale koppeling, verbruikslimiet of ontbrekend API-tegoed.
 
 = 4.9.2 =
 
