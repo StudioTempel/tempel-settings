@@ -1,5 +1,232 @@
 # Changelog
 
+## 4.9.2 — 2026-11-24
+
+- Koppelt een website automatisch met Tempel Hub zodra het domein daar geregistreerd staat en de domeinchallenge slaagt.
+- Verwijdert het tijdelijke centrale koppelvenster: geregistreerde domeinen blijven veilig automatisch koppelbaar.
+- Probeert een mislukte koppeling na 15 minuten opnieuw en direct opnieuw na iedere pluginupdate.
+
+## 4.9.1 — 2026-11-23
+
+- Verwijdert lokale instellingen voor AI aan/uit, API-sleutel, model en gebruikslimieten; deze komen uitsluitend uit Tempel Hub.
+- Alleen de toegestane WordPress-rollen blijven bewust lokaal instelbaar.
+- Voegt een tijdelijke, centraal schakelbare automatische koppeling toe voor websites die al in het CRM geregistreerd staan.
+- De automatische koppeling gebruikt een willekeurige domeinchallenge; er staat geen gedeeld geheim in de pluginrelease.
+
+## 4.9.0 — 2026-11-23
+
+- Eerste koppeling met Tempel Hub in het CRM voor centraal beheer van AI-toegang, Templeton-regels en gebruikslimieten.
+- Websites koppelen via een eenmalige code die alleen werkt voor het geregistreerde domein.
+- Alle AI-verzoeken worden per site ondertekend met HMAC, tijdstempel en een unieke nonce; hergebruik wordt geblokkeerd.
+- De centrale OpenAI-sleutel wordt nooit naar WordPress verstuurd; lokaal ingestelde sleutels blijven tijdelijk als fallback werken.
+- De AI-instellingen tonen de Hub-status en bieden koppelen en ontkoppelen zonder handmatige configuratiebestanden.
+
+## 4.8.0 — 2026-11-23
+
+- Nieuwe beheerpagina `Optimalisatie` om bestaande pagina's adviserend te scannen.
+- De analyse gebruikt gewone pagina-inhoud, geselecteerde ACF/Flexible Content, bestaande SEO-data en het bedrijfs-DNA.
+- Resultaten bevatten sterke punten, knelpunten, concrete acties, herschrijfvoorstellen en SEO-advies; er wordt niets automatisch gepubliceerd of overschreven.
+- De analyse draait als achtergrondtaak met live voortgang en veilige tekstweergave.
+
+## 4.7.7 — 2026-11-23
+
+- Het DNA-scherm heeft nu één gedocumenteerd afstandssysteem: 24 px tussen secties, 16 px tussen titel en inhoud, 12 px tussen items, 8 px bij toelichtingen en 4 px tussen statusregels.
+- De ruimte onder `Bedrijfs-DNA` is vergroot naar 16 px.
+
+## 4.7.6 — 2026-11-23
+
+- De DNA-pagina gebruikt een consequent verticaal ritme van 24 px tussen hoofdblokken en 12 px tussen hoofdstukken.
+- Gesloten generator- en hoofdstukregels hebben compactere binnenruimte.
+
+## 4.7.5 — 2026-11-23
+
+- De uitgebreide DNA-generator is standaard ingeklapt en opent alleen wanneer een nieuw voorstel nodig is.
+- Grote keuze- en bronkaarten zijn vervangen door compacte bediening.
+- Slechts één DNA-hoofdstuk blijft tegelijk open en acties per antwoord zijn visueel terughoudender.
+
+## 4.7.4 — 2026-11-23
+
+- Elk DNA-antwoord kan afzonderlijk als menselijk gecontroleerd worden gemarkeerd.
+- Hoofdstukken tonen naast de invulstatus de verdeling tussen gecontroleerde en uitsluitend door AI ingevulde antwoorden.
+- AI-overname en latere tekstwijzigingen trekken een eerdere controlestatus automatisch in.
+
+## 4.7.3 — 2026-11-23
+
+- De zes DNA-hoofdstukken zijn compacte accordeons met een subtiele invulstatus.
+- DNA-voorstellen worden per hoofdstuk gegroepeerd en pas na openen getoond.
+- De bedrijfs-DNA-kop en hoofdstuknavigatie gebruiken minder nadrukkelijke AI-vormgeving.
+
+## 4.7.2 — 2026-11-23
+
+- Voegt aan de Templeton Engine-pagina een dynamisch overzicht toe van alle gebruikte bronnen en kaders.
+- Toont de dekking van DNA-antwoorden, website-inhoud, ACF/Flexible Content en SEO-data.
+
+## 4.7.1 — 2026-11-23
+
+- Toont op alle Tempel-pagina’s een vaste opslagmelding rechtsonder.
+- Ondersteunt live opslaan, klassieke WordPress-opslagmeldingen en dynamisch toegevoegde succesmeldingen.
+
+## 4.7.0 — 2026-11-23
+
+- Herbouwt de DNA-pagina rond de zes blokken uit de Studio Tempel-vragenlijst voor merkstrategie.
+- Koppelt de geselecteerde contentinventarisatie zichtbaar aan het DNA-onderzoek.
+- Introduceert een veilige voorstelworkflow voor bestaande klanten: per antwoord overnemen, aanvullen of overslaan, of alleen lege velden vullen.
+- Voegt de vaste SEO-paginawerkwijze toe aan Templeton Engine 2.6.
+
+## 4.6.0 — 2026-11-23
+
+- Voegt een aparte beheerpagina voor Templeton Engine 2.5 toe met vaste Studio Tempel-richtlijnen.
+- Past het redactionele kader automatisch toe op alle schrijftaken, DNA-analyses en gerichte DNA-updates.
+- Beheert schrijfstijl, feiten en claims, SEO, structuur, verboden formuleringen, kwaliteitscontrole en voorbeelden met live opslaan.
+
+## 4.5.0 — 2026-11-23
+
+- Voegt Contentinventaris toe voor het beheren van publieke contenttypes, ACF-velden en SEO-bronnen die Templeton mag gebruiken.
+- DNA-voorstellen kunnen bestaande gegevens aanvullen of volledig overschrijven.
+- Ieder DNA-onderdeel kan afzonderlijk opnieuw worden onderzocht met een toelichting op wat er gewijzigd is.
+
+## 4.4.0 — 2026-11-23
+
+- Slaat alle echte Tempel-instellingen automatisch op zonder losse opslaanknoppen.
+- Toont subtiele live status bij opslaan, succes en fouten.
+- Houdt bewuste acties zoals verzenden, opschonen, back-uppen, koppelen en verhuizen buiten automatisch opslaan.
+
+## 4.3.4 — 2026-11-23
+
+- Maakt de tagskolom in het bedrijfs-DNA ruimer zodat langere tags beter leesbaar blijven.
+
+## 4.3.3 — 2026-11-23
+
+- Hernoemt Steekwoorden naar Tags en plaatst titel en beschrijving boven een rustige tweekolomsindeling met tags links en tekst rechts.
+
+## 4.3.2 — 2026-11-23
+
+- Toont tijdens diep DNA-onderzoek een live onderzoekslog met de afzonderlijke scanonderdelen.
+- Presenteert gebruikte bronnen als duidelijke bronkaarten en maakt steekwoorden bewerkbaar als losse tags.
+
+## 4.3.1 — 2026-11-23
+
+- Het bronnenoverzicht vermeldt naast externe bronnen ook het websiteprofiel, aantallen onderzochte publieke contenttypes, ACF/Flexible Content en gebruikte categorieën en tags.
+- Lokale broncategorieën tonen alleen transparante samenvattingen en aantallen; volledige veldinhoud en gevoelige gegevens worden niet in het overzicht herhaald.
+- Externe markt- en trendbronnen blijven afzonderlijk herkenbaar en klikbaar.
+
+## 4.3.0 — 2026-11-23
+
+- Ieder DNA-onderdeel heeft een eigen compacte regel met bewerkbare steekwoorden.
+- Templeton Engine genereert per onderdeel vier tot tien concrete, kommagescheiden tags en vermijdt algemene nietszeggende termen.
+- De tags worden genormaliseerd, ontdubbeld en samen met de uitgebreide DNA-tekst aan iedere volgende AI-opdracht meegegeven.
+
+## 4.2.1 — 2026-11-23
+
+- Diep DNA-onderzoek draait als achtergrondtaak met live voortgangsfases, verstreken tijd en duidelijke foutstatus.
+- Tijdens het genereren wordt Templeton Engine 2.4 als actieve engine vermeld.
+- DNA-tekstvelden groeien automatisch mee tijdens typen en na het invullen van een voorstel.
+
+## 4.2.0 — 2026-11-23
+
+- DNA-onderzoek uitgebreid naar openbare custom post types, ACF-tekst, Flexible Content, categorieën en tags.
+- Doelgroepanalyse vormt voortaan onderbouwde hypotheses uit aanbod, taal, problemen, voordelen, cases en call-to-actions wanneer de doelgroep niet expliciet wordt genoemd.
+- Gericht webonderzoek gebruikt afgeleide thema’s, zoekbegrippen, doelgroepbehoeften en regio met een uitgebreidere zoekcontext.
+- Het bedrijfs-DNA bevat voortaan ook een blijvend veld voor kernonderwerpen en relevante trends.
+
+## 4.1.1 — 2026-11-23
+
+- Back-ups, Website verhuizen en de statuskaarten volgen nu overal het lichte Tempel-thema.
+- Oude hardgecodeerde donkere oppervlakken worden in licht thema centraal overschreven via de gedeelde designtokens.
+
+## 4.1.0 — 2026-11-23
+
+- DNA is een afzonderlijke pagina voor beheerders en editors; API-sleutel, rollen en limieten blijven uitsluitend onder Beheer beschikbaar.
+- De eerdere technische Instellingen-sectie heet voortaan Beheer.
+- Een gecontroleerde DNA-generator analyseert lokale openbare website-inhoud, een optionele redacteursinstructie en desgewenst actuele markttrends via OpenAI-web search.
+- Gegenereerd DNA wordt eerst als bewerkbaar voorstel ingevuld en nooit automatisch opgeslagen; gebruikte trendbronnen verschijnen als klikbare links.
+- Een licht Tempel-thema toegevoegd en eenmalig standaard ingeschakeld.
+
+## 4.0.3 — 2026-11-23
+
+- Verwijdert de waarschuwing “Deel geen gevoelige gegevens” van AI & DNA voor een rustigere interface.
+
+## 4.0.2 — 2026-11-23
+
+- Herstelt de typografische hiërarchie van AI & DNA: veldlabels en toelichtingen staan weer los van elkaar met consistente ruimte, kleur en regelhoogte.
+
+## 4.0.1 — 2026-11-23
+
+- Herstelt de ontbrekende Tempel-stylesheets op AI & DNA en andere verborgen detailpagina's met een afwijkend WordPress-scherm-ID.
+- De centrale schermherkenning controleert voortaan zowel het scherm-ID als de geregistreerde Tempel-paginaslug.
+
+## 4.0.0 — 2026-11-23
+
+- De plug-in en het beheermenu heten voortaan kortweg Tempel.
+- Tempel AI heeft een centraal bedrijfs-DNA voor bedrijf, doelgroep, aanbod, positionering, tone of voice, woordkeuze en een representatieve voorbeeldtekst.
+- Iedere AI-opdracht gebruikt dit DNA automatisch als veilige inhoudelijke en stilistische context.
+- De nieuwe actie Websiteonderdeel schrijven vormt de eerste basis voor latere ACF-blokgeneratie.
+
+## 3.3.1 — 2026-11-23
+
+- Alle regels in het compacte publicatieblok staan nu op één vaste linkerlijn.
+- Tekst en bediening zijn verticaal uitgelijnd met de bijbehorende WordPress- en Yoast-iconen.
+
+## 3.3.0 — 2026-11-23
+
+- Nieuw standaard ingeschakeld compact publicatieblok voor de klassieke WordPress-editor.
+- De zichtbare labels Status, Zichtbaarheid en Gepubliceerd op worden rustig verborgen; de bijbehorende iconen, actuele waarden, bewerklinks en acties blijven intact.
+- De labels blijven beschikbaar voor schermlezers en de functie kan onder Algemeen → Uiterlijk worden uitgeschakeld.
+
+## 3.2.1 — 2026-11-23
+
+- WYSIWYG-inhoud wordt nu met zijn veilige HTML-structuur naar OpenAI gestuurd, zodat koppen, paragrafen, lijsten, links, strong/em en CSS-klassen behouden kunnen blijven.
+- Het voorbeeldvenster rendert de opmaak en blijft vóór het terugplaatsen bewerkbaar.
+- Alle teruggestuurde HTML wordt server-side met `wp_kses_post()` gefilterd; scripts, event-attributen en andere onveilige markup worden niet toegelaten.
+- Gewone ACF-tekstvelden blijven bewust uitsluitend platte tekst gebruiken.
+- Wanneer een redacteur de overgenomen brontekst handmatig wijzigt, schakelt die ene opdracht veilig terug naar platte tekst om verouderde verborgen HTML te voorkomen.
+
+## 3.2.0 — 2026-11-23
+
+- De AI-schrijfassistent is veranderd van een los gereedschap in een veldgebonden redactiehulp.
+- Ondersteunde ACF-velden krijgen direct naast hun label een compacte AI-knop.
+- De klassieke editor krijgt een AI-knop naast de bestaande mediaknoppen.
+- Een veldknop opent de module direct met geselecteerde tekst, of anders de volledige veldinhoud, en onthoudt exact waar het resultaat terug moet komen.
+- Nieuw toegevoegde Flexible Content-layouts en repeaterregels krijgen hun AI-knoppen automatisch zonder de pagina te herladen.
+- De losse knop rechtsonder blijft alleen als reserve zichtbaar wanneer er geen ondersteund veld of klassieke editor aanwezig is.
+
+## 3.1.1 — 2026-11-23
+
+- De AI-schrijfassistent herkent nu ACF-tekstvelden, textarea's en iedere afzonderlijke ACF-WYSIWYG.
+- Velden binnen Flexible Content-layouts, repeaters en geneste combinaties worden via hun actieve DOM-veld gevolgd.
+- De assistent toont de layout- en veldnaam en zet de gecontroleerde tekst uitsluitend terug in dat gekozen veld.
+- ACF ontvangt na het terugplaatsen de gebruikelijke input-, change- en TinyMCE-events, zodat gewijzigde waarden correct worden opgeslagen.
+
+## 3.1.0 — 2026-11-23
+
+- Een optionele AI-schrijfassistent toegevoegd aan Gutenberg en de klassieke editor.
+- Redacteuren kunnen tekst genereren, herschrijven, verbeteren, verkorten, uitbreiden en vertalen en zien altijd eerst een voorbeeld.
+- De persoonlijke OpenAI API-sleutel wordt versleuteld opgeslagen en blijft volledig server-side.
+- Rollencontrole, nonces, berichtrechten, maximale tekstlengte en dag-, maand- en tokenlimieten toegevoegd.
+- AI-verbruik wordt lokaal als aantallen en tokens bijgehouden; ingevoerde teksten en antwoorden worden niet gelogd.
+
+## 3.0.5 — 2026-11-12
+
+- De losse download- en importblokken staan nu direct onder de SFTP-verhuizing. De uitklapbare buitenbox en de dubbele titel “Handmatig met een verhuispakket” zijn verwijderd.
+
+## 3.0.4 — 2026-11-12
+
+- Downloadlinks voor verhuispakketten worden nu als gewone URL opgebouwd. De JSON-respons bevat daardoor echte `&`-scheidingstekens in plaats van HTML-code `&amp;`, zodat WordPress de token en nonce correct ontvangt.
+
+## 3.0.3 — 2026-11-11
+
+- Herstelt ZIP-fout 19 bij handmatige exports. Het pad van het pakket werd tijdens de bestandsronde overschreven met het pad van het laatst gevonden websitebestand, waardoor de eindcontrole geen ZIP maar een gewoon bronbestand probeerde te openen.
+- Een regressietest bewaakt dat bronbestandspaden het pakketpad niet opnieuw kunnen overschrijven.
+
+## 3.0.2 — 2026-11-11
+
+- De pakketknop leest de serverroute nu expliciet uit het HTML-`action`-attribuut. Het verborgen WordPress-actieveld kan daardoor niet langer per ongeluk als URL worden gebruikt en een onmiddellijke HTTP 404 veroorzaken.
+
+## 3.0.1 — 2026-11-11
+
+- Het opbouwen van een verhuispakket gebruikt voortaan de ingelogde `admin-post.php`-route in plaats van `admin-ajax.php`. Dit voorkomt de HTTP 404 die sommige hostings of beveiligingslagen bij langdurige AJAX-aanvragen teruggeven.
+- De route blijft uitsluitend beschikbaar voor beheerders en vereist een actiegebonden WordPress-nonce.
+
 ## 3.0.0 — handmatige pakketdownload
 
 - E-mailverificatie bij backendlogin blijft voor nieuwe installaties en upgrades voorlopig opt-in; bestaande handmatige keuzes worden niet gewijzigd.

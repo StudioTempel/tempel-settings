@@ -1,26 +1,199 @@
-=== Tempel settings ===
+=== Tempel ===
 Contributors: studiotempel
 Tags: tempel, admin, widgets, gravity forms, performance
 Requires at least: 6.0
 Requires PHP: 8.0
 Tested up to: 7.1
-Stable tag: 3.0.0
+Stable tag: 4.9.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Studio Tempel helper plugin voor custom-built WordPress websites.
+AI, beheer en gereedschap voor websites van Studio Tempel.
 
 == Description ==
 
-Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites, waaronder admin-branding, dashboard-widgets, Gravity Forms adresvelden, mailfuncties, Dropbox-back-ups, SVG-ondersteuning, content dupliceren, taxonomy ordering en performance-instellingen.
+Tempel combineert een bedrijfsgebonden AI-schrijfassistent met beheer, beveiliging, back-ups en gereedschap voor WordPress-websites van Studio Tempel.
 
 == Installation ==
 
 1. Upload de pluginmap `tempel-settings` naar `/wp-content/plugins/`.
 2. Activeer de plugin via het WordPress plugin-overzicht.
-3. Configureer de gewenste onderdelen via `Tempel Settings`.
+3. Configureer de gewenste onderdelen via `Tempel`.
 
 == Changelog ==
+
+= 4.9.2 =
+
+* Koppelt een website automatisch met Tempel Hub zodra het domein daar geregistreerd staat en de domeinchallenge slaagt.
+* Verwijdert het tijdelijke centrale koppelvenster: geregistreerde domeinen blijven veilig automatisch koppelbaar.
+* Probeert een mislukte koppeling na 15 minuten opnieuw en direct opnieuw na iedere pluginupdate.
+
+= 4.9.1 =
+* AI-model, sleutel, centrale aan/uit-status en technische limieten worden alleen nog vanuit Tempel Hub beheerd.
+* Alleen de toegestane WordPress-rollen blijven lokaal instelbaar.
+* Websites die in het CRM staan kunnen na deze update eenmalig automatisch en domeingebonden koppelen.
+
+= 4.9.0 =
+* Eerste Tempel Hub-koppeling voor centraal AI-beheer zonder OpenAI-sleutels op websites.
+* Eenmalige domeingebonden koppelcodes en per-site ondertekende verzoeken met replaybescherming.
+* Lokale OpenAI-configuratie blijft beschikbaar als fallback tijdens de uitrol.
+
+= 4.8.0 =
+* Voegt de aparte pagina Optimalisatie toe voor een adviserend verbeterplan van bestaande pagina's.
+* Analyseert gewone inhoud, geselecteerde ACF/Flexible Content, SEO-data en het bedrijfs-DNA.
+* Toont voortgang, sterke punten, knelpunten, concrete verbeteringen, herschrijfvoorstellen en een SEO-voorstel zonder de pagina automatisch te wijzigen.
+
+= 4.7.7 =
+* Voegt een vast verticaal ritme toe voor secties, titels, items, toelichtingen en statusregels op de DNA-pagina.
+* Geeft de titel Bedrijfs-DNA zestien pixels ruimte tot het eerste hoofdstuk.
+
+= 4.7.6 =
+* Maakt de verticale ruimte op de DNA-pagina consistent en compacter.
+* Verkleint de ruimte rond de paginakop, generator, hoofdstuktitel en gesloten hoofdstukken.
+
+= 4.7.5 =
+* Brengt de DNA-generator onder in een compacte accordeon die standaard gesloten is.
+* Vereenvoudigt broninformatie en voorstelinstellingen tot rustige, compacte regels.
+* Houdt maximaal één DNA-hoofdstuk tegelijk geopend en maakt acties per antwoord subtieler.
+
+= 4.7.4 =
+* Toont per DNA-hoofdstuk hoeveel antwoorden door een mens zijn gecontroleerd en hoeveel alleen uit AI komen.
+* Voegt per DNA-antwoord een afzonderlijke status Gecontroleerd toe.
+* Maakt de controlestatus automatisch ongeldig zodra een tekst opnieuw wordt gewijzigd of door AI wordt vervangen.
+
+= 4.7.3 =
+* Maakt de DNA-pagina rustiger met compacte accordeons per merkstrategiehoofdstuk.
+* Groepeert ook gegenereerde DNA-voorstellen per ingeklapt hoofdstuk.
+* Vervangt nadrukkelijke AI-accenten in het bedrijfsprofiel door een functionele voortgangsweergave.
+
+= 4.7.2 =
+* Toont op de Templeton Engine-pagina welke bronnen en kaders automatisch worden meegenomen.
+* Maakt de dekking van DNA, website-inhoud, ACF/Flexible Content en SEO-bronnen direct zichtbaar.
+
+= 4.7.1 =
+* Toont na iedere geslaagde opslagactie binnen Tempel een vaste, consistente melding rechtsonder.
+* Geeft dezelfde melding bij live opslaan, klassieke WordPress-opslag en later toegevoegde succesmeldingen.
+
+= 4.7.0 =
+* Bouwt het bedrijfs-DNA op volgens de Studio Tempel-vragenlijst voor merkstrategie in zes stappen.
+* Gebruikt de geselecteerde contentinventarisatie zichtbaar als primaire bron voor DNA-voorstellen.
+* Bewaart gegenereerde voorstellen apart en laat beheerders per onderdeel overnemen, aanvullen of overslaan.
+* Voegt de vaste SEO- en webredactiewerkwijze toe aan Templeton Engine 2.6.
+
+= 4.6.0 =
+* Voegt een aparte beheerpagina voor Templeton Engine 2.5 toe met vaste Studio Tempel-richtlijnen.
+* Past het redactionele kader automatisch toe op alle schrijftaken, DNA-analyses en gerichte DNA-updates.
+* Beheert schrijfstijl, feiten en claims, SEO, structuur, verboden formuleringen, kwaliteitscontrole en voorbeelden met live opslaan.
+
+= 4.5.0 =
+* Voegt Contentinventaris toe voor het beheren van publieke contenttypes, ACF-velden en SEO-bronnen die Templeton mag gebruiken.
+* DNA-voorstellen kunnen bestaande gegevens aanvullen of volledig overschrijven.
+* Ieder DNA-onderdeel kan afzonderlijk opnieuw worden onderzocht met een toelichting op wat er gewijzigd is.
+
+= 4.4.0 =
+* Slaat alle echte Tempel-instellingen automatisch op zonder losse opslaanknoppen.
+* Toont subtiele live status bij opslaan, succes en fouten.
+* Houdt bewuste acties zoals verzenden, opschonen, back-uppen, koppelen en verhuizen buiten automatisch opslaan.
+
+= 4.3.4 =
+* Maakt de tagskolom in het bedrijfs-DNA ruimer zodat langere tags beter leesbaar blijven.
+
+= 4.3.3 =
+* Hernoemt Steekwoorden naar Tags en plaatst titel en beschrijving boven een rustige tweekolomsindeling met tags links en tekst rechts.
+
+= 4.3.2 =
+* Toont tijdens diep DNA-onderzoek een live onderzoekslog met de afzonderlijke scanonderdelen.
+* Presenteert gebruikte bronnen als duidelijke bronkaarten en maakt steekwoorden bewerkbaar als losse tags.
+
+= 4.3.1 =
+* Bronnenoverzicht vermeldt nu ook websiteprofiel, onderzochte openbare contenttypes, ACF/Flexible Content en categorieën en tags.
+* Externe markt- en trendbronnen blijven apart herkenbaar en klikbaar.
+
+= 4.3.0 =
+* Voegt bij ieder onderdeel van het bedrijfs-DNA compacte, bewerkbare steekwoorden toe.
+* Templeton genereert per onderdeel vier tot tien concrete tags naast de uitgebreide analyse.
+* Alle volgende AI-opdrachten gebruiken zowel de DNA-tekst als de bijbehorende stuurwoorden.
+
+= 4.2.1 =
+* Voert diep DNA-onderzoek uit als achtergrondtaak met live fases, verstreken tijd en foutstatus.
+* Toont Templeton Engine 2.4 tijdens het genereren.
+* Laat alle DNA-tekstvelden automatisch meegroeien met hun inhoud.
+
+= 4.2.0 =
+* Verdiept DNA-onderzoek met openbare custom post types, ACF-tekst, Flexible Content, categorieën en tags.
+* Leidt onderbouwde doelgroep-hypotheses af wanneer de doelgroep niet letterlijk op de website staat.
+* Gebruikt afgeleide thema’s en zoekbegrippen voor gericht onderzoek naar markt, klantgedrag, regelgeving en trends.
+* Voegt Kernonderwerpen en trends toe aan het blijvende bedrijfs-DNA.
+
+= 4.1.1 =
+* Maakt Back-ups, Website verhuizen en de statuskaarten volledig geschikt voor het lichte Tempel-thema.
+* Centraliseert de lichte kleuren via de gedeelde Tempel-designtokens.
+
+= 4.1.0 =
+* Splits DNA en technische AI-instellingen in aparte pagina's voor editors en beheerders.
+* Hernoem de bestaande technische instellingen naar Beheer.
+* Laat Tempel een DNA-voorstel maken op basis van website-inhoud, doelgroepinvoer en optionele actuele webtrends.
+* Voeg een licht Tempel-thema toe en schakel dit standaard in.
+
+= 4.0.3 =
+* Verwijder de waarschuwing over gevoelige gegevens van de AI & DNA-pagina.
+
+= 4.0.2 =
+* Geef labels en toelichtingen van AI & DNA een duidelijke hiërarchie en vaste tussenruimte.
+
+= 4.0.1 =
+* Herken verborgen Tempel-detailpagina's betrouwbaar aan hun scherm-ID en paginaslug.
+* Laad de volledige donkere Tempel-interface en veldopmaak nu ook correct op AI & DNA.
+
+= 4.0.0 =
+* Hernoem Tempel Settings naar Tempel.
+* Voeg een centraal bedrijfs-DNA toe met doelgroep, aanbod, positionering, tone of voice, woordkeuze en voorbeeldtekst.
+* Gebruik het bedrijfs-DNA automatisch bij iedere AI-schrijfopdracht.
+* Voeg de actie Websiteonderdeel schrijven toe als eerste basis voor toekomstige blokgeneratie.
+
+= 3.3.1 =
+* Lijn alle regels van het compacte publicatieblok links uit.
+* Centreer de tekst verticaal ten opzichte van de bijbehorende iconen.
+
+= 3.3.0 =
+* Maak het publicatieblok in de klassieke editor rustiger door de labels Status, Zichtbaarheid en Gepubliceerd op visueel te verbergen.
+* Behoud de WordPress-iconen, actuele waarden, bewerklinks en alle publicatieacties.
+* Schakel de functie standaard in en maak haar instelbaar onder Algemeen → Uiterlijk.
+
+= 3.2.1 =
+* Behoud koppen, paragrafen, lijsten, links, nadruk en CSS-klassen bij AI-bewerking van WYSIWYG-inhoud.
+* Toon HTML-antwoorden als opgemaakt en bewerkbaar voorbeeld in plaats van zichtbare HTML-code.
+* Filter alle gegenereerde HTML server-side met de WordPress-veiligheidsregels voordat deze wordt teruggeplaatst.
+
+= 3.2.0 =
+* Plaats een compacte AI-knop direct bij ieder ondersteund ACF-tekstveld en bij de klassieke editor.
+* Open de schrijfassistent onmiddellijk voor dat veld, met de selectie of volledige veldinhoud al ingevuld.
+* Voeg knoppen automatisch toe aan nieuwe Flexible Content-layouts en repeaterregels zonder paginaverversing.
+
+= 3.1.1 =
+* Ondersteun ACF-tekstvelden, textarea's en WYSIWYG-editors, ook binnen Flexible Content en geneste repeaters.
+* Toon vóór het genereren en terugplaatsen duidelijk welk ACF-veld actief is.
+
+= 3.1.0 =
+* Voeg een optionele AI-schrijfassistent toe voor Gutenberg en de klassieke editor.
+* Bewaar de OpenAI API-sleutel versleuteld en gebruik deze uitsluitend server-side.
+* Voeg dag-, maand- en tokenlimieten, rollencontrole en een voorbeeldstap voor invoegen toe.
+
+= 3.0.5 =
+* Toon de download- en importblokken direct onder de SFTP-verhuizing, zonder uitklapbare buitenbox.
+
+= 3.0.4 =
+* Voorkom een ongeldige pakketdownload doordat HTML-gecodeerde `&amp;`-tekens als onderdeel van de download-URL werden gebruikt.
+
+= 3.0.3 =
+* Controleer na export het daadwerkelijk gemaakte ZIP-pakket in plaats van het laatst verzamelde websitebestand; hiermee verdwijnt ZIP-fout 19.
+
+= 3.0.2 =
+* Voorkom HTTP 404 bij het maken van een verhuispakket door de formulier-URL expliciet uit het action-attribuut te lezen.
+
+= 3.0.1 =
+* Maak verhuispakketten via de beveiligde admin-post-route, zodat hostings die langdurige admin-ajax-aanvragen met HTTP 404 afbreken niet langer vastlopen.
+* Houd e-mailverificatie voor backend-logins standaard uit en opt-in.
 
 = 3.0.0 =
 * Vereenvoudig het beheer tot Overzicht, Instellingen, Gereedschap en Logboek.
@@ -30,7 +203,7 @@ Tempel settings bundelt een aantal Studio Tempel helpers voor WordPress websites
 * Centraliseer toegang tot bestaande instellingen zonder opgeslagen waarden te wijzigen.
 * Voorkom dat de adminnavigatie tijdens het renderen opnieuw hooks registreert.
 * Voeg vaste editor- en PHP-codestandaarden toe voor verdere ontwikkeling.
-* Schakel e-mailverificatie voor backend-logins standaard in en voeg een noodschakelaar voor mailproblemen toe.
+* Voeg optionele e-mailverificatie voor backend-logins en een noodschakelaar voor mailproblemen toe.
 * Sluit WP-Members-logins op de website expliciet uit van backend-e-mailverificatie.
 * Beperk e-mailverificatie tot beheerlogins via wp-admin, wp-login.php en st-beheer.
 * Dwing op alle huidige en toekomstige Tempel-schermen het donkere canvas en de vaste veldindeling af.

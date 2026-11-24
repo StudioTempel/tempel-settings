@@ -13,6 +13,11 @@ require_once TEMPEL_SETTINGS_DIR . 'src/views/info-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/status-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/backup-settings.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/views/stager-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/ai-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/dna-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/optimization-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/content-inventory-settings.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/views/templeton-settings.php';
 
 // Widgets
 require_once TEMPEL_SETTINGS_DIR . 'src/widgets/status-widget.php';
@@ -39,6 +44,7 @@ if (!class_exists('Admin')) {
             $this->load_ajax_functions();
             // Hook setting registration
             add_action('admin_init', array($this, 'register_plugin_settings'));
+            add_filter('option_page_capability_tempel_dna_settings', array($this, 'dna_settings_capability'));
             
             // Hook admin page assets
             add_action('admin_enqueue_scripts', array($this, 'load_assets'));
@@ -52,6 +58,11 @@ if (!class_exists('Admin')) {
             
             // Load widgets
             $this->load_widgets();
+        }
+
+        public function dna_settings_capability(): string
+        {
+            return 'edit_pages';
         }
 
         public function move_tempel_menu_to_bottom(): void
@@ -104,6 +115,7 @@ if (!class_exists('Admin')) {
                 'tempel-mail-settings',
                 'tempel-info-settings',
                 'tempel-stager-settings',
+                'tempel-ai-settings',
             );
 
             echo '<style id="tempel-settings-submenu-visibility">';
@@ -251,22 +263,57 @@ if (!class_exists('Admin')) {
             }
             $overview_page = new Overview_Settings(
                 __('Overzicht', 'tempel-settings'),
-                __('Tempel Settings', 'tempel-settings'),
+                __('Tempel', 'tempel-settings'),
                 'tempel-settings',
                 $this->get_menu_icon(),
                 99,
+                '',
+                false,
+                'edit_pages',
             );
 
             $this->pages['tempel-settings'] = $overview_page;
 
             $this->pages['tempel-general-settings'] = new General_Settings(
-                __('Instellingen', 'tempel-settings'),
-                __('Instellingen', 'tempel-settings'),
+                __('Beheer', 'tempel-settings'),
+                __('Beheer', 'tempel-settings'),
                 'tempel-general-settings',
                 $this->get_menu_icon(),
                 1,
                 'tempel-settings',
                 true
+            );
+
+            $this->pages['tempel-content-inventory'] = new Content_Inventory_Settings(
+                __('Contentinventaris', 'tempel-settings'),
+                __('Contentinventaris', 'tempel-settings'),
+                'tempel-content-inventory',
+                $this->get_menu_icon(),
+                1,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-dna-settings'] = new DNA_Settings(
+                __('DNA', 'tempel-settings'),
+                __('DNA', 'tempel-settings'),
+                'tempel-dna-settings',
+                $this->get_menu_icon(),
+                2,
+                'tempel-settings',
+                true,
+                'edit_pages'
+            );
+
+            $this->pages['tempel-optimization-settings'] = new Optimization_Settings(
+                __('Optimalisatie', 'tempel-settings'),
+                __('Optimalisatie', 'tempel-settings'),
+                'tempel-optimization-settings',
+                $this->get_menu_icon(),
+                3,
+                'tempel-settings',
+                true,
+                'edit_pages'
             );
             
             $this->pages['tempel-widget-settings'] = new Widget_Settings(
@@ -305,6 +352,26 @@ if (!class_exists('Admin')) {
                 'tempel-mail-settings',
                 $this->get_menu_icon(),
                 5,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-ai-settings'] = new AI_Settings(
+                __('AI-instellingen', 'tempel-settings'),
+                __('AI-instellingen', 'tempel-settings'),
+                'tempel-ai-settings',
+                $this->get_menu_icon(),
+                6,
+                'tempel-settings',
+                true
+            );
+
+            $this->pages['tempel-templeton-settings'] = new Templeton_Settings(
+                __('Templeton Engine', 'tempel-settings'),
+                __('Templeton Engine', 'tempel-settings'),
+                'tempel-templeton-settings',
+                $this->get_menu_icon(),
+                7,
                 'tempel-settings',
                 true
             );
@@ -392,6 +459,73 @@ if (!class_exists('Admin')) {
                     'sanitize_callback' => array($this, 'sanitize_backup_settings'),
                 )
             );
+
+            register_setting(
+                'tempel_ai_settings',
+                AI_Assistant::SETTINGS_OPTION,
+                array(
+                    'sanitize_callback' => array($this, 'sanitize_ai_settings'),
+                )
+            );
+
+            register_setting(
+                'tempel_dna_settings',
+                AI_DNA::OPTION,
+                array(
+                    'sanitize_callback' => array(AI_DNA::class, 'sanitize'),
+                )
+            );
+
+            register_setting(
+                'tempel_dna_settings',
+                AI_DNA::PROPOSAL_OPTION,
+                array(
+                    'sanitize_callback' => array(AI_DNA::class, 'sanitize'),
+                )
+            );
+
+            register_setting(
+                'tempel_content_inventory',
+                Content_Inventory::OPTION,
+                array(
+                    'sanitize_callback' => array(Content_Inventory::class, 'sanitize'),
+                )
+            );
+
+            register_setting(
+                'tempel_templeton_guidelines',
+                Templeton_Guidelines::OPTION,
+                array(
+                    'sanitize_callback' => array(Templeton_Guidelines::class, 'sanitize'),
+                )
+            );
+        }
+
+        public function sanitize_ai_settings($input): array
+        {
+            $input = is_array($input) ? $input : array();
+            $current = get_option(AI_Assistant::SETTINGS_OPTION, array());
+            $current = is_array($current) ? $current : array();
+            $allowed_models = array('gpt-6.1-terra', 'gpt-6-luna', 'gpt-5.4-mini');
+            $model = sanitize_text_field(wp_unslash($input['model'] ?? 'gpt-6.1-terra'));
+            $roles = array_map('sanitize_key', (array) ($input['roles'] ?? array()));
+            $roles = array_values(array_intersect($roles, array_keys(wp_roles()->roles)));
+
+            $sanitized = array(
+                'enabled' => isset($input['enabled']) && $input['enabled'] === 'on' ? 'on' : '',
+                'api_key' => !empty($input['api_key'])
+                    ? \Tempel\Core\SecretStore::encrypt(sanitize_text_field(wp_unslash($input['api_key'])))
+                    : (string) ($current['api_key'] ?? ''),
+                'model' => in_array($model, $allowed_models, true) ? $model : 'gpt-6.1-terra',
+                'roles' => $roles ?: array('administrator', 'editor'),
+                'daily_user_limit' => max(1, min(500, absint($input['daily_user_limit'] ?? 25))),
+                'monthly_site_limit' => max(1, min(100000, absint($input['monthly_site_limit'] ?? 1000))),
+                'monthly_token_limit' => max(10000, min(100000000, absint($input['monthly_token_limit'] ?? 1000000))),
+                'max_input_chars' => max(500, min(50000, absint($input['max_input_chars'] ?? 12000))),
+                'max_output_tokens' => max(100, min(4000, absint($input['max_output_tokens'] ?? 1200))),
+            );
+
+            return array_merge($sanitized, AI_DNA::sanitize($input));
         }
 
         public function sanitize_backup_settings($input): array
@@ -470,6 +604,8 @@ if (!class_exists('Admin')) {
 
             $checkboxes = array(
                 'enable_branding',
+                'admin_light_theme',
+                'compact_publish_box',
                 'complianz_close_button_fix',
                 'notifications_enabled',
                 'security_lock',
@@ -520,6 +656,8 @@ if (!class_exists('Admin')) {
             ));
             $general_settings_submitted = $this->has_any_input_key($input, array(
                 'enable_branding',
+                'admin_light_theme',
+                'compact_publish_box',
                 'complianz_close_button_fix',
                 'notifications_enabled',
                 'security_lock',
@@ -738,6 +876,7 @@ if (!class_exists('Admin')) {
             }
             
             if ($this->is_tempel_settings_screen($screen->id)) {
+                $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
                 wp_enqueue_style('tempel-admin-tokens', TEMPEL_SETTINGS_ASSET_URL . 'css/admin-tokens.css', array(), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/admin-tokens.css'));
                 wp_enqueue_style('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'css/widget-settings.css', array('tempel-admin-tokens'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/widget-settings.css'));
                 wp_enqueue_style('tmpl-settings-overrides', TEMPEL_SETTINGS_ASSET_URL . 'css/settings-overrides.css', array('tmpl-settings-page'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'css/settings-overrides.css'));
@@ -768,7 +907,31 @@ if (!class_exists('Admin')) {
                         ),
                     ));
                 }
-                wp_enqueue_script('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'js/settings.js', array('jquery'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/settings.js'), true);
+
+                if ($current_page === 'tempel-dna-settings') {
+                    wp_enqueue_script('tempel-ai-dna', TEMPEL_SETTINGS_ASSET_URL . 'js/ai-dna.js', array('wp-api-fetch'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/ai-dna.js'), true);
+                    wp_localize_script('tempel-ai-dna', 'tempelDNA', array(
+                        'path' => '/tempel/v1/ai/dna',
+                        'startPath' => '/tempel/v1/ai/dna/start',
+                        'statusPath' => '/tempel/v1/ai/dna/status/',
+                        'nonce' => wp_create_nonce('wp_rest'),
+                        'fields' => array_map(static function (array $field): array {
+                            return array('label' => (string) $field['label'], 'group' => (string) ($field['group'] ?? ''));
+                        }, AI_DNA::fields()),
+                        'groups' => AI_DNA::groups(),
+                    ));
+                }
+                if ($current_page === 'tempel-optimization-settings') {
+                    wp_enqueue_script('tempel-ai-optimization', TEMPEL_SETTINGS_ASSET_URL . 'js/ai-optimization.js', array('wp-api-fetch'), filemtime(TEMPEL_SETTINGS_ASSET_DIR . 'js/ai-optimization.js'), true);
+                    wp_localize_script('tempel-ai-optimization', 'tempelOptimization', array(
+                        'startPath' => '/tempel/v1/ai/optimization/start',
+                        'statusPath' => '/tempel/v1/ai/optimization/status/',
+                        'nonce' => wp_create_nonce('wp_rest'),
+                    ));
+                }
+                // Use the release version so browsers cannot keep an older settings script
+                // after a plugin update whose source file timestamp stayed unchanged.
+                wp_enqueue_script('tmpl-settings-page', TEMPEL_SETTINGS_ASSET_URL . 'js/settings.js', array('jquery'), TEMPEL_SETTINGS_VERSION, true);
                 wp_localize_script('tmpl-settings-page', 'tmplWidgetSettings', array(
                     'nonce' => wp_create_nonce('tmpl_widget_settings_action'),
                 ));
@@ -792,6 +955,10 @@ if (!class_exists('Admin')) {
 
             if ($screen && $this->is_tempel_settings_screen($screen->id)) {
                 $classes .= ' tempel-settings-admin';
+                $settings = get_option('tmpl_settings', array());
+                if (is_array($settings) && ($settings['admin_light_theme'] ?? '') === 'on') {
+                    $classes .= ' tempel-theme-light';
+                }
             }
 
             return trim($classes);
@@ -799,9 +966,15 @@ if (!class_exists('Admin')) {
 
         private function is_tempel_settings_screen(string $screen_id): bool
         {
-            return $screen_id === 'toplevel_page_tempel-settings'
+            if ($screen_id === 'toplevel_page_tempel-settings'
                 || $screen_id === 'toplevel_page_tempel-widget-settings'
-                || str_starts_with($screen_id, 'tempel-settings_page_tempel-');
+                || str_starts_with($screen_id, 'tempel-settings_page_tempel-')
+                || str_starts_with($screen_id, 'admin_page_tempel-')) {
+                return true;
+            }
+
+            $page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
+            return $page !== '' && isset(self::$registered_pages[$page]);
         }
         
         /**

@@ -11,7 +11,7 @@ function settings_navigation()
         <div class="sidebar__inner">
             <div class="sidebar__header">
                 <div class="sidebar__title">
-                    <?php esc_html_e('Settings', 'tempel-settings'); ?>
+                    <?php esc_html_e('Tempel', 'tempel-settings'); ?>
                 </div>
             </div>
             <div class="sidebar__nav">
@@ -31,7 +31,8 @@ function menu_loop($pages)
 {
     $groups = array(
         __('Overzicht', 'tempel-settings') => array('tempel-settings'),
-        __('Instellingen', 'tempel-settings') => array('tempel-general-settings', 'tempel-widget-settings', 'tempel-gform-address-settings', 'tempel-performance-settings', 'tempel-mail-settings'),
+        __('Content', 'tempel-settings') => array('tempel-content-inventory', 'tempel-dna-settings', 'tempel-optimization-settings'),
+        __('Beheer', 'tempel-settings') => array('tempel-general-settings', 'tempel-widget-settings', 'tempel-gform-address-settings', 'tempel-performance-settings', 'tempel-mail-settings', 'tempel-ai-settings', 'tempel-templeton-settings'),
         __('Gereedschap', 'tempel-settings') => array('tempel-backup-settings', 'tempel-stager-settings'),
         __('Logboek', 'tempel-settings') => array('tempel-status-settings'),
     );
@@ -39,7 +40,10 @@ function menu_loop($pages)
     echo '<ul>';
     $current_page = isset($_GET['page']) ? sanitize_key(wp_unslash($_GET['page'])) : '';
     foreach ($groups as $label => $slugs) {
-        $available = array_intersect_key($pages, array_flip($slugs));
+        $available = array_filter(
+            array_intersect_key($pages, array_flip($slugs)),
+            static fn($page): bool => current_user_can($page->capability)
+        );
         if (!$available) continue;
         echo '<li class="tempel-nav-group">';
         echo '<span class="tempel-nav-group__label">' . esc_html($label) . '</span>';

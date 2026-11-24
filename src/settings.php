@@ -24,6 +24,12 @@ require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/email-login-verificati
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/dropbox-backup.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/stager.php';
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/php-security.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/content-inventory.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/templeton-guidelines.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/ai-dna.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/hub-client.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/ai-assistant.php';
+require_once TEMPEL_SETTINGS_DIR . 'src/includes/settings/compact-publish-box.php';
 
 require_once TEMPEL_SETTINGS_DIR . 'src/includes/helper-functions.php';
 
@@ -38,6 +44,12 @@ if(!class_exists('Settings')) {
             new Stager();
             new PHP_Security();
             new Security_Lock_Auto_Reenable();
+            new Hub_Client();
+            new AI_Assistant();
+
+            if(sanitize_checkbox_value(return_option('tmpl_settings', 'compact_publish_box'))) {
+                new Compact_Publish_Box();
+            }
 
             if(sanitize_checkbox_value(return_option('tmpl_settings', 'gf_antispam_enabled'))) {
                 new GF_Simple_Antispam();

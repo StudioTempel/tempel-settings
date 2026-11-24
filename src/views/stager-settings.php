@@ -84,15 +84,13 @@ final class Stager_Settings extends Page
                                 </form>
                             </section>
 
-                            <details class="tempel-stager-manual">
-                                <summary><?php esc_html_e('Handmatig met een verhuispakket', 'tempel-settings'); ?></summary>
-                                <div class="tempel-stager-grid tempel-stager-grid--manual">
+                            <div class="tempel-stager-grid tempel-stager-grid--manual">
                                     <section class="tempel-stager-card">
                                         <h2><?php esc_html_e('Download verhuispakket', 'tempel-settings'); ?></h2>
                                         <p><?php esc_html_e('Het pakket bevat ook de database en gebruikersaccounts. Bewaar het privé.', 'tempel-settings'); ?></p>
-                                        <form id="stager-export-form" method="post" action="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
+                                        <form id="stager-export-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
                                             <input type="hidden" name="action" value="tempel_stager_prepare_export">
-                                            <input type="hidden" name="nonce" value="<?php echo esc_attr(wp_create_nonce('tempel_stager_browse')); ?>">
+                                            <?php wp_nonce_field('tempel_stager_prepare_export'); ?>
                                             <button class="button button-primary" <?php disabled((bool) $issues); ?>><?php esc_html_e('Maak verhuispakket', 'tempel-settings'); ?></button>
                                             <div id="stager-export-progress" class="tempel-stager-export-progress" hidden aria-live="polite">
                                                 <p id="stager-export-message"><?php esc_html_e('Voorbereiden…', 'tempel-settings'); ?></p>
@@ -125,8 +123,7 @@ final class Stager_Settings extends Page
                                             <button class="button button-primary" <?php disabled((bool) $issues); ?>><?php esc_html_e('Importeer website', 'tempel-settings'); ?></button>
                                         </form>
                                     </section>
-                                </div>
-                            </details>
+                            </div>
                             <p class="description"><?php esc_html_e('Ondersteunt enkele WordPress-installaties, PHP 8.1+ en maximaal 20 GiB uitgepakt. Multisite wordt niet ondersteund.', 'tempel-settings'); ?></p>
                         </div>
                     </div>

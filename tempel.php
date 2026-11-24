@@ -1,7 +1,7 @@
 <?php
 
 /**
- * StudioTempel settings
+ * Tempel
  *
  * @package           tempel-settings
  * @link              https://github.com/StudioTempel/tempel-settings
@@ -9,9 +9,9 @@
  * @copyright         2026 Studio Tempel
  * @license           GPL v2 or later
  *
- * Plugin Name:       Tempel settings
- * Description:       Plugin that compliments custom-built themes produced by Studio Tempel
- * Version:           3.0.0
+ * Plugin Name:       Tempel
+ * Description:       AI, beheer en gereedschap voor websites van Studio Tempel
+ * Version:           4.9.2
  * Author:            Studio Tempel
  * Author URI:        https://studiotempel.nl
  * Text Domain:       tempel-settings
@@ -24,7 +24,7 @@ namespace Tempel;
 
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 
-if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '3.0.0');
+if ( ! defined('TEMPEL_SETTINGS_VERSION') ) define('TEMPEL_SETTINGS_VERSION', '4.9.2');
 if ( ! defined('TEMPEL_SETTINGS_FILE') ) define('TEMPEL_SETTINGS_FILE', __FILE__);
 if ( ! defined('TEMPEL_SETTINGS_BASENAME') ) define('TEMPEL_SETTINGS_BASENAME', plugin_basename(__FILE__));
 if ( ! defined('TEMPEL_SETTINGS_DIR') ) define('TEMPEL_SETTINGS_DIR', plugin_dir_path(__FILE__));
@@ -117,6 +117,9 @@ class TempelSettings
         $this->apply_security_lock_auto_reenable_default();
         $this->repair_general_settings_after_gravity_forms_save();
         $this->apply_complianz_style_default();
+        $this->apply_compact_publish_box_default();
+        $this->apply_admin_light_theme_default();
+        $this->migrate_ai_dna_settings();
         $this->deactivate_vulnerable_wpmudev_dashboard();
         Status_Log::init();
         Status_Monitor::init();
@@ -265,6 +268,47 @@ class TempelSettings
         $settings['complianz_close_button_fix'] = 'on';
         update_option('tmpl_settings', $settings);
         update_option($default_option, true);
+    }
+
+    /** Enables the calmer classic-editor publish box once, without overriding later choices. */
+    private function apply_compact_publish_box_default(): void
+    {
+        $default_option = 'tempel_settings_compact_publish_box_default_applied';
+        if (get_option($default_option)) {
+            return;
+        }
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $settings['compact_publish_box'] = 'on';
+        update_option('tmpl_settings', $settings);
+        update_option($default_option, true);
+    }
+
+    private function apply_admin_light_theme_default(): void
+    {
+        $default_option = 'tempel_settings_admin_light_theme_default_applied';
+        if (get_option($default_option)) return;
+
+        $settings = get_option('tmpl_settings', array());
+        $settings = is_array($settings) ? $settings : array();
+        $settings['admin_light_theme'] = 'on';
+        update_option('tmpl_settings', $settings);
+        update_option($default_option, true);
+    }
+
+    private function migrate_ai_dna_settings(): void
+    {
+        if (get_option('tempel_ai_dna_migrated')) return;
+
+        $legacy = get_option(AI_Assistant::SETTINGS_OPTION, array());
+        $legacy = is_array($legacy) ? $legacy : array();
+        $dna = array();
+        foreach (array_keys(AI_DNA::fields()) as $key) {
+            if (isset($legacy[$key]) && is_string($legacy[$key])) $dna[$key] = $legacy[$key];
+        }
+        if ($dna && !get_option(AI_DNA::OPTION)) update_option(AI_DNA::OPTION, AI_DNA::sanitize($dna));
+        update_option('tempel_ai_dna_migrated', true);
     }
 
     private function deactivate_vulnerable_wpmudev_dashboard(): void

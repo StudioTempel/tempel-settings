@@ -104,8 +104,8 @@ final class Tempel_Stager_Migration {
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
         $file_count = 0;
         foreach ($iterator as $file) {
-                $path = wp_normalize_path($file->getPathname());
-                $relative = ltrim(substr($path, strlen($root)), '/');
+                $source_path = wp_normalize_path($file->getPathname());
+                $relative = ltrim(substr($source_path, strlen($root)), '/');
                 if ($file->isLink() || !$file->isFile() || !$file->isReadable()) { continue; }
                 if (Tempel_Stager_Values::excluded_file($relative)) { continue; }
                 $name = 'site/' . $relative;

@@ -1,0 +1,37 @@
+#submitdiv.tempel-compact-publish-box #misc-publishing-actions {
+    display: grid;
+    gap: 0;
+    padding: 8px 0;
+}
+
+#submitdiv.tempel-compact-publish-box .misc-pub-section {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 40px;
+    margin: 0 !important;
+    padding: 8px 12px 8px 48px !important;
+    line-height: 24px;
+    text-align: left;
+}
+
+#submitdiv.tempel-compact-publish-box .misc-pub-section::before {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    margin: 0;
+    padding: 0;
+    transform: translateY(-50%);
+    line-height: 1;
+    vertical-align: middle;
+}
+
+#submitdiv.tempel-compact-publish-box .misc-pub-section > a {
+    margin-left: 5px;
+}
+
+#submitdiv.tempel-compact-publish-box #timestamp b,
+#submitdiv.tempel-compact-publish-box #post-status-display,
+#submitdiv.tempel-compact-publish-box #post-visibility-display {
+    font-weight: 600;
+}

@@ -275,6 +275,42 @@ class General_Settings extends Page
                                         </div>
                                         <!-- Settings Field | Enable Branding -->
 
+                                        <div id="admin_light_theme_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="admin_light_theme"><?php esc_html_e('Licht Tempel-thema', 'tempel-settings'); ?></label>
+                                                    <p id="admin_light_theme_description" class="description"><?php esc_html_e('Gebruikt een rustige lichte vormgeving op de pagina’s van Tempel.', 'tempel-settings'); ?></p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[admin_light_theme]" value="">
+                                                    <label class="checkbox__switch" for="admin_light_theme">
+                                                        <input type="checkbox" name="tmpl_settings[admin_light_theme]" id="admin_light_theme" aria-describedby="admin_light_theme_description" <?php echo $this->is_checked('admin_light_theme'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="compact_publish_box_setting" class="settings__field">
+                                            <div class="settings__field__inner">
+                                                <div class="settings__label__wrap">
+                                                    <label for="compact_publish_box">
+                                                        <?php esc_html_e('Compact publicatieblok', 'tempel-settings'); ?>
+                                                    </label>
+                                                    <p id="compact_publish_box_description" class="description">
+                                                        <?php esc_html_e('Verbergt in de klassieke editor alleen de labels Status, Zichtbaarheid en Gepubliceerd op. Iconen, waarden, bewerklinks en publicatieknoppen blijven beschikbaar.', 'tempel-settings'); ?>
+                                                    </p>
+                                                </div>
+                                                <div class="settings__input__wrap">
+                                                    <input type="hidden" name="tmpl_settings[compact_publish_box]" value="">
+                                                    <label class="checkbox__switch" for="compact_publish_box">
+                                                        <input type="checkbox" name="tmpl_settings[compact_publish_box]" id="compact_publish_box" aria-describedby="compact_publish_box_description" <?php echo $this->is_checked('compact_publish_box'); ?>>
+                                                        <span class="checkbox__switch__slider"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div id="complianz_close_button_fix_setting" class="settings__field">
                                             <div class="settings__field__inner">
                                                 <div class="settings__label__wrap">

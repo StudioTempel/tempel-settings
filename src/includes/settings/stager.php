@@ -13,12 +13,12 @@ final class Stager
     {
         add_action('admin_init', array($this, 'deactivate_standalone_plugin'));
         add_action('admin_post_tempel_stager_export', array($this, 'export'));
+        add_action('admin_post_tempel_stager_prepare_export', array($this, 'prepare_export'));
         add_action('admin_post_tempel_stager_download_export', array($this, 'download_export'));
         add_action('admin_post_tempel_stager_import', array($this, 'import'));
         add_action('admin_post_tempel_stager_deploy', array($this, 'deploy'));
         add_action('wp_ajax_tempel_stager_browse', array($this, 'browse'));
         add_action('wp_ajax_tempel_stager_dropbox_packages', array($this, 'dropbox_packages'));
-        add_action('wp_ajax_tempel_stager_prepare_export', array($this, 'prepare_export'));
         add_action('tempel_stager_cleanup_export', array($this, 'cleanup_export'));
     }
 
@@ -36,7 +36,7 @@ final class Stager
         \deactivate_plugins('stager/stager.php', true);
         update_option('tempel_stager_standalone_replaced', time(), false);
         add_action('admin_notices', static function (): void {
-            echo '<div class="notice notice-info is-dismissible"><p>' . esc_html__('De losse Stager-plugin is uitgeschakeld, omdat Website verhuizen nu in Tempel Settings zit.', 'tempel-settings') . '</p></div>';
+            echo '<div class="notice notice-info is-dismissible"><p>' . esc_html__('De losse Stager-plugin is uitgeschakeld, omdat Website verhuizen nu in Tempel zit.', 'tempel-settings') . '</p></div>';
         });
     }
 
@@ -89,7 +89,7 @@ final class Stager
     /** Builds a private package while streaming progress to the current admin screen. */
     public function prepare_export(): void
     {
-        $this->guard_ajax();
+        $this->guard_action('tempel_stager_prepare_export');
         if (function_exists('set_time_limit')) {
             @set_time_limit(0);
         }
@@ -116,10 +116,13 @@ final class Stager
                 'filename' => $filename,
             ), HOUR_IN_SECONDS);
             wp_schedule_single_event(time() + HOUR_IN_SECONDS, 'tempel_stager_cleanup_export', array($file));
-            $url = wp_nonce_url(
-                admin_url('admin-post.php?action=tempel_stager_download_export&token=' . rawurlencode($token)),
-                'tempel_stager_download_export_' . $token
-            );
+            // wp_nonce_url() HTML-escapes ampersands. This URL is sent as JSON
+            // and assigned through JavaScript, so build an unescaped URL here.
+            $url = add_query_arg(array(
+                'action' => 'tempel_stager_download_export',
+                'token' => $token,
+                '_wpnonce' => wp_create_nonce('tempel_stager_download_export_' . $token),
+            ), admin_url('admin-post.php'));
             $emit(array(
                 'type' => 'done',
                 'message' => __('Het pakket is gemaakt en gecontroleerd.', 'tempel-settings'),

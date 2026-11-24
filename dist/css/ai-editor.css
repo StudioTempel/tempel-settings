@@ -1,0 +1,80 @@
+.tempel-ai-launcher {
+    position: fixed;
+    z-index: 99990;
+    right: 24px;
+    bottom: 24px;
+    min-height: 44px;
+    padding: 0 20px;
+    color: #000;
+    font-weight: 700;
+    background: #f3f438;
+    border: 0;
+    border-radius: 999px;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .24);
+    cursor: pointer;
+}
+.tempel-ai-launcher[hidden] { display: none; }
+
+.tempel-ai-inline-button {
+    float: right;
+    min-height: 26px;
+    margin: -4px 0 4px 12px;
+    padding: 2px 9px;
+    color: #1d2327;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 20px;
+    background: #f3f438;
+    border: 1px solid #d8d91e;
+    border-radius: 999px;
+    cursor: pointer;
+}
+.tempel-ai-inline-button:hover, .tempel-ai-inline-button:focus { color: #000; background: #ffff55; border-color: #8c8d00; outline: none; box-shadow: 0 0 0 2px rgba(243, 244, 56, .35); }
+.tempel-ai-classic-button { margin-left: 8px !important; }
+.tempel-ai-classic-button span { color: #8c8d00; }
+
+.tempel-ai-panel {
+    position: fixed;
+    z-index: 99991;
+    right: 24px;
+    bottom: 80px;
+    width: min(440px, calc(100vw - 32px));
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 24px;
+    color: #fff;
+    background: #171717;
+    border: 1px solid #383838;
+    border-radius: 16px;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, .42);
+}
+
+.tempel-ai-panel[hidden] { display: none; }
+.tempel-ai-panel header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.tempel-ai-panel h2 { margin: 0; color: #fff; font-size: 20px; }
+.tempel-ai-target { margin: -8px 0 20px; padding: 8px 10px; color: #a3a3a3; background: #222; border-radius: 8px; font-size: 13px; }
+.tempel-ai-target.is-selected { color: #f3f438; }
+.tempel-ai-panel header button { padding: 0; color: #fff; background: transparent; border: 0; font-size: 28px; line-height: 1; cursor: pointer; }
+.tempel-ai-field { display: grid; gap: 8px; margin-bottom: 16px; }
+.tempel-ai-field label { color: #fff; font-weight: 600; }
+.tempel-ai-field :is(select, textarea, .tempel-ai-result) { width: 100%; box-sizing: border-box; color: #fff; background: #222; border: 1px solid #4a4a4a; border-radius: 10px; }
+.tempel-ai-field select { min-height: 42px; }
+.tempel-ai-field textarea { padding: 10px 12px; resize: vertical; }
+.tempel-ai-field :is(select, textarea, .tempel-ai-result):focus { border-color: #f3f438; box-shadow: 0 0 0 2px rgba(243, 244, 56, .3); outline: none; }
+.tempel-ai-result { min-height: 150px; max-height: 320px; overflow: auto; padding: 12px; line-height: 1.5; }
+.tempel-ai-result :first-child { margin-top: 0; }
+.tempel-ai-result :last-child { margin-bottom: 0; }
+.tempel-ai-result a { color: #f3f438; }
+.tempel-ai-label-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.tempel-ai-label-row button { padding: 0; color: #f3f438; background: transparent; border: 0; cursor: pointer; }
+.tempel-ai-panel .button { min-height: 40px; border-radius: 10px; }
+.tempel-ai-panel .button-primary { color: #000; background: #f3f438; border-color: #f3f438; }
+.tempel-ai-status { min-height: 22px; color: #a3a3a3; }
+.tempel-ai-status.is-error { color: #ff806b; }
+.tempel-ai-status.is-success { color: #59dd96; }
+
+@media (max-width: 600px) {
+    .tempel-ai-launcher { right: 16px; bottom: 16px; }
+    .tempel-ai-panel { right: 16px; bottom: 70px; padding: 20px; }
+}

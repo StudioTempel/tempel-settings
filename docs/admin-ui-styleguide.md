@@ -1,6 +1,6 @@
-# Tempel Settings admin UI
+# Tempel admin UI
 
-Deze stijlgids is de bron voor alle beheerpagina's van Tempel Settings. Nieuwe
+Deze stijlgids is de bron voor alle beheerpagina's van Tempel. Nieuwe
 schermen gebruiken uitsluitend de tokens en componenten hieronder. Bestaande
 schermen worden stapsgewijs omgezet; functionaliteit en opgeslagen instellingen
 blijven daarbij ongewijzigd.
@@ -86,8 +86,8 @@ Respecteer altijd `prefers-reduced-motion`.
 - Op smalle schermen vallen label en bediening terug naar één kolom.
 - Twee velden naast elkaar worden alleen gebruikt voor korte, logisch gekoppelde
   waarden zoals start- en einddatum.
-- Iedere nieuwe Tempel-beheerpagina gebruikt automatisch het donkere canvas via
-  de centrale `tempel-settings-admin` bodyklasse; een lichte schermvariant is niet toegestaan.
+- Iedere nieuwe Tempel-beheerpagina gebruikt automatisch de centrale thema-tokens.
+  Het lichte thema is standaard; het donkere thema blijft via Beheer → Uiterlijk beschikbaar.
 
 ## Componenten
 

@@ -156,7 +156,7 @@ class Security_Lock
 
     private function error_message(): string
     {
-        return __('Het aanmaken of promoveren van beheerders is geblokkeerd via Tempel Settings.', 'tempel-settings');
+        return __('Het aanmaken of promoveren van beheerders is geblokkeerd via Tempel.', 'tempel-settings');
     }
 
     public function validate_user($errors, $update, $user): void

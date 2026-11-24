@@ -78,13 +78,40 @@
 .tempel-ui-progress progress { width: 100%; height: 12px; overflow: hidden; accent-color: var(--tempel-ui-color-accent); border: 0; border-radius: var(--tempel-ui-radius-pill); }
 .tempel-ui-progress__message { margin: 0; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
 
+.tempel-autosave-form .settings__form__footer,
+.tempel-autosave-form p.submit { display: none; }
+.tempel-live-save-status { position: fixed; right: 24px; bottom: 24px; z-index: 100100; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 9px 16px; color: var(--tempel-ui-color-text); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); box-shadow: var(--tempel-ui-shadow-md); opacity: 0; transform: translateY(8px); font-size: var(--tempel-ui-text-sm); font-weight: 700; pointer-events: none; transition: opacity var(--tempel-ui-transition-fast), transform var(--tempel-ui-transition-fast); }
+.tempel-live-save-status[hidden] { display: none; }
+.tempel-live-save-status.is-visible { opacity: 1; transform: translateY(0); }
+.tempel-live-save-status::before { width: 9px; height: 9px; content: ''; background: var(--tempel-ui-color-text-muted); border-radius: 50%; }
+.tempel-live-save-status.is-saving::before { background: var(--tempel-ui-color-info); animation: tempel-live-save-pulse .8s ease-in-out infinite alternate; }
+.tempel-live-save-status.is-saved::before { background: var(--tempel-ui-color-success); }
+.tempel-live-save-status.is-error::before { background: var(--tempel-ui-color-danger); }
+@keyframes tempel-live-save-pulse { from { opacity: .35; transform: scale(.75); } to { opacity: 1; transform: scale(1); } }
+@media (max-width: 782px) { .tempel-live-save-status { right: 12px; bottom: 12px; } }
+
 .tempel-ui-field { display: grid; gap: var(--tempel-ui-space-2); }
 .tempel-ui-field label { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-md); font-weight: 600; }
 .tempel-ui-field__help { margin: 0; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); line-height: 1.5; }
 
+.tempel-ui-notice {
+    margin-bottom: var(--tempel-ui-space-5);
+    padding: var(--tempel-ui-space-4);
+    color: var(--tempel-ui-color-text);
+    background: var(--tempel-ui-color-surface);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-left: 4px solid var(--tempel-ui-color-info);
+    border-radius: var(--tempel-ui-radius-md);
+}
+.tempel-ui-notice--warning { border-left-color: var(--tempel-ui-color-warning); }
+.tempel-ui-notice--error { border-left-color: var(--tempel-ui-color-danger); }
+.tempel-ui-notice--success { border-left-color: var(--tempel-ui-color-success); }
+.tempel-ui-notice p { margin: var(--tempel-ui-space-1) 0 0; color: var(--tempel-ui-color-text-muted); }
+.tempel-ui-notice a { color: var(--tempel-ui-color-accent); }
+
 .tempel-ui-page input[type='text'], .tempel-ui-page input[type='url'], .tempel-ui-page input[type='email'],
 .tempel-ui-page input[type='password'], .tempel-ui-page input[type='number'], .tempel-ui-page input[type='time'],
-.tempel-ui-page select {
+.tempel-ui-page select, .tempel-ui-page textarea {
     min-height: 44px;
     padding: 0 var(--tempel-ui-space-4);
     color: var(--tempel-ui-color-text);
@@ -93,7 +120,15 @@
     border-radius: var(--tempel-ui-radius-md);
 }
 
-.tempel-ui-page :is(input, select, button, a):focus-visible { outline: none; box-shadow: var(--tempel-ui-focus); }
+.tempel-ui-page textarea {
+    width: 100%;
+    min-height: 96px;
+    padding: var(--tempel-ui-space-3) var(--tempel-ui-space-4);
+    line-height: 1.5;
+    resize: vertical;
+}
+
+.tempel-ui-page :is(input, select, textarea, button, a):focus-visible { outline: none; box-shadow: var(--tempel-ui-focus); }
 .tempel-ui-page .button { min-height: 40px; padding: 0 var(--tempel-ui-space-4); border-radius: var(--tempel-ui-radius-md) !important; transition: background var(--tempel-ui-transition-fast), color var(--tempel-ui-transition-fast), border-color var(--tempel-ui-transition-fast); }
 .tempel-ui-page .button-primary { color: var(--tempel-ui-color-accent-text) !important; background: var(--tempel-ui-color-accent) !important; border-color: var(--tempel-ui-color-accent) !important; }
 .tempel-ui-page .button-link-delete { color: var(--tempel-ui-color-danger); }
@@ -219,6 +254,238 @@ body.wp-admin.tempel-settings-admin .settings__category .tempel-mail-editor-fiel
     gap: var(--tempel-ui-space-3);
 }
 
+#tmpl_ai_settings .tempel-ui-card {
+    display: grid;
+    gap: var(--tempel-ui-space-4);
+    margin-bottom: var(--tempel-ui-space-6);
+    padding: var(--tempel-ui-space-5);
+    background: var(--tempel-ui-color-surface);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-radius: var(--tempel-ui-radius-lg);
+}
+
+#tmpl_ai_settings .tempel-ui-card h2 { margin: 0; color: var(--tempel-ui-color-text); }
+#tmpl_ai_settings .settings__field { border-top: 1px solid var(--tempel-ui-color-border); }
+#tmpl_ai_settings .settings__field__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 50%); align-items: center; gap: var(--tempel-ui-space-6); padding: var(--tempel-ui-space-4) 0; }
+#tmpl_ai_settings .settings__input__wrap > :is(input, select) { width: 100%; }
+#tmpl_ai_settings .settings__input__wrap > .checkbox__switch { margin-left: auto; }
+#tmpl_ai_settings .settings__label__wrap label { display: block; color: var(--tempel-ui-color-text); font-weight: 600; }
+#tmpl_ai_settings .settings__label__wrap .label__desc { display: block; margin-top: var(--tempel-ui-space-1); color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); font-weight: 400; line-height: 1.5; }
+#tmpl_ai_settings .tempel-ai-role-list { display: grid; gap: var(--tempel-ui-space-2); }
+#tmpl_ai_settings .tempel-ai-role-list label { color: var(--tempel-ui-color-text); }
+#tmpl_ai_settings .tempel-field-label { display: block; color: var(--tempel-ui-color-text); font-weight: 600; }
+
+#tmpl_dna_settings .tempel-ui-card { display: grid; gap: var(--tempel-ui-space-4); margin-bottom: var(--tempel-ui-space-6); }
+#tmpl_dna_settings .tempel-ui-card h2 { margin: 0; }
+#tmpl_dna_settings .tempel-ui-page-header { margin-bottom: var(--tempel-ui-space-5); }
+/* DNA vertical rhythm: 24px sections, 16px title-to-content, 12px peers, 8px title help, 4px status lines. */
+#tmpl_dna_settings .settings__field { border-top: 1px solid var(--tempel-ui-color-border); }
+#tmpl_dna_settings .settings__field__inner { display: grid; gap: var(--tempel-ui-space-4); padding: var(--tempel-ui-space-5) 0; }
+#tmpl_dna_settings .settings__label__wrap label { display: block; color: var(--tempel-ui-color-text); font-weight: 600; }
+#tmpl_dna_settings .settings__label__wrap .label__desc { display: block; margin-top: var(--tempel-ui-space-1); color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); font-weight: 400; line-height: 1.5; }
+.tempel-dna-field-controls { display: grid; grid-template-columns: minmax(260px, 40%) minmax(0, 1fr); align-items: start; gap: var(--tempel-ui-space-4); }
+.tempel-dna-tags { display: grid !important; gap: var(--tempel-ui-space-2); color: var(--tempel-ui-color-text-muted) !important; font-size: var(--tempel-ui-text-xs) !important; font-weight: 700 !important; letter-spacing: .04em; text-transform: uppercase; }
+.tempel-dna-text { display: grid; gap: var(--tempel-ui-space-2); }
+.tempel-dna-text > span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.tempel-dna-text textarea { width: 100%; }
+.tempel-dna-tags__value { position: absolute !important; width: 1px !important; height: 1px !important; padding: 0 !important; overflow: hidden !important; clip: rect(0, 0, 0, 0) !important; white-space: nowrap !important; border: 0 !important; }
+.tempel-dna-tag-editor { display: flex; flex-wrap: wrap; align-items: center; gap: var(--tempel-ui-space-2); min-height: 46px; padding: 7px 10px; background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); cursor: text; }
+.tempel-dna-tag-list { display: contents; }
+.tempel-dna-tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 7px 5px 10px; color: var(--tempel-ui-color-text); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-sm); font-weight: 600; letter-spacing: normal; line-height: 1.2; text-transform: none; }
+.tempel-dna-tag button { display: grid; width: 20px; min-width: 20px; height: 20px; min-height: 20px; padding: 0; place-items: center; color: var(--tempel-ui-color-text-muted); background: transparent; border: 0; border-radius: 50%; font-size: 17px; line-height: 1; cursor: pointer; }
+.tempel-dna-tag button:hover, .tempel-dna-tag button:focus { color: var(--tempel-ui-color-accent-text); background: var(--tempel-ui-color-accent); outline: none; }
+.tempel-dna-tag-input { flex: 1 1 150px; min-width: 130px !important; min-height: 30px !important; padding: 3px 4px !important; color: var(--tempel-ui-color-text) !important; background: transparent !important; border: 0 !important; box-shadow: none !important; font-size: var(--tempel-ui-text-sm) !important; font-weight: 400 !important; letter-spacing: normal; text-transform: none; }
+.tempel-dna-generator { display: block !important; margin-bottom: 0 !important; padding: 0 !important; overflow: hidden; }
+.tempel-dna-generator__summary { display: flex; align-items: center; justify-content: space-between; gap: var(--tempel-ui-space-4); padding: var(--tempel-ui-space-3) var(--tempel-ui-space-5); list-style: none; cursor: pointer; }
+.tempel-dna-generator__summary::-webkit-details-marker { display: none; }
+.tempel-dna-generator__summary::after { color: var(--tempel-ui-color-text-muted); content: '⌄'; font-size: 22px; line-height: 1; transition: transform var(--tempel-ui-transition-fast); }
+.tempel-dna-generator[open] > .tempel-dna-generator__summary::after { transform: rotate(180deg); }
+.tempel-dna-generator__summary > span { display: grid; gap: 2px; }
+.tempel-dna-generator__summary strong { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-md); }
+.tempel-dna-generator__summary small { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); font-weight: 400; }
+.tempel-dna-generator__content { display: grid; gap: var(--tempel-ui-space-4); padding: var(--tempel-ui-space-4) var(--tempel-ui-space-5) var(--tempel-ui-space-5); border-top: 1px solid var(--tempel-ui-color-border); }
+.tempel-dna-inventory-summary { display: flex; align-items: center; gap: var(--tempel-ui-space-2); color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-dna-inventory-summary a { margin-left: auto; }
+.tempel-dna-inventory-summary span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-dna-generator__options { display: flex; flex-wrap: wrap; align-items: end; gap: var(--tempel-ui-space-4); }
+.tempel-dna-generator__options > label:first-child { display: grid; gap: var(--tempel-ui-space-1); color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-sm); font-weight: 600; }
+.tempel-dna-generator__options select { min-width: 220px; }
+.tempel-dna-profile-header { display: flex; margin: var(--tempel-ui-space-5) 0 var(--tempel-ui-space-4); }
+.tempel-dna-profile-header > div { display: grid; gap: var(--tempel-ui-space-2); }
+.tempel-dna-profile-header h2 { margin: 0; color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-2xl); }
+.tempel-dna-profile-header p { margin: 0; color: var(--tempel-ui-color-text-muted); }
+.tempel-dna-group { display: block !important; margin-bottom: var(--tempel-ui-space-3) !important; padding: 0 !important; overflow: hidden; }
+.tempel-dna-group__summary { display: grid; grid-template-columns: auto minmax(0, 1fr) auto auto; align-items: center; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-3) var(--tempel-ui-space-5); list-style: none; cursor: pointer; }
+.tempel-dna-group__summary::-webkit-details-marker { display: none; }
+.tempel-dna-group__summary::after { color: var(--tempel-ui-color-text-muted); content: '⌄'; font-size: 22px; line-height: 1; transform-origin: center; transition: transform var(--tempel-ui-transition-fast); }
+.tempel-dna-group[open] > .tempel-dna-group__summary::after { transform: rotate(180deg); }
+.tempel-dna-group__number { display: grid; width: 30px; height: 30px; place-items: center; color: var(--tempel-ui-color-text-muted); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: 50%; font-size: var(--tempel-ui-text-sm); font-weight: 700; }
+.tempel-dna-group__title { display: grid; gap: 2px; }
+.tempel-dna-group__title strong { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-lg); }
+.tempel-dna-group__title small { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); font-weight: 400; }
+.tempel-dna-group__progress { display: grid; justify-items: end; gap: 2px; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 600; white-space: nowrap; }
+.tempel-dna-group__progress small { color: var(--tempel-ui-color-text-muted); font-size: 11px; font-weight: 500; }
+.tempel-dna-group__content { padding: 0 var(--tempel-ui-space-5) var(--tempel-ui-space-2); border-top: 1px solid var(--tempel-ui-color-border); }
+.tempel-dna-proposal { border-color: color-mix(in srgb, var(--tempel-ui-color-accent) 55%, var(--tempel-ui-color-border)) !important; }
+.tempel-dna-proposal[hidden] { display: none !important; }
+.tempel-dna-proposal__header { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--tempel-ui-space-5); }
+.tempel-dna-proposal__header > div { display: grid; gap: var(--tempel-ui-space-2); }
+.tempel-dna-proposal__header h2, .tempel-dna-proposal__header p { margin: 0; }
+.tempel-dna-proposal__header p { color: var(--tempel-ui-color-text-muted); }
+.tempel-dna-proposal__count { flex: 0 0 auto; padding: 6px 11px; color: var(--tempel-ui-color-text); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-sm); font-weight: 700; }
+.tempel-dna-proposal__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--tempel-ui-space-2); padding: var(--tempel-ui-space-4) 0; border-block: 1px solid var(--tempel-ui-color-border); }
+.tempel-dna-proposal__list { display: grid; gap: var(--tempel-ui-space-5); }
+.tempel-dna-proposal-group { overflow: hidden; background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-dna-proposal-group > summary { display: flex; align-items: center; justify-content: space-between; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-4); color: var(--tempel-ui-color-text); list-style: none; cursor: pointer; }
+.tempel-dna-proposal-group > summary::-webkit-details-marker { display: none; }
+.tempel-dna-proposal-group > summary::after { color: var(--tempel-ui-color-text-muted); content: '⌄'; font-size: 20px; line-height: 1; }
+.tempel-dna-proposal-group > summary > span { margin-left: auto; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 600; }
+.tempel-dna-proposal-group__content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-3); padding: 0 var(--tempel-ui-space-4) var(--tempel-ui-space-4); border-top: 1px solid var(--tempel-ui-color-border); }
+.tempel-dna-proposal-group__content > :first-child { margin-top: var(--tempel-ui-space-4); }
+.tempel-dna-proposal-group__content > :nth-child(2) { margin-top: var(--tempel-ui-space-4); }
+.tempel-dna-proposal-card { display: grid; align-content: start; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-dna-proposal-card > strong { color: var(--tempel-ui-color-text); }
+.tempel-dna-proposal-card > p { margin: 0; color: var(--tempel-ui-color-text); white-space: pre-wrap; }
+.tempel-dna-proposal-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tempel-dna-proposal-tags span { padding: 4px 8px; color: var(--tempel-ui-color-text-muted); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-xs); font-weight: 700; }
+.tempel-dna-proposal-card__actions { display: flex; flex-wrap: wrap; gap: var(--tempel-ui-space-2); margin-top: auto; padding-top: var(--tempel-ui-space-2); }
+.tempel-dna-trends { color: var(--tempel-ui-color-text); font-weight: 600; }
+.tempel-dna-field-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--tempel-ui-space-4); }
+.tempel-dna-field-heading label { flex: 1 1 auto; }
+.tempel-dna-field-actions { display: flex; flex: 0 0 auto; align-items: center; gap: var(--tempel-ui-space-2); }
+.tempel-dna-reviewed { display: inline-flex !important; align-items: center; gap: 7px; min-height: 34px; padding: 0 10px; color: var(--tempel-ui-color-text-muted) !important; background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-xs); font-weight: 600 !important; cursor: pointer; }
+.tempel-dna-reviewed:has(input:checked) { color: var(--tempel-ui-color-success) !important; border-color: color-mix(in srgb, var(--tempel-ui-color-success) 55%, var(--tempel-ui-color-border)); }
+.tempel-dna-reviewed input { margin: 0 !important; }
+.tempel-dna-update-toggle { min-height: auto !important; padding: 2px 0 !important; color: var(--tempel-ui-color-text-muted) !important; font-size: var(--tempel-ui-text-xs) !important; text-decoration: none !important; }
+.tempel-dna-update-toggle:hover, .tempel-dna-update-toggle:focus { color: var(--tempel-ui-color-text) !important; }
+.tempel-dna-update-toggle { flex: 0 0 auto; }
+.tempel-dna-update-panel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-dna-update-panel[hidden] { display: none; }
+.tempel-dna-update-panel label { grid-column: 1 / -1; color: var(--tempel-ui-color-text); font-weight: 700; }
+.tempel-dna-update-panel textarea { width: 100%; min-height: 72px; }
+.tempel-dna-sources { display: grid; gap: var(--tempel-ui-space-4); padding: var(--tempel-ui-space-5); background: linear-gradient(145deg, var(--tempel-ui-color-surface-raised), var(--tempel-ui-color-surface)); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-lg); }
+.tempel-dna-sources[hidden] { display: none; }
+.tempel-dna-sources__header { display: flex; align-items: start; justify-content: space-between; gap: var(--tempel-ui-space-4); }
+.tempel-dna-sources__header > div { display: grid; gap: 3px; }
+.tempel-dna-sources__header strong { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-lg); }
+.tempel-dna-sources__header > div > span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-dna-sources__count { flex: 0 0 auto; padding: 5px 10px; color: var(--tempel-ui-color-text); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-xs); font-weight: 700; }
+.tempel-dna-sources__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-3); }
+.tempel-dna-source-card { display: grid; align-content: start; gap: 6px; min-width: 0; padding: var(--tempel-ui-space-4); color: var(--tempel-ui-color-text); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); text-decoration: none; transition: border-color var(--tempel-ui-transition-fast), transform var(--tempel-ui-transition-fast); }
+a.tempel-dna-source-card:hover, a.tempel-dna-source-card:focus { color: var(--tempel-ui-color-text); border-color: var(--tempel-ui-color-info); box-shadow: none; transform: translateY(-1px); }
+.tempel-dna-source-card__type { width: max-content; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.tempel-dna-source-card--web .tempel-dna-source-card__type { color: var(--tempel-ui-color-info); }
+.tempel-dna-source-card__title { overflow: hidden; color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-md); line-height: 1.35; text-overflow: ellipsis; }
+.tempel-dna-source-detail { display: block; margin-top: 2px; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+#tempel-dna-status.is-success { color: var(--tempel-ui-color-success); }
+#tempel-dna-status.is-error { color: var(--tempel-ui-color-danger); }
+.tempel-dna-fields textarea { overflow-y: hidden; transition: height var(--tempel-ui-transition-fast); }
+.tempel-dna-progress { margin-top: var(--tempel-ui-space-2); }
+.tempel-dna-engine { width: max-content; padding: 4px 9px; color: var(--tempel-ui-color-accent-text); background: var(--tempel-ui-color-accent); border-radius: var(--tempel-ui-radius-pill); font-size: var(--tempel-ui-text-xs); font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.tempel-dna-progress progress:not([value]) { animation: tempel-dna-pulse 1.2s ease-in-out infinite alternate; }
+.tempel-dna-activity { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-2) var(--tempel-ui-space-5); margin: var(--tempel-ui-space-1) 0 0; padding: var(--tempel-ui-space-4); list-style: none; background: var(--tempel-ui-color-surface-raised); border-radius: var(--tempel-ui-radius-md); }
+.tempel-dna-activity li { position: relative; margin: 0; padding-left: 24px; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); line-height: 1.45; transition: color var(--tempel-ui-transition-fast); }
+.tempel-dna-activity li::before { position: absolute; top: .25em; left: 0; width: 12px; height: 12px; content: ''; border: 2px solid var(--tempel-ui-color-border-strong); border-radius: 50%; }
+.tempel-dna-activity li.is-active { color: var(--tempel-ui-color-text); font-weight: 700; }
+.tempel-dna-activity li.is-active::before { border-color: var(--tempel-ui-color-accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--tempel-ui-color-accent) 18%, transparent); animation: tempel-dna-step-pulse 1s ease-in-out infinite alternate; }
+.tempel-dna-activity li.is-complete { color: var(--tempel-ui-color-text); }
+.tempel-dna-activity li.is-complete::before { content: '✓'; width: 16px; height: 16px; top: .08em; color: var(--tempel-ui-color-accent-text); background: var(--tempel-ui-color-accent); border-color: var(--tempel-ui-color-accent); font-size: 11px; font-weight: 900; line-height: 13px; text-align: center; }
+@keyframes tempel-dna-pulse { from { opacity: .45; } to { opacity: 1; } }
+@keyframes tempel-dna-step-pulse { from { opacity: .5; } to { opacity: 1; } }
+@media (max-width: 782px) { .tempel-dna-activity { grid-template-columns: 1fr; } }
+@media (max-width: 782px) { .tempel-dna-sources__grid { grid-template-columns: 1fr; } .tempel-dna-sources__header { align-items: start; flex-direction: column; } }
+@media (max-width: 782px) { .tempel-dna-field-controls { grid-template-columns: 1fr; } }
+@media (max-width: 782px) { .tempel-dna-inventory-summary, .tempel-dna-proposal__header { align-items: flex-start; flex-direction: column; } .tempel-dna-inventory-summary a { margin-left: 0; } .tempel-dna-proposal-group__content { grid-template-columns: 1fr; } .tempel-dna-proposal-group__content > :nth-child(2) { margin-top: 0; } .tempel-dna-group__summary { grid-template-columns: auto minmax(0, 1fr) auto; padding-inline: var(--tempel-ui-space-4); } .tempel-dna-group__progress { display: none; } .tempel-dna-group__content { padding-inline: var(--tempel-ui-space-4); } }
+@media (max-width: 782px) { .tempel-dna-field-heading { align-items: stretch; flex-direction: column; } .tempel-dna-field-actions { justify-content: space-between; } .tempel-dna-update-toggle { width: max-content; } .tempel-dna-update-panel { grid-template-columns: 1fr; } }
+
+.tempel-content-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tempel-ui-space-3); }
+.tempel-content-summary > div { display: grid; gap: 3px; padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-content-summary strong { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-2xl); line-height: 1; }
+.tempel-content-summary span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-inventory-section { display: grid; gap: var(--tempel-ui-space-4); margin-top: var(--tempel-ui-space-5); }
+.tempel-inventory-section h2 { margin: 0 0 var(--tempel-ui-space-1); }
+.tempel-inventory-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-3); }
+.tempel-inventory-item { display: flex; align-items: center; justify-content: space-between; gap: var(--tempel-ui-space-4); min-width: 0; padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface-raised); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-inventory-item > div { display: grid; min-width: 0; gap: 3px; }
+.tempel-inventory-item strong { overflow: hidden; color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-md); text-overflow: ellipsis; }
+.tempel-inventory-item span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-inventory-item .checkbox__switch { flex: 0 0 auto; }
+.tempel-inventory-item.is-disabled { opacity: .58; }
+.tempel-inventory-group { overflow: hidden; background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-inventory-group summary { display: flex; align-items: center; justify-content: space-between; gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-4); cursor: pointer; }
+.tempel-inventory-group summary span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-inventory-group .tempel-inventory-grid { padding: 0 var(--tempel-ui-space-4) var(--tempel-ui-space-4); }
+.tempel-ui-empty { margin: 0; padding: var(--tempel-ui-space-4); color: var(--tempel-ui-color-text-muted); background: var(--tempel-ui-color-surface-raised); border-radius: var(--tempel-ui-radius-md); }
+@media (max-width: 960px) { .tempel-content-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tempel-inventory-grid { grid-template-columns: 1fr; } }
+@media (max-width: 600px) { .tempel-content-summary { grid-template-columns: 1fr; } }
+
+.tempel-templeton-header { align-items: end; }
+.tempel-templeton-header h1 { margin-top: var(--tempel-ui-space-3); }
+.tempel-templeton-score { display: grid; flex: 0 0 auto; gap: 2px; min-width: 150px; padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-templeton-score strong { color: var(--tempel-ui-color-text); font-size: var(--tempel-ui-text-2xl); line-height: 1; }
+.tempel-templeton-score span { color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); }
+.tempel-templeton-inputs { display: grid; gap: var(--tempel-ui-space-4); margin: 0 0 var(--tempel-ui-space-5); }
+.tempel-templeton-inputs > header h2 { margin: 0 0 var(--tempel-ui-space-1); color: var(--tempel-ui-color-text); }
+.tempel-templeton-inputs > header p { margin: 0; color: var(--tempel-ui-color-text-muted); }
+.tempel-templeton-input-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-3); }
+.tempel-templeton-input-grid article { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--tempel-ui-space-3); padding: var(--tempel-ui-space-4); background: var(--tempel-ui-color-surface); border: 1px solid var(--tempel-ui-color-border); border-radius: var(--tempel-ui-radius-md); }
+.tempel-templeton-input-grid article > div { display: grid; align-content: start; gap: 4px; }
+.tempel-templeton-input-grid article strong { color: var(--tempel-ui-color-text); }
+.tempel-templeton-input-grid article p { margin: 0; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-sm); line-height: 1.5; }
+.tempel-templeton-input-grid article > :is(a, span):last-child { grid-column: 2; width: max-content; color: var(--tempel-ui-color-text-muted); font-size: var(--tempel-ui-text-xs); font-weight: 700; }
+.tempel-templeton-input-grid article > a:last-child { color: var(--tempel-ui-color-info); }
+.tempel-templeton-input-icon { display: grid; width: 42px; height: 42px; place-items: center; color: var(--tempel-ui-color-accent-text); background: var(--tempel-ui-color-accent); border-radius: var(--tempel-ui-radius-md); font-size: 11px; font-weight: 900; letter-spacing: .02em; }
+.tempel-templeton-switch { display: flex; align-items: center; justify-content: space-between; gap: var(--tempel-ui-space-5); margin: var(--tempel-ui-space-5) 0; }
+.tempel-templeton-switch h2, .tempel-templeton-field h2 { margin: 0 0 var(--tempel-ui-space-1); }
+.tempel-templeton-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--tempel-ui-space-4); }
+.tempel-templeton-field { display: grid; align-content: start; gap: var(--tempel-ui-space-4); }
+.tempel-templeton-field textarea { width: 100%; min-height: 150px; resize: vertical; }
+@media (max-width: 960px) { .tempel-templeton-grid { grid-template-columns: 1fr; } }
+@media (max-width: 782px) { .tempel-templeton-header { align-items: stretch; } .tempel-templeton-score { width: 100%; } .tempel-templeton-input-grid { grid-template-columns: 1fr; } }
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #wpwrap,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #wpcontent,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #wpbody,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #wpbody-content,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tmpl_settings__wrap,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tmpl_settings__page,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tmpl_settings__inner,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__sidebar,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__body {
+    color: var(--tempel-ui-color-text) !important;
+    background: var(--tempel-ui-color-canvas) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__sidebar .sidebar__title,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .category__title,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__label__wrap label {
+    color: var(--tempel-ui-color-text) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__sidebar a.nav__item {
+    color: var(--tempel-ui-color-text) !important;
+    background: var(--tempel-ui-color-surface) !important;
+    border-color: var(--tempel-ui-color-border) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__sidebar a.nav__item.active {
+    color: var(--tempel-ui-color-accent-text) !important;
+    background: var(--tempel-ui-color-accent) !important;
+    border-color: var(--tempel-ui-color-accent) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .settings__input__wrap :is(input[type='text'], input[type='url'], input[type='email'], input[type='password'], input[type='number'], input[type='time'], select, textarea) {
+    color: var(--tempel-ui-color-text) !important;
+    background-color: var(--tempel-ui-color-surface-raised) !important;
+    border-color: var(--tempel-ui-color-border) !important;
+}
+
+@media (max-width: 900px) {
+    #tmpl_ai_settings .settings__field__inner { grid-template-columns: 1fr; gap: var(--tempel-ui-space-3); }
+    #tmpl_dna_settings .settings__field__inner { grid-template-columns: 1fr; gap: var(--tempel-ui-space-3); }
+}
+
 body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .settings__label__wrap,
 body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .settings__input__wrap,
 body.wp-admin.tempel-settings-admin .tempel-mail-editor-field .wp-editor-wrap,
@@ -249,5 +516,246 @@ body.wp-admin.tempel-settings-admin .tempel-mail-editor-field textarea.wp-editor
 
     body.wp-admin.tempel-settings-admin .settings__category .settings__input__wrap > .checkbox__switch {
         margin-left: 0;
+    }
+}
+
+/*
+ * Light theme compatibility for feature pages that predate the shared
+ * design tokens. Dark-theme declarations remain their fallback; light mode
+ * always resolves visible surfaces through the central palette below.
+ */
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-hero,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-card,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-last-message,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-connection-actions,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-dropbox-browser,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-dropbox-folder,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-card,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-folder-dialog,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-status-card {
+    color: var(--tempel-ui-color-text) !important;
+    background: var(--tempel-ui-color-surface) !important;
+    border-color: var(--tempel-ui-color-border) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-hero h1,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-card strong,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-technical summary,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-card h2,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager label,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-folder-dialog__header h2,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-folder-close,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #stager-folder-path,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-export-progress p {
+    color: var(--tempel-ui-color-text) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-hero p,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-hero__hint,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-card__label,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-card > span:last-child,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-last-message,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-last-message code,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-help,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-connection-actions span,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-card p,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-status-card p {
+    color: var(--tempel-ui-color-text-muted) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-technical[open] summary,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-help,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .tempel-backup-field-grid .settings__field,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .tempel-backup-field-grid .settings__field + .settings__field {
+    border-color: var(--tempel-ui-color-border) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings #wpwrap,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings #wpcontent,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings #wpbody,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings #wpbody-content,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings .tmpl_settings__wrap,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings .tmpl_settings__page,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings .tmpl_settings__inner,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings .settings__sidebar,
+body.wp-admin.tempel-settings-admin.tempel-theme-light.tempel-settings_page_tempel-backup-settings .settings__body,
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_stager_settings .settings__body .body__inner,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-status-grid {
+    color: var(--tempel-ui-color-text) !important;
+    background: var(--tempel-ui-color-canvas) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap input[type='text'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap input[type='email'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap input[type='password'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap input[type='number'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap input[type='time'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light #tmpl_backup_settings .settings__input__wrap select,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager input[type='text'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager input[type='password'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager input[type='number'],
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager input[type='url'] {
+    color: var(--tempel-ui-color-text) !important;
+    background: var(--tempel-ui-color-surface-raised) !important;
+    border-color: var(--tempel-ui-color-border) !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-warning {
+    color: #5f4700 !important;
+    background: #fff8dc !important;
+    border-color: #e7cc69 !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-warning strong,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-warning p {
+    color: inherit !important;
+}
+
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-backup-eyebrow,
+body.wp-admin.tempel-settings-admin.tempel-theme-light .tempel-stager-step {
+    color: #675f00 !important;
+}
+
+/* Page optimization: calm, advisory results built from the shared UI tokens. */
+#tmpl_optimization_settings .tempel-ui-page-header {
+    margin-bottom: var(--tempel-ui-space-5);
+}
+
+.tempel-optimization-start,
+.tempel-optimization-result,
+.tempel-optimization-list {
+    display: grid;
+    gap: var(--tempel-ui-space-4);
+}
+
+.tempel-optimization-start select,
+.tempel-optimization-start textarea {
+    width: 100%;
+    max-width: none;
+}
+
+.tempel-optimization-start textarea {
+    min-height: 92px;
+    resize: vertical;
+}
+
+.tempel-optimization-start > .tempel-ui-field__help:empty {
+    display: none;
+}
+
+.tempel-optimization-start > .tempel-ui-field__help.is-success {
+    color: var(--tempel-ui-color-success);
+}
+
+.tempel-optimization-start > .tempel-ui-field__help.is-error {
+    color: var(--tempel-ui-color-danger);
+}
+
+.tempel-optimization-result {
+    margin-top: var(--tempel-ui-space-6);
+}
+
+.tempel-optimization-result[hidden] {
+    display: none;
+}
+
+.tempel-optimization-result__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--tempel-ui-space-5);
+    padding-bottom: var(--tempel-ui-space-4);
+    border-bottom: 1px solid var(--tempel-ui-color-border);
+}
+
+.tempel-optimization-result__header h2,
+.tempel-optimization-result__header p,
+.tempel-optimization-result .tempel-ui-card h3 {
+    margin: 0;
+}
+
+.tempel-optimization-result__header p {
+    max-width: 760px;
+    margin-top: var(--tempel-ui-space-2);
+    color: var(--tempel-ui-color-text-muted);
+}
+
+.tempel-optimization-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--tempel-ui-space-4);
+}
+
+.tempel-optimization-result .tempel-ui-card {
+    display: grid;
+    align-content: start;
+    gap: var(--tempel-ui-space-4);
+}
+
+.tempel-optimization-result ul {
+    display: grid;
+    gap: var(--tempel-ui-space-3);
+    margin: 0;
+    padding-left: 20px;
+}
+
+.tempel-optimization-list article {
+    display: grid;
+    gap: var(--tempel-ui-space-2);
+    padding: var(--tempel-ui-space-4);
+    background: var(--tempel-ui-color-surface-raised);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-radius: var(--tempel-ui-radius-md);
+}
+
+.tempel-optimization-list article p {
+    margin: 0;
+    color: var(--tempel-ui-color-text-muted);
+    white-space: pre-wrap;
+}
+
+.tempel-optimization-priority {
+    justify-self: start;
+    padding: 3px 9px;
+    color: var(--tempel-ui-color-text);
+    background: var(--tempel-ui-color-surface);
+    border: 1px solid var(--tempel-ui-color-border);
+    border-radius: var(--tempel-ui-radius-pill);
+    font-size: var(--tempel-ui-text-xs);
+    line-height: 1.3;
+    text-transform: capitalize;
+}
+
+.tempel-optimization-priority.is-hoog {
+    color: var(--tempel-ui-color-danger);
+}
+
+.tempel-optimization-seo dl {
+    display: grid;
+    grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+    gap: var(--tempel-ui-space-3) var(--tempel-ui-space-5);
+    margin: 0;
+}
+
+.tempel-optimization-seo dt {
+    color: var(--tempel-ui-color-text-muted);
+    font-weight: 700;
+}
+
+.tempel-optimization-seo dd {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 782px) {
+    .tempel-optimization-grid,
+    .tempel-optimization-seo dl {
+        grid-template-columns: 1fr;
+    }
+
+    .tempel-optimization-result__header {
+        align-items: stretch;
+        flex-direction: column;
     }
 }

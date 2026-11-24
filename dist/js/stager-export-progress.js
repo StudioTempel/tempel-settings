@@ -48,7 +48,9 @@
         running = true; button.disabled = true; button.textContent = 'Pakket wordt gemaakt…';
         panel.hidden = false; bar.hidden = false; bar.removeAttribute('value'); message.textContent = 'Website controleren…';
         try {
-            const response = await fetch(form.action, {method: 'POST', credentials: 'same-origin', body: new FormData(form)});
+            const endpoint = form.getAttribute('action');
+            if (!endpoint) throw new Error('De downloadroute ontbreekt. Vernieuw de pagina en probeer opnieuw.');
+            const response = await fetch(endpoint, {method: 'POST', credentials: 'same-origin', body: new FormData(form)});
             if (!response.ok) throw new Error('De server antwoordt met HTTP ' + response.status + '.');
             if (!response.body || !(response.headers.get('content-type') || '').includes('application/x-ndjson')) throw new Error('De server gaf geen geldige voortgang terug. Vernieuw de pagina en probeer opnieuw.');
             const reader = response.body.getReader(); const decoder = new TextDecoder(); let pending = ''; let finished = false;

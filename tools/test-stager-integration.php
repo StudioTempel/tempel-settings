@@ -22,6 +22,7 @@ check_stager(strpos($view, '<dialog id="stager-folders"') !== false, 'Server fol
 check_stager(strpos($module, "deactivate_plugins('stager/stager.php'") !== false, 'Standalone Stager is replaced without a class conflict');
 check_stager(strpos($view, 'tempel-stager-backup') === false && strpos($view, 'tempel-stager-hero') === false, 'Migration page omits duplicate introduction and backup status');
 check_stager(strpos($view, 'tempel-stager-grid--manual') !== false, 'Manual migration steps use a vertical layout');
+check_stager(strpos($view, 'tempel-stager-manual') === false && strpos($view, 'Handmatig met een verhuispakket') === false, 'Manual package cards appear directly without a collapsible outer box');
 check_stager(strpos($view, '1 · Op de bronsite') === false && strpos($view, '2 · Op de doelsite') === false, 'Manual migration cards omit redundant source and destination labels');
 check_stager(strpos($view, 'PHP-uploadlimiet') !== false && strpos($view, 'wp_max_upload_size()') !== false, 'Browser upload limit is explained separately from package capacity');
 check_stager(strpos($view, 'stager-dropbox-browse') !== false && strpos($module, 'download_portable_package') !== false, 'Portable packages can be selected directly from Dropbox');
@@ -31,6 +32,7 @@ check_stager(strpos($sftp, 'Tempel_Stager_SFTP') !== false, 'SFTP engine uses a 
 check_stager(strpos($migration, 'MAX_BYTES = 21474836480') !== false, 'Twenty GiB extraction limit remains enforced');
 check_stager(strpos($migration, "'format' => 2") !== false && strpos($migration, "'database.sql'") !== false, 'Site packages contain portable migration data and a recovery SQL dump');
 check_stager(strpos($migration, "'site/' . \$relative") !== false, 'Site packages include the complete WordPress root');
+check_stager(substr_count($migration, '$path = wp_normalize_path($file->getPathname())') === 0 && strpos($migration, '$source_path = wp_normalize_path($file->getPathname())') !== false, 'Source files cannot overwrite the package path before ZIP verification');
 check_stager(strpos($migration, 'SET FOREIGN_KEY_CHECKS=0') !== false && strpos($migration, 'SELECT @@FOREIGN_KEY_CHECKS') !== false, 'Foreign keys are suspended and restored during atomic import');
 check_stager(strpos($migration, "preg_match('/FOREIGN KEY") === false, 'Foreign-key tables remain supported in migration packages');
 check_stager(strpos($migration, "preg_match('/DATA DIRECTORY|INDEX DIRECTORY|CONNECTION") !== false, 'External table storage remains blocked');
@@ -39,3 +41,6 @@ check_stager(file_exists($root . '/dist/js/stager-folder-browser.js'), 'Folder b
 check_stager(file_exists($root . '/dist/js/stager-deploy-progress.js'), 'Progress asset is present');
 check_stager(file_exists($root . '/dist/js/stager-export-progress.js') && strpos($view, 'stager-export-progress') !== false, 'Manual export is prepared with live progress before download');
 check_stager(strpos($module, 'tempel_stager_download_export') !== false && strpos($module, 'set_transient') !== false, 'Prepared exports use a private expiring download link');
+check_stager(strpos($module, 'admin_post_tempel_stager_prepare_export') !== false && strpos($view, "admin_url('admin-post.php')") !== false, 'Package preparation uses the authenticated admin-post route');
+check_stager(strpos(file_get_contents($root . '/dist/js/stager-export-progress.js'), "form.getAttribute('action')") !== false, 'Export JavaScript cannot confuse the action field with the form endpoint');
+check_stager(strpos($module, '$url = wp_nonce_url(') === false && strpos($module, "'_wpnonce' => wp_create_nonce('tempel_stager_download_export_' . \$token)") !== false, 'JSON download URL keeps query separators unescaped');

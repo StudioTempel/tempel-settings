@@ -227,7 +227,7 @@ class GF_BAG_Address
 
             return array(
                 'success' => false,
-                'message' => __('PostcodeAPI.nu API key ontbreekt in de Tempel Settings plugininstellingen.', 'tempel-settings'),
+                'message' => __('De PostcodeAPI.nu API-sleutel ontbreekt in Tempel.', 'tempel-settings'),
             );
         }
 
